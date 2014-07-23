@@ -1,0 +1,3 @@
+#!/bin/bash
+
+scp -r .Xdefaults .profile .vim .viminfo .vimrc .xinitrc .ssh .i3/config .bin cjb@shell.cyber.com.au:/home/cjb/

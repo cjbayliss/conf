@@ -1,0 +1,4 @@
+#!/bin/bash
+
+read -rp 'Enter a new branch name: ' name;
+git checkout -b "$name" && git push origin "$name" && git branch --set-upstream "$name" origin/"$name"

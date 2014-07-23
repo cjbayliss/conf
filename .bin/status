@@ -1,0 +1,10 @@
+#!/bin/sh
+# shell script to prepend i3status with more stuff
+
+i3status | while :
+do
+        read -r line
+        #echo "$(ssh shell.cyber.com.au tail -1 .irssi/fnotify) | $line" || exit 1
+        echo " my thing| $line" || exit 1
+        sleep 1
+done
