@@ -1,0 +1,32 @@
+# Redhat Color definitions
+#color normal      white          default
+color normal      default        default
+color hdrdefault  red            default
+color quoted      brightblue     default
+color quoted1     brightcyan     default
+color quoted2     brightgreen    default
+color quoted3     brightyellow   default
+color quoted4     brightred      default
+color quoted5     brightmagenta  default
+color quoted6     brightwhite    default
+color quoted7     brightblack    default
+color signature   red            default
+color indicator   brightyellow   red
+color error       brightred      default
+#color status      yellow         blue
+color status      brightyellow   blue
+color tree        magenta        default  # the thread tree in the index menu
+color tilde       magenta        default
+color message     brightcyan     default
+color markers     brightcyan     default
+color attachment  brightmagenta  default
+color search      default        green    # how to highlight search patterns in the pager
+
+color header      brightred      default "^(From|Subject|Date|To|Message-ID):"
+color body        brightgreen    default "[[:alpha:]]+://[^[:space:]]+"    # point out URLs
+color body        magenta        default "[[:alnum:]_.-]+@[[:alnum:]_.-]+" # e-mail addresses
+color underline   brightgreen    default
+
+# attributes when using a mono terminal
+#mono  header     underline ^(From|Subject):
+mono  quoted     bold
