@@ -31,7 +31,6 @@ alias la='ls -la'
 alias emacs="emacs -nw"
 alias mutt="mutt; tput sgr0"
 alias lua="lua5.3"
-alias myip="echo $(curl -s http://ipecho.net/plain)"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
