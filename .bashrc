@@ -4,37 +4,6 @@ case $- in
       *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100000
-HISTFILESIZE=200000
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-PS1='[\u@\h \W]\$ '
-
-# enable color support of ls and also add handy aliases
-alias ls='ls -h --color=auto'
-alias grep='grep --color=auto'
-
-# some more aliases
-alias ll='ls -l'
-alias la='ls -la'
-alias emacs="emacs -nw"
-alias mutt="mutt; tput sgr0"
-alias lua="lua5.3"
-
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -46,5 +15,30 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# underline curser
-echo -e -n "\x1b[\x33 q"
+# don't put duplicate lines or lines starting with space in the history.
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# we use -1 to unlimit the history
+HISTSIZE=-1
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+PS1='[\u@\h \W]\$ '
+
+# enable color support of ls and also add handy aliases
+alias ls='ls -h --color=auto'
+alias grep='grep --color=auto'
+alias vim='~/.bin/vim'
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# the paths
+export PATH="$PATH:$HOME/.bin"
+
+export TERM='xterm-256color'
