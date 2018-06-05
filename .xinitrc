@@ -9,18 +9,14 @@ fi
 # My ssh agent
 eval "$($HOME/.bin/twb-agents)"
 
+# set the white balance
+redshift -O 6000 &
+
 # The the .Xresources, I have more config in there.
 xrdb ~/.Xresources
 
-# HP 23fi or 23cw colour correction
-#xgamma -bgamma 1.2 -ggamma 1.1 -rgamma 1.1
-
-# wallpaper. requires the background to be set with feh, ex:
-# feh --bg-scale path/to/pic.jpg
-#sh ~/.fehbg &
-
-# for pulseaudio systems
-#start-pulseaudio-x11
+# start pulseaudio
+start-pulseaudio-x11
 
 # Now start i3wm! :)
 exec i3
