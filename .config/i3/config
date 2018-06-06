@@ -9,7 +9,9 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-new_window normal 0px
+# display no title bar or borders, I used to run the commented out line:
+#new_window normal 0px
+new_window pixel 0
 workspace_layout tabbed
 
 set $mod Mod4
@@ -160,6 +162,9 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         separator_symbol "|"
+        mode hide
+        hidden_state hide
+        modifier Mod1
         status_command i3status
 }
 
