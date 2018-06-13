@@ -19,7 +19,7 @@ xrdb ~/.Xresources
 start-pulseaudio-x11
 
 # Now start i3wm! :)
-exec i3
+dbus-launch --exit-with-session i3
 
 # Here are some xrandr examples:
 #xrandr --output VGA1 --auto --right-of LVDS1
