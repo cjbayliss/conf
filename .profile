@@ -9,5 +9,4 @@ fi
 # set PATH so it includes user's private bin directories
 export PATH="$PATH:$HOME/.bin"
 
-export VISUAL=emacs
-export TERMINAL=xterm
+export VISUAL=mg
