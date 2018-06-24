@@ -10,7 +10,7 @@ fi
 eval "$($HOME/.bin/twb-agents)"
 
 # set the white balance
-redshift -O 6000 &
+redshift -O 5200 &
 
 # The the .Xresources, I have more config in there.
 xrdb ~/.Xresources
