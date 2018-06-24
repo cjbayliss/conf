@@ -138,6 +138,9 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         separator_symbol "|"
+        mode hide
+        hidden_state hide
+        modifier Mod1
         status_command i3status
 }
 
