@@ -147,6 +147,9 @@ bar {
         status_command i3status
 }
 
+# force pop-up windows to be floating
+for_window [title="Emoji Choice"] floating enable
+
 # Lock the screen
 bindsym $mod+Mod1+l exec "~/.bin/locker"
 #exec xautolock -time 2 -locker '~/.bin/locker' &
