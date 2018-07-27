@@ -15,6 +15,12 @@ redshift -O 5200 &
 # The the .Xresources, I have more config in there.
 xrdb ~/.Xresources
 
+# ibus input stuff
+ibus-daemon -d &
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
 # start pulseaudio
 start-pulseaudio-x11
 
