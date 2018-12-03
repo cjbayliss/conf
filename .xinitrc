@@ -10,13 +10,16 @@ fi
 eval "$($HOME/.bin/twb-agents)"
 
 # set the white balance
-redshift -O 5200 &
+redshift -O 4800 &
 
 # The the .Xresources, I have more config in there.
 xrdb ~/.Xresources
 
+# real smooth scrolling in FF
+export MOZ_USE_XINPUT2=1
+
 # ibus input stuff
-ibus-daemon -d &
+ibus-daemon -drx &
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
