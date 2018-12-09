@@ -1,19 +1,12 @@
-# This deals with dbus, etc.
-if [ -d /etc/X11/xinit/xinitrc.d ] ; then
-    for f in /etc/X11/xinit/xinitrc.d/?* ; do
-        [ -x "$f" ] && . "$f"
-    done
-    unset f
-fi
-
-# My ssh agent
-eval "$($HOME/.bin/twb-agents)"
+# for ssh-agent, see: https://bbs.archlinux.org/viewtopic.php?id=205961
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+gnome-keyring-daemon -rd &
 
 # set the white balance
 redshift -O 4800 &
 
 # The the .Xresources, I have more config in there.
-xrdb ~/.Xresources
+xrdb ~/.Xresources &
 
 # real smooth scrolling in FF
 export MOZ_USE_XINPUT2=1
@@ -25,9 +18,10 @@ export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 
 # start pulseaudio
-start-pulseaudio-x11
+start-pulseaudio-x11 &
 
 # Now start i3wm! :)
+
 dbus-launch --exit-with-session i3
 
 # Here are some xrandr examples:
