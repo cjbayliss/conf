@@ -12,16 +12,18 @@ set imap_keepalive = 300
 set mail_check = 120
 auto_view text/html                                      # view html automatically
 alternative_order text/plain text/enriched text/html     # save html for last
-set realname='Real Name'
+set realname = "Real Name"
+set from = "someone@example.com"
 
-# gmail config
-set imap_user = 'someone@gmail.com'
-set imap_pass = 'password'
+# email account config
+set imap_user = "someone@example.com"
+set imap_pass = "password"
 
-set folder = imaps://imap.gmail.com/
-set spoolfile = +INBOX
-set postponed = "+[Gmail]/Drafts"
+set folder = "imaps://mail.gandi.net:993/"
+set spoolfile = $folder 
+set record = "=Sent"
 
-set smtp_url = 'smtps://someone@smtp.gmail.com'
+set smtp_url = "smtp://$imap_user:$imap_pass@mail.gandi.net:587/"
 set smtp_pass = 'password'
-unset record
+set use_from = yes
+set ssl_starttls = yes
