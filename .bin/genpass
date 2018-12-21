@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# WARNING!!
+#
+# While I put a bit of effort into making this as safe to use as I know how,
+# this is probably not safe for generating actual passwords because I am not an
+# infosec specialist. In plain terms:
+#
+###############################
+#    USE AT YOUR OWN RISK!    #
+###############################
+
+x=0
+while [ "$x" -le 10 ]
+do
+	l=$[ 10 + $[ RANDOM % 15 ]]
+	# supposedly some organisations such as the NSA can figure out the first x
+	# amount of lines of /dev/urandom, thus:
+	# 'head -n $(($l*$l*$l)) | tail -n "$l"'
+	# so just to be safe, let's make it more difficult.
+	echo $(cat /dev/urandom | strings | grep -o '[0-9A-Za-z~!@#$%^&*()_+]' | head -n $(($l*$l*$l)) | tail -n "$l" | tr -d '\n')
+	x=$(( $x + 1 ))
+done
