@@ -19,3 +19,9 @@ To purge deleted messages, press `$`.
 To mark for deletion, press `d`.
 
 To unmark for deletion, press `u`.
+
+## converting music to opus
+
+```
+for i in *.mp3; do ffmpeg -i "$i" -acodec libopus -b:a 256000 -vbr off "${i%.*}.opus"; done
+```
