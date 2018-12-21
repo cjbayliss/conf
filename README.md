@@ -2,7 +2,7 @@
 
 Some of it is nice, but most of it is boring.
 
-See [emacs-config](https://github.com/cjbayliss/emacs-config/) for my emacs config.
+See [emacs-config](https://git.sr.ht/~cjb/emacs-config) for my emacs config.
 
 ## mutt shortcuts for the forgetful, aka cjb.
 
