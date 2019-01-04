@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# get-img, a script to get a direct link to the image from imgur and ibb
+
+curl -s "$1" | grep 'image_src' | cut -d'"' -f4
