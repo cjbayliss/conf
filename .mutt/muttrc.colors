@@ -1,28 +1,31 @@
-color normal      default        default
-color hdrdefault  red            default
-color quoted      brightblue     default
-color quoted1     brightcyan     default
-color quoted2     brightgreen    default
-color quoted3     brightyellow   default
-color quoted4     brightred      default
-color quoted5     brightmagenta  default
-color quoted6     brightwhite    default
-color quoted7     brightblack    default
-color signature   red            default
-color indicator   brightyellow   red
-color error       brightred      default
-color status      brightyellow   blue
-color tree        magenta        default  # the thread tree in the index menu
-color tilde       magenta        default
-color message     brightcyan     default
-color markers     brightcyan     default
-color attachment  brightmagenta  default
-color search      default        green    # how to highlight search patterns in the pager
+color normal     default  default
+color hdrdefault color196 default
+color quoted     color245 default
+color quoted1    color111 default
+color quoted2    color77  default
+color quoted3    color180 default
+color quoted4    color198 default
+color quoted5    color147 default
+color signature  color245 default
+color indicator  color208 color235
+color error      color196 default
+color status     black    color250
+color tree       color208 default # the thread tree in the index menu
+color tilde      color208 default
+color message    color198 default
+color markers    color198 default
+color attachment color198 default
+color search     default  color118 # how to highlight search patterns in the pager
 
-color header      brightred      default "^(From|Subject|Date|To|Message-ID):"
-color body        brightgreen    default "[[:alpha:]]+://[^[:space:]]+"    # point out URLs
-color body        magenta        default "[[:alnum:]_.-]+@[[:alnum:]_.-]+" # e-mail addresses
-color underline   brightgreen    default
+color header     color208 default "^(Date|Message-ID):"
+color header     color111 default "^(To:|From:)"
+color header     color77  default "^Subject:"
+color header     color245 default "^User-Agent:"
+
+color body       color208 default "[[:alpha:]]+://[^[:space:]]+"    # point out URLs
+color body       color198 default "[[:alnum:]_.-]+@[[:alnum:]_.-]+" # e-mail addresses
+
+#color underline  brightgreen default #what is this?
 
 # attributes when using a mono terminal
 mono  quoted      bold
