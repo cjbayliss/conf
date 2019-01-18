@@ -11,11 +11,11 @@ xrdb ~/.Xresources &
 # real smooth scrolling in FF
 export MOZ_USE_XINPUT2=1
 
-# ibus input stuff
-ibus-daemon -drx &
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+# we now use fcitx because it has less bugs and works in FF etc.
+fcitx -dr &
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
 
 # start pulseaudio
 start-pulseaudio-x11 &
