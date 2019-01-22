@@ -11,18 +11,16 @@ xrdb ~/.Xresources &
 # real smooth scrolling in FF
 export MOZ_USE_XINPUT2=1
 
-# we now use fcitx because it has less bugs and works in FF etc.
-fcitx -dr &
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
+# ibus input stuff
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus 
 
 # start pulseaudio
 start-pulseaudio-x11 &
 
 # Now start i3wm! :)
-
-dbus-launch --exit-with-session i3
+exec dbus-launch --exit-with-session i3
 
 # Here are some xrandr examples:
 #xrandr --output VGA1 --auto --right-of LVDS1

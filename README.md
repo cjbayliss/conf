@@ -28,17 +28,11 @@ for i in *.mp3; do ffmpeg -i "$i" -acodec libopus -b:a 256000 -vbr off "${i%.*}.
 
 ## input emoji and japanese
 
-Install `fcitx-frontend-all`, `fcitx-mozc`, and `fcitx-table-emoji` or
-`fcitx-table-other`.
+Install `ibus`, `ibus-kkc`, and on debian `ibus-table-emoji`.
 
-Restart the session, and the config in `.xsession` will be loaded.
+Restart the session, and the config will be loaded.
 
-Configure `fcitx` and add the `mozc` input. Then go to the addon tab
-and configure the 'Input method selector' and set 'Global Input Method
-SelectKey' to Alt+Super+Space or something. And こんにちわ！ (only
-word I can really remeber so far, that and ぎんたま。I guess there is
-also あんき。)
-
-To input emoji press `Ctl+Atl+Shift+U` and type something like
-'smiling face' you can then look through a list of smiling emoji. You
-can use this to input any Unicode really.
+Configure `ibus` and add the `ibus-kkc` input. You will possibly want
+to set the input switching to Super+Space or something. Also set the
+emoji input to something like Super+E and the unicode input to
+something like Super+U.
