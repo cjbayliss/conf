@@ -32,7 +32,6 @@ shopt -s checkwinsize
 # alias stuff
 alias ls='ls -h --color=auto'
 alias grep='grep --color=auto'
-alias w3m='w3m -no-cookie'
 
 #######################
 ## exports and sheep ##

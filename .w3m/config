@@ -1,0 +1,10 @@
+use_language_tag 1
+follow_locale 1
+system_charset UTF-8
+document_charset UTF-8
+display_charset UTF-8
+#cookie_accept_domains
+#cookie_reject_domains
+accept_bad_cookie 0
+accept_cookie 0
+use_cookie 0
