@@ -8,9 +8,11 @@ See [emacs-config](https://git.sr.ht/~cjb/emacs-config) for my emacs config.
 
 To tag emails, press `t`.
 
-You can then 'move' (know as 'save' in mutt) them with `s` and type
+You can then 'move' (know as 'save' in mutt) them with `;s` and type
 the folder you wish to move to, if it doesn't exist mutt will ask if
 you want to create it.
+
+Note that ';' is used to apply next function to tagged messages.
 
 To switch folder, press `c-?`.
 
