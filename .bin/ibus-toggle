@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# based on https://git.sr.ht/~sircmpwn/dotfiles/tree/master/bin/ibus-toggle
+
+engine=$(ibus engine)
+if [ "${engine}" != "xkb:us::eng" ]
+then
+    ibus engine xkb:us::eng
+else
+    ibus engine mozc-jp
+fi
+

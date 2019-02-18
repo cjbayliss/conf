@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# for ssh-agent, see: https://bbs.archlinux.org/viewtopic.php?id=205961
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+gnome-keyring-daemon -rd &
+
+# real smooth scrolling in FF
+# FIXME: is this needed under sway?
+export MOZ_USE_XINPUT2=1
+
+# ibus input stuff
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus 
+
+# fix headerbar apps (note, I like the csd look, just not the massive
+# border around them because I use i3wm)
+# FIXME: is this needed for sway?
+#export GTK_CSD=0
+#export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
+
+# set QT stuff. requires qt5ct -_-
+export QT_QPA_PLATFORMTHEME="qt5ct"
+
+# wayland stuff
+export QT_QPA_PLATFORM=wayland
+export GDK_BACKEND=wayland
+export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+
+# Now start sway! :)
+
+exec dbus-launch --sh-syntax --exit-with-session sway
