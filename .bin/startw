@@ -13,13 +13,7 @@ export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus 
 
-# fix headerbar apps (note, I like the csd look, just not the massive
-# border around them because I use i3wm)
-# FIXME: is this needed for sway?
-#export GTK_CSD=0
-#export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
-
-# set QT stuff. requires qt5ct -_-
+# set QT theme engine. requires qt5ct -_-
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
 # wayland stuff
