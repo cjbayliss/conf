@@ -40,10 +40,11 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 #bindsym $mod+d exec "dmenu_run -fn 'Liberation Mono'"
 
-# instead of dmenu, we are using this horrible mess, I intened to find
-# a better solution later
-bindsym $mod+d exec gnome-terminal --title Menu --hide-menubar --command "bash -c 'compgen -c | sort -u | fzf | xargs -r swaymsg -t command exec'"
-for_window [title="^Menu$"] border none, floating enable
+# instead of dmenu, we are using smenu from
+# https://git.sr.ht/~cjb/sst/ it is less bad than what I had before
+# (gnome-terminal)
+bindsym $mod+d exec "~/.bin/smenu"
+for_window [title="^smenu$"] border none, floating enable
 
 # you will notice that I don't use jkli or jkl; for my movment keys, I
 # love arrow keys and I need more sortcuts for non i3wm stuff.
