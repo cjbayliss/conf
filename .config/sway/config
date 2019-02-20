@@ -44,7 +44,7 @@ bindsym $mod+Shift+q kill
 # https://git.sr.ht/~cjb/sst/ it is less bad than what I had before
 # (gnome-terminal)
 bindsym $mod+d exec "~/.bin/smenu"
-for_window [title="^smenu$"] border none, floating enable
+for_window [title="^smenu$"] border pixel 2, floating enable
 
 # you will notice that I don't use jkli or jkl; for my movment keys, I
 # love arrow keys and I need more sortcuts for non i3wm stuff.
