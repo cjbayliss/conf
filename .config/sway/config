@@ -4,6 +4,9 @@
 default_border none
 # FIXME: this does not work right under sway.
 workspace_layout tabbed
+# temp fix for not hiding titlebar in tabbed mode, I almost prefer it tbh.
+titlebar_border_thickness 0
+titlebar_padding 0 0
 
 # background
 output '*' background '~/dev/moon.png' fill '#000000'
