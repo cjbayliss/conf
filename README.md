@@ -22,10 +22,18 @@ To mark for deletion, press `d`.
 
 To unmark for deletion, press `u`.
 
-## converting music to opus
+## ffmpeg
+
+convert music to opus:
 
 ```
 for i in *.mp3; do ffmpeg -i "$i" -acodec libopus -b:a 256000 -vbr off "${i%.*}.opus"; done
+```
+
+cut out section:
+
+```
+ffmpeg -i in.opus -ss 00:00:20 -to 00:00:40 -c copy out.opus
 ```
 
 ## input emoji and japanese
