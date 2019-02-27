@@ -7,6 +7,6 @@ if [ "${engine}" != "xkb:us::eng" ]
 then
     ibus engine xkb:us::eng
 else
-    ibus engine mozc-jp
+    ibus engine anthy
 fi
 
