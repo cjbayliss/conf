@@ -6,3 +6,6 @@ fi
 
 # add ~/.bin to PATH
 export PATH="$PATH:$HOME/.bin"
+
+# start the ssh-agent. requires the package 'keychain'
+eval $(keychain --eval --quiet --quick)

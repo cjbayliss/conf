@@ -1,9 +1,4 @@
 #!/bin/bash
-
-# for ssh-agent, see: https://bbs.archlinux.org/viewtopic.php?id=205961
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
-gnome-keyring-daemon -rd &
-
 # real smooth scrolling in FF
 # FIXME: is this needed under sway?
 export MOZ_USE_XINPUT2=1
