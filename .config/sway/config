@@ -9,7 +9,7 @@ titlebar_border_thickness 0
 titlebar_padding 0 0
 
 # background
-output '*' background '~/dev/moon.png' fill '#000000'
+output '*' background '~/.wallpaper' fill '#000000'
 
 # i prefer to not use x11 at all, if i need x11 for something i start
 # it then. still keeping xwayland installed though.
