@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/mksh
 
 # WARNING!!
 #
@@ -10,14 +10,30 @@
 #    USE AT YOUR OWN RISK!    #
 ###############################
 
-x=0
-while [ "$x" -le 10 ]
+# set mksh to be 'more' POSIX compliant. The idea is to one day get this script
+# to be fully POSIX compliant
+set -o posix
+
+cntr=0
+# we don't include 0 as a easy hack to not get 00 through 09, although we don't
+# get 10,20,30,.. etc etc. this saves us an if statement, and shouldn't be a
+# security issue.
+stop=$(cat /dev/urandom | tr -dc '1-9' | fold -w 2 | head -n1)
+
+while (( "$cntr" <= "$stop" ))
 do
-	l=$[ 10 + $[ RANDOM % 15 ]]
-	# supposedly some organisations such as the NSA can figure out the first x
-	# amount of lines of /dev/urandom, thus:
-	# 'head -n $(($l*$l*$l)) | tail -n "$l"'
-	# so just to be safe, let's make it more difficult.
-	echo $(cat /dev/urandom | strings | grep -o '[0-9A-Za-z~!@#$%^&*()_+]' | head -n $(($l*$l*$l)) | tail -n "$l" | tr -d '\n')
-	x=$(( $x + 1 ))
+    tmp=$(cat /dev/urandom | tr -dc '0-9' | fold -w 2 | head -n1)
+    # hack to make 04 == 4, or 05 == 5.
+    l=$(expr $tmp + 0)
+    if (( "$l" >= 10 )) && (( "$l" <= 40))
+    then
+        # *supposedly* some organisations such as the NSA can figure out the
+        # first x amount of lines of /dev/urandom, so we pass a list of
+        # characters to head -n $l multiplied by itself 3 times to get a random
+        # *amount* of characters, and tail that to get a random length after we
+        # remove the '\n's with tr.
+        echo $(cat /dev/urandom | strings | grep -o '[0-9A-Za-z~!@#$%^&*()_+]' | head -n $(( $l*$l*$l )) | tail -n "$l" | tr -d '\n')
+        # increment the counter
+        cntr=$(( $cntr + 1 ))
+    fi
 done
