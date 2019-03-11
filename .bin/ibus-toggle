@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # based on https://git.sr.ht/~sircmpwn/dotfiles/tree/master/bin/ibus-toggle
 

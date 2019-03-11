@@ -1,33 +1,11 @@
-if [[ $- != *i* ]] ; then
-	# Shell is non-interactive.  Be done now!
-	return
-fi
+# bind C-l to clear-screen
+bind '^L=clear-screen'
 
-# enable bash completion in interactive shells
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
+# history file
+HISTFILE=~/.history
 
-# don't put duplicate lines or lines starting with space in the
-# history.
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# we use -1 to unlimit the history
-HISTSIZE=-1
-
-# check the window size after each command and, if necessary, update
-# the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# sane prompt, if not already sane uncomment this
-#PS1='[\u@\h \W]\$ '
+# sane prompt
+PS1='${USER:=$(id -un)}'"@${HOSTNAME:=$(hostname)}:\$PWD $(if (( USER_ID )); then print \$; else print \#; fi) "
 
 # alias stuff
 alias ls='ls -h --color=auto'
