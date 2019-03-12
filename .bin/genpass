@@ -1,4 +1,4 @@
-#!/bin/mksh
+#!/bin/sh
 
 # WARNING!!
 #
@@ -10,9 +10,8 @@
 #    USE AT YOUR OWN RISK!    #
 ###############################
 
-# set mksh to be 'more' POSIX compliant. The idea is to one day get this script
-# to be fully POSIX compliant
-set -o posix
+# NOTE: While this script is mostly POSIX compliant, it may depend on tools from
+# GNU Coreutils. I intend to test it further at a later date. -- cjb, 2019-03
 
 cntr=0
 # we don't include 0 as a easy hack to not get 00 through 09, although we don't
@@ -20,12 +19,12 @@ cntr=0
 # security issue.
 stop=$(cat /dev/urandom | tr -dc '1-9' | fold -w 2 | head -n1)
 
-while (( "$cntr" <= "$stop" ))
+while [ "$cntr" -le "$stop" ]
 do
-    tmp=$(cat /dev/urandom | tr -dc '0-9' | fold -w 2 | head -n1)
+    l=$(cat /dev/urandom | tr -dc '0-9' | fold -w 2 | head -n1)
     # hack to make 04 == 4, or 05 == 5.
-    l=$(expr $tmp + 0)
-    if (( "$l" >= 10 )) && (( "$l" <= 40))
+    l=$(expr $l + 0)
+    if [ "$l" -ge 10 ] && [ "$l" -le 40 ]
     then
         # *supposedly* some organisations such as the NSA can figure out the
         # first x amount of lines of /dev/urandom, so we pass a list of
