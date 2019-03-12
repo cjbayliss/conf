@@ -9,7 +9,7 @@ titlebar_border_thickness 0
 titlebar_padding 0 0
 
 # background
-output '*' background '~/.wallpaper' fill '#000000'
+output '*' background '#000000' solid_color
 
 # i prefer to not use x11 at all, if i need x11 for something i start
 # it then. still keeping xwayland installed though.
