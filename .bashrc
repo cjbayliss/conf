@@ -33,25 +33,22 @@ shopt -s checkwinsize
 ## COOL PROMPT ##
 #################
 
-# see https://dev.to/vlasales/git-prompt-in-bash-47ph
+__git_branch() {
+    BRANCH="$(git branch 2>/dev/null | grep '^*' | colrm 1 2)"
+    if [ "$BRANCH" != "" ]; then
+        printf " $BRANCH"
+    fi
+}
 __git_status() {
-    STATUS=$(git status 2>/dev/null |
-    awk '
-    /^On branch / {printf($3)}
-    /^You are currently rebasing/ {printf("\\e[38;5;165m rebasing %s", $6)}
-    /^Initial commit/ {printf(" (init)")}
-    /^Untracked files/ {printf("\\e[38;5;9m +")}
-    /^Changes not staged / {printf("\\e[38;5;9m ?")}
-    /^Changes to be committed/ {printf("\\e[38;5;9m *")}
-    /^Your branch is ahead of/ {printf("\\e[38;5;9m ^")}
-    ')
-    if [ -n "$STATUS" ]; then
-        printf "\e[38;5;193m [$STATUS\e[38;5;193m]"
+    if [ "$(__git_branch)" != "" ]; then
+        if [ "$(git status --short 2>/dev/null)" != "" ]; then
+            printf " ✗"
+        fi
     fi
 }
 
 # cool prompt
-PS1='\e[1m\e[38;5;249m\u@\h \e[38;5;202m\W$(__git_status) \e[38;5;15m\$ \e[0m'
+PS1='\[\e[1m\]\[\e[38;5;249m\]\u@\h \[\e[38;5;202m\]\W\[\e[38;5;193m\]$(__git_branch)\[\e[31m\]$(__git_status) \[\e[38;5;15m\]\$ \[\e[0m\]'
 
 ###########################
 ## ALIAS ALL THE THINGS! ##
