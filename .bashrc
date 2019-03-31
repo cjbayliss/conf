@@ -64,11 +64,13 @@ alias grep='grep --color=auto'
 # console, we just alias these to folks.
 alias emacs='TERM=screen-256color emacs'
 alias mutt='TERM=screen-256color mutt'
+alias newsboat='TERM=screen-256color newsboat'
 
 ######################
 ## EPIC COMPLETION! ##
 ######################
 
+shopt -s direxpand
 bind "set menu-complete-display-prefix on"
 bind "set show-all-if-ambiguous on"
 bind "TAB:menu-complete"
