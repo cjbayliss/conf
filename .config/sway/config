@@ -122,6 +122,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        position top
         font pango:Iosevka Term Slab 11
         mode hide
         hidden_state hide
@@ -157,10 +158,9 @@ bindsym $mod+space exec '~/.bin/ibus-toggle'
 # https://github.com/breznak/redshift/ in the branch
 # 'origin/Lourens-Rich-master'
 # ./configure --prefix=$HOME/.local/usr/ --enable-drm --enable-wayland
-exec --no-startup-id "~/.local/usr/bin/redshift -O 4800"
+exec --no-startup-id "~/.bin/redshift -O 4800"
 
 # get mako from here https://github.com/emersion/mako
 exec --no-startup-id "~/.bin/mako --default-timeout 5000"
 
-exec --no-startup-id "keepassxc --keyfile ~/.keepass ~/.keepass.kdbx"
 exec --no-startup-id "ibus-daemon -dr; sleep 1; ibus engine xkb:us::eng"
