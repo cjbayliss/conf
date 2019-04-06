@@ -6,8 +6,6 @@ In 2019 I re-created this repo, deleting all the old history as it was mostly
 useless to me. This makes cloning quicker (was already fast). Obviously I kept a
 backup, if you need something that you think was in an old commit, email me. :)
 
-See [emacs-config](https://git.sr.ht/~cjb/emacs-config) for my emacs config.
-
 ## mutt shortcuts for the forgetful, aka cjb.
 
 To tag emails, press `t`.
@@ -54,3 +52,12 @@ input. `~/.bin/ibus-toggle` is bound to
 <kbd>Cmd</kbd>+<kbd>Space</kbd> in the sway config. Set the emoji
 input to something like <kbd>Cmd</kbd>+<kbd>e</kbd> and the unicode
 input to something like <kbd>Cmd</kbd>+<kbd>u</kbd>.
+
+## ~/.emac.d
+
+### make sure to install:
+
+```
+use-package
+erc-hl-nicks
+```
