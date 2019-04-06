@@ -5,7 +5,8 @@ if [[ -f ~/.bashrc ]] ; then
 fi
 
 # add ~/.bin to PATH
-export PATH="$PATH:$HOME/.bin"
+export GOPATH="$HOME/.go"
+export PATH="$PATH:$HOME/.bin:$GOPATH/bin"
 
 # start the ssh-agent. requires the package 'keychain'
 eval $(keychain --eval --quiet --quick)
