@@ -31,6 +31,8 @@
   (erc-scrolltobottom-enable)
   (erc-notifications-mode)
   (erc-spelling-mode)
+  (global-display-line-numbers-mode 0)
+  (global-hl-line-mode 0)
 
 (use-package erc-hl-nicks :after erc)
 
