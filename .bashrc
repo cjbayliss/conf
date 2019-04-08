@@ -59,7 +59,7 @@ alias ls="ls -h --color=auto"
 alias la="ls -hlA"
 alias ll="ls -hl"
 alias grep="grep --color=auto"
-alias erc="emacs -l ~/.emacs.d/erc.el"
+alias erc="TERM=screen-256color emacs -l $HOME/.emacs.d/erc.el"
 
 ######################
 ## EPIC COMPLETION! ##
