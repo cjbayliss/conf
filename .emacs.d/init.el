@@ -39,6 +39,7 @@
  '(font-lock-string-face ((t (:foreground "brightgreen"))))
  '(font-lock-type-face ((t (:foreground "brightyellow"))))
  '(font-lock-variable-name-face ((t (:foreground "brightred"))))
+ '(header-line ((t (:foreground "brightwhite" :slant oblique :weight bold))))
  '(hl-line ((t (:background "color-237"))))
  '(isearch ((t (:background "brightyellow" :foreground "black"))))
  '(lazy-highlight ((t (:background "red" :foreground "black"))))
