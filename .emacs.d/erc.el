@@ -37,4 +37,5 @@
 (use-package erc-hl-nicks :after erc)
 
 ;; fix ERC prompt colours
-(custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold)))))
+(custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
+                  '(erc-timestamp-face ((t (:foreground "brightwhite" :weight bold)))))
