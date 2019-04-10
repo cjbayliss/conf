@@ -28,14 +28,17 @@
         erc-autojoin-channels-alist
         '(("freenode.net" "#xebian")("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]"))))
-  (erc-scrolltobottom-enable)
-  (erc-notifications-mode)
-  (erc-spelling-mode)
-  (global-display-line-numbers-mode 0)
-  (global-hl-line-mode 0)
+
+(erc-scrolltobottom-enable)
+(erc-notifications-mode)
+(erc-spelling-mode)
+(global-display-line-numbers-mode 0)
+(global-hl-line-mode 0)
 
 (use-package erc-hl-nicks :after erc)
 
 ;; fix ERC prompt colours
 (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
-                  '(erc-timestamp-face ((t (:foreground "brightwhite" :weight bold)))))
+                  '(erc-timestamp-face ((t (:foreground "brightwhite" :weight bold))))
+                  '(erc-input-face ((t (:foreground "white"))))
+                  '(erc-my-nick-face ((t (:foreground "brightred" :weight bold)))))
