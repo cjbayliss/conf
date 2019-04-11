@@ -59,7 +59,12 @@ alias ls="ls -h --color=auto"
 alias la="ls -hlA"
 alias ll="ls -hl"
 alias grep="grep --color=auto"
-alias erc="TERM=screen-256color emacs -l $HOME/.emacs.d/erc.el"
+alias erc="emacs -fg brightwhite -bg black -l $HOME/.emacs.d/erc.el"
+alias gmail="firefox -P gmail https://mail.google.com/mail/u/0/h/1pq68r75kzvdr/?v%3Dlui"
+# fix this common mistype
+alias taks="task"
+# don't use double quotes (") for this alias
+alias please='sudo $(fc -ln -1)'
 
 ######################
 ## EPIC COMPLETION! ##
