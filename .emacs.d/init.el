@@ -15,18 +15,7 @@
 (global-display-line-numbers-mode)
 (global-hl-line-mode)
 
-;; un-comment this to install stuff from the melpa repo. make sure to comment it
-;; out for better startup times
-
-;;(require 'package)
-;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-
-;; fix ugly colours. beleive it or not, this **doesn't** slow down my emacs init
-;; time 😂
-;;
-;; we don't set italic comments because fontconfig or libvte (which??) doesn't
-;; show emoji with italic text, I hope to find a solution someday 😢
-;; possibly related: https://bugs.launchpad.net/bugs/1665140
+;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(custom-state ((t (:foreground "brightgreen"))))
  '(custom-variable-tag ((t (:foreground "blue" :weight bold))))
