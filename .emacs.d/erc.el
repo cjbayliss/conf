@@ -37,3 +37,34 @@
                   '(erc-timestamp-face ((t (:foreground "brightwhite" :weight bold))))
                   '(erc-input-face ((t (:foreground "white"))))
                   '(erc-my-nick-face ((t (:foreground "brightred" :weight bold)))))
+
+;; modified options two and five from here:
+;; https://www.emacswiki.org/emacs/ErcNickColors
+
+;; we only use 16 colours, minus "black" and "brightwhite", i.e. 14 colours
+(setq my-colors-list '("red" "green" "yellow" "blue"
+                       "magenta" "cyan" "white" "brightblack"
+                       "brightred" "brightgreen" "brightyellow"
+                       "brightblue" "brightmagenta" "brightcyan"))
+
+(defun my/return-colour (string)
+  "return colour for STRING"
+  (nth (mod (string-to-number (substring (md5 (downcase string)) 0 6) 16)
+            (length my-colors-list))
+       my-colors-list))
+
+(defun erc-highlight-nicknames ()
+  "highlight erc nicknames with colour from my/return-colour"
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\\w+" nil t)
+      (let* ((bounds (bounds-of-thing-at-point 'symbol))
+             (nick   (buffer-substring-no-properties (car bounds) (cdr bounds))))
+        (when (erc-get-server-user nick)
+          (put-text-property
+           (car bounds) (cdr bounds) 'face
+           (cons 'foreground-color (my/return-colour nick)))
+          (add-face-text-property
+           (car bounds) (cdr bounds) 'bold))))))
+
+(add-hook 'erc-insert-modify-hook 'erc-highlight-nicknames)
