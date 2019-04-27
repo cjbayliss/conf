@@ -68,3 +68,4 @@
            (car bounds) (cdr bounds) 'bold))))))
 
 (add-hook 'erc-insert-modify-hook 'erc-highlight-nicknames)
+(add-hook 'erc-send-modify-hook 'erc-highlight-nicknames)
