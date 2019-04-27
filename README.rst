@@ -59,18 +59,16 @@ input to something like Cmd+e and the unicode input to something like Cmd+u.
 ~/.emac.d
 ---------
 
-make sure to install:
-~~~~~~~~~~~~~~~~~~~~~
+install stuff, but don't load melpa each time you run emacs:
 
-::
+.. code:: elisp
 
-    use-package
-    erc-hl-nicks
-
-melpa
-~~~~~
-
-::
-
-    (require 'package)
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+      (defun setup-emacs ()
+        "install emacs packages"
+        (interactive)
+        (require 'package)
+        (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+        (package-refresh-contents)
+        ;; this is just an example...
+        (if (not (package-installed-p 'erc-hl-nicks))
+            (progn (package-install 'erc-hl-nicks))))
