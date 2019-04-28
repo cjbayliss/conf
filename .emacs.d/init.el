@@ -71,6 +71,12 @@
   (dolist (color (defined-colors))
     (or (string-match-p "black" color)
         (string-match-p "color-16" color)
+        (string-match-p "color-17" color)
+        (string-match-p "color-18" color)
+        (string-match-p "color-22" color)
+        (string-match-p "color-52" color)
+        (string-match-p "color-53" color)
+        (string-match-p "color-54" color)
         (string-match-p "color-232" color)
         (string-match-p "color-233" color)
         (string-match-p "color-234" color)
@@ -79,11 +85,21 @@
         (string-match-p "color-237" color)
         (add-to-list 'my-colors-list color)))
 
+  ;; people i associate their with a color from previous nick color scripts
+  (setq my-custom-colors '(("Unit193" . "color-92")
+                           ("twb" . "color-226")
+                           ("parsnip" . "color-57")
+                           ("bremner" . "color-226")
+                           ("bpalmer". "color-241")
+                           ("jlf" . "color-191")
+                           ("cjb" . "color-85")))
+
   (defun my/return-color (string)
     "return color for STRING"
-    (nth (mod (string-to-number (substring (md5 (downcase string)) 0 6) 16)
-              (length my-colors-list))
-         my-colors-list))
+    (or (cdr (assoc nick my-custom-colors))
+        (nth (mod (string-to-number (substring (md5 (downcase string)) 0 6) 16)
+                  (length my-colors-list))
+             my-colors-list)))
 
   (defun erc-highlight-nicknames ()
     "highlight erc nicknames with color from my/return-color"
