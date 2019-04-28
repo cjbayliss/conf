@@ -32,7 +32,7 @@
 (add-to-list 'erc-mode-hook
              (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
 
-;; fix ERC prompt colours
+;; fix ERC prompt colors
 (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
                   '(erc-timestamp-face ((t (:foreground "brightwhite" :weight bold))))
                   '(erc-input-face ((t (:foreground "white"))))
@@ -41,20 +41,27 @@
 ;; modified options two and five from here:
 ;; https://www.emacswiki.org/emacs/ErcNickColors
 
-;; we only use 16 colours, minus "black" and "brightwhite", i.e. 14 colours
-(setq my-colors-list '("red" "green" "yellow" "blue"
-                       "magenta" "cyan" "white" "brightblack"
-                       "brightred" "brightgreen" "brightyellow"
-                       "brightblue" "brightmagenta" "brightcyan"))
+;; create a list of colors without colors too dark to see
+(setq my-colors-list '(nil))
+(dolist (color (defined-colors))
+  (or (string-match-p "black" color)
+      (string-match-p "color-16" color)
+      (string-match-p "color-232" color)
+      (string-match-p "color-233" color)
+      (string-match-p "color-234" color)
+      (string-match-p "color-235" color)
+      (string-match-p "color-236" color)
+      (string-match-p "color-237" color)
+      (add-to-list 'my-colors-list color)))
 
-(defun my/return-colour (string)
-  "return colour for STRING"
+(defun my/return-color (string)
+  "return color for STRING"
   (nth (mod (string-to-number (substring (md5 (downcase string)) 0 6) 16)
             (length my-colors-list))
        my-colors-list))
 
 (defun erc-highlight-nicknames ()
-  "highlight erc nicknames with colour from my/return-colour"
+  "highlight erc nicknames with color from my/return-color"
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward "\\w+" nil t)
@@ -63,7 +70,7 @@
         (when (erc-get-server-user nick)
           (put-text-property
            (car bounds) (cdr bounds) 'face
-           (cons 'foreground-color (my/return-colour nick)))
+           (cons 'foreground-color (my/return-color nick)))
           (add-face-text-property
            (car bounds) (cdr bounds) 'bold))))))
 
