@@ -88,7 +88,7 @@
   ;; people i associate their with a color from previous nick color scripts
   (setq my-custom-colors '(("Unit193" . "color-92")
                            ("twb" . "color-226")
-                           ("parsnip" . "color-57")
+                           ("parsnip" . "SlateBlue")
                            ("bremner" . "color-226")
                            ("bpalmer". "color-241")
                            ("jlf" . "color-191")
