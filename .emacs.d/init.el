@@ -10,35 +10,33 @@
 (setq inhibit-startup-screen t
       column-number-mode t
       make-backup-files nil
-      ;; set this very low to reduce input lag, this can slow down init time
-      gc-cons-threshold 100
-      ;; use the one and only C style!
-      c-default-style "linux")
+      ;; set this very low to reduce input lag, this can slow down init
+      ;; time. people in the know say this shouldn't be needed. idk, i simply
+      ;; want to type without a lag spike every 15 words or so. maybe it's
+      ;; because my ram is slow and old?
+      gc-cons-threshold 100)
 
 ;; set the default fill-column char width
 (setq-default fill-column 79
-              frame-background-mode 'dark)
+              frame-background-mode 'dark
+              indent-tabs-mode nil)
 
 ;; ERC config
 (with-eval-after-load "erc"
   (autoload 'erc-goodies "erc-goodies")
 
-  (defun my/return-lines (file)
-    "return list of lines from file"
-    (with-temp-buffer (insert-file-contents file)
-                      (split-string (buffer-string) "\n" t)))
-
-  (let ((acc (my/return-lines "~/.my-erc-account")))
-    (setq erc-nick (car acc)
-          erc-password (nth 1 acc)))
-  (setq erc-rename-buffers t
+  (setq erc-prompt-for-password nil
+        erc-rename-buffers t
         erc-interpret-mirc-color t
-        erc-lurker-hide-list '("JOIN" "PART" "QUIT" "NICK")
+        erc-lurker-hide-list '("JOIN" "PART" "QUIT")
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
         erc-server "chat.au.freenode.net"
+        erc-nick "cjb"
+        erc-user-full-name "Christopher Bayliss"
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian")("oftc.net" "#debian-devel"))
+        '(("freenode.net" "#xebian" "#emacs" "#allocpsa" "#stumpwm" "#gnu" "#guile")
+          ("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
   (erc-scrolltobottom-enable)
@@ -94,7 +92,7 @@
                            ("bpalmer". "color-241")
                            ("jlf" . "color-191")
                            ("fsbot" . "color-219")
-                           ("cjb" . "brightred")))
+                           ("cjb" . "color-66")))
 
   (defun my/return-color (string)
     "return color for STRING"
