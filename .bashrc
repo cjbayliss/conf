@@ -75,11 +75,11 @@ bind "\"\e[Z\": menu-complete-backward"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # cool less colors. this is buggy.
-export LESS_TERMCAP_mb=$'\e[1m\e[33m'
-export LESS_TERMCAP_md=$'\e[1m\e[33m'
+export LESS_TERMCAP_mb=$'\e[1m\e[38;5;202m'
+export LESS_TERMCAP_md=$'\e[1m\e[38;5;202m'
 export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[1m\e[32m'
+export LESS_TERMCAP_so=$'\e[1m\e[38;5;201m'
 export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1m\e[35m'
+export LESS_TERMCAP_us=$'\e[1m\e[38;5;193m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export GROFF_NO_SGR=1
