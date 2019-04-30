@@ -44,8 +44,6 @@
   (erc-scrolltobottom-enable)
   (erc-notifications-mode)
   (erc-spelling-mode)
-  (global-display-line-numbers-mode 0)
-  (global-hl-line-mode 0)
 
   ;; make ERC use full buffer width
   (add-to-list 'window-configuration-change-hook
@@ -56,8 +54,7 @@
 
   ;; fix ERC prompt colors
   (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
-                    '(erc-input-face ((t (:foreground "white"))))
-                    '(erc-my-nick-face ((t (:foreground "brightred" :weight bold)))))
+                    '(erc-input-face ((t (:foreground "white")))))
 
   ;; modified options two and five from here:
   ;; https://www.emacswiki.org/emacs/ErcNickColors
