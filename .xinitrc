@@ -1,7 +1,3 @@
-# for ssh-agent, see: https://bbs.archlinux.org/viewtopic.php?id=205961
-#export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
-#gnome-keyring-daemon -rd &
-
 # set the white balance
 redshift -O 4800 &
 
@@ -10,6 +6,9 @@ xrdb ~/.Xresources &
 
 # real smooth scrolling in FF
 export MOZ_USE_XINPUT2=1
+
+# enable scolling
+export GDK_CORE_DEVICE_EVENTS=1
 
 # set QT theme engine. requires qt5ct -_-
 export QT_QPA_PLATFORMTHEME="qt5ct"
@@ -31,6 +30,10 @@ export XDG_VIDEOS_DIR="$HOME/videos"
 
 # start ibus
 ibus-daemon -dr &
+ibus engine xkb:us::eng &
+
+# nice vsync for nvidia cards
+#compton --backend xr_glx_hybrid --vsync opengl-swc &
 
 # Now start i3wm! :)
 exec dbus-launch --exit-with-session stumpwm
