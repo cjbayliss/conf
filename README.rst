@@ -8,25 +8,6 @@ useless to me. This makes cloning quicker (was already fast).  Obviously I kept
 a backup, if you need something that you think was in an old commit, email
 me. :)
 
-mutt shortcuts for the forgetful, aka cjb.
-------------------------------------------
-
-To tag emails, press ``t``.
-
-You can then 'move' (know as 'save' in mutt) them with ``;s`` and type the
-folder you wish to move to, if it doesn't exist mutt will ask if you want to
-create it.
-
-Note that ``;`` is used to apply next function to tagged messages.
-
-To switch folder, press ``c-?``.
-
-To purge deleted messages, press ``$``.
-
-To mark for deletion, press ``d``.
-
-To unmark for deletion, press ``u``.
-
 ffmpeg
 ------
 

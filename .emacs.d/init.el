@@ -29,6 +29,7 @@
         erc-rename-buffers t
         erc-interpret-mirc-color t
         erc-lurker-hide-list '("JOIN" "PART" "QUIT")
+        erc-ignore-list '("fedora-notif")
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
         erc-server "chat.au.freenode.net"
