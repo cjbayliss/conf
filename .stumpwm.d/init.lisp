@@ -1,3 +1,7 @@
+;;; -*- mode: common lisp -*-
+;; ^ that is an attempt to make github change its mind, i'm positive this is
+;; *not* NewLisp. 😑
+
 ;; load quicklisp for cool kids stuff
 (load "~/quicklisp/setup.lisp")
 
@@ -9,6 +13,8 @@
 ;; start terminal with C-z c or C-z C-c
 (define-key *root-map* (kbd "c") "exec sst")
 (define-key *root-map* (kbd "C-c") "exec sst")
+;; start firefox with C-z C-f
+(define-key *root-map* (kbd "C-f") "exec firefox")
 
 ;; brightness control
 (defcommand brightness-down () ()
