@@ -62,6 +62,27 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
+;; finally, i can use php-mode and phpcbf without slowing down the rest of my
+;; life
+(add-to-list 'auto-mode-alist
+             '("\\.php\\'" .
+               (lambda ()
+                 (load "~/.emacs.d/elisp/php-project")
+                 (load "~/.emacs.d/elisp/php-mode")
+                 (php-mode)
+                 (setq indent-tabs-mode nil
+                       c-basic-offset 4)
+                 (php-enable-psr2-coding-style))))
+
+(defun my/compile-the-lot ()
+  "compile everything in ~/.emacs.d/elisp regardless of time etc"
+  (interactive)
+  ;; add ~/.emacs/elisp to the load path so that everything compiles,
+  ;; e.g. php-mode.el depends on php-project.el
+  (setq load-path (cons "~/.emacs.d/elisp/" load-path))
+  ;; compile
+  (byte-recompile-directory "~/.emacs.d/elisp/" 0 t))
+
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
