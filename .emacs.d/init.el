@@ -29,7 +29,6 @@
         erc-rename-buffers t
         erc-interpret-mirc-color t
         erc-lurker-hide-list '("JOIN" "PART" "QUIT")
-        erc-ignore-list '("fedora-notif")
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
         erc-server "chat.au.freenode.net"
@@ -40,6 +39,9 @@
           ("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
+  ;; load erc-hl-nicks
+  (load "~/.emacs.d/elisp/erc-hl-nicks")
+  (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode)
   (erc-spelling-mode)
@@ -55,69 +57,10 @@
   (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
                     '(erc-input-face ((t (:foreground "white")))))
 
-  ;; modified options two and five from here:
-  ;; https://www.emacswiki.org/emacs/ErcNickColors
-
-  ;; create a list of colors without colors too dark to see
-  (setq my-colors-list '(nil))
-  (dolist (color (defined-colors))
-    (or (string-match-p "black" color)
-        (string-match-p "color-16" color)
-        (string-match-p "color-17" color)
-        (string-match-p "color-18" color)
-        (string-match-p "color-19" color)
-        (string-match-p "color-20" color)
-        (string-match-p "color-21" color)
-        (string-match-p "color-22" color)
-        (string-match-p "color-52" color)
-        (string-match-p "color-53" color)
-        (string-match-p "color-54" color)
-        (string-match-p "color-55" color)
-        (string-match-p "color-56" color)
-        (string-match-p "color-57" color)
-        (string-match-p "color-232" color)
-        (string-match-p "color-233" color)
-        (string-match-p "color-234" color)
-        (string-match-p "color-235" color)
-        (string-match-p "color-236" color)
-        (string-match-p "color-237" color)
-        (add-to-list 'my-colors-list color)))
-
-  ;; people i associate their with a color from previous nick color scripts
-  (setq my-custom-colors '(("Unit193" . "color-92")
-                           ("twb" . "color-226")
-                           ("codingquark" . "color-157")
-                           ("parsnip" . "color-69")
-                           ("parsnip0" . "color-69")
-                           ("bremner" . "color-226")
-                           ("bpalmer". "color-241")
-                           ("jlf" . "color-191")
-                           ("fsbot" . "color-219")
-                           ("cjb" . "color-66")))
-
-  (defun my/return-color (string)
-    "return color for STRING"
-    (or (cdr (assoc nick my-custom-colors))
-        (nth (mod (string-to-number (substring (md5 (downcase string)) 0 6) 16)
-                  (length my-colors-list))
-             my-colors-list)))
-
-  (defun erc-highlight-nicknames ()
-    "highlight erc nicknames with color from my/return-color"
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward "\\w+" nil t)
-        (let* ((bounds (bounds-of-thing-at-point 'symbol))
-               (nick   (buffer-substring-no-properties (car bounds) (cdr bounds))))
-          (when (erc-get-server-user nick)
-            (put-text-property
-             (car bounds) (cdr bounds) 'face
-             (cons 'foreground-color (my/return-color nick)))
-            (add-face-text-property
-             (car bounds) (cdr bounds) 'bold))))))
-
-  (add-hook 'erc-insert-modify-hook 'erc-highlight-nicknames)
-  (add-hook 'erc-send-modify-hook 'erc-highlight-nicknames))
+  ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
+  ;; has lived, but since you know how to use git you'll find out in no time!!
+  ;; (yes, I felt like writing about this paren for no reason at all.)
+  )
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
