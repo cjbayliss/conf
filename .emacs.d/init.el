@@ -4,22 +4,40 @@
 ;;
 ;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my 11 year
 ;;     old Macbook. (current init time 2019-04-27: 0.0s)
-;;
+
 ;; general emacs settings
 (menu-bar-mode -1)
+
 (setq inhibit-startup-screen t
       column-number-mode t
       make-backup-files nil
+      require-final-newline t
+      ;; don't show gnus startup, and use mutt like threading. copied from:
+      ;; http://cyber.com.au/~twb/.emacs
+      gnus-inhibit-startup-message t
+      gnus-sum-thread-tree-false-root "─*> "
+      gnus-sum-thread-tree-indent "  "
+      gnus-sum-thread-tree-leaf-with-other "├─> "
+      gnus-sum-thread-tree-root "> "
+      gnus-sum-thread-tree-single-indent ""
+      gnus-sum-thread-tree-single-leaf "└─> "
+      gnus-sum-thread-tree-vertical "│ "
+      gnus-user-date-format-alist '((t . "%b %e"))
+      gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
       ;; set this very low to reduce input lag, this can slow down init
       ;; time. people in the know say this shouldn't be needed. idk, i simply
       ;; want to type without a lag spike every 15 words or so. maybe it's
       ;; because my ram is slow and old?
       gc-cons-threshold 100)
 
-;; set the default fill-column char width
 (setq-default fill-column 79
               frame-background-mode 'dark
-              indent-tabs-mode nil)
+              indent-tabs-mode nil
+              show-trailing-whitespace t)
+
+;; enable some modes.
+(show-paren-mode +1)
+(delete-selection-mode +1)
 
 ;; ERC config
 (with-eval-after-load "erc"

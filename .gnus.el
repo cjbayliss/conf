@@ -1,3 +1,4 @@
+;; email
 (setq gnus-select-method '(nnimap "email"
                                   (nnimap-address "mail.gandi.net")
                                   (nnimap-server-port 993)
@@ -14,3 +15,6 @@
       ;; copy sent emails to Sent
       gnus-message-archive-group "nnimap+email:Sent"
       gnus-gcc-mark-as-read t)
+
+(add-hook 'gnus-summary-mode-hook 'hl-line-mode)
+(add-hook 'gnus-group-mode-hook 'hl-line-mode)

@@ -36,20 +36,3 @@ Restart the session, and the config will be loaded.
 Run ``ibus-setup`` to configure ``ibus`` and add the ``anthy`` input.
 ``~/.bin/ibus-toggle`` is bound to Cmd+Space in the sway config. Set the emoji
 input to something like Cmd+e and the unicode input to something like Cmd+u.
-
-~/.emac.d
----------
-
-install stuff, but don't load melpa each time you run emacs:
-
-.. code:: elisp
-
-      (defun setup-emacs ()
-        "install emacs packages"
-        (interactive)
-        (require 'package)
-        (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-        (package-refresh-contents)
-        ;; this is just an example...
-        (if (not (package-installed-p 'erc-hl-nicks))
-            (progn (package-install 'erc-hl-nicks))))
