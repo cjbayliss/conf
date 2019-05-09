@@ -57,6 +57,8 @@
           ("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
+  (setq-default show-trailing-whitespace nil)
+  (show-paren-mode -1)
   ;; load erc-hl-nicks
   (load "~/.emacs.d/elisp/erc-hl-nicks")
   (erc-hl-nicks)
@@ -80,8 +82,7 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
-;; finally, i can use php-mode and phpcbf without slowing down the rest of my
-;; life
+;; use php-mode without slowing down the rest of my life
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" .
                (lambda ()
@@ -104,4 +105,5 @@
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
- '(region ((t (:inverse-video t)))))
+ '(region ((t (:inverse-video t))))
+ '(show-paren-match ((t (:foreground "steelblue1")))))
