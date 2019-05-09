@@ -53,7 +53,7 @@
         erc-nick "cjb"
         erc-user-full-name "Christopher Bayliss"
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#emacs" "#allocpsa" "#stumpwm" "#gnu" "#guile")
+        '(("freenode.net" "#xebian" "#allocpsa" "#stumpwm" "#guile" "#guix" "#gnu")
           ("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
@@ -102,8 +102,12 @@
   ;; compile
   (byte-recompile-directory "~/.emacs.d/elisp/" 0 t))
 
+;; add a hook to highlight the current day in the calendar
+(add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
  '(region ((t (:inverse-video t))))
+ '(calendar-today ((t (:foreground "red" :weight bold :slant oblique))))
  '(show-paren-match ((t (:foreground "steelblue1")))))
