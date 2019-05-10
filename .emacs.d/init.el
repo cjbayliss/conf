@@ -53,7 +53,7 @@
         erc-nick "cjb"
         erc-user-full-name "Christopher Bayliss"
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#allocpsa" "#stumpwm" "#guile" "#guix" "#gnu")
+        '(("freenode.net" "#guile" "#guix" "#stumpwm" "#gnu" "#xebian" "#allocpsa")
           ("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
