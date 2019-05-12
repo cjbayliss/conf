@@ -7,6 +7,7 @@
 
 (set-prefix-key (kbd "C-z"))
 (setf *window-border-style* :none)
+(setf *normal-border-width* 0)
 
 ;; start dmenu with C-z C-d
 (define-key *root-map* (kbd "C-d") "exec dmenu_run -b -fn 'Iosevka Term Slab'")
