@@ -35,6 +35,14 @@
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
+(setq initial-scratch-message ";; ┏━╸┏┓╻╻ ╻ ╔═╗┌┬┐┌─┐┌─┐┌─┐
+;; ┃╺┓┃┗┫┃ ┃ ║╣ │││├─┤│  └─┐
+;; ┗━┛╹ ╹┗━┛ ╚═╝┴ ┴┴ ┴└─┘└─┘
+;; This buffer is for text that is not saved, and for Lisp evaluation.
+;; To create a file, visit it with C-x C-f and enter text in its buffer.
+
+")
+
 ;; enable some modes.
 (show-paren-mode +1)
 (delete-selection-mode +1)
@@ -53,7 +61,7 @@
         erc-nick "cjb"
         erc-user-full-name "Christopher Bayliss"
         erc-autojoin-channels-alist
-        '(("freenode.net" "#guile" "#guix" "#stumpwm" "#gnu" "#xebian" "#allocpsa")
+        '(("freenode.net" "#xebian" "#allocpsa")
           ("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
