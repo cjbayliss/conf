@@ -12,6 +12,35 @@
       column-number-mode t
       make-backup-files nil
       require-final-newline t
+      ;; w3m config -- somewhat copied twb's defaults
+      w3m-bookmark-file-coding-system 'utf-8
+      w3m-coding-system 'utf-8
+      w3m-default-coding-system 'utf-8
+      w3m-file-coding-system 'utf-8
+      w3m-file-name-coding-system 'utf-8
+      w3m-terminal-coding-system 'utf-8
+      w3m-default-save-directory "~/downloads/"
+      ;; this is such a horrible default, disable it
+      w3m-enable-google-feeling-lucky nil
+      w3m-pop-up-windows nil
+      ;; use the User-Agent from ~/.w3m/config
+      w3m-add-user-agent nil
+      w3m-search-engine-alist
+      '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
+        ("duckduckgo" "https://duckduckgo.com/lite/?q=%s"))
+      w3m-search-default-engine "duckduckgo"
+      ;; http://bugs.debian.org/457909
+      w3m-show-decoded-url nil
+      w3m-track-mouse nil
+      w3m-use-cookies nil
+      w3m-use-favicon nil
+      w3m-use-header-line nil
+      w3m-use-mule-ucs t
+      ;; always use Unicode (not ASCII) box drawing characters.
+      w3m-use-symbol t
+      w3m-use-tab-menubar nil
+      w3m-use-toolbar nil
+      w3m-home-page "about:blank"
       ;; don't show gnus startup, and use mutt like threading. copied from:
       ;; http://cyber.com.au/~twb/.emacs
       gnus-inhibit-startup-message t
@@ -42,6 +71,10 @@
 ;; To create a file, visit it with C-x C-f and enter text in its buffer.
 
 ")
+
+(setq browse-url-browser-function 'w3m-browse-url)
+(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+(global-set-key "\C-xw" 'browse-url-at-point)
 
 ;; enable some modes.
 (show-paren-mode +1)
