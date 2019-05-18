@@ -124,14 +124,12 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
-;; use php-mode without slowing down the rest of my life
-(add-to-list 'auto-mode-alist
-             '("\\.php\\'" .
-               (lambda ()
-                 (php-mode)
-                 (setq indent-tabs-mode nil
-                       c-basic-offset 4)
-                 (php-enable-psr2-coding-style))))
+;; php-mode config
+(autoload 'php-mode "php-mode")
+(add-to-list 'auto-mode-alist '("\\.\\(?:php\\|phtml\\)\\'" . php-mode))
+(with-eval-after-load "php-mode"
+  (setq c-basic-offset 4))
+(add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
 
 ;; add a hook to highlight the current day in the calendar
 (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
