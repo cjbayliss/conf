@@ -125,18 +125,24 @@
   )
 
 ;; php-mode config
-(autoload 'php-mode "php-mode")
 (add-to-list 'auto-mode-alist '("\\.\\(?:php\\|phtml\\)\\'" . php-mode))
 (with-eval-after-load "php-mode"
   (setq c-basic-offset 4))
 (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
+
+;; js2-mode config
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(setq js-indent-level 2)
 
 ;; add a hook to highlight the current day in the calendar
 (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
+ '(calendar-today ((t (:foreground "red" :weight bold :slant oblique))))
+ '(font-lock-function-name-face ((t (:foreground "LightSkyBlue" :weight bold))))
+ '(js2-function-param ((t (:foreground "white" :slant oblique))))
+ '(js2-object-property-access ((t (:foreground "color-115"))))
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
  '(region ((t (:inverse-video t))))
- '(calendar-today ((t (:foreground "red" :weight bold :slant oblique))))
  '(show-paren-match ((t (:foreground "steelblue1")))))
