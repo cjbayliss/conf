@@ -65,7 +65,8 @@ alias grep="grep --color=auto"
 ## EPIC COMPLETION! ##
 ######################
 
-shopt -s direxpand
+bind "set colored-completion-prefix on"
+bind "set colored-stats on"
 bind "set menu-complete-display-prefix on"
 bind "set show-all-if-ambiguous on"
 bind "TAB:menu-complete"
