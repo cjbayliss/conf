@@ -9,8 +9,6 @@
 ;; delay caused by installing elpa/melpa packages to ~/.emacs.d/elpa/
 
 ;; general emacs settings
-(menu-bar-mode -1)
-
 (setq inhibit-startup-screen t
       column-number-mode t
       make-backup-files nil
@@ -44,6 +42,7 @@
       w3m-use-tab-menubar nil
       w3m-use-toolbar nil
       w3m-home-page "about:blank"
+      browse-url-browser-function 'w3m-browse-url
       ;; don't show gnus startup, and use mutt like threading. copied from:
       ;; http://cyber.com.au/~twb/.emacs
       gnus-inhibit-startup-message t
@@ -60,14 +59,8 @@
       ;; time. people in the know say this shouldn't be needed. idk, i simply
       ;; want to type without a lag spike every 15 words or so. maybe it's
       ;; because my ram is slow and old?
-      gc-cons-threshold 100)
-
-(setq-default fill-column 79
-              frame-background-mode 'dark
-              indent-tabs-mode nil
-              show-trailing-whitespace t)
-
-(setq initial-scratch-message ";; ┏━╸┏┓╻╻ ╻ ╔═╗┌┬┐┌─┐┌─┐┌─┐
+      gc-cons-threshold 100
+      initial-scratch-message ";; ┏━╸┏┓╻╻ ╻ ╔═╗┌┬┐┌─┐┌─┐┌─┐
 ;; ┃╺┓┃┗┫┃ ┃ ║╣ │││├─┤│  └─┐
 ;; ┗━┛╹ ╹┗━┛ ╚═╝┴ ┴┴ ┴└─┘└─┘
 ;; This buffer is for text that is not saved, and for Lisp evaluation.
@@ -75,13 +68,31 @@
 
 ")
 
-(setq browse-url-browser-function 'w3m-browse-url)
-(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
-(global-set-key "\C-cb" 'browse-url-at-point)
+(setq-default fill-column 79
+              save-place t
+              frame-background-mode 'dark
+              indent-tabs-mode nil
+              show-trailing-whitespace t)
 
 ;; enable some modes.
 (show-paren-mode +1)
 (delete-selection-mode +1)
+(save-place-mode +1)
+(global-hl-line-mode +1)
+(global-display-line-numbers-mode +1)
+;; disable some modes
+(menu-bar-mode -1)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; keybinds
+(global-set-key "\C-cb" 'browse-url-at-point)
+
+;; disable some global stuff in w3m
+(with-eval-after-load "w3m"
+  (setq show-trailing-whitespace nil)
+  (global-hl-line-mode -1)
+  (global-display-line-numbers-mode -1))
 
 ;; ERC config
 (with-eval-after-load "erc"
@@ -103,6 +114,8 @@
 
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
+  (global-hl-line-mode -1)
+  (global-display-line-numbers-mode -1)
   (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode)
@@ -141,8 +154,10 @@
 (custom-set-faces
  '(calendar-today ((t (:foreground "red" :weight bold :slant oblique))))
  '(font-lock-function-name-face ((t (:foreground "LightSkyBlue" :weight bold))))
+ '(hl-line ((t (:background "color-237"))))
  '(js2-function-param ((t (:foreground "white" :slant oblique))))
  '(js2-object-property-access ((t (:foreground "color-115"))))
+ '(line-number-current-line ((t (:background "color-237" :foreground "chocolate1"))))
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
  '(region ((t (:inverse-video t))))
  '(show-paren-match ((t (:foreground "steelblue1")))))
