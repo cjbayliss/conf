@@ -16,5 +16,7 @@
       gnus-message-archive-group "nnimap+email:Sent"
       gnus-gcc-mark-as-read t)
 
+(global-display-line-numbers-mode -1)
+
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
