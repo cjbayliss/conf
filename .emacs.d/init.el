@@ -93,9 +93,12 @@
   (setq show-trailing-whitespace nil))
 
 ;; custom irc func to load erc and join networks automatcially
-(defun my/irc ()
+(defun irc ()
   "Connect to IRC."
   (interactive)
+  ;; these bits need to be here **before** you start ERC
+  (setq erc-prompt-for-nickserv-password nil)
+  (erc-services-mode +1)
   (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
   (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
 
@@ -104,7 +107,6 @@
   (autoload 'erc-goodies "erc-goodies")
 
   (setq erc-prompt-for-password nil
-        erc-prompt-for-nickserv-password nil
         erc-autojoin-timing 'ident
         erc-rename-buffers t
         erc-interpret-mirc-color t
@@ -122,7 +124,6 @@
   (erc-scrolltobottom-enable)
   (erc-notifications-mode +1)
   (erc-spelling-mode +1)
-  (erc-services-mode +1)
 
   ;; make ERC use full buffer width
   (add-to-list 'window-configuration-change-hook
