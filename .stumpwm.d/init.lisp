@@ -2,9 +2,6 @@
 ;; ^ that is an attempt to make github change its mind, i'm positive this is
 ;; *not* NewLisp. 😑
 
-;; load quicklisp for cool kids stuff
-(load "~/quicklisp/setup.lisp")
-
 ;; general stuffs
 (stumpwm:run-shell-command "xsetroot -cursor_name left_ptr")
 (stumpwm:run-shell-command "feh --bg-fill '/home/cjb/pictures/v0h9ok63q1y21.jpg'")
@@ -65,12 +62,3 @@
 (define-key *top-map* (kbd "XF86AudioNext") "music-next")
 (define-key *top-map* (kbd "XF86AudioPrev") "music-prev")
 (define-key *top-map* (kbd "XF86AudioPlay") "music-pause")
-
-(ql:quickload "clx-truetype")
-(load-module "ttf-fonts")
-;; uncomment this for first run, or if you install a new font
-;;(xft:cache-fonts)
-(set-font (make-instance 'xft:font
-                         :family "Iosevka Term Slab"
-                         :subfamily "Regular"
-                         :size 11))
