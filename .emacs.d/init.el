@@ -78,8 +78,7 @@
 (show-paren-mode +1)
 (delete-selection-mode +1)
 (save-place-mode +1)
-(global-hl-line-mode +1)
-(global-display-line-numbers-mode +1)
+
 ;; disable some modes
 (menu-bar-mode -1)
 
@@ -87,12 +86,11 @@
 
 ;; keybinds
 (global-set-key "\C-cb" 'browse-url-at-point)
+(global-set-key "\C-cl" 'display-line-numbers-mode)
 
-;; disable some global stuff in w3m
+;; disable some stuff in w3m
 (with-eval-after-load "w3m"
-  (setq show-trailing-whitespace nil)
-  (global-hl-line-mode -1)
-  (global-display-line-numbers-mode -1))
+  (setq show-trailing-whitespace nil))
 
 ;; custom irc func to load erc and join networks automatcially
 (defun my/irc ()
@@ -120,8 +118,6 @@
 
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
-  (global-hl-line-mode -1)
-  (global-display-line-numbers-mode -1)
   (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode +1)
