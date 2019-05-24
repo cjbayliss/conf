@@ -4,11 +4,14 @@ redshift -O 4800 &
 # The the .Xresources, I have more config in there.
 xrdb ~/.Xresources &
 
+# keyboard setting. note needs xmodmap to be installed
+xmodmap ~/.Xmodmap &
+
 # real smooth scrolling in FF
 export MOZ_USE_XINPUT2=1
 
 # enable scolling
-export GDK_CORE_DEVICE_EVENTS=1
+#export GDK_CORE_DEVICE_EVENTS=1
 
 # set QT theme engine. requires qt5ct -_-
 export QT_QPA_PLATFORMTHEME="qt5ct"
@@ -16,7 +19,7 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 # ibus input stuff
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus 
+export QT_IM_MODULE=ibus
 
 # XDG_*_DIRs
 export XDG_DESKTOP_DIR="$HOME/dev"
