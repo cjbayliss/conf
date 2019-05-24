@@ -94,19 +94,25 @@
   (global-hl-line-mode -1)
   (global-display-line-numbers-mode -1))
 
+;; custom irc func to load erc and join networks automatcially
+(defun my/irc ()
+  "Connect to IRC."
+  (interactive)
+  (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
+  (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
+
 ;; ERC config
 (with-eval-after-load "erc"
   (autoload 'erc-goodies "erc-goodies")
 
   (setq erc-prompt-for-password nil
+        erc-prompt-for-nickserv-password nil
+        erc-autojoin-timing 'ident
         erc-rename-buffers t
         erc-interpret-mirc-color t
         erc-lurker-hide-list '("JOIN" "PART" "QUIT")
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
-        erc-server "chat.au.freenode.net"
-        erc-nick "cjb"
-        erc-user-full-name "Christopher Bayliss"
         erc-autojoin-channels-alist
         '(("freenode.net" "#xebian" "#allocpsa")
           ("oftc.net" "#debian-devel"))
@@ -118,8 +124,9 @@
   (global-display-line-numbers-mode -1)
   (erc-hl-nicks)
   (erc-scrolltobottom-enable)
-  (erc-notifications-mode)
-  (erc-spelling-mode)
+  (erc-notifications-mode +1)
+  (erc-spelling-mode +1)
+  (erc-services-mode +1)
 
   ;; make ERC use full buffer width
   (add-to-list 'window-configuration-change-hook
@@ -153,7 +160,6 @@
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(calendar-today ((t (:foreground "red" :weight bold :slant oblique))))
- '(font-lock-function-name-face ((t (:foreground "LightSkyBlue" :weight bold))))
  '(hl-line ((t (:background "color-237"))))
  '(js2-function-param ((t (:foreground "white" :slant oblique))))
  '(js2-object-property-access ((t (:foreground "color-115"))))
