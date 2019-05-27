@@ -1,10 +1,8 @@
-;;; -*- mode: common lisp -*-
-;; ^ that is an attempt to make github change its mind, i'm positive this is
-;; *not* NewLisp. 😑
+;; -*- lisp -*-
 
 ;; general stuffs
 (stumpwm:run-shell-command "xsetroot -cursor_name left_ptr")
-(stumpwm:run-shell-command "feh --bg-fill '/home/cjb/pictures/v0h9ok63q1y21.jpg'")
+(stumpwm:run-shell-command "feh --bg-fill '/home/cjb/pictures/desktop.*'")
 (set-prefix-key (kbd "C-z"))
 (setf *window-border-style* :none)
 (setf *normal-border-width* 0)
