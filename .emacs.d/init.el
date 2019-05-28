@@ -55,6 +55,8 @@
       gnus-sum-thread-tree-vertical "│ "
       gnus-user-date-format-alist '((t . "%b %e"))
       gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
+      ;; why does this need to be set here?
+      gnus-directory "~/.emacs.d/news/"
       ;; set this very low to reduce input lag, this can slow down init
       ;; time. people in the know say this shouldn't be needed. idk, i simply
       ;; want to type without a lag spike every 15 words or so. maybe it's
@@ -157,7 +159,6 @@
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(calendar-today ((t (:foreground "red" :weight bold :slant oblique))))
- '(hl-line ((t (:background "color-237"))))
  '(js2-function-param ((t (:foreground "white" :slant oblique))))
  '(js2-object-property-access ((t (:foreground "color-115"))))
  '(line-number-current-line ((t (:background "color-237" :foreground "chocolate1"))))

@@ -14,7 +14,9 @@
       gnus-use-cache t
       ;; copy sent emails to Sent
       gnus-message-archive-group "nnimap+email:Sent"
-      gnus-gcc-mark-as-read t)
+      gnus-gcc-mark-as-read t
+      message-directory "~/.emacs.d/mail/"
+      nnfolder-directory "~/.emacs.d/mail/archive")
 
 (global-display-line-numbers-mode -1)
 
