@@ -148,6 +148,7 @@
 (with-eval-after-load "php-mode"
   (setq c-basic-offset 4))
 (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
+(add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
 
 ;; js2-mode config
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
