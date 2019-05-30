@@ -2,7 +2,7 @@
 
 ;; general stuffs
 (stumpwm:run-shell-command "xsetroot -cursor_name left_ptr")
-(stumpwm:run-shell-command "feh --bg-fill '/home/cjb/pictures/desktop.*'")
+(stumpwm:run-shell-command "feh --bg-fill '/home/cjb/pictures/desktop.jpg'")
 (set-prefix-key (kbd "C-z"))
 (setf *window-border-style* :none)
 (setf *normal-border-width* 0)
@@ -29,20 +29,23 @@
 
 ;; volume control
 (defcommand volume-down () ()
-  "turn down the volume with amixer"
-  (run-shell-command "amixer set Master unmute; amixer set Master 2%-"))
+  "turn down the volume with amixer, then display volume"
+  (run-shell-command "amixer set Master unmute; amixer set Master 2%-")
+  (run-shell-command "amixer get Master | grep 'Mono: Pl' | cut -d' ' -f6" t))
 
 (defcommand volume-up () ()
-  "turn up the volume with amixer"
-  (run-shell-command "amixer set Master unmute; amixer set Master 2%+"))
+  "turn up the volume with amixer, then display volume"
+  (run-shell-command "amixer set Master unmute; amixer set Master 2%+")
+  (run-shell-command "amixer get Master | grep 'Mono: Pl' | cut -d' ' -f6" t))
 
 (defcommand toggle-mute () ()
-  "toggle mute with amixer"
-  (run-shell-command "amixer set Master toggle"))
+  "toggle mute with amixer, then display state"
+  (run-shell-command "amixer set Master toggle")
+  (run-shell-command "amixer get Master | grep 'Mono: Pl' | cut -d' ' -f8" t))
 
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "volume-down")
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "volume-up")
-(define-key *top-map* (kbd "XF86AudioMute") "mute-toggle")
+(define-key *top-map* (kbd "XF86AudioMute") "toggle-mute")
 
 ;; cmus control
 (defcommand music-next () ()
