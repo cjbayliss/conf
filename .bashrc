@@ -60,6 +60,10 @@ alias ls="ls -h --color=auto"
 alias la="ls -hlA"
 alias ll="ls -hl"
 alias grep="grep --color=auto"
+alias sbcl="rlwrap sbcl --noinform"
+
+# the holy grail of editors!! READLINE CAT. poof!! your mind is blown, innit??!!
+alias cat="rlwrap cat"
 
 ######################
 ## EPIC COMPLETION! ##
