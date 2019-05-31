@@ -111,12 +111,19 @@
   (setq erc-prompt-for-password nil
         erc-autojoin-timing 'ident
         erc-rename-buffers t
+        erc-track-exclude-server-buffer t
         erc-interpret-mirc-color t
         erc-lurker-hide-list '("JOIN" "PART" "QUIT")
+        erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT"
+                                  "324" "329" "332" "333" "353" "477")
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
+        erc-auto-query 'buffer
+        erc-join-buffer 'bury
+        erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#allocpsa")
+        '(("freenode.net" "#xebian" "#gentoo" "#emacs"
+           "#allocpsa" "##javascript" "#scheme" "#stumpwm")
           ("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
