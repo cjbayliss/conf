@@ -99,9 +99,12 @@
   "Connect to IRC."
   (interactive)
   ;; these bits need to be here **before** you start ERC
-  (setq erc-prompt-for-nickserv-password nil)
+  (setq erc-prompt-for-nickserv-password nil
+        ;; set this here, the auto resize is below
+        erc-fill-column 157)
   (erc-services-mode +1)
   (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
+  (erc-tls :server "irc.gnome.org" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
   (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
 
 ;; ERC config
@@ -122,8 +125,7 @@
         erc-join-buffer 'bury
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#gentoo" "#emacs"
-           "#allocpsa" "##javascript" "#scheme" "#stumpwm")
+        '(("freenode.net" "#xebian" "#gentoo" "#emacs" "#allocpsa" "##javascript" "#scheme" "#stumpwm" "##math")
           ("oftc.net" "#debian-devel"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
