@@ -55,10 +55,6 @@
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 
-;; disable some stuff in w3m
-(with-eval-after-load "w3m"
-  (setq show-trailing-whitespace nil))
-
 ;; custom irc func to load erc and join networks automatcially
 (defun irc ()
   "Connect to IRC."
