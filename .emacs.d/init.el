@@ -13,39 +13,7 @@
       column-number-mode t
       make-backup-files nil
       require-final-newline t
-      ;; w3m config -- somewhat copied twb's defaults
-      w3m-bookmark-file-coding-system 'utf-8
-      w3m-coding-system 'utf-8
-      w3m-default-coding-system 'utf-8
-      w3m-file-coding-system 'utf-8
-      w3m-file-name-coding-system 'utf-8
-      w3m-terminal-coding-system 'utf-8
-      w3m-default-save-directory "~/downloads/"
-      ;; this is such a horrible default, disable it
-      w3m-enable-google-feeling-lucky nil
-      w3m-pop-up-windows nil
-      ;; use the User-Agent from ~/.w3m/config
-      w3m-add-user-agent nil
-      w3m-search-engine-alist
-      '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
-        ("duckduckgo" "https://duckduckgo.com/lite/?q=%s"))
-      w3m-search-default-engine "duckduckgo"
-      ;; http://bugs.debian.org/457909
-      w3m-show-decoded-url nil
-      w3m-track-mouse nil
-      w3m-use-cookies nil
-      w3m-use-favicon nil
-      w3m-use-header-line nil
-      w3m-use-mule-ucs t
-      ;; always use Unicode (not ASCII) box drawing characters.
-      w3m-use-symbol t
-      w3m-use-tab-menubar nil
-      w3m-use-toolbar nil
-      w3m-home-page "about:blank"
-      browse-url-browser-function 'w3m-browse-url
-      ;; don't show gnus startup, and use mutt like threading. copied from:
-      ;; http://cyber.com.au/~twb/.emacs
-      gnus-inhibit-startup-message t
+      ;; use mutt like threading. copied from: http://cyber.com.au/~twb/.emacs
       gnus-sum-thread-tree-false-root "─*> "
       gnus-sum-thread-tree-indent "  "
       gnus-sum-thread-tree-leaf-with-other "├─> "
@@ -159,18 +127,8 @@
 (add-hook 'php-mode-hook 'php-enable-psr2-coding-style)
 (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
 
-;; js2-mode config
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(setq js-indent-level 2)
-
-;; add a hook to highlight the current day in the calendar
-(add-hook 'calendar-today-visible-hook 'calendar-mark-today)
-
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
- '(calendar-today ((t (:foreground "red" :weight bold :slant oblique))))
- '(js2-function-param ((t (:foreground "white" :slant oblique))))
- '(js2-object-property-access ((t (:foreground "color-115"))))
  '(line-number-current-line ((t (:background "color-237" :foreground "chocolate1"))))
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
  '(region ((t (:inverse-video t))))
