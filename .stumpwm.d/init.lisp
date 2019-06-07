@@ -1,11 +1,12 @@
 ;; -*- lisp -*-
 
 ;; general stuffs
-(stumpwm:run-shell-command "xsetroot -cursor_name left_ptr")
-(stumpwm:run-shell-command "feh --bg-fill '/home/cjb/pictures/desktop.jpg'")
+(run-shell-command "xsetroot -cursor_name left_ptr")
+(run-shell-command "feh --bg-fill '/home/cjb/pictures/desktop.jpg'")
 (set-prefix-key (kbd "C-z"))
 (setf *window-border-style* :none)
 (setf *normal-border-width* 0)
+(set-font "-*-terminus-medium-r-normal--16-*")
 
 ;; start dmenu with C-z C-d
 (define-key *root-map* (kbd "C-d") "exec dmenu_run -b -fn 'Iosevka Term Slab'")
