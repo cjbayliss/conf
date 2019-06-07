@@ -73,6 +73,7 @@ bind "set colored-completion-prefix on"
 bind "set colored-stats on"
 bind "set menu-complete-display-prefix on"
 bind "set show-all-if-ambiguous on"
+bind "set completion-query-items 0"
 bind "TAB:menu-complete"
 bind "\"\e[Z\": menu-complete-backward"
 
