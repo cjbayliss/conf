@@ -28,20 +28,9 @@ export XDG_DOWNLOAD_DIR="$HOME/downloads"
 export XDG_MUSIC_DIR="$HOME/music"
 export XDG_VIDEOS_DIR="$HOME/videos"
 
-# start pulseaudio
-#start-pulseaudio-x11 &
-
 # start ibus
 ibus-daemon -dr &
 ibus engine xkb:us::eng &
 
-# nice vsync for nvidia cards
-#compton --backend xr_glx_hybrid --vsync opengl-swc &
-
-# Now start i3wm! :)
+# Now start stumpwm! :)
 exec dbus-launch --exit-with-session stumpwm
-
-# Here are some xrandr examples:
-#xrandr --output VGA1 --auto --right-of LVDS1
-#xrandr --output LVDS1 --auto
-#xrandr --output VGA1 --auto --right-of LVDS1
