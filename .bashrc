@@ -62,6 +62,9 @@ alias ll="ls -hl"
 alias grep="grep --color=auto"
 alias sbcl="rlwrap sbcl --noinform"
 
+# disable debians site-lisp
+alias emacs="emacs --no-site-lisp"
+
 # the holy grail of editors!! READLINE CAT. poof!! your mind is blown, innit??!!
 alias cat="rlwrap cat"
 
