@@ -77,14 +77,13 @@
         erc-rename-buffers t
         erc-track-exclude-server-buffer t
         erc-interpret-mirc-color t
-        erc-hide-list '("JOIN" "MODE" "NICK" "PART" "QUIT"
-                        "324" "329" "332" "333" "353" "477")
+        erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT")
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
         '(("freenode.net" "#xebian" "#emacs" "#allocpsa" "#stumpwm")
-          ("oftc.net" "#debian-devel"))
+          ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
   (setq-default show-trailing-whitespace nil)

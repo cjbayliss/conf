@@ -26,6 +26,7 @@ fonts-noto-color-emoji
 fonts-noto-extra
 gcc-8-plugin-dev
 git
+gnutls-bin
 gtypist
 guile-2.2
 htop
