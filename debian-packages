@@ -6,6 +6,7 @@ bc
 bison
 brightnessctl
 brightness-udev
+bsd-mailx
 build-essential
 ca-certificates
 cmus
@@ -14,6 +15,7 @@ curl
 dbus-x11
 dunst
 emacs-nox
+etckeeper
 fakeroot
 feh
 ffmpeg
@@ -58,6 +60,7 @@ suckless-tools
 tig
 tmux
 transmission-gtk
+unattended-upgrades
 w3m
 wget
 xorg
