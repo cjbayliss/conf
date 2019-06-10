@@ -45,6 +45,7 @@ libvte-2.91-dev
 lm-sensors
 mg
 mpv
+ncurses-term
 powertop
 python3-crypto
 python3-pyasn1
