@@ -16,7 +16,8 @@
       gnus-message-archive-group "nnimap+email:Sent"
       gnus-gcc-mark-as-read t
       message-directory "~/.emacs.d/mail/"
-      nnfolder-directory "~/.emacs.d/mail/archive")
+      nnfolder-directory "~/.emacs.d/mail/archive"
+      mm-text-html-renderer 'gnus-w3m)
 
 (global-display-line-numbers-mode -1)
 
