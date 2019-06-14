@@ -27,9 +27,9 @@
       ;; want to type without a lag spike every 15 words or so. maybe it's
       ;; because my ram is slow and old?
       gc-cons-threshold 100
-      initial-scratch-message ";; ┏━╸┏┓╻╻ ╻ ╔═╗┌┬┐┌─┐┌─┐┌─┐
-;; ┃╺┓┃┗┫┃ ┃ ║╣ │││├─┤│  └─┐
-;; ┗━┛╹ ╹┗━┛ ╚═╝┴ ┴┴ ┴└─┘└─┘
+      initial-scratch-message ";; ┌─┐┌┐┬┬ ┬ ┌─┐┌┬┐┌─┐┌─┐┌─┐
+;; │┌┐│└┤│ │ ├┤ │││├─┤│  └─┐
+;; └─┘┴ ┴└─┘ └─┘┴ ┴┴ ┴└─┘└─┘
 ;; This buffer is for text that is not saved, and for Lisp evaluation.
 ;; To create a file, visit it with C-x C-f and enter text in its buffer.
 
