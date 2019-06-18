@@ -11,6 +11,7 @@ cmus-plugin-ffmpeg
 curl
 dbus-x11
 dunst
+emacs-common-non-dfsg
 emacs-nox
 fakeroot
 feh
@@ -45,6 +46,7 @@ ncurses-term
 powertop
 python3-crypto
 python3-pyasn1
+ranger
 redshift
 rlwrap
 rsync
@@ -60,5 +62,9 @@ transmission-gtk
 unzip
 w3m
 wget
+wpasupplicant
+xdg-user-dirs
 xorg
+xpdf
 xserver-xorg-video-intel
+youtube-dl
