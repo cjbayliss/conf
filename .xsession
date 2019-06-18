@@ -28,9 +28,5 @@ export XDG_DOWNLOAD_DIR="$HOME/downloads"
 export XDG_MUSIC_DIR="$HOME/music"
 export XDG_VIDEOS_DIR="$HOME/videos"
 
-# start ibus
-ibus-daemon -dr &
-ibus engine xkb:us::eng &
-
 # Now start stumpwm! :)
 exec dbus-launch --exit-with-session stumpwm

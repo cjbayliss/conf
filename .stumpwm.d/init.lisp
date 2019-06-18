@@ -64,3 +64,8 @@
 (define-key *top-map* (kbd "XF86AudioNext") "music-next")
 (define-key *top-map* (kbd "XF86AudioPrev") "music-prev")
 (define-key *top-map* (kbd "XF86AudioPlay") "music-pause")
+
+;; start ibus at the very last, this is due to a bug in FF.
+(run-shell-command "ibus-daemon -dr")
+;; also set the default input
+(run-shell-command "ibus engine xkb:us::eng")
