@@ -65,7 +65,6 @@
         erc-fill-column 157)
   (erc-services-mode +1)
   (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
-  (erc-tls :server "irc.gnome.org" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
   (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
 
 ;; ERC config
