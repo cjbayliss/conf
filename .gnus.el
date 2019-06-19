@@ -10,7 +10,7 @@
       smtpmail-smtp-service 587
       gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"
       ;; make subbed groups visible
-      gnus-permanently-visible-groups ""
+      gnus-permanently-visible-groups "INBOX\\|Sent\\|archive\\|cyber"
       gnus-use-cache t
       ;; copy sent emails to Sent
       gnus-message-archive-group "nnimap+email:Sent"
