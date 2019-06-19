@@ -3,13 +3,13 @@
       column-number-mode t
       make-backup-files nil
       require-final-newline t
-      ;; use mutt like threading. copied from: http://cyber.com.au/~twb/.emacs
-      gnus-sum-thread-tree-false-root "─*> "
+      ;; modified from: http://cyber.com.au/~twb/.emacs
+      gnus-sum-thread-tree-false-root "──○ "
       gnus-sum-thread-tree-indent "  "
-      gnus-sum-thread-tree-leaf-with-other "├─> "
-      gnus-sum-thread-tree-root "> "
+      gnus-sum-thread-tree-leaf-with-other "├─● "
+      gnus-sum-thread-tree-root "■ "
       gnus-sum-thread-tree-single-indent ""
-      gnus-sum-thread-tree-single-leaf "└─> "
+      gnus-sum-thread-tree-single-leaf "╰─● "
       gnus-sum-thread-tree-vertical "│ "
       gnus-user-date-format-alist '((t . "%b %e"))
       gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
