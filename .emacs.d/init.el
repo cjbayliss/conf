@@ -1,10 +1,3 @@
-;; there may be strange approaches in this conifg, here are two reasons why:
-;;
-;;     1. i'm an idiot who doesn't know elisp.
-;;
-;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my 11 year
-;;     old Macbook. (current init time 2019-04-27: 0.0s)
-
 ;; general emacs settings
 (setq inhibit-startup-screen t
       column-number-mode t
@@ -22,10 +15,7 @@
       gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
       ;; why does this need to be set here?
       gnus-directory "~/.emacs.d/news/"
-      ;; set this very low to reduce input lag, this can slow down init
-      ;; time. people in the know say this shouldn't be needed. idk, i simply
-      ;; want to type without a lag spike every 15 words or so. maybe it's
-      ;; because my ram is slow and old?
+      ;; let the game begin! (people have heated views on this setting)
       gc-cons-threshold 100
       initial-scratch-message ";; ┌─┐┌┐┬┬ ┬ ┌─┐┌┬┐┌─┐┌─┐┌─┐
 ;; │┌┐│└┤│ │ ├┤ │││├─┤│  └─┐
@@ -40,6 +30,10 @@
               frame-background-mode 'dark
               indent-tabs-mode nil
               show-trailing-whitespace t)
+
+;; add debian's elpa packges to load path
+(let ((default-directory  "/usr/share/emacs/site-lisp/elpa/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;; enable some modes.
 (show-paren-mode +1)
@@ -87,9 +81,6 @@
 
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
-  ;; load erc-hl-nicks
-  (load "~/.emacs.d/elisp/erc-hl-nicks/erc-hl-nicks")
-  (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode +1)
   (erc-spelling-mode +1)
@@ -105,6 +96,74 @@
   (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
                     '(erc-input-face ((t (:foreground "white")))))
 
+  ;; modified options two and five from here:
+  ;; https://www.emacswiki.org/emacs/ErcNickColors
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; FIXME:: package erc-hl-nicks for debian to get rid of this mess ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; create a list of colors without colors too dark to see
+  (setq my-colors-list '(nil))
+  (dolist (color (defined-colors))
+    (or (string-match-p "black" color)
+        (string-match-p "color-16" color)
+        (string-match-p "color-17" color)
+        (string-match-p "color-18" color)
+        (string-match-p "color-19" color)
+        (string-match-p "color-20" color)
+        (string-match-p "color-21" color)
+        (string-match-p "color-22" color)
+        (string-match-p "color-52" color)
+        (string-match-p "color-53" color)
+        (string-match-p "color-54" color)
+        (string-match-p "color-55" color)
+        (string-match-p "color-56" color)
+        (string-match-p "color-57" color)
+        (string-match-p "color-232" color)
+        (string-match-p "color-233" color)
+        (string-match-p "color-234" color)
+        (string-match-p "color-235" color)
+        (string-match-p "color-236" color)
+        (string-match-p "color-237" color)
+        (add-to-list 'my-colors-list color)))
+
+  ;; people i associate their with a color from previous nick color scripts
+  (setq my-custom-colors '(("Unit193" . "color-92")
+                           ("twb" . "color-226")
+                           ("codingquark" . "color-157")
+                           ("parsnip" . "color-69")
+                           ("parsnip0" . "color-69")
+                           ("bremner" . "color-226")
+                           ("bpalmer". "color-241")
+                           ("jlf" . "color-191")
+                           ("fsbot" . "color-219")
+                           ("cjb" . "color-66")))
+
+  (defun my/return-color (string)
+    "return color for STRING"
+    (or (cdr (assoc nick my-custom-colors))
+        (nth (mod (string-to-number (substring (md5 (downcase string)) 0 6) 16)
+                  (length my-colors-list))
+             my-colors-list)))
+
+  (defun erc-highlight-nicknames ()
+    "highlight erc nicknames with color from my/return-color"
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "\\w+" nil t)
+        (let* ((bounds (bounds-of-thing-at-point 'symbol))
+               (nick   (buffer-substring-no-properties (car bounds) (cdr bounds))))
+          (when (erc-get-server-user nick)
+            (put-text-property
+             (car bounds) (cdr bounds) 'face
+             (cons 'foreground-color (my/return-color nick)))
+            (add-face-text-property
+             (car bounds) (cdr bounds) 'bold))))))
+
+  (add-hook 'erc-insert-modify-hook 'erc-highlight-nicknames)
+  (add-hook 'erc-send-modify-hook 'erc-highlight-nicknames)
+
   ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
   ;; has lived, but since you know how to use git you'll find out in no time!!
   ;; (yes, I felt like writing about this paren for no reason at all.)
@@ -112,74 +171,11 @@
 
 ;; php-mode config
 (add-to-list 'auto-mode-alist
-             '("\\.php\\'" .
-               (lambda ()
-                 (load "~/.emacs.d/elisp/php-mode/php-project")
-                 (load "~/.emacs.d/elisp/php-mode/php-mode")
-                 (php-mode)
-                 (setq c-basic-offset 4)
-                 (php-enable-psr2-coding-style))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; FIXME: YUK YUK YUK -- cjb, 2019-05-10 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun my/get-sha512sum (file)
-  "get sha512sum of file"
-  (replace-regexp-in-string " .+$" "" (shell-command-to-string (concat "sha512sum -z " file))))
-
-(defun my/wget (file dest)
-  "download a file with wget because url-copy-file is fickle"
-  (message (concat "downloading " file))
-  (shell-command (concat "wget -c " file " -O " dest " -o /dev/null"))
-  (message "done."))
-
-(defun my/untar (file dest)
-  "untar file"
-  (shell-command (concat "tar xf " file " -C " dest " --strip-components=1")))
-
-(defun my/mkdir-p (dir)
-  "make a directory with mkdir -p"
-  (shell-command (concat "mkdir -p " dir)))
-
-(defun my/download-modules ()
-  "download modules"
-  (my/wget "https://github.com/emacs-php/php-mode/archive/v1.21.1.tar.gz" "~/.cache/php-mode.tar.gz")
-  (my/wget "https://github.com/leathekd/erc-hl-nicks/archive/1.3.3.tar.gz" "~/.cache/erc-hl-nicks.tar.gz"))
-
-;; FIXME:: make this lispy.
-(defun my/install-module (file name)
-  "install the module"
-  ;; make directories
-  (my/mkdir-p "~/.cache/my-emacs-tmp/")
-  (my/mkdir-p (concat "~/.emacs.d/elisp/" name))
-  ;; untar the module
-  (my/untar file "~/.cache/my-emacs-tmp/")
-  ;; copy .el files from temp folder to NAME
-  (shell-command (concat "cp ~/.cache/my-emacs-tmp/*.el ~/.emacs.d/elisp/" name))
-  ;; delete the temp folder
-  (shell-command "rm -rf ~/.cache/my-emacs-tmp/")
-  (message (concat "installed " name)))
-
-(defun my/setup-modules ()
-  (interactive)
-  (my/download-modules)
-  (if (string-equal "87182af418d96c131c39ac8101f144875efafe2229a3523224ff04f77b20cfb8be8ea87365082019ea4679dd1d774b610a22fdcc11ad90176a19f552415299c7"
-                    (my/get-sha512sum "~/.cache/php-mode.tar.gz"))
-      (my/install-module "~/.cache/php-mode.tar.gz" "php-mode")
-    (message "~/.cache/php-mode.tar.gz does not match checksum"))
-  (if (string-equal "ae35f138f850e7532c0e2a9a5bbfbe1d61915794f4892d528e3932e745692107272cc78bad632eca6fc798edb4514683f76c19e4da66f3bc19186f108f400d24"
-                    (my/get-sha512sum "~/.cache/erc-hl-nicks.tar.gz"))
-      (my/install-module "~/.cache/erc-hl-nicks.tar.gz" "erc-hl-nicks")
-    (message "~/.cache/erc-hl-nicks.tar.gz does not match checksum")))
-
-(defun my/compile-the-lot ()
-  "compile everything in ~/.emacs.d/elisp regardless of time etc"
-  (interactive)
-  ;; manually add php-mode to load path first
-  (setq load-path (cons "~/.emacs.d/elisp/php-mode" load-path))
-  ;; compile
-  (byte-recompile-directory "~/.emacs.d/elisp/" 0 t))
+             '("\\.php\\'" . (lambda ()
+                               (autoload 'php-mode "php-mode")
+                               (php-mode)
+                               (setq c-basic-offset 4)
+                               (php-enable-psr2-coding-style))))
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
