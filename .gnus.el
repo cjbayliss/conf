@@ -26,3 +26,7 @@
 
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
+
+;; check for news, notify
+(gnus-demon-add-handler 'gnus-demon-scan-mail 5 t)
+(add-hook 'gnus-after-getting-new-news-hook 'gnus-notifications)

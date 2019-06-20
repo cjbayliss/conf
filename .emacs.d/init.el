@@ -138,7 +138,8 @@
                            ("bpalmer". "color-241")
                            ("jlf" . "color-191")
                            ("fsbot" . "color-219")
-                           ("cjb" . "color-66")))
+                           ("cjb" . "color-66")
+                           ("cjbayliss" . "color-66")))
 
   (defun my/return-color (string)
     "return color for STRING"
