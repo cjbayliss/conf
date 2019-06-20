@@ -19,9 +19,6 @@
       nnfolder-directory "~/.emacs.d/mail/archive"
       mm-text-html-renderer 'gnus-w3m)
 
-;; news
-(add-to-list 'gnus-secondary-select-methods '(nntp "news.gmane.org"))
-
 (global-display-line-numbers-mode -1)
 
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
