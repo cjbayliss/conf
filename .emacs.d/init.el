@@ -27,7 +27,7 @@
 
 (setq-default fill-column 79
               save-place t
-              frame-background-mode 'dark
+              frame-background-mode 'light
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
@@ -93,8 +93,7 @@
                (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
 
   ;; fix ERC prompt colors
-  (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
-                    '(erc-input-face ((t (:foreground "white")))))
+  (custom-set-faces '(erc-prompt-face ((t (:foreground "black" :background nil :weight bold)))))
 
   ;; modified options two and five from here:
   ;; https://www.emacswiki.org/emacs/ErcNickColors
@@ -180,7 +179,4 @@
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
- '(line-number-current-line ((t (:background "color-237" :foreground "chocolate1"))))
- '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
- '(region ((t (:inverse-video t))))
- '(show-paren-match ((t (:foreground "steelblue1")))))
+ '(mode-line-buffer-id ((t (:foreground "VioletRed4" :background nil :weight bold :slant oblique)))))

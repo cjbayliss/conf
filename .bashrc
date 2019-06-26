@@ -47,9 +47,9 @@ __git_status() {
     fi
 }
 
-# cool prompt
-#PS1='\[\e[1m\]\u@\h \[\e[33m\]\W\[\e[35m\]$(__git_branch)\[\e[31m\]$(__git_status) \[\e[39m\]\$ \[\e[0m\]'
-PS1='\[\e[1m\]\[\e[38;5;249m\]\u@\h \[\e[38;5;202m\]\W\[\e[38;5;193m\]$(__git_branch)\[\e[31m\]$(__git_status) \[\e[38;5;15m\]\$ \[\e[0m\]'
+# hopefully universal cool prompt (as in the colours should look right on dark
+# and light backgrounds)
+PS1='\[\e[1m\]\u@\h \[\e[38;5;166m\]\w\[\e[38;5;77m\]$(__git_branch)\[\e[31m\]$(__git_status) \[\e[39m\]\$ \[\e[0m\]'
 
 ###########################
 ## ALIAS ALL THE THINGS! ##
