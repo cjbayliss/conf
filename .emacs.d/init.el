@@ -95,57 +95,36 @@
   ;; fix ERC prompt colors
   (custom-set-faces '(erc-prompt-face ((t (:foreground "black" :background nil :weight bold)))))
 
-  ;; modified options two and five from here:
+  ;; this highlighting is a slightly modified version of option five from here:
   ;; https://www.emacswiki.org/emacs/ErcNickColors
+  (defmacro unpack-color (color red green blue &rest body)
+    `(let ((,red   (car ,color))
+           (,green (car (cdr ,color)))
+           (,blue  (car (cdr (cdr ,color)))))
+       ,@body))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; FIXME:: package erc-hl-nicks for debian to get rid of this mess ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (defun rgb-to-html (color)
+    (unpack-color color red green blue
+                  (concat "#" (format "%02x%02x%02x" red green blue))))
 
-  ;; create a list of colors without colors too dark to see
-  (setq my-colors-list '(nil))
-  (dolist (color (defined-colors))
-    (or (string-match-p "black" color)
-        (string-match-p "color-16" color)
-        (string-match-p "color-17" color)
-        (string-match-p "color-18" color)
-        (string-match-p "color-19" color)
-        (string-match-p "color-20" color)
-        (string-match-p "color-21" color)
-        (string-match-p "color-22" color)
-        (string-match-p "color-52" color)
-        (string-match-p "color-53" color)
-        (string-match-p "color-54" color)
-        (string-match-p "color-55" color)
-        (string-match-p "color-56" color)
-        (string-match-p "color-57" color)
-        (string-match-p "color-232" color)
-        (string-match-p "color-233" color)
-        (string-match-p "color-234" color)
-        (string-match-p "color-235" color)
-        (string-match-p "color-236" color)
-        (string-match-p "color-237" color)
-        (add-to-list 'my-colors-list color)))
+  (defun hexcolor-luminance (color)
+    (unpack-color color red green blue
+                  (floor (+ (* 0.299 red) (* 0.587 green) (* 0.114 blue)))))
 
-  ;; people i associate their with a color from previous nick color scripts
-  (setq my-custom-colors '(("Unit193" . "color-92")
-                           ("twb" . "color-226")
-                           ("codingquark" . "color-157")
-                           ("parsnip" . "color-69")
-                           ("parsnip0" . "color-69")
-                           ("bremner" . "color-226")
-                           ("bpalmer". "color-241")
-                           ("jlf" . "color-191")
-                           ("fsbot" . "color-219")
-                           ("cjb" . "color-66")
-                           ("cjbayliss" . "color-66")))
+  (defun invert-color (color)
+    (unpack-color color red green blue
+                  `(,(- 255 red) ,(- 255 green) ,(- 255 blue))))
 
-  (defun my/return-color (string)
-    "return color for STRING"
-    (or (cdr (assoc nick my-custom-colors))
-        (nth (mod (string-to-number (substring (md5 (downcase string)) 0 6) 16)
-                  (length my-colors-list))
-             my-colors-list)))
+  (defun erc-get-color-for-nick (nick dark)
+    (let* ((hash     (md5 (downcase nick)))
+           (red      (mod (string-to-number (substring hash 0 10) 16) 256))
+           (blue     (mod (string-to-number (substring hash 10 20) 16) 256))
+           (green    (mod (string-to-number (substring hash 20 30) 16) 256))
+           (color    `(,red ,green ,blue)))
+      (rgb-to-html (if (if dark (< (hexcolor-luminance color) 85)
+                         (> (hexcolor-luminance color) 170))
+                       (invert-color color)
+                     color))))
 
   (defun erc-highlight-nicknames ()
     "highlight erc nicknames with color from my/return-color"
@@ -156,10 +135,10 @@
                (nick   (buffer-substring-no-properties (car bounds) (cdr bounds))))
           (when (erc-get-server-user nick)
             (put-text-property
-             (car bounds) (cdr bounds) 'face
-             (cons 'foreground-color (my/return-color nick)))
+	     (car bounds) (cdr bounds) 'face
+             (cons 'foreground-color (erc-get-color-for-nick nick 'nil)))
             (add-face-text-property
-             (car bounds) (cdr bounds) 'bold))))))
+	     (car bounds) (cdr bounds) 'bold))))))
 
   (add-hook 'erc-insert-modify-hook 'erc-highlight-nicknames)
   (add-hook 'erc-send-modify-hook 'erc-highlight-nicknames)
