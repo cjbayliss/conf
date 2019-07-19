@@ -1,3 +1,10 @@
+;; there may be strange approaches in this conifg, here are two reasons why:
+;;
+;;     1. i'm an idiot who doesn't know elisp.
+;;
+;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my 11 year
+;;     old Macbook. (current init time 2019-04-27: 0.0s)
+
 ;; general emacs settings
 (setq inhibit-startup-screen t
       column-number-mode t
@@ -30,10 +37,6 @@
               frame-background-mode 'dark
               indent-tabs-mode nil
               show-trailing-whitespace t)
-
-;; add debian's elpa packges to load path
-(let ((default-directory  "/usr/share/emacs/site-lisp/elpa/"))
-  (normal-top-level-add-subdirs-to-load-path))
 
 ;; enable some modes.
 (show-paren-mode +1)
@@ -79,13 +82,14 @@
           ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
-  (autoload 'erc-hl-nicks "erc-hl-nicks")
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
+  ;; load erc-hl-nicks
+  (load "~/.emacs.d/elisp/erc-hl-nicks/erc-hl-nicks")
+  (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode +1)
   (erc-spelling-mode +1)
-  (erc-hl-nicks)
 
   ;; make ERC use full buffer width
   (add-to-list 'window-configuration-change-hook
@@ -106,7 +110,8 @@
 ;; php-mode config
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" . (lambda ()
-                               (autoload 'php-mode "php-mode")
+                               (load "~/.emacs.d/elisp/php-mode/php-project")
+                               (load "~/.emacs.d/elisp/php-mode/php-mode")
                                (php-mode)
                                (setq c-basic-offset 4)
                                (php-enable-psr2-coding-style))))
@@ -114,10 +119,74 @@
 ;; d-mode
 (add-to-list 'auto-mode-alist
              '("\\.d\\'" . (lambda ()
-                             (autoload 'd-mode "d-mode")
+                             (load "~/.emacs.d/elisp/d-mode/d-mode")
                              (d-mode)
                              (setq c-basic-offset 4))))
 
+;; I previouly considered this section to be yuk. It still is. But there are
+;; worse ways.
+(defun my/get-sha512sum (file)
+  "get sha512sum of file"
+  (replace-regexp-in-string " .+$" "" (shell-command-to-string (concat "sha512sum -z " file))))
+
+(defun my/wget (file dest)
+  "download a file with wget because url-copy-file is fickle"
+  (message (concat "downloading " file))
+  (shell-command (concat "wget -c " file " -O " dest " -o /dev/null"))
+  (message "done."))
+
+(defun my/untar (file dest)
+  "untar file"
+  (shell-command (concat "tar xf " file " -C " dest " --strip-components=1")))
+
+(defun my/mkdir-p (dir)
+  "make a directory with mkdir -p"
+  (shell-command (concat "mkdir -p " dir)))
+
+(defun my/download-modules ()
+  "download modules"
+  (my/wget "https://github.com/emacs-php/php-mode/archive/v1.21.1.tar.gz" "~/.cache/php-mode.tar.gz")
+  (my/wget "https://github.com/leathekd/erc-hl-nicks/archive/1.3.3.tar.gz" "~/.cache/erc-hl-nicks.tar.gz")
+  (my/wget "https://github.com/Emacs-D-Mode-Maintainers/Emacs-D-Mode/archive/2.0.9.tar.gz" "~/.cache/d-mode.tar.gz"))
+
+;; FIXME:: make this lispy.
+(defun my/install-module (file name)
+  "install the module"
+  ;; make directories
+  (my/mkdir-p "~/.cache/my-emacs-tmp/")
+  (my/mkdir-p (concat "~/.emacs.d/elisp/" name))
+  ;; untar the module
+  (my/untar file "~/.cache/my-emacs-tmp/")
+  ;; copy .el files from temp folder to NAME
+  (shell-command (concat "cp ~/.cache/my-emacs-tmp/*.el ~/.emacs.d/elisp/" name))
+  ;; delete the temp folder
+  (shell-command "rm -rf ~/.cache/my-emacs-tmp/")
+  (message (concat "installed " name)))
+
+(defun my/setup-modules ()
+  (interactive)
+  (my/download-modules)
+  (if (string-equal "87182af418d96c131c39ac8101f144875efafe2229a3523224ff04f77b20cfb8be8ea87365082019ea4679dd1d774b610a22fdcc11ad90176a19f552415299c7"
+                    (my/get-sha512sum "~/.cache/php-mode.tar.gz"))
+      (my/install-module "~/.cache/php-mode.tar.gz" "php-mode")
+    (message "~/.cache/php-mode.tar.gz does not match checksum"))
+  (if (string-equal "ae35f138f850e7532c0e2a9a5bbfbe1d61915794f4892d528e3932e745692107272cc78bad632eca6fc798edb4514683f76c19e4da66f3bc19186f108f400d24"
+                    (my/get-sha512sum "~/.cache/erc-hl-nicks.tar.gz"))
+      (my/install-module "~/.cache/erc-hl-nicks.tar.gz" "erc-hl-nicks")
+    (message "~/.cache/erc-hl-nicks.tar.gz does not match checksum"))
+  (if (string-equal "753e42ad3b973ce028429e30c9be145989c0aa613f4b89b336d2b69240c58712199986cf9c26e367675d6fcf6ba94ce70db1c67150449e0f70cc9bf67bf141da"
+                    (my/get-sha512sum "~/.cache/d-mode.tar.gz"))
+      (my/install-module "~/.cache/d-mode.tar.gz" "d-mode")
+    (message "~/.cache/d-mode.tar.gz does not match checksum")))
+
+
+(defun my/compile-the-lot ()
+  "compile everything in ~/.emacs.d/elisp regardless of time etc"
+  (interactive)
+  ;; manually add php-mode to load path first
+  (setq load-path (cons "~/.emacs.d/elisp/php-mode" load-path))
+  ;; compile
+  (byte-recompile-directory "~/.emacs.d/elisp/" 0 t))
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
