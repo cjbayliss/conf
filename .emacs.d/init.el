@@ -56,11 +56,43 @@
 (defun irc ()
   "Connect to IRC."
   (interactive)
+
   ;; these bits need to be here **before** you start ERC
   (setq erc-prompt-for-nickserv-password nil
         ;; set this here, the auto resize is below
         erc-fill-column 157)
   (erc-services-mode +1)
+
+  ;; load erc-sasl
+  (add-to-list 'load-path "~/.emacs.d/elisp/erc-sasl")
+  (require 'erc-sasl)
+
+  ;; redefine the erc-login function so erc-sasl works
+  (defun erc-login ()
+    "Perform user authentication at the IRC server."
+    (erc-log (format "login: nick: %s, user: %s %s %s :%s"
+		     (erc-current-nick)
+		     (user-login-name)
+		     (or erc-system-name (system-name))
+		     erc-session-server
+		     erc-session-user-full-name))
+    (if erc-session-password
+	(erc-server-send (format "PASS %s" erc-session-password))
+      (message "Logging in without password"))
+    (when (and (featurep 'erc-sasl) (erc-sasl-use-sasl-p))
+      (erc-server-send "CAP REQ :sasl"))
+    (erc-server-send (format "NICK %s" (erc-current-nick)))
+    (erc-server-send
+     (format "USER %s %s %s :%s"
+	     ;; hacked - S.B.
+	     (if erc-anonymous-login erc-email-userid (user-login-name))
+	     "0" "*"
+	     erc-session-user-full-name))
+    (erc-update-mode-line))
+
+  ;; use erc-sasl for freenode
+  (add-to-list 'erc-sasl-server-regexp-list "chat\\.au\\.freenode\\.net")
+
   (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
   (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
 
