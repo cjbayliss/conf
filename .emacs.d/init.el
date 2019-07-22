@@ -57,10 +57,8 @@
   "Connect to IRC."
   (interactive)
 
-  ;; these bits need to be here **before** you start ERC
-  (setq erc-prompt-for-nickserv-password nil
-        ;; set this here, the auto resize is below
-        erc-fill-column 157)
+  ;; set this here, the auto resize is below
+  (setq erc-fill-column 157)
   (erc-services-mode +1)
 
   ;; load erc-sasl
