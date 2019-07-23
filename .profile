@@ -11,6 +11,9 @@ export NAME="Christopher Bayliss"
 # add ~/.bin to PATH
 export PATH="$PATH:$HOME/.bin"
 
+# make virsh use qemu:///system by default
+export LIBVIRT_DEFAULT_URI='qemu:///system'
+
 # start the ssh-agent. requires the package 'keychain'
 eval $(keychain --eval --quiet --quick)
 
