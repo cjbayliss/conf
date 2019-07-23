@@ -3,6 +3,23 @@ if [[ $- != *i* ]] ; then
     return
 fi
 
+# because ifupdown is horrible, don't start any internet at boottime, instead
+# ask me at login
+if [[ "$(tty)" = "/dev/tty1" ]]; then
+    while true
+    do
+        read -p "start wifi? (y/N) " answer
+
+        case $answer in
+            [yY]* ) sudo ifup wlan0;
+                    break;;
+
+            [nN]* ) break;;
+            *) break;;
+        esac
+    done
+fi
+
 # enable bash completion in interactive shells
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
