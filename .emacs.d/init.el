@@ -54,8 +54,9 @@
 ;; rcirc enable spell checking, rcirc-omit-mode, and pin prompt to bottom
 (add-hook 'rcirc-mode-hook
           (lambda ()
-            (flyspell-mode 1)
-            (rcirc-omit-mode)
+            (flyspell-mode +1)
+            (rcirc-omit-mode +1)
+            (rcirc-track-minor-mode +1)
             (set (make-local-variable 'scroll-conservatively) 8192)))
 ;; make rcirc use full window width
 (add-to-list 'window-configuration-change-hook
