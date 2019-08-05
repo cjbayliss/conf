@@ -73,20 +73,25 @@
                            ("irc.oftc.net" :nick "cjbayliss" :port 6697 :encryption tls
                             :channels ("#debian-devel" "#debian-next" "#debian-mentors"))))
 
-;; notifications
-(require 'notifications)
-(defun rcirc-notifications (process sender response target text)
-  (when (and (string= response "PRIVMSG")
-             (not (string= sender (rcirc-nick process)))
-             (not (rcirc-channel-p target)))
-    (notifications-notify :title sender :body text))
-  (when (and (string-match (rcirc-nick process) text)
-             (rcirc-channel-p target)
-             (not (string= (rcirc-nick process) sender))
-             (not (string= (rcirc-server-name process) sender)))
-    (notifications-notify :title sender :body text)))
+(with-eval-after-load "rcirc"
+  ;; disable thing unrelated to IRC
+  (setq-default show-trailing-whitespace nil)
+  (show-paren-mode -1)
 
-(add-hook 'rcirc-print-hooks 'rcirc-notifications)
+  ;; notifications
+  (require 'notifications)
+  (defun rcirc-notifications (process sender response target text)
+    (when (and (string= response "PRIVMSG")
+               (not (string= sender (rcirc-nick process)))
+               (not (rcirc-channel-p target)))
+      (notifications-notify :title sender :body text))
+    (when (and (string-match (rcirc-nick process) text)
+               (rcirc-channel-p target)
+               (not (string= (rcirc-nick process) sender))
+               (not (string= (rcirc-server-name process) sender)))
+      (notifications-notify :title sender :body text)))
+
+  (add-hook 'rcirc-print-hooks 'rcirc-notifications))
 
 (load "~/.rcirc" t t)
 
