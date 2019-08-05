@@ -38,12 +38,11 @@
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
-;; enable some modes.
+
+;; enable/disable modes
 (show-paren-mode +1)
 (delete-selection-mode +1)
 (save-place-mode +1)
-
-;; disable some modes
 (menu-bar-mode -1)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -52,145 +51,56 @@
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 
-;; custom irc func to load erc and join networks automatcially
-(defun irc ()
-  "Connect to IRC."
-  (interactive)
+;; rcirc enable spell checking, rcirc-omit-mode, and pin prompt to bottom
+(add-hook 'rcirc-mode-hook
+          (lambda ()
+            (flyspell-mode 1)
+            (rcirc-omit-mode)
+            (set (make-local-variable 'scroll-conservatively) 8192)))
+;; make rcirc use full window width
+(add-to-list 'window-configuration-change-hook
+             (lambda () (setq rcirc-fill-column (- (window-width) 2))))
 
-  ;; these bits need to be here **before** you start ERC
-  (setq erc-prompt-for-nickserv-password nil
-        ;; set this here, the auto resize is below
-        erc-fill-column 157)
+(setq rcirc-default-nick "cjb"
+      rcirc-default-user-name "cjb"
+      rcirc-default-full-name "Christopher Bayliss"
+      rcirc-startup-channels-alist nil
+      rcirc-buffer-maximum-lines 2048
+      rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE")
+      rcirc-server-alist '(("chat.au.freenode.net" :nick "cjb" :port 6697 :encryption tls
+                            :channels ("#xebian" "#emacs" "#allocpsa" "#stumpwm"))
+                           ("127.0.0.1" :nick "cjb" :port 6667 :channels ("#cyber"))
+                           ("irc.oftc.net" :nick "cjbayliss" :port 6697 :encryption tls
+                            :channels ("#debian-devel" "#debian-next" "#debian-mentors"))))
 
-  (erc-services-mode +1)
+;; notifications
+(require 'notifications)
+(defun rcirc-notifications (process sender response target text)
+  (when (and (string= response "PRIVMSG")
+             (not (string= sender (rcirc-nick process)))
+             (not (rcirc-channel-p target)))
+    (notifications-notify :title sender :body text))
+  (when (and (string-match (rcirc-nick process) text)
+             (rcirc-channel-p target)
+             (not (string= (rcirc-nick process) sender))
+             (not (string= (rcirc-server-name process) sender)))
+    (notifications-notify :title sender :body text)))
 
-  (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
-  (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
+(add-hook 'rcirc-print-hooks 'rcirc-notifications)
 
-;; ERC config
-(with-eval-after-load "erc"
-  (autoload 'erc-goodies "erc-goodies")
+(load "~/.rcirc" t t)
 
-  (setq erc-prompt-for-password nil
-        erc-autojoin-timing 'ident
-        erc-rename-buffers t
-        erc-track-exclude-server-buffer t
-        erc-interpret-mirc-color t
-        erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT")
-        erc-fill-function 'erc-fill-static
-        erc-fill-static-center 15
-        erc-server-reconnect-timeout 60
-        erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#emacs" "#allocpsa" "#stumpwm")
-          ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors"))
-        erc-prompt (lambda () (concat "[" (buffer-name) "]")))
+;; add debian's elpa packges to load path
+(let ((default-directory  "/usr/share/emacs/site-lisp/elpa/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
-  (setq-default show-trailing-whitespace nil)
-  (show-paren-mode -1)
-  ;; load erc-hl-nicks
-  (load "~/.emacs.d/elisp/erc-hl-nicks/erc-hl-nicks")
-  (erc-hl-nicks)
-  (erc-scrolltobottom-enable)
-  (erc-notifications-mode +1)
-  (erc-spelling-mode +1)
-
-  ;; make ERC use full buffer width
-  (add-to-list 'window-configuration-change-hook
-               (lambda () (setq erc-fill-column (- (window-width) 2))))
-  ;; keep ERC buffer pined to bottom
-  (add-to-list 'erc-mode-hook
-               (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
-
-  ;; fix ERC prompt colors
-  (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
-                    '(erc-input-face ((t (:foreground "white")))))
-
-  ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
-  ;; has lived, but since you know how to use git you'll find out in no time!!
-  ;; (yes, I felt like writing about this paren for no reason at all.)
-  )
-
-;; php-mode config
+;; load php stuff grumble grumble
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" . (lambda ()
-                               (load "~/.emacs.d/elisp/php-mode/php-project")
-                               (load "~/.emacs.d/elisp/php-mode/php-mode")
+                               (autoload 'php-mode "php-mode")
                                (php-mode)
                                (setq c-basic-offset 4)
                                (php-enable-psr2-coding-style))))
-
-;; d-mode
-(add-to-list 'auto-mode-alist
-             '("\\.d\\'" . (lambda ()
-                             (load "~/.emacs.d/elisp/d-mode/d-mode")
-                             (d-mode)
-                             (setq c-basic-offset 4))))
-
-;; I previouly considered this section to be yuk. It still is. But there are
-;; worse ways.
-(defun my/get-sha512sum (file)
-  "get sha512sum of file"
-  (replace-regexp-in-string " .+$" "" (shell-command-to-string (concat "sha512sum -z " file))))
-
-(defun my/wget (file dest)
-  "download a file with wget because url-copy-file is fickle"
-  (message (concat "downloading " file))
-  (shell-command (concat "wget -c " file " -O " dest " -o /dev/null"))
-  (message "done."))
-
-(defun my/untar (file dest)
-  "untar file"
-  (shell-command (concat "tar xf " file " -C " dest " --strip-components=1")))
-
-(defun my/mkdir-p (dir)
-  "make a directory with mkdir -p"
-  (shell-command (concat "mkdir -p " dir)))
-
-(defun my/download-modules ()
-  "download modules"
-  (my/wget "https://github.com/emacs-php/php-mode/archive/v1.21.1.tar.gz" "~/.cache/php-mode.tar.gz")
-  (my/wget "https://github.com/leathekd/erc-hl-nicks/archive/1.3.3.tar.gz" "~/.cache/erc-hl-nicks.tar.gz")
-  (my/wget "https://github.com/Emacs-D-Mode-Maintainers/Emacs-D-Mode/archive/2.0.9.tar.gz" "~/.cache/d-mode.tar.gz"))
-
-;; FIXME:: make this lispy.
-(defun my/install-module (file name)
-  "install the module"
-  ;; make directories
-  (my/mkdir-p "~/.cache/my-emacs-tmp/")
-  (my/mkdir-p (concat "~/.emacs.d/elisp/" name))
-  ;; untar the module
-  (my/untar file "~/.cache/my-emacs-tmp/")
-  ;; copy .el files from temp folder to NAME
-  (shell-command (concat "cp ~/.cache/my-emacs-tmp/*.el ~/.emacs.d/elisp/" name))
-  ;; delete the temp folder
-  (shell-command "rm -rf ~/.cache/my-emacs-tmp/")
-  (message (concat "installed " name)))
-
-(defun my/setup-modules ()
-  (interactive)
-  (my/download-modules)
-  (if (string-equal "87182af418d96c131c39ac8101f144875efafe2229a3523224ff04f77b20cfb8be8ea87365082019ea4679dd1d774b610a22fdcc11ad90176a19f552415299c7"
-                    (my/get-sha512sum "~/.cache/php-mode.tar.gz"))
-      (my/install-module "~/.cache/php-mode.tar.gz" "php-mode")
-    (message "~/.cache/php-mode.tar.gz does not match checksum"))
-  (if (string-equal "ae35f138f850e7532c0e2a9a5bbfbe1d61915794f4892d528e3932e745692107272cc78bad632eca6fc798edb4514683f76c19e4da66f3bc19186f108f400d24"
-                    (my/get-sha512sum "~/.cache/erc-hl-nicks.tar.gz"))
-      (my/install-module "~/.cache/erc-hl-nicks.tar.gz" "erc-hl-nicks")
-    (message "~/.cache/erc-hl-nicks.tar.gz does not match checksum"))
-  (if (string-equal "753e42ad3b973ce028429e30c9be145989c0aa613f4b89b336d2b69240c58712199986cf9c26e367675d6fcf6ba94ce70db1c67150449e0f70cc9bf67bf141da"
-                    (my/get-sha512sum "~/.cache/d-mode.tar.gz"))
-      (my/install-module "~/.cache/d-mode.tar.gz" "d-mode")
-    (message "~/.cache/d-mode.tar.gz does not match checksum")))
-
-
-(defun my/compile-the-lot ()
-  "compile everything in ~/.emacs.d/elisp regardless of time etc"
-  (interactive)
-  ;; manually add php-mode to load path first
-  (setq load-path (cons "~/.emacs.d/elisp/php-mode" load-path))
-  (setq load-path (cons "~/.emacs.d/elisp/d-mode" load-path))
-  ;; compile
-  (byte-recompile-directory "~/.emacs.d/elisp/" 0 t))
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
