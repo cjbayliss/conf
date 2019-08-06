@@ -42,6 +42,7 @@
 (show-paren-mode +1)
 (delete-selection-mode +1)
 (save-place-mode +1)
+(global-hl-line-mode +1)
 (menu-bar-mode -1)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -87,6 +88,7 @@
 
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
+  (global-hl-line-mode -1)
   ;; load erc-hl-nicks
   (load "~/.emacs.d/erc-hl-nicks")
   (erc-hl-nicks)
@@ -110,14 +112,11 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
-;; add debian's elpa packges to load path
-(let ((default-directory  "/usr/share/emacs/site-lisp/elpa/"))
-  (normal-top-level-add-subdirs-to-load-path))
-
 ;; load php stuff grumble grumble
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" . (lambda ()
-                               (autoload 'php-mode "php-mode")
+                               (load "/usr/share/emacs/site-lisp/elpa/php-mode-1.21.0/php-project")
+                               (load "/usr/share/emacs/site-lisp/elpa/php-mode-1.21.0/php-mode")
                                (php-mode)
                                (setq c-basic-offset 4)
                                (php-enable-psr2-coding-style))))
