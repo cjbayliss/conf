@@ -38,7 +38,6 @@
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
-
 ;; enable/disable modes
 (show-paren-mode +1)
 (delete-selection-mode +1)
@@ -51,50 +50,65 @@
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 
-;; rcirc enable spell checking, rcirc-omit-mode, and pin prompt to bottom
-(add-hook 'rcirc-mode-hook
-          (lambda ()
-            (flyspell-mode +1)
-            (rcirc-omit-mode +1)
-            (rcirc-track-minor-mode +1)
-            (set (make-local-variable 'scroll-conservatively) 8192)))
-;; make rcirc use full window width
-(add-to-list 'window-configuration-change-hook
-             (lambda () (setq rcirc-fill-column (- (window-width) 2))))
+;; custom irc func to load erc and join networks automatcially
+(defun irc ()
+  "Connect to IRC."
+  (interactive)
 
-(setq rcirc-default-nick "cjb"
-      rcirc-default-user-name "cjb"
-      rcirc-default-full-name "Christopher Bayliss"
-      rcirc-startup-channels-alist nil
-      rcirc-buffer-maximum-lines 2048
-      rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE")
-      rcirc-server-alist '(("chat.au.freenode.net" :nick "cjb" :port 6697 :encryption tls
-                            :channels ("#xebian" "#emacs" "#allocpsa" "#stumpwm"))
-                           ("127.0.0.1" :nick "cjb" :port 6667 :channels ("#cyber"))
-                           ("irc.oftc.net" :nick "cjbayliss" :port 6697 :encryption tls
-                            :channels ("#debian-devel" "#debian-next" "#debian-mentors"))))
+  ;; these bits need to be here **before** you start ERC
+  (setq erc-prompt-for-nickserv-password nil
+        ;; set this here, the auto resize is below
+        erc-fill-column 157)
 
-(with-eval-after-load "rcirc"
-  ;; disable thing unrelated to IRC
+  (load "~/.erc")
+  (require 'erc-services)
+  (erc-services-mode +1)
+
+  (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
+  (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
+
+;; ERC config
+(with-eval-after-load "erc"
+  (autoload 'erc-goodies "erc-goodies")
+
+  (setq erc-prompt-for-password nil
+        erc-autojoin-timing 'ident
+        erc-rename-buffers t
+        erc-track-exclude-server-buffer t
+        erc-interpret-mirc-color t
+        erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT")
+        erc-fill-function 'erc-fill-static
+        erc-fill-static-center 15
+        erc-server-reconnect-timeout 60
+        erc-autojoin-channels-alist
+        '(("freenode.net" "#xebian" "#emacs" "#allocpsa" "#stumpwm")
+          ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors"))
+        erc-prompt (lambda () (concat "[" (buffer-name) "]")))
+
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
+  ;; load erc-hl-nicks
+  (load "~/.emacs.d/erc-hl-nicks")
+  (erc-hl-nicks)
+  (erc-scrolltobottom-enable)
+  (erc-notifications-mode +1)
+  (erc-spelling-mode +1)
 
-  ;; notifications
-  (require 'notifications)
-  (defun rcirc-notifications (process sender response target text)
-    (when (and (string= response "PRIVMSG")
-               (not (string= sender (rcirc-nick process)))
-               (not (rcirc-channel-p target)))
-      (notifications-notify :title sender :body text))
-    (when (and (string-match (rcirc-nick process) text)
-               (rcirc-channel-p target)
-               (not (string= (rcirc-nick process) sender))
-               (not (string= (rcirc-server-name process) sender)))
-      (notifications-notify :title sender :body text)))
+  ;; make ERC use full buffer width
+  (add-to-list 'window-configuration-change-hook
+               (lambda () (setq erc-fill-column (- (window-width) 2))))
+  ;; keep ERC buffer pined to bottom
+  (add-to-list 'erc-mode-hook
+               (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
 
-  (add-hook 'rcirc-print-hooks 'rcirc-notifications))
+  ;; fix ERC prompt colors
+  (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
+                    '(erc-input-face ((t (:foreground "white")))))
 
-(load "~/.rcirc" t t)
+  ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
+  ;; has lived, but since you know how to use git you'll find out in no time!!
+  ;; (yes, I felt like writing about this paren for no reason at all.)
+  )
 
 ;; add debian's elpa packges to load path
 (let ((default-directory  "/usr/share/emacs/site-lisp/elpa/"))
