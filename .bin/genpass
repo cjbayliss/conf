@@ -24,7 +24,7 @@ do
     l=$(cat /dev/urandom | tr -dc '0-9' | fold -w 2 | head -n1)
     # hack to make 04 == 4, or 05 == 5.
     l=$(expr $l + 0)
-    if [ "$l" -ge 10 ] && [ "$l" -le 40 ]
+    if [ "$l" -ge 15 ] && [ "$l" -le 40 ]
     then
         # *supposedly* some organisations such as the NSA can figure out the
         # first x amount of lines of /dev/urandom, so we pass a list of
