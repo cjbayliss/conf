@@ -33,7 +33,6 @@
 ")
 
 (setq-default fill-column 79
-              save-place t
               frame-background-mode 'dark
               indent-tabs-mode nil
               show-trailing-whitespace t)
@@ -82,8 +81,8 @@
         erc-fill-static-center 15
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#emacs" "#allocpsa" "#stumpwm")
-          ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors"))
+        '(("freenode.net" "#xebian" "#allocpsa" "#stumpwm")
+          ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors" "#debian-au" "#packaging"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
   (setq-default show-trailing-whitespace nil)
