@@ -58,16 +58,12 @@ PS1='\[\e[1m\]\[\e[38;5;249m\]\u@\h \[\e[38;5;202m\]\W\[\e[38;5;193m\]$(__git_br
 
 # alias stuff
 alias ls="ls -h --color=auto"
-alias la="ls -hlA"
-alias ll="ls -hl"
 alias grep="grep --color=auto"
 alias sbcl="rlwrap sbcl --noinform"
 
-# disable debians site-lisp
-alias emacs="emacs --no-site-lisp"
-
-# the holy grail of editors!! READLINE CAT. poof!! your mind is blown, innit??!!
-alias cat="rlwrap cat"
+# so uh, yeeaaaaah... see https://github.com/tmux/tmux/issues/142
+# 😢
+alias tmux='tmux -f $HOME/.config/tmux/tmux.conf'
 
 ######################
 ## EPIC COMPLETION! ##
