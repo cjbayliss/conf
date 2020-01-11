@@ -1,0 +1,158 @@
+# sway config file
+
+# display no title bar or borders
+default_border none
+# FIXME: this does not work right under sway.
+workspace_layout tabbed
+# temp fix for not hiding titlebar in tabbed mode, I almost prefer it tbh.
+titlebar_border_thickness 0
+titlebar_padding 0 0
+
+# background
+output '*' background '#000000' solid_color
+
+# i prefer to not use x11 at all, if i need x11 for something i start
+# it then. still keeping xwayland installed though.
+xwayland false
+
+# input config
+input '1452:553:appletouch' {
+      tap enabled
+      natural_scroll enabled
+}
+
+set $mod Mod4
+
+# we set the font size for titles here, and then again for the swaybar
+# in the 'bar {}' section. this is a temporary workaround for
+# https://github.com/swaywm/sway/issues/3663
+font pango:Iosevka Term Slab 0
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# we used to use uxterm for the UTF-8 support, and pass -uc for an
+# underline curser, however the UTF-8 support was found to be quite
+# lacking. gnome-terminal, on the other hand, has full UTF-8 support
+# and emoji!
+bindsym $mod+Return exec "~/.bin/sst"
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+#bindsym $mod+d exec "dmenu_run -fn 'Liberation Mono'"
+
+# instead of dmenu, we are using smenu from
+# https://git.sr.ht/~cjb/sst/ it is less bad than what I had before
+# (gnome-terminal)
+bindsym $mod+d exec "~/.bin/smenu"
+for_window [title="^smenu$"] border pixel 2, floating enable
+
+# you will notice that I don't use jkli or jkl; for my movment keys, I
+# love arrow keys and I need more sortcuts for non i3wm stuff.
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# the next section historically had keys for spliting virtical and
+# horizontal, fullscreen mode and other container control. It's all
+# gone because 1. I don't use it and 2. I need more keys for non i3wm
+# stuff.
+
+# I've kept this because sometimes a program needs to be forced into
+# either tiling or floating.
+bindsym $mod+Shift+space floating toggle
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file FIXME: is there ever I time I've needed this instead of $mod+Shift+r ??
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'Do you really want to exit sway?' -b 'EXIT' 'swaymsg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# adjust screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 5%-"
+bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl set +5%"
+
+# pulseaudio systems:
+#bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ 0; pactl set-sink-volume @DEFAULT_SINK@ +2% "
+#bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ 0; pactl set-sink-volume @DEFAULT_SINK@ -2% "
+#bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+
+# adjust volume with alsa
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master unmute; amixer set Master 2%+ "
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master unmute; amixer set Master 2%- "
+bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle"
+
+# control cmus
+bindsym XF86AudioPlay exec --no-startup-id "cmus-remote --pause"
+bindsym XF86AudioNext exec --no-startup-id "cmus-remote --next"
+bindsym XF86AudioPrev exec --no-startup-id "cmus-remote --prev"
+
+# ibus stuff
+# FIXME: mozc does not display suggestions :/
+for_window [app_id="ibus-extension-gtk3"] border none, floating enable
+bindsym $mod+space exec '~/.bin/ibus-toggle'
+
+# need to compile the version of redshift found here
+# https://github.com/breznak/redshift/ in the branch
+# 'origin/Lourens-Rich-master'
+# ./configure --prefix=$HOME/.local/usr/ --enable-drm --enable-wayland
+exec --no-startup-id "~/.local/usr/bin/redshift -O 4800"
+
+# get mako from here https://github.com/emersion/mako
+exec --no-startup-id "~/.bin/mako --default-timeout 5000"
+
+exec --no-startup-id "ibus-daemon -dr; sleep 1; ibus engine xkb:us::eng"
+
+# power management
+exec --no-startup-id "~/.bin/locker"
