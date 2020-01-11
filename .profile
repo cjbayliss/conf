@@ -21,13 +21,3 @@ export LIBVIRT_DEFAULT_URI='qemu:///system'
 
 # start the ssh-agent. requires the package 'keychain'
 eval $(keychain --eval --quiet --quick)
-
-# set default directories
-xdg-user-dirs-update --set DESKTOP "$HOME/dev"
-xdg-user-dirs-update --set DOWNLOAD "$HOME/downloads"
-xdg-user-dirs-update --set TEMPLATES "$HOME/dev/templates"
-xdg-user-dirs-update --set PUBLICSHARE "$HOME/dev/public"
-xdg-user-dirs-update --set DOCUMENTS "$HOME/dev"
-xdg-user-dirs-update --set MUSIC "$HOME/music"
-xdg-user-dirs-update --set PICTURES "$HOME/pictures"
-xdg-user-dirs-update --set VIDEOS "$HOME/videos"
