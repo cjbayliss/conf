@@ -6,7 +6,7 @@ export MOZ_USE_XINPUT2=1
 # ibus input stuff
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus 
+export QT_IM_MODULE=ibus
 
 # set QT theme engine. requires qt5ct -_-
 export QT_QPA_PLATFORMTHEME="qt5ct"
@@ -31,5 +31,9 @@ if test -z "${XDG_RUNTIME_DIR}"; then
     fi
 fi
 
+if ! test -d "$HOME/.local/tmp/sway/"; then
+    mkdir -p "$HOME/.local/tmp/sway/"
+fi
+
 # Now start sway! :)
-exec dbus-launch --sh-syntax --exit-with-session sway 2>~/.sway.log
+exec dbus-launch --sh-syntax --exit-with-session sway 2>"$HOME/.local/tmp/sway/$(date '+%F')-$(date|md5sum - | cut -d' ' -f1).log"
