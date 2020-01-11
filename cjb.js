@@ -1,3 +1,4 @@
+
 pref("accessibility.force_disabled", 1);
 pref("accessibility.typeaheadfind.flashBar", 0);
 pref("app.normandy.api_url", "");
