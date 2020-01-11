@@ -20,8 +20,10 @@
       gnus-sum-thread-tree-vertical "│ "
       gnus-user-date-format-alist '((t . "%b %e"))
       gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
-      ;; why does this need to be set here?
+      ;; get stuff out of the home dir
       gnus-directory "~/.emacs.d/news/"
+      gnus-startup-file "~/.emacs.d/newsrc"
+      gnus-init-file "~/.emacs.d/gnus"
       ;; let the game begin! (people have heated views on this setting)
       gc-cons-threshold 100
       initial-scratch-message ";; ┌─┐┌┐┬┬ ┬ ┌─┐┌┬┐┌─┐┌─┐┌─┐
@@ -60,7 +62,7 @@
         ;; set this here, the auto resize is below
         erc-fill-column 157)
 
-  (load "~/.erc")
+  (load "~/.emacs.d/erc")
   (require 'erc-services)
   (erc-services-mode +1)
 
@@ -81,7 +83,7 @@
         erc-fill-static-center 15
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#allocpsa" "#stumpwm")
+        '(("freenode.net" "#xebian" "#emacs" "#gentoo" "#gentoo-au" "#python" "#allocpsa" "#stumpwm")
           ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors" "#debian-au" "#packaging"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
@@ -114,8 +116,6 @@
 ;; load php stuff grumble grumble
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" . (lambda ()
-                               (load "/usr/share/emacs/site-lisp/elpa/php-mode-1.21.0/php-project")
-                               (load "/usr/share/emacs/site-lisp/elpa/php-mode-1.21.0/php-mode")
                                (php-mode)
                                (setq c-basic-offset 4)
                                (php-enable-psr2-coding-style))))
