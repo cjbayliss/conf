@@ -32,12 +32,13 @@
   "send a new emails notification"
   ;; YUK.
   (setq my/email-count (gnus-group-unread "INBOX"))
-  (notifications-notify
-   :title "Gnus"
-   :body (format "You have %s new %s!" my/email-count (if (= my/email-count 1)
-                                                          "email"
-                                                        "emails"))
-   :app-icon nil))
+  (unless (< my/email-count 1)
+    (notifications-notify
+     :title "Gnus"
+     :body (format "You have %s new %s!" my/email-count (if (= my/email-count 1)
+                                                            "email"
+                                                          "emails"))
+     :app-icon nil)))
 
 (add-hook 'gnus-after-getting-new-news-hook 'my/gnus-notify t)
 
