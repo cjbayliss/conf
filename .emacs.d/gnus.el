@@ -11,7 +11,8 @@
       gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"
       ;; make subbed groups visible
       gnus-permanently-visible-groups "INBOX\\|Sent\\|archive\\|cyber"
-      gnus-use-cache t
+      gnus-asynchronous t
+      gnus-use-cache 'passive
       ;; copy sent emails to Sent
       gnus-message-archive-group "nnimap+email:Sent"
       gnus-gcc-mark-as-read t
@@ -23,6 +24,22 @@
 
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
+
+(require 'notifications)
+
+;; TODO: make this only notify for *new* emails, and not all unread emails
+(defun my/gnus-notify ()
+  "send a new emails notification"
+  ;; YUK.
+  (setq my/email-count (gnus-group-unread "INBOX"))
+  (notifications-notify
+   :title "Gnus"
+   :body (format "You have %s new %s!" my/email-count (if (= my/email-count 1)
+                                                          "email"
+                                                        "emails"))
+   :app-icon nil))
+
+(add-hook 'gnus-after-getting-new-news-hook 'my/gnus-notify t)
 
 ;; setup this demon *after* gnus has loaded, otherwise it does not work
 (with-eval-after-load "gnus"
