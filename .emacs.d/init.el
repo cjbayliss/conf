@@ -1,9 +1,15 @@
-;; there may be strange approaches in this conifg, here are two reasons why:
-;;
-;;     1. i'm an idiot who doesn't know elisp.
-;;
-;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my 11 year
-;;     old Macbook. (current init time 2019-04-27: 0.0s)
+;; setup the package system (comment out after first run for a faster startup)
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+
+;; don't comment this out otherwise use-package does not work
+(package-initialize)
+
+;; this can be commented out after the first run
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 ;; general emacs settings
 (setq inhibit-startup-screen t
@@ -91,7 +97,7 @@
   (show-paren-mode -1)
   (global-hl-line-mode -1)
   ;; load erc-hl-nicks
-  (load "~/.emacs.d/erc-hl-nicks")
+  (use-package erc-hl-nicks :ensure t :defer t)
   (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode +1)
@@ -113,12 +119,52 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
+;; hl-todo, making FIXMEs obvious since 2013 apparently
+(use-package hl-todo
+  :ensure t
+  :defer t)
+
+;; pythons are scary
+(use-package anaconda-mode
+  :ensure t
+  :defer t)
+
+;; don't forget your suit
+(use-package company
+  :ensure t
+  :defer t)
+
+;; there's a snake in your company!
+(use-package company-anaconda
+  :ensure t
+  :defer t)
+
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+
+;; kill off snakes for a living
+(defun my/the-serpent-reaper ()
+  "kill anaconda mode server"
+  (if (fboundp 'anaconda-mode-process)
+      (anaconda-mode-stop)))
+
+(add-hook 'kill-emacs-hook 'my/the-serpent-reaper)
+
 ;; load php stuff grumble grumble
-(add-to-list 'auto-mode-alist
-             '("\\.php\\'" . (lambda ()
-                               (php-mode)
-                               (setq c-basic-offset 4)
-                               (php-enable-psr2-coding-style))))
+(use-package php-mode
+  :ensure t
+  :defer t
+  :mode (("\\.php\\'" . php-mode))
+  :config
+  (add-hook 'php-mode-hook
+            '(lambda ()
+               ;; php-mode settings:
+               (setq c-basic-offset 4)
+               (php-enable-psr2-coding-style))))
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
