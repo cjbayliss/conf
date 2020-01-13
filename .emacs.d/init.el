@@ -124,35 +124,27 @@
   :ensure t
   :defer t)
 
-;; pythons are scary
-(use-package anaconda-mode
-  :ensure t
-  :defer t)
-
 ;; don't forget your suit
 (use-package company
   :ensure t
   :defer t)
 
-;; there's a snake in your company!
-(use-package company-anaconda
+;; all welcome elpy, the fear of pythons
+(use-package elpy
   :ensure t
-  :defer t)
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable)
+  :config
+  ;; yeah, i just using boring old python for this
+  (setq python-shell-interpreter "python"
+        python-shell-interpreter-args "-i"))
 
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+
 (add-hook 'after-init-hook 'global-company-mode)
-
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
-;; kill off snakes for a living
-(defun my/the-serpent-reaper ()
-  "kill anaconda mode server"
-  (if (fboundp 'anaconda-mode-process)
-      (anaconda-mode-stop)))
-
-(add-hook 'kill-emacs-hook 'my/the-serpent-reaper)
 
 ;; load php stuff grumble grumble
 (use-package php-mode
