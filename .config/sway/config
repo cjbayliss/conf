@@ -102,7 +102,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "swaynag -t warning -m 'Do you really want to exit sway?' -b 'EXIT' 'swaymsg exit'"
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes, exit sway' 'swaymsg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -129,8 +129,8 @@ bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl set +5%"
 #bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
 # adjust volume with alsa
-bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master unmute; amixer set Master 2%+ "
-bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master unmute; amixer set Master 2%- "
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 2%+ unmute | grep 'Mono:' | sed -e 's/\%].*//' -e 's/.*\[//' > $SWAYSOCK.wob"
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 2%- unmute | grep 'Mono:' | sed -e 's/\%].*//' -e 's/.*\[//' > $SWAYSOCK.wob"
 bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle"
 
 # control cmus
@@ -152,6 +152,11 @@ exec --no-startup-id "~/.local/usr/bin/redshift -O 4800"
 # get mako from here https://github.com/emersion/mako
 exec --no-startup-id "~/.bin/mako --default-timeout 5000"
 
+# wob, for volume indication, etc
+exec --no-startup-id "mkfifo $SWAYSOCK.wob"
+exec "tail -f $SWAYSOCK.wob | wob"
+
+# start ibus for input stuffs
 exec --no-startup-id "ibus-daemon -dr; sleep 1; ibus engine xkb:us::eng"
 
 # power management
