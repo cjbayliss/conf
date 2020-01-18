@@ -89,7 +89,7 @@
         erc-fill-static-center 15
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#emacs" "#gentoo" "#gentoo-au" "#python" "#allocpsa" "#stumpwm")
+        '(("freenode.net" "#xebian" "#emacs" "#gentoo" "#gentoo-au" "#python" "#allocpsa")
           ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors" "#debian-au" "#packaging"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
@@ -160,7 +160,7 @@
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
- '(line-number-current-line ((t (:background "color-237" :foreground "chocolate1"))))
+ '(line-number-current-line ((t (:background "darkolivegreen" :foreground "chocolate1"))))
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
  '(region ((t (:inverse-video t))))
  '(show-paren-match ((t (:foreground "steelblue1")))))
