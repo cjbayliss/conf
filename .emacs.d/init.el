@@ -89,8 +89,8 @@
         erc-fill-static-center 15
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#emacs" "#gentoo" "#gentoo-au" "#python" "#allocpsa")
-          ("oftc.net" "#debian-devel" "#debian-next" "#debian-mentors" "#debian-au" "#packaging"))
+        '(("freenode.net" "#xebian" "#emacs" "#gentoo" "#python" "#allocpsa")
+          ("oftc.net" "#debian-au"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
   (setq-default show-trailing-whitespace nil)
@@ -157,6 +157,20 @@
                ;; php-mode settings:
                (setq c-basic-offset 4)
                (php-enable-psr2-coding-style))))
+
+(use-package phpcbf
+  :ensure t
+  :defer t
+  :init
+  (setq phpcbf-executable "/usr/bin/phpcbf"
+        phpcbf-standard "PSR2"
+        ;; see https://github.com/nishimaki10/emacs-phpcbf/pull/8/commits/3b53e88
+        phpcbf-exclude "PSR2.ControlStructures.ElseIfDeclaration"))
+
+;; neotree keybinding
+(use-package neotree
+  :ensure t
+  :bind ([f6] . neotree-toggle))
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
