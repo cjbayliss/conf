@@ -1,16 +1,3 @@
-;; setup the package system (comment out after first run for a faster startup)
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-
-;; don't comment this out otherwise use-package does not work
-(package-initialize)
-
-;; this can be commented out after the first run
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 ;; general emacs settings
 (setq inhibit-startup-screen t
       column-number-mode t
@@ -48,15 +35,19 @@
 ;; enable/disable modes
 (show-paren-mode +1)
 (delete-selection-mode +1)
+(menu-bar-mode -1)
+
+;; these two modes slow my startup down by more than 25ms, but i can't live
+;; without them 😕
 (save-place-mode +1)
 (global-hl-line-mode +1)
-(menu-bar-mode -1)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
+(global-set-key "\C-cf" 'neotree-toggle)
 
 ;; custom irc func to load erc and join networks automatcially
 (defun irc ()
@@ -97,7 +88,7 @@
   (show-paren-mode -1)
   (global-hl-line-mode -1)
   ;; load erc-hl-nicks
-  (use-package erc-hl-nicks :ensure t :defer t)
+  (require 'erc-hl-nicks)
   (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode +1)
@@ -119,58 +110,28 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
-;; hl-todo, making FIXMEs obvious since 2013 apparently
-(use-package hl-todo
-  :ensure t
-  :defer t)
 
-;; don't forget your suit
-(use-package company
-  :ensure t
-  :defer t)
 
-;; all welcome elpy, the fear of pythons
-(use-package elpy
-  :ensure t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable)
-  :config
-  ;; yeah, i just using boring old python for this
-  (setq python-shell-interpreter "python"
-        python-shell-interpreter-args "-i"))
+(add-hook 'php-mode-hook '(lambda ()
+                            ;; php-mode settings:
+                            (setq c-basic-offset 4)
+                            (php-enable-psr2-coding-style)))
+(setq phpcbf-executable "/usr/bin/phpcbf"
+      phpcbf-standard "PSR2"
+      ;; see https://github.com/nishimaki10/emacs-phpcbf/pull/8/commits/3b53e88
+      phpcbf-exclude "PSR2.ControlStructures.ElseIfDeclaration")
+
+;; python setup
+(setq python-shell-interpreter "python"
+      python-shell-interpreter-args "-i")
 
 (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+(add-hook 'python-mode-hook 'elpy-enable)
 
-(add-hook 'after-init-hook 'global-company-mode)
+;; these hooks slow down my load time by more than 250ms 😭
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
-;; load php stuff grumble grumble
-(use-package php-mode
-  :ensure t
-  :defer t
-  :mode (("\\.php\\'" . php-mode))
-  :config
-  (add-hook 'php-mode-hook
-            '(lambda ()
-               ;; php-mode settings:
-               (setq c-basic-offset 4)
-               (php-enable-psr2-coding-style))))
-
-(use-package phpcbf
-  :ensure t
-  :defer t
-  :init
-  (setq phpcbf-executable "/usr/bin/phpcbf"
-        phpcbf-standard "PSR2"
-        ;; see https://github.com/nishimaki10/emacs-phpcbf/pull/8/commits/3b53e88
-        phpcbf-exclude "PSR2.ControlStructures.ElseIfDeclaration"))
-
-;; neotree keybinding
-(use-package neotree
-  :ensure t
-  :bind ([f6] . neotree-toggle))
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
