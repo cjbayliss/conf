@@ -17,6 +17,8 @@
       gnus-directory "~/.emacs.d/news/"
       gnus-startup-file "~/.emacs.d/newsrc"
       gnus-init-file "~/.emacs.d/gnus"
+      ;; focus mode 🧐
+      focus-current-thing 'paragraph
       ;; let the game begin! (people have heated views on this setting)
       gc-cons-threshold 100
       initial-scratch-message ";; ┌─┐┌┐┬┬ ┬ ┌─┐┌┬┐┌─┐┌─┐┌─┐
@@ -110,8 +112,6 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
-
-
 (add-hook 'php-mode-hook '(lambda ()
                             ;; php-mode settings:
                             (setq c-basic-offset 4)
@@ -135,6 +135,7 @@
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
+ '(focus-unfocused ((t (:foreground "color-59"))))
  '(line-number-current-line ((t (:background "darkolivegreen" :foreground "chocolate1"))))
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
  '(region ((t (:inverse-video t))))
