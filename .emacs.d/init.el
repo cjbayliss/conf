@@ -113,8 +113,8 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
-;; add debian's elpa packges to load path
-(let ((default-directory  "/usr/share/emacs/site-lisp/elpa/"))
+;; add packages to load path
+(let ((default-directory  "/usr/share/emacs/site-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 
 ;; load php stuff grumble grumble
