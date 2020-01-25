@@ -113,9 +113,14 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
+;; add debian's elpa packges to load path
+(let ((default-directory  "/usr/share/emacs/site-lisp/elpa/"))
+  (normal-top-level-add-subdirs-to-load-path))
+
 ;; load php stuff grumble grumble
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" . (lambda ()
+                               (autoload 'php-mode "php-mode")
                                (php-mode)
                                (setq c-basic-offset 4)
                                (php-enable-psr2-coding-style))))
