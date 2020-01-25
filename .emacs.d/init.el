@@ -1,8 +1,16 @@
+;; there may be strange approaches in this conifg, here are two reasons why:
+;;
+;;     1. i'm an idiot who doesn't know elisp.
+;;
+;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my 11 year
+;;     old Macbook. (current init time 2019-04-27: 0.0s)
+
 ;; general emacs settings
 (setq inhibit-startup-screen t
       column-number-mode t
       make-backup-files nil
       require-final-newline t
+      c-basic-offset 4
       ;; modified from: http://cyber.com.au/~twb/.emacs
       gnus-sum-thread-tree-false-root "──○ "
       gnus-sum-thread-tree-indent "  "
@@ -17,8 +25,6 @@
       gnus-directory "~/.emacs.d/news/"
       gnus-startup-file "~/.emacs.d/newsrc"
       gnus-init-file "~/.emacs.d/gnus"
-      ;; focus mode 🧐
-      focus-current-thing 'paragraph
       ;; let the game begin! (people have heated views on this setting)
       gc-cons-threshold 100
       initial-scratch-message ";; ┌─┐┌┐┬┬ ┬ ┌─┐┌┬┐┌─┐┌─┐┌─┐
@@ -39,17 +45,12 @@
 (delete-selection-mode +1)
 (menu-bar-mode -1)
 
-;; these two modes slow my startup down by more than 25ms, but i can't live
-;; without them 😕
-(save-place-mode +1)
-(global-hl-line-mode +1)
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
-(global-set-key "\C-cf" 'neotree-toggle)
+(global-set-key "\C-ch" 'hl-line-mode)
 
 ;; custom irc func to load erc and join networks automatcially
 (defun irc ()
@@ -90,7 +91,7 @@
   (show-paren-mode -1)
   (global-hl-line-mode -1)
   ;; load erc-hl-nicks
-  (require 'erc-hl-nicks)
+  (load "~/.emacs.d/erc-hl-nicks")
   (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode +1)
@@ -112,30 +113,15 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
-(add-hook 'php-mode-hook '(lambda ()
-                            ;; php-mode settings:
-                            (setq c-basic-offset 4)
-                            (php-enable-psr2-coding-style)))
-(setq phpcbf-executable "/usr/bin/phpcbf"
-      phpcbf-standard "PSR2"
-      ;; see https://github.com/nishimaki10/emacs-phpcbf/pull/8/commits/3b53e88
-      phpcbf-exclude "PSR2.ControlStructures.ElseIfDeclaration")
-
-;; python setup
-(setq python-shell-interpreter "python"
-      python-shell-interpreter-args "-i")
-
-(add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
-(add-hook 'python-mode-hook 'elpy-enable)
-
-;; these hooks slow down my load time by more than 250ms 😭
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-(add-hook 'after-init-hook 'global-company-mode)
+;; load php stuff grumble grumble
+(add-to-list 'auto-mode-alist
+             '("\\.php\\'" . (lambda ()
+                               (php-mode)
+                               (setq c-basic-offset 4)
+                               (php-enable-psr2-coding-style))))
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
- '(focus-unfocused ((t (:foreground "color-59"))))
  '(line-number-current-line ((t (:background "darkolivegreen" :foreground "chocolate1"))))
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
  '(region ((t (:inverse-video t))))

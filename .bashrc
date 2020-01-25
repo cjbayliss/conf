@@ -59,7 +59,8 @@ PS1='\[\e[1m\]\[\e[38;5;249m\]\u@\h \[\e[38;5;202m\]\W\[\e[38;5;193m\]$(__git_br
 # alias stuff
 alias ls="ls -h --color=auto"
 alias grep="grep --color=auto"
-alias sbcl="rlwrap sbcl --noinform"
+# i forgot how slow debians site-lisp is one time and removed this -_-
+alias emacs="emacs --no-site-lisp"
 
 # so uh, yeeaaaaah... see https://github.com/tmux/tmux/issues/142
 # 😢
