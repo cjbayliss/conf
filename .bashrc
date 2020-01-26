@@ -47,10 +47,10 @@ __git_status() {
     fi
 }
 
-# hopefully universal cool prompt (as in the colours should look right on dark
-# and light backgrounds) (THIS DIDN'T WORK OUT SO WELL)
-#PS1='\[\e[1m\]\u@\h \[\e[38;5;166m\]\w\[\e[38;5;77m\]$(__git_branch)\[\e[31m\]$(__git_status) \[\e[39m\]\$ \[\e[0m\]'
-PS1='\[\e[1m\]\[\e[38;5;249m\]\u@\h \[\e[38;5;202m\]\W\[\e[38;5;193m\]$(__git_branch)\[\e[31m\]$(__git_status) \[\e[38;5;15m\]\$ \[\e[0m\]'
+# universal prompt, should work anywhere
+#PS1='\u@\h \w \$ '
+# cool prompt with git repo status
+PS1='\[\e[1m\]\[\e[38;5;249m\]\u@\h \[\e[38;5;202m\]\w\[\e[38;5;193m\]$(__git_branch)\[\e[31m\]$(__git_status) \[\e[38;5;15m\]\$ \[\e[0m\]'
 
 ###########################
 ## ALIAS ALL THE THINGS! ##
@@ -78,15 +78,34 @@ bind "set completion-query-items 0"
 bind "TAB:menu-complete"
 bind "\"\e[Z\": menu-complete-backward"
 
+########################
+## EXPORTS AND SHEEP  ##
+########################
+
 # cool gcc colors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# cool less colors. this is buggy.
-export LESS_TERMCAP_mb=$'\e[1m\e[38;5;202m'
-export LESS_TERMCAP_md=$'\e[1m\e[38;5;202m'
-export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[1m\e[38;5;201m'
-export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1m\e[38;5;193m'
-export LESS_TERMCAP_ue=$'\e[0m'
+# make libvte terminals happy
 export GROFF_NO_SGR=1
+
+#####################
+## custom commands ##
+#####################
+
+# nice man colors
+man() {
+    env \
+        LESS_TERMCAP_mb=$(printf "\e[1m\e[38;5;202m") \
+        LESS_TERMCAP_md=$(printf "\e[1m\e[38;5;202m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1m\e[38;5;201m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1m\e[38;5;193m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        man "$@"
+}
+
+# this provides the main info i used htop for
+htop() {
+    free -h; echo; uptime; echo; ps au
+}
