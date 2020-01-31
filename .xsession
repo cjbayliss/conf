@@ -22,5 +22,5 @@ export XDG_DOWNLOAD_DIR="$HOME/downloads"
 export XDG_MUSIC_DIR="$HOME/music"
 export XDG_VIDEOS_DIR="$HOME/videos"
 
-# Now start stumpwm! :)
-exec dbus-launch --exit-with-session stumpwm
+# Now start ratpoison! :)
+exec dbus-launch --exit-with-session ratpoison

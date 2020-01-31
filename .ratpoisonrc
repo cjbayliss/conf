@@ -1,0 +1,30 @@
+# prefix key
+escape C-z
+
+# basic settings
+set border 0
+# see: https://en.wikipedia.org/wiki/X11_color_names
+set fgcolor white
+set bgcolor black
+exec xsetroot -solid gray15 -cursor_name left_ptr
+
+# lunch stuff
+bind C-d exec dmenu_run -b -fn 'Iosevka Term Slab'
+bind c exec sst
+bind C-c exec sst
+bind C-f exec firefox
+
+# top level keys
+definekey top XF86MonBrightnessDown exec brightnessctl set 5%-
+definekey top XF86MonBrightnessUp exec brightnessctl set +5%
+
+definekey top XF86AudioLowerVolume exec ratpoison -c "echo $(amixer set Master 2%- unmute | grep 'Mono:' | cut -d' ' -f6)"
+definekey top XF86AudioRaiseVolume exec ratpoison -c "echo $(amixer set Master 2%+ unmute | grep 'Mono:' | cut -d' ' -f6)"
+definekey top XF86AudioMute exec ratpoison -c "echo $(amixer set Master toggle | grep 'Mono:' | cut -d' ' -f8)"
+
+definekey top XF86AudioNext exec cmus-remote --next
+definekey top XF86AudioPrev exec cmus-remote --prev
+definekey top XF86AudioPlay exec cmus-remote --pause
+
+# this must go last due to a firefox bug
+exec ibus-daemon -dr
