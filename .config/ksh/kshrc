@@ -9,6 +9,14 @@ HISTCONTROL=ignorespace:ignoredups
 HISTFILE="$HOME/.cache/ksh_history"
 HISTSIZE=10000
 
+# color dirs/files nicely
+eval $(dircolors)
+
+# load ksh-completeions
+if [ -f "$HOME/.config/ksh/ksh-completion.sh" ]; then
+	. "$HOME/.config/ksh/ksh-completion.sh"
+fi
+
 #################
 ## COOL PROMPT ##
 #################
@@ -47,8 +55,13 @@ alias emacs="emacs --no-site-lisp"
 # 😢
 alias tmux='tmux -f $HOME/.config/tmux/tmux.conf'
 
+# if on gentoo, make startx use $HOME/.xsession
+if test $(uname -r | grep -i gentoo); then
+    alias startx="startx $HOME/.xsession"
+fi
+
 #######################
-## exports and sheep ##
+## EXPORTS AND SHEEP ##
 #######################
 
 # cool gcc colors
@@ -61,7 +74,7 @@ export LESSHISTFILE='/dev/null'
 export GROFF_NO_SGR=1
 
 #####################
-## custom commands ##
+## CUSTOM COMMANDS ##
 #####################
 
 # nice man colors
@@ -86,6 +99,34 @@ htop() {
 ix.io() {
     curl -F 'f:1=<-' ix.io
 }
+
+# if on gentoo, add gentoo-world-check, a @world file checker from:
+# https://wiki.gentoo.org/wiki/World_file_(Portage)
+# this can be helpfull for removing things from your @world file
+if test $(uname -r | grep -i gentoo); then
+
+    gentoo-world-check() {
+        echo -n 'Are you sure you want to run gentoo-world-check? IT CAN TAKE SOME TIME!! (y/N)? '
+        read answer
+        if [ "$answer" != "${answer#[Yy]}" ]; then
+            rm -i /tmp/deselect
+            while read i ; do \
+                if [ -n "$(qdepends -Q $i)" ]; then \
+                    echo '' ; echo 'checking '$i ;
+                    if [ -n "$(emerge -p --quiet --depclean $i)" ]; then \
+                        echo $i' needs to stay in @world'
+                    else
+                        echo $i' can be deselected'
+                        echo $i >> /tmp/deselect
+                    fi
+                fi
+            done < /var/lib/portage/world
+            echo '\n/tmp/deselect contains candidates for deselection'
+            echo 'try: emerge --ask --deselect $(< /tmp/deselect)\n'
+        fi
+    }
+
+fi
 
 # cleanup on exit
 __cleanup() {

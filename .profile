@@ -23,6 +23,9 @@ export LIBVIRT_DEFAULT_URI='qemu:///system'
 # start the ssh-agent. requires the package 'keychain'
 eval $(keychain --eval --quiet --quick --dir "$HOME/.cache/keychain")
 
+# this PS1 *sould* work in any POSIX compliant shell
+#PS1="$USER@${HOSTNAME:=$(hostname)} \$(pwd | sed 's/\/home\/'$USER'/~/')"' \$ '
+
 # set default directories
 xdg-user-dirs-update --set DESKTOP "$HOME/dev"
 xdg-user-dirs-update --set DOWNLOAD "$HOME/downloads"
