@@ -83,13 +83,14 @@
         erc-fill-static-center 15
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#gentoo" "#emacs" "#ksh" "#python" "#allocpsa")
-          ("oftc.net" "#debian-au"))
+        '(("freenode.net" "#xebian" "#gentoo" "#emacs" "#python" "#allocpsa" "##music-electronics" "#lisp" "#clojure" "#clojurescript" "#lighttpd" "##asm")
+          ("oftc.net" "#debian-au" "#debian-devel" "#debian-next" "#debian-mentors" "#debian-next" "#packaging"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
   (global-hl-line-mode -1)
+  (ido-mode +1)
   ;; load erc-hl-nicks
   (load "~/.emacs.d/erc-hl-nicks")
   (erc-hl-nicks)
