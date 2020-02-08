@@ -1,4 +1,4 @@
-# -*- sh -*-
+#!/bin/ksh
 
 ######################
 ## GENERAL SETTINGS ##
@@ -10,7 +10,7 @@ HISTFILE="$HOME/.cache/ksh_history"
 HISTSIZE=10000
 
 # color dirs/files nicely
-eval $(dircolors)
+[ -f /usr/bin/dircolors ] && eval "$(dircolors)"
 
 # load ksh-completeions
 if [ -f "$HOME/.config/ksh/ksh-completion.sh" ]; then
@@ -22,7 +22,7 @@ fi
 #################
 
 __git_branch() {
-    BRANCH="$(git branch 2>/dev/null | grep '^*' | colrm 1 2)"
+    BRANCH="$(git branch 2>/dev/null | grep '^*' | cut -d' ' -f2)"
     if [ "$BRANCH" != "" ]; then
         printf " $BRANCH"
     fi
@@ -96,7 +96,7 @@ htop() {
 }
 
 # paste command
-ix.io() {
+ix() {
     curl -F 'f:1=<-' ix.io
 }
 

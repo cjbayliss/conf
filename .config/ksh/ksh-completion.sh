@@ -14,4 +14,4 @@ set -A complete_man_1 -- $(ls -1 /usr/share/man/man1/ | sed 's/\..*//')
 
 # tab complete some commands for sudo
 [ -f /usr/bin/emerge ] && GENTOO_STUFF='emerge eselect'
-set -A complete_sudo_1 -- $GENTOO_STUFF poweroff -i
+set -A complete_sudo_1 -- $GENTOO_STUFF emacs poweroff -i
