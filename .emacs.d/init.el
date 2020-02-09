@@ -45,6 +45,10 @@
 (delete-selection-mode +1)
 (menu-bar-mode -1)
 
+;; yes, these modes slow down startup a lot 😢
+(save-place-mode +1)
+(global-hl-line-mode +1)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
@@ -125,6 +129,20 @@
                                (php-mode)
                                (setq c-basic-offset 4)
                                (php-enable-psr2-coding-style))))
+
+;; load nasm-mode instead of the broken(?) asm-mode
+(add-to-list 'auto-mode-alist
+             '("\\.\\(asm\\|nasm\\|S\\|s\\)\\'" . (lambda ()
+                                                    (load "~/.emacs.d/nasm-mode")
+                                                    (nasm-mode))))
+
+;; if I'm editing a C file, I *probably* want the linux style
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (setq c-default-style "linux"
+                  c-basic-offset 8
+                  tab-width 8
+                  indent-tabs-mode t)))
 
 ;; beleive it or not, this **doesn't** increase emacs init time
 (custom-set-faces
