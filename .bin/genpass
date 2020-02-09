@@ -17,13 +17,15 @@ cntr=0
 # we don't include 0 as a easy hack to not get 00 through 09, although we don't
 # get 10,20,30,.. etc etc. this saves us an if statement, and shouldn't be a
 # security issue.
-stop=$(cat /dev/urandom | tr -dc '1-9' | fold -w 2 | head -n1)
+stop=$(tr -dc '1-9' < /dev/urandom | fold -w 2 | head -n1)
 
 while [ "$cntr" -le "$stop" ]
 do
-    l=$(cat /dev/urandom | tr -dc '0-9' | fold -w 2 | head -n1)
-    # hack to make 04 == 4, or 05 == 5.
-    l=$(expr $l + 0)
+    l=$(tr -dc '0-9' < /dev/urandom | fold -w 2 | head -n1)
+    # hack to make 04 == 4, or 05 == 5. NOTE: we ignore shellcheck's SC2003
+    # because in this case $(( )) is *not* what we want.
+    # shellcheck disable=SC2003
+    l=$(expr "$l" + 0)
     if [ "$l" -ge 15 ] && [ "$l" -le 40 ]
     then
         # *supposedly* some organisations such as the NSA can figure out the
@@ -31,8 +33,9 @@ do
         # characters to head -n $l multiplied by itself 3 times to get a random
         # *amount* of characters, and tail that to get a random length after we
         # remove the '\n's with tr.
-        echo $(cat /dev/urandom | strings | grep -o '[0-9A-Za-z~!@#$%^&*()_+]' | head -n $(( $l*$l*$l )) | tail -n "$l" | tr -d '\n')
+        strings < /dev/urandom | grep -o '[0-9A-Za-z~!@#$%^&*()_+]' | head -n $(( l*l*l )) | tail -n "$l" | tr -d '\n'
+        printf '\n'
         # increment the counter
-        cntr=$(( $cntr + 1 ))
+        cntr=$(( cntr + 1 ))
     fi
 done
