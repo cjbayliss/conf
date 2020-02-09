@@ -1,13 +1,13 @@
 #!/bin/sh
-# if ksh, source ksh config if it exists
-if [ -n "$KSH_VERSION" ]; then
-    if [[ -f ~/.config/ksh/kshrc ]] ; then
-        export ENV="$HOME/.config/ksh/kshrc"
+# if bash, source bash config if it exists
+if [ -n "$BASH_VERSION" ]; then
+    if [ -f ~/.bashrc ] ; then
+        . ~/.bashrc
     fi
 fi
 
 # turn off the screen after 1 min
-if [[ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ]] ; then
+if [ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ] ; then
     setterm --powersave on --blank 1
 fi
 
@@ -16,16 +16,16 @@ export EMAIL="cjb@cjb.sh"
 export NAME="Christopher Bayliss"
 
 # add ~/.bin to PATH
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.bin"
 
 # make virsh use qemu:///system by default
 export LIBVIRT_DEFAULT_URI='qemu:///system'
 
 # start the ssh-agent. requires the package 'keychain'
-[ -f /usr/bin/keychain ] && eval $(keychain --eval --quiet --quick --dir "$HOME/.cache/keychain")
+[ -f /usr/bin/keychain ] && eval "$(keychain --eval --quiet --quick --dir ~/.cache/keychain)"
 
 # this PS1 *sould* work in any POSIX compliant shell
-#PS1="$USER@${HOSTNAME:=$(hostname)} \$(pwd | sed 's/\/home\/'$USER'/~/')"' \$ '
+[ -z "$BASH_VERSION" ] && PS1="$USER@${HOSTNAME:=$(hostname)} \$(pwd | sed 's/\/home\/'$USER'/~/')"' \$ '
 
 # set default directories
 if [ -f /usr/bin/xdg-user-dirs-update ]; then
