@@ -1,0 +1,20 @@
+;;; -*- mode: scheme -*-
+
+;; activate readline for a nicer experience
+(use-modules (ice-9 readline))
+(activate-readline)
+
+;; enable history
+(readline-enable 'history-file)
+(readline-set! history-length 10000)
+
+;; set a plain prompt
+(use-modules (system repl common))
+(repl-default-option-set! 'prompt ">>> ")
+
+;; don't show the welcome message
+(module-set! (resolve-module '(system repl common))
+             'repl-welcome
+             (const #t))
+
+;; vim: ft=scheme :
