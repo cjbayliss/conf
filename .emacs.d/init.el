@@ -56,77 +56,64 @@
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 (global-set-key "\C-ch" 'hl-line-mode)
 
-;; see https://github.com/jorgenschaefer/circe/wiki/Configuration
-(defun my/fetch-password (&rest params)
-  (require 'auth-source)
-  (let ((match (car (apply 'auth-source-search params))))
-    (if match
-        (let ((secret (plist-get match :secret)))
-          (if (functionp secret)
-              (funcall secret)
-            secret))
-      (error "Password not found for %S" params))))
-
-(defun my/return-password (server)
-  (my/fetch-password :host server))
+;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out. rcirc
 
 ;; custom irc func to load erc and join networks automatcially
 (defun irc ()
   "Connect to IRC."
   (interactive)
-  (require 'circe)
-  (require 'circe-color-nicks)
-  (enable-circe-color-nicks)
+
+  ;; these bits need to be here **before** you start ERC
+  (setq erc-prompt-for-nickserv-password nil
+        ;; set this here, the auto resize is below
+        erc-fill-column 157)
+
+  (load "~/.emacs.d/erc")
+  (require 'erc-services)
+  (erc-services-mode +1)
+
+  (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
+  (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
+
+;; ERC config
+(with-eval-after-load "erc"
+  (autoload 'erc-goodies "erc-goodies")
+
+  (setq erc-prompt-for-password nil
+        erc-autojoin-timing 'ident
+        erc-rename-buffers t
+        erc-track-exclude-server-buffer t
+        erc-interpret-mirc-color t
+        erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT")
+        erc-fill-function 'erc-fill-static
+        erc-fill-static-center 15
+        erc-server-reconnect-timeout 60
+        erc-autojoin-channels-alist
+        '(("freenode.net" "#xebian" "#allocpsa" "#lisp" "##asm")
+          ("oftc.net" "#debian-au" "#debian-devel" "#debian-next" "#debian-mentors" "#packaging"))
+        erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
   (global-hl-line-mode -1)
+  (ido-mode +1)
+  ;; load erc-hl-nicks
+  (load "~/.emacs.d/erc-hl-nicks")
+  (erc-hl-nicks)
+  (erc-scrolltobottom-enable)
+  (erc-notifications-mode +1)
+  (erc-spelling-mode +1)
 
-  (add-hook 'lui-mode-hook 'my-lui-setup)
-  (defun my-lui-setup ()
-    (setq fringes-outside-margins t
-          word-wrap t
-          wrap-prefix "      "))
+  ;; make ERC use full buffer width
+  (add-to-list 'window-configuration-change-hook
+               (lambda () (setq erc-fill-column (- (window-width) 2))))
+  ;; keep ERC buffer pined to bottom
+  (add-to-list 'erc-mode-hook
+               (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
 
-  (setq lui-fill-type nil
-        lui-time-stamp-position 'left
-        lui-time-stamp-format "%H:%M "
-        lui-time-stamp-only-when-changed-p nil
-        circe-format-say "<{nick}> {body}"
-        circe-format-action "[{nick} {body}]"
-        circe-format-self-say circe-format-say
-        circe-format-self-action circe-format-action
-        circe-reduce-lurker-spam t
-        circe-color-nicks-everywhere t
-        lui-flyspell-p t
-        circe-default-nick "cjbayliss"
-        circe-default-realname "Christopher Bayliss"
-        circe-network-options
-        '(("OFTC"
-           :host "irc.oftc.net"
-           :nick "cjbayliss"
-           :nickserv-password my/return-password
-           :channels (:after-auth "#debian-au" "#debian-devel" "#debian-next" "#debian-mentors" "#debian-next" "#packaging"))
-          ("Cyber"
-           :host "127.0.0.1"
-           :port "6667"
-           :nick "cjb"
-           :channels ("#cyber"))
-          ("Freenode"
-           :host "chat.au.freenode.net"
-           :nick "cjb"
-           :sasl-username "cjb"
-           :sasl-password my/return-password
-           :nickserv-password my/return-password
-           :channels (:after-auth "#xebian" "#gentoo" "#emacs" "#python" "#allocpsa" "#lisp" "#clojure" "##asm" "##c"))))
-  (circe "Cyber")
-  (circe "OFTC")
-  (circe "Freenode")
-
-  (custom-set-faces '(circe-my-message-face ((t (:foreground "color-216"))))
-                    '(circe-prompt-face ((t (:foreground "cyan1"))))
-                    '(circe-server-face ((t (:foreground "chocolate1"))))
-                    '(lui-time-stamp-face ((t (:foreground "brightwhite")))))
+  ;; fix ERC prompt colors
+  (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
+                    '(erc-input-face ((t (:foreground "white")))))
 
   ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
   ;; has lived, but since you know how to use git you'll find out in no time!!
