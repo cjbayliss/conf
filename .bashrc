@@ -40,7 +40,7 @@ shopt -s checkwinsize
 #################
 
 __git_branch() {
-    BRANCH="$(git branch 2>/dev/null | grep '^*' | cut -d' ' -f2)"
+    BRANCH="$(git branch 2>/dev/null | grep '^*' | colrm 1 2)"
     if [ "$BRANCH" != "" ]; then
         printf " %s" "$BRANCH"
     fi
