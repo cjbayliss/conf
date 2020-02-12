@@ -47,3 +47,5 @@
 
 ## block evil mozilla stuff
 0.0.0.0 incoming.telemetry.mozilla.org
+
+# vim: ft=conf :

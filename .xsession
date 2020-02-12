@@ -24,3 +24,5 @@ export XDG_VIDEOS_DIR="$HOME/videos"
 
 # Now start ratpoison! :)
 exec dbus-launch --exit-with-session ratpoison
+
+# vim: ft=sh :
