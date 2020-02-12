@@ -4,6 +4,12 @@
 ;;
 ;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my 11 year
 ;;     old Macbook. (current init time 2019-04-27: 0.0s)
+;;
+;; NOTE: a better way to test the startup time is this 'oneliner' (the sleep is important):
+;;
+;;     $ x=0; while [ $x -lt 10 ]; do time emacs -kill; x=$((x + 1)); sleep 1; done
+;;
+;; on my Macbook the average is: 74.9ms
 
 ;; general emacs settings
 (setq inhibit-startup-screen t
@@ -11,6 +17,7 @@
       make-backup-files nil
       require-final-newline t
       c-basic-offset 4
+
       ;; modified from: http://cyber.com.au/~twb/.emacs
       gnus-sum-thread-tree-false-root "──○ "
       gnus-sum-thread-tree-indent "  "
@@ -21,6 +28,7 @@
       gnus-sum-thread-tree-vertical "│ "
       gnus-user-date-format-alist '((t . "%b %e"))
       gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
+
       ;; get stuff out of the home dir
       gnus-directory "~/.emacs.d/news/"
       gnus-startup-file "~/.emacs.d/newsrc"
@@ -40,18 +48,12 @@
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
-;; set default load-path
-(let ((default-directory  "/usr/share/emacs/site-lisp/"))
-  (normal-top-level-add-subdirs-to-load-path))
-;; add ~/.emacs.d/lisp to load path
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
 ;; enable/disable modes
 (show-paren-mode +1)
 (delete-selection-mode +1)
 (menu-bar-mode -1)
 
-;; yes, these modes slow down startup a lot 😢
+;; yes, these modes slow down startup by about 4ms total 😢
 (save-place-mode +1)
 (global-hl-line-mode +1)
 
@@ -63,8 +65,7 @@
 (global-set-key "\C-ch" 'hl-line-mode)
 
 ;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out. rcirc
-
-;; custom irc func to load erc and join networks automatcially
+;; custom irc func to load erc and join networks automatically
 (defun irc ()
   "Connect to IRC."
   (interactive)
@@ -95,7 +96,7 @@
         erc-fill-static-center 15
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#allocpsa" "#lisp" "##asm")
+        '(("freenode.net" "#xebian" "#lisp" "##asm")
           ("oftc.net" "#debian-au" "#debian-devel" "#debian-next" "#debian-mentors" "#packaging"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
@@ -103,6 +104,8 @@
   (show-paren-mode -1)
   (global-hl-line-mode -1)
   (ido-mode +1)
+  ;; load and require erc-hl-nicks
+  (my/load-lisp)
   (require 'erc-hl-nicks)
   (erc-hl-nicks)
   (erc-scrolltobottom-enable)
@@ -116,7 +119,7 @@
   (add-to-list 'erc-mode-hook
                (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
 
-  ;; fix ERC prompt colors
+  ;; fix ERC prompt colours
   (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
                     '(erc-input-face ((t (:foreground "white")))))
 
@@ -128,6 +131,7 @@
 ;; load php stuff grumble grumble
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" . (lambda ()
+                               (my/load-lisp)
                                (require 'php-mode)
                                (php-mode)
                                (setq c-basic-offset 4)
@@ -136,6 +140,7 @@
 ;; load nasm-mode instead of the broken(?) asm-mode
 (add-to-list 'auto-mode-alist
              '("\\.\\(asm\\|nasm\\|S\\|s\\)\\'" . (lambda ()
+                                                    (my/load-lisp)
                                                     (require 'nasm-mode)
                                                     (nasm-mode))))
 
@@ -147,7 +152,31 @@
                   tab-width 8
                   indent-tabs-mode t)))
 
-;; beleive it or not, this **doesn't** increase emacs init time
+;; instead of loading hl-todo (which compiled, takes about 10ms on my machine)
+(defface highlight-todo-face
+  '((t :foreground "yellow" :background "black" :inverse-video t :weight bold))
+  "Basic face for highlighting TODO &c.")
+(defvar highlight-todo-face 'highlight-todo-face)
+(add-hook 'prog-mode-hook (lambda ()
+                            (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\):" 1 highlight-todo-face t)))))
+
+;; emacs should already have this function, does it and i can't find it?
+(defun byte-compile-directory (directory)
+  "compile contents of a directory"
+  (interactive "DByte compile directory: ")
+  (byte-recompile-directory directory 0))
+
+;; it takes almost 10ms add these load paths, so put it in a function, and call
+;; when needed instead of every time i open emacs
+(defun my/load-lisp ()
+  "function to load lisp when needed"
+  ;; set default load-path
+  (let ((default-directory  "/usr/share/emacs/site-lisp/"))
+    (normal-top-level-add-subdirs-to-load-path))
+  ;; add ~/.emacs.d/lisp to load path
+  (add-to-list 'load-path "~/.emacs.d/lisp/"))
+
+;; believe it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(line-number-current-line ((t (:background "darkolivegreen" :foreground "chocolate1"))))
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
