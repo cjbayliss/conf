@@ -40,6 +40,12 @@
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
+;; set default load-path
+(let ((default-directory  "/usr/share/emacs/site-lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
+;; add ~/.emacs.d/lisp to load path
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 ;; enable/disable modes
 (show-paren-mode +1)
 (delete-selection-mode +1)
@@ -77,7 +83,7 @@
 
 ;; ERC config
 (with-eval-after-load "erc"
-  (autoload 'erc-goodies "erc-goodies")
+  (require 'erc-goodies)
 
   (setq erc-prompt-for-password nil
         erc-autojoin-timing 'ident
@@ -97,8 +103,7 @@
   (show-paren-mode -1)
   (global-hl-line-mode -1)
   (ido-mode +1)
-  ;; load erc-hl-nicks
-  (load "~/.emacs.d/erc-hl-nicks")
+  (require 'erc-hl-nicks)
   (erc-hl-nicks)
   (erc-scrolltobottom-enable)
   (erc-notifications-mode +1)
@@ -120,14 +125,10 @@
   ;; (yes, I felt like writing about this paren for no reason at all.)
   )
 
-;; add packages to load path
-(let ((default-directory  "/usr/share/emacs/site-lisp/"))
-  (normal-top-level-add-subdirs-to-load-path))
-
 ;; load php stuff grumble grumble
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" . (lambda ()
-                               (autoload 'php-mode "php-mode")
+                               (require 'php-mode)
                                (php-mode)
                                (setq c-basic-offset 4)
                                (php-enable-psr2-coding-style))))
@@ -135,7 +136,7 @@
 ;; load nasm-mode instead of the broken(?) asm-mode
 (add-to-list 'auto-mode-alist
              '("\\.\\(asm\\|nasm\\|S\\|s\\)\\'" . (lambda ()
-                                                    (load "~/.emacs.d/nasm-mode")
+                                                    (require 'nasm-mode)
                                                     (nasm-mode))))
 
 ;; if I'm editing a C file, I *probably* want the linux style
