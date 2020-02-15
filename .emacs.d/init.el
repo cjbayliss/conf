@@ -64,53 +64,35 @@
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 (global-set-key "\C-ch" 'hl-line-mode)
 
-;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out. rcirc
-;; custom irc func to load erc and join networks automatically
-(defun irc ()
-  "Connect to IRC."
-  (interactive)
-
-  ;; these bits need to be here **before** you start ERC
-  (setq erc-prompt-for-nickserv-password nil
-        ;; set this here, the auto resize is below
-        erc-fill-column 157)
-
-  (load "~/.emacs.d/erc")
-  (require 'erc-services)
-  (erc-services-mode +1)
-
-  (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
-  (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
-
+;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out.
 ;; ERC config
 (with-eval-after-load "erc"
   (require 'erc-goodies)
 
-  (setq erc-prompt-for-password nil
-        erc-autojoin-timing 'ident
-        erc-rename-buffers t
-        erc-track-exclude-server-buffer t
+  (setq erc-fill-function 'erc-fill-static
+        erc-fill-static-center 15
         erc-interpret-mirc-color t
         erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT")
-        erc-fill-function 'erc-fill-static
-        erc-fill-static-center 15
+        erc-prompt (lambda () (concat "[" (buffer-name) "]"))
+        erc-prompt-for-nickserv-password nil
+        erc-prompt-for-password nil
+        erc-rename-buffers t
+        erc-server "chat.au.freenode.net"
         erc-server-reconnect-timeout 60
-        erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#lisp" "##asm")
-          ("oftc.net" "#debian-au" "#debian-devel" "#debian-next" "#debian-mentors" "#packaging"))
-        erc-prompt (lambda () (concat "[" (buffer-name) "]")))
+        erc-track-exclude-server-buffer t
+        erc-user-full-name "Christopher Bayliss")
 
+  (erc-notifications-mode +1)
+  (erc-scrolltobottom-enable)
+  (erc-spelling-mode +1)
+  (global-hl-line-mode -1)
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
-  (global-hl-line-mode -1)
-  (ido-mode +1)
+
   ;; load and require erc-hl-nicks
   (my/load-lisp)
   (require 'erc-hl-nicks)
   (erc-hl-nicks)
-  (erc-scrolltobottom-enable)
-  (erc-notifications-mode +1)
-  (erc-spelling-mode +1)
 
   ;; make ERC use full buffer width
   (add-to-list 'window-configuration-change-hook
