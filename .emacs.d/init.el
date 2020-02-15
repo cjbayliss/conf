@@ -158,6 +158,31 @@
   ;; add ~/.emacs.d/lisp to load path
   (add-to-list 'load-path "~/.emacs.d/lisp/"))
 
+;; elfeed setup
+(defun start-elfeed()
+  "function to load then start elfeed"
+  (interactive)
+  (my/load-lisp)
+  (setq-default show-trailing-whitespace nil)
+  ;; set elfeed's... feeds
+  (setq elfeed-feeds '("http://blog.jeff.over.bz/rss.xml"
+                       "http://nullprogram.com/feed/"
+                       "http://planet.kernel.org/rss20.xml"
+                       "https://blog.mattcen.com/rss"
+                       "https://christine.website/blog.rss"
+                       "https://cjb.sh/articles/feed.xml"
+                       "https://codingquark.com/feed.xml"
+                       "https://danluu.com/atom.xml"
+                       "https://jvns.ca/atom.xml"
+                       "https://lwn.net/headlines/rss"
+                       "https://planet.freedesktop.org/rss20.xml"
+                       "https://planet.gentoo.org/rss20.xml"
+                       "https://rachelbythebay.com/w/atom.xml"
+                       "https://sachachua.com/blog/category/emacs-news/feed"
+                       "https://security.gentoo.org/glsa/feed.rss"))
+  (require 'elfeed)
+  (elfeed))
+
 ;; believe it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(line-number-current-line ((t (:background "darkolivegreen" :foreground "chocolate1"))))
