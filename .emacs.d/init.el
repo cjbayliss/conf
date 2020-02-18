@@ -64,6 +64,9 @@
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 (global-set-key "\C-ch" 'hl-line-mode)
 
+;; don't start rcirc by accident
+(fmakunbound 'irc)
+
 ;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out.
 ;; ERC config
 (with-eval-after-load "erc"
@@ -159,7 +162,7 @@
   (add-to-list 'load-path "~/.emacs.d/lisp/"))
 
 ;; elfeed setup
-(defun start-elfeed()
+(defun rss()
   "function to load then start elfeed"
   (interactive)
   (my/load-lisp)
@@ -175,6 +178,7 @@
                        "https://danluu.com/atom.xml"
                        "https://jvns.ca/atom.xml"
                        "https://lwn.net/headlines/rss"
+                       "https://pine64.org/blog/rss"
                        "https://planet.freedesktop.org/rss20.xml"
                        "https://planet.gentoo.org/rss20.xml"
                        "https://rachelbythebay.com/w/atom.xml"
