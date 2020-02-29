@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# alias stuff
+alias grep="grep --color=auto"
+alias ls="ls -h --color=auto"
+alias htop="free -h; echo; uptime; echo; ps au"
+alias ix="curl -F 'f:1=<-' ix.io"
+alias poweroff="sudo /sbin/poweroff"
+alias wget="wget --hsts-file=/dev/null"
+# i once removed this having forgot how slow debian's site-lisp is -_-
+alias emacs="emacs --no-site-lisp"
+
+# so uh, yeeaaaaah... https://github.com/tmux/tmux/issues/142
+alias tmux="tmux -f $HOME/.config/tmux/tmux.conf"
+
+# if on gentoo, make startx use $HOME/.xsession
+[ -n "$(uname -r | grep -i gentoo)" ] && alias startx="startx $HOME/.xsession"
+
+# setup a PS1 that *should* work in any POSIX compliant shell
+PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed 's/\/home\/'$USER'/~/')\$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')> "
+
+# cleanup on exit
+__cleanup() {
+    rmdir ~/*
+    rm ~/.*hist*
+    rm ~/.lesshst
+    rm ~/.viminfo
+    rm -rf ~/.w3m
+    clear
+}
+
+trap __cleanup EXIT
