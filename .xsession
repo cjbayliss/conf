@@ -1,6 +1,9 @@
 # set the white balance
 redshift -O 4800 &
 
+# "xmodmap is deprecated" <-- tell me that when setxkbmap has feature parity.
+xmodmap ~/.Xmodmap
+
 # real smooth scrolling in FF
 export MOZ_USE_XINPUT2=1
 
@@ -14,6 +17,7 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
+export MOZC_CONFIGURATION_DIRECTORY="$HOME/.config/mozc"
 
 # XDG_*_DIRs
 export XDG_DESKTOP_DIR="$HOME/dev"
