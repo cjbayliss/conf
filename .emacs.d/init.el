@@ -167,20 +167,22 @@
   (interactive)
   (my/load-lisp)
   (setq-default show-trailing-whitespace nil)
+
   ;; set elfeed's... feeds
-  (setq elfeed-feeds '("http://blog.jeff.over.bz/rss.xml"
-                       "http://nullprogram.com/feed/"
-                       "http://planet.kernel.org/rss20.xml"
+  (setq elfeed-feeds '("https://blog.jeff.over.bz/rss.xml"
                        "https://blog.mattcen.com/rss"
                        "https://christine.website/blog.rss"
                        "https://cjb.sh/articles/feed.xml"
                        "https://codingquark.com/feed.xml"
                        "https://danluu.com/atom.xml"
+                       "https://deftly.net/rss.xml"
                        "https://jvns.ca/atom.xml"
                        "https://lwn.net/headlines/rss"
+                       "https://nullprogram.com/feed/"
                        "https://pine64.org/blog/rss"
                        "https://planet.freedesktop.org/rss20.xml"
                        "https://planet.gentoo.org/rss20.xml"
+                       "https://planet.kernel.org/rss20.xml"
                        "https://rachelbythebay.com/w/atom.xml"
                        "https://sachachua.com/blog/category/emacs-news/feed"
                        "https://security.gentoo.org/glsa/feed.rss"))
