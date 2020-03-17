@@ -55,16 +55,17 @@ PS1='\[\e[1m\]\[\e[38;5;249m\]\u@\h \[\e[38;5;202m\]\W\[\e[38;5;193m\]$(__git_br
 ###########################
 
 # alias stuff
-alias ls='ls -h --color=auto'
-alias la='ls -hlA --color=auto'
-alias ll='ls -hl --color=auto'
-alias grep='grep --color=auto'
+alias ls="ls -h --color=auto"
+alias la="ls -hlA"
+alias ll="ls -hl"
+alias grep="grep --color=auto"
 
 # instead of exporting TERM=screen-256color which breaks tmux buffers on the
-# console, we just alias these to folks.
-alias emacs='TERM=screen-256color emacs'
-alias mutt='TERM=screen-256color mutt'
-alias newsboat='TERM=screen-256color newsboat'
+# linux console/tty, we just alias these to folks.
+alias emacs="TERM=screen-256color emacs"
+alias erc="TERM=screen-256color emacs -l $HOME/.emacs.d/erc.el"
+alias mutt="TERM=screen-256color mutt"
+alias newsboat="TERM=screen-256color newsboat"
 
 ######################
 ## EPIC COMPLETION! ##
