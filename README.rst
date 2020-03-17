@@ -3,6 +3,16 @@ My standard \*NIX config
 
 Some of it is nice, but most of it is boring.
 
+In early 2019 I started a fresh repo, part of this was because I wanted have
+faster clone times, but most of it was because I was embarrassed of the
+mistakes of my past, stupid workarounds, and wot not.
+
+In 2020 I merged my previous years history into one repo, this is that
+repo. Hopefully nothing has been lost from the start. (2014) Sadly the two
+repos that were always separate, but related, are not easy to merge. Said repos
+contained my original emacs config, and my separate Macbook Pro 11,1 config
+(laptop I since sold)
+
 ffmpeg
 ------
 
@@ -26,3 +36,13 @@ FIXME:
   and breaks if a feed is down for a day.
 
 * use SASL for IRC.
+
+
+Unicode for testing:
+--------------------
+
+🙂 🎉 🍕 ☮️
+
+今日は
+
+سلام
