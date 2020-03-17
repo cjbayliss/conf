@@ -1,12 +1,7 @@
-My standard GNU/Linux config
-============================
+My standard \*NIX config
+========================
 
 Some of it is nice, but most of it is boring.
-
-In 2019 I re-created this repo, deleting all the old history as it was mostly
-useless to me. This makes cloning quicker (was already fast).  Obviously I kept
-a backup, if you need something that you think was in an old commit, email
-me. :)
 
 ffmpeg
 ------

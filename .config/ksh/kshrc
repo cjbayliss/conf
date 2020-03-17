@@ -1,33 +1,13 @@
-if [[ $- != *i* ]] ; then
-    # Shell is non-interactive.  Be done now!
-    return
-fi
-
-# enable bash completion in interactive shells
-if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    fi
-fi
+# -*- sh -*-
 
 ######################
 ## GENERAL SETTINGS ##
 ######################
 
 # don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# we use -1 to unlimit the history
-HISTSIZE=-1
-
-# check the window size after each command and, if necessary, update the values
-# of LINES and COLUMNS.
-shopt -s checkwinsize
+HISTCONTROL=ignorespace:ignoredups
+HISTFILE="$HOME/.cache/ksh_history"
+HISTSIZE=10000
 
 #################
 ## COOL PROMPT ##
@@ -59,6 +39,7 @@ PS1='\[\e[1m\]\[\e[38;5;249m\]\u@\h \[\e[38;5;202m\]\w\[\e[38;5;193m\]$(__git_br
 # alias stuff
 alias ls="ls -h --color=auto"
 alias grep="grep --color=auto"
+alias wget="wget --hsts-file=/dev/null"
 # i forgot how slow debians site-lisp is one time and removed this -_-
 alias emacs="emacs --no-site-lisp"
 
@@ -66,24 +47,15 @@ alias emacs="emacs --no-site-lisp"
 # 😢
 alias tmux='tmux -f $HOME/.config/tmux/tmux.conf'
 
-######################
-## EPIC COMPLETION! ##
-######################
-
-bind "set colored-completion-prefix on"
-bind "set colored-stats on"
-bind "set menu-complete-display-prefix on"
-bind "set show-all-if-ambiguous on"
-bind "set completion-query-items 0"
-bind "TAB:menu-complete"
-bind "\"\e[Z\": menu-complete-backward"
-
-########################
-## EXPORTS AND SHEEP  ##
-########################
+#######################
+## exports and sheep ##
+#######################
 
 # cool gcc colors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# turn off these history files
+export LESSHISTFILE='/dev/null'
 
 # make libvte terminals happy
 export GROFF_NO_SGR=1
@@ -109,3 +81,23 @@ man() {
 htop() {
     free -h; echo; uptime; echo; ps au
 }
+
+# paste command
+ix.io() {
+    curl -F 'f:1=<-' ix.io
+}
+
+# cleanup on exit
+__cleanup() {
+    # don't run unless the login shell
+    if [ "$-" == "ilms" ]; then
+        rmdir ~/*
+        rm ~/.*hist*
+        rm ~/.lesshst
+        rm ~/.viminfo
+        rm -rf ~/.w3m
+        clear
+    fi
+}
+
+trap __cleanup EXIT

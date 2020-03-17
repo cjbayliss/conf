@@ -1,12 +1,6 @@
 # set the white balance
 redshift -O 4800 &
 
-# The the .Xresources, I have more config in there.
-xrdb ~/.Xresources &
-
-# keyboard setting. note needs xmodmap to be installed
-xmodmap ~/.Xmodmap &
-
 # real smooth scrolling in FF
 export MOZ_USE_XINPUT2=1
 

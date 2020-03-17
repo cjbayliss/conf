@@ -81,13 +81,9 @@
         erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT")
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
-        erc-kill-buffer-on-part t
-        erc-kill-queries-on-quit t
-        erc-kill-server-buffer-on-quit t
-        erc-join-buffer 'bury
         erc-server-reconnect-timeout 60
         erc-autojoin-channels-alist
-        '(("freenode.net" "#xebian" "#emacs" "#gentoo" "#python" "#allocpsa")
+        '(("freenode.net" "#xebian" "#gentoo" "#emacs" "#ksh" "#python" "#allocpsa")
           ("oftc.net" "#debian-au"))
         erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
