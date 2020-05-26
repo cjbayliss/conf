@@ -24,10 +24,10 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # set cool prompt
 __git_prompt() {
-    BRANCH="$(git branch 2>/dev/null | awk '/^\*/{print $2}')"
+    BRANCH="$(git branch 2>/dev/null | awk '/^\*/{$1=""; $0=$0; $1=$1; print}')"
     if [ -n "$BRANCH" ]; then
         if [ -n "$(git status --short 2>/dev/null)" ]; then
-            printf " [%%F{red}%s%%f]" "$BRANCH"
+            printf " [%%F{red}%%B%s%%f]" "$BRANCH"
         else
             printf " [%%F{green}%s%%f]" "$BRANCH"
         fi
