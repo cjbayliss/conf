@@ -54,15 +54,18 @@ if [ -n "$KSH_VERSION" ] || [ -n "$BASH_VERSION" ]; then
     # overly complex due to tab completion breaking with simpler approaches -_-
     PS1='\[\e[0m\]\u@\h:\[\e[36m\]\w\[\e[0m\]$([ -n "$(__git_branch)" ] && printf " [")\[\e[$(__git_status)m\]$(__git_branch)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf "]")> '
 
-    # nice man colors
-    export LESS_TERMCAP_mb=$'\e[1m\e[38;5;202m'
-    export LESS_TERMCAP_md=$'\e[1m\e[38;5;202m'
-    export LESS_TERMCAP_me=$'\e[0m'
-    export LESS_TERMCAP_so=$'\e[1m\e[38;5;201m'
-    export LESS_TERMCAP_se=$'\e[0m'
-    export LESS_TERMCAP_us=$'\e[1m\e[38;5;193m'
-    export LESS_TERMCAP_ue=$'\e[0m'
-    export GROFF_NO_SGR=1
+    # nice manpage colours
+    man() {
+        env \
+            LESS_TERMCAP_mb=$(printf "\e[1m\e[38;5;202m") \
+            LESS_TERMCAP_md=$(printf "\e[1m\e[38;5;202m") \
+            LESS_TERMCAP_me=$(printf "\e[0m") \
+            LESS_TERMCAP_so=$(printf "\e[1m\e[38;5;201m") \
+            LESS_TERMCAP_se=$(printf "\e[0m") \
+            LESS_TERMCAP_us=$(printf "\e[1m\e[38;5;193m") \
+            LESS_TERMCAP_ue=$(printf "\e[0m") \
+            man "$@"
+    }
 fi
 
 # cleanup on exit
