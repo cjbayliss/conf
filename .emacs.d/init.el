@@ -29,6 +29,9 @@
       gnus-user-date-format-alist '((t . "%b %e"))
       gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
 
+      ;; set the default browser to the sane one...
+      browse-url-browser-function 'browse-url-firefox
+
       ;; get stuff out of the home dir
       gnus-directory "~/.emacs.d/news/"
       gnus-startup-file "~/.emacs.d/newsrc"
@@ -182,6 +185,7 @@
                        "https://pine64.org/blog/rss"
                        "https://planet.freedesktop.org/rss20.xml"
                        "https://planet.gentoo.org/rss20.xml"
+                       "https://planet.gnu.org/atom.xml"
                        "https://planet.kernel.org/rss20.xml"
                        "https://rachelbythebay.com/w/atom.xml"
                        "https://sachachua.com/blog/category/emacs-news/feed"
@@ -204,4 +208,16 @@
  '(line-number-current-line ((t (:background "darkolivegreen" :foreground "chocolate1"))))
  '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
  '(region ((t (:inverse-video t))))
- '(show-paren-match ((t (:foreground "steelblue1")))))
+ '(show-paren-match ((t (:foreground "steelblue1"))))
+ '(vc-edited-state ((t (:foreground "#553333" :slant oblique :weight bold))))
+ '(vc-up-to-date-state ((t (:foreground "#335533" :slant oblique :weight bold)))))
+
+;; ah shit, you've mistakenly opened graphical emacs, here let me help you out:
+(when (display-graphic-p)
+  (set-background-color "black")
+  (set-foreground-color "white")
+  (custom-set-faces '(mode-line ((t (:background "grey75" :foreground "black")))))
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+  (set-face-attribute 'default nil :height 110)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
