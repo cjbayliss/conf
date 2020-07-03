@@ -3,7 +3,7 @@
 # alias stuff
 alias grep="grep --color=auto"
 alias ls="ls -h --color=auto"
-alias htop="free -h; echo; uptime; echo; ps au"
+[ ! -f "$(which htop)" ] && alias htop="free -h; echo; uptime; echo; ps au"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
 alias wget="wget --hsts-file=/dev/null"
