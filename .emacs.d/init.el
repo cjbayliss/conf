@@ -189,6 +189,16 @@
   (require 'elfeed)
   (elfeed))
 
+;; load neotree if not loaded and toggle
+(defun my/load-neotree()
+  (interactive)
+  (unless (featurep 'neotree)
+    (my/load-lisp)
+    (require 'neotree))
+  (neotree-toggle))
+
+(global-set-key [f6] 'my/load-neotree)
+
 ;; believe it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(line-number-current-line ((t (:background "darkolivegreen" :foreground "chocolate1"))))
