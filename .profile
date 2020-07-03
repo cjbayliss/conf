@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # turn off the screen after 1 min
 if [ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ] ; then
     setterm --powersave on --blank 1
@@ -21,7 +22,7 @@ export ENV="$XDG_CONFIG_HOME/sh/shrc"
 export EMAIL="cjb@cjb.sh"
 export NAME="Christopher Bayliss"
 export TIME_STYLE=long-iso
-export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.config/composer/vendor/bin/"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
