@@ -27,7 +27,7 @@ __git_prompt() {
     BRANCH="$(git branch 2>/dev/null | awk '/^\*/{$1=""; $0=$0; $1=$1; print}')"
     if [ -n "$BRANCH" ]; then
         if [ -n "$(git status --short 2>/dev/null)" ]; then
-            printf " [%%F{red}%%B%s%%f]" "$BRANCH"
+            printf " [%%F{red}%%B%s%%f%%b]" "$BRANCH"
         else
             printf " [%%F{green}%s%%f]" "$BRANCH"
         fi
