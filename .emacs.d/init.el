@@ -2,14 +2,14 @@
 ;;
 ;;     1. i'm an idiot who doesn't know elisp.
 ;;
-;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my 11 year
-;;     old Macbook. (current init time 2019-04-27: 0.0s)
+;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my very old
+;;     Macbook. (current init time 2019-04-27: 0.0s)
 ;;
 ;; NOTE: a better way to test the startup time is this 'oneliner' (the sleep is important):
 ;;
 ;;     $ x=0; while [ $x -lt 10 ]; do time emacs -kill; x=$((x + 1)); sleep 1; done
 ;;
-;; on my Macbook the average is: 74.9ms
+;; on my Macbook 4,1 (2008) the average is: 74.9ms
 
 ;; general emacs settings
 (setq inhibit-startup-screen t
@@ -36,8 +36,12 @@
       gnus-directory "~/.emacs.d/news/"
       gnus-startup-file "~/.emacs.d/newsrc"
       gnus-init-file "~/.emacs.d/gnus"
-      ;; let the game begin! (people have heated views on this setting)
-      gc-cons-threshold 100
+      ;; setting this to low has an impact on startup, so set it high, then set
+      ;; it low later in emacs-start-hook
+      gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6
+      package-enable-at-startup nil
+      package--init-file-ensured t
       initial-scratch-message ";; ┌─┐┌┐┬┬ ┬ ┌─┐┌┬┐┌─┐┌─┐┌─┐
 ;; │┌┐│└┤│ │ ├┤ │││├─┤│  └─┐
 ;; └─┘┴ ┴└─┘ └─┘┴ ┴┴ ┴└─┘└─┘
@@ -158,11 +162,31 @@
 ;; when needed instead of every time i open emacs
 (defun my/load-lisp ()
   "function to load lisp when needed"
-  ;; set default load-path
+  ;; add site-lisp and user lisp to load path
   (let ((default-directory  "/usr/share/emacs/site-lisp/"))
     (normal-top-level-add-subdirs-to-load-path))
-  ;; add ~/.emacs.d/lisp to load path
-  (add-to-list 'load-path "~/.emacs.d/lisp/"))
+  (let ((default-directory
+          (concat user-emacs-directory (convert-standard-filename "lisp/"))))
+    (normal-top-level-add-subdirs-to-load-path)))
+
+;; my prefered packages
+(defvar my/packages
+  '(elfeed erc-hl-nicks nasm-mode neotree php-mode which-key))
+
+;; custom install function
+(defun my/install-packages ()
+  "install my/packages"
+  (interactive)
+  (require 'package)
+  (my/load-lisp)
+  (setq package-enable-at-startup nil)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (setq package-user-dir "~/.emacs.d/lisp")
+  (package-initialize)
+  (package-refresh-contents)
+  (dolist (x my/packages)
+    (unless (package-installed-p x)
+      (package-install x))))
 
 ;; elfeed setup
 (defun rss()
@@ -202,6 +226,17 @@
   (neotree-toggle))
 
 (global-set-key [f6] 'my/load-neotree)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            ;; a high gc-cons-threshold causes input lag on my laptop every x
+            ;; seconds, so set it crazy small 😬
+            (setq gc-cons-threshold 100
+                  gc-cons-percentage 0.1)
+            ;; load which-key with little startup impact
+            (add-to-list 'load-path (car (file-expand-wildcards "~/.emacs.d/lisp/which-key*" t)))
+            (require 'which-key)
+            (which-key-mode)))
 
 ;; believe it or not, this **doesn't** increase emacs init time
 (custom-set-faces
