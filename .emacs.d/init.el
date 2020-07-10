@@ -33,9 +33,9 @@
       browse-url-browser-function 'browse-url-firefox
 
       ;; get stuff out of the home dir
-      gnus-directory "~/.emacs.d/news/"
-      gnus-startup-file "~/.emacs.d/newsrc"
-      gnus-init-file "~/.emacs.d/gnus"
+      gnus-directory (concat user-emacs-directory "news")
+      gnus-startup-file (concat user-emacs-directory "newsrc")
+      gnus-init-file (concat user-emacs-directory "gnus")
       ;; setting this to low has an impact on startup, so set it high, then set
       ;; it low later in emacs-start-hook
       gc-cons-threshold most-positive-fixnum
@@ -70,6 +70,7 @@
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 (global-set-key "\C-ch" 'hl-line-mode)
+(global-set-key "\C-cf" 'my/neotree-toggle)
 
 ;; don't start rcirc by accident
 (fmakunbound 'irc)
@@ -173,7 +174,7 @@
   (let ((default-directory  "/usr/share/emacs/site-lisp/"))
     (normal-top-level-add-subdirs-to-load-path))
   (let ((default-directory
-          (concat user-emacs-directory (convert-standard-filename "lisp/"))))
+          (concat user-emacs-directory "lisp")))
     (normal-top-level-add-subdirs-to-load-path)))
 
 ;; my prefered packages
@@ -188,7 +189,9 @@
   (my/load-lisp)
   (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  (setq package-user-dir "~/.emacs.d/lisp")
+  ;; create and set lisp directory
+  (mkdir (concat user-emacs-directory "lisp") t)
+  (setq package-user-dir (concat user-emacs-directory "lisp"))
   (package-initialize)
   (package-refresh-contents)
   (dolist (x my/packages)
@@ -220,19 +223,18 @@
                        "https://planet.kernel.org/rss20.xml"
                        "https://rachelbythebay.com/w/atom.xml"
                        "https://sachachua.com/blog/category/emacs-news/feed"
-                       "https://security.gentoo.org/glsa/feed.rss"))
+                       "https://security.gentoo.org/glsa/feed.rss")
+        elfeed-db-directory (concat user-emacs-directory "elfeed"))
   (require 'elfeed)
   (elfeed))
 
 ;; load neotree if not loaded and toggle
-(defun my/load-neotree()
+(defun my/neotree-toggle()
   (interactive)
   (unless (featurep 'neotree)
     (my/load-lisp)
     (require 'neotree))
   (neotree-toggle))
-
-(global-set-key [f6] 'my/load-neotree)
 
 (add-hook 'emacs-startup-hook
           (lambda ()
@@ -241,7 +243,7 @@
             (setq gc-cons-threshold 100
                   gc-cons-percentage 0.1)
             ;; load which-key with little startup impact
-            (add-to-list 'load-path (car (file-expand-wildcards "~/.emacs.d/lisp/which-key*" t)))
+            (add-to-list 'load-path (car (file-expand-wildcards (concat user-emacs-directory "lisp/which-key*") t)))
             (require 'which-key)
             (which-key-mode)))
 
