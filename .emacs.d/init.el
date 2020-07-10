@@ -136,6 +136,13 @@
                                                     (require 'nasm-mode)
                                                     (nasm-mode))))
 
+;; lua-mode
+(add-to-list 'auto-mode-alist
+             '("\\.lua\\'" . (lambda ()
+                               (my/load-lisp)
+                               (require 'lua-mode)
+                               (lua-mode))))
+
 ;; if I'm editing a C file, I *probably* want the linux style
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -171,7 +178,7 @@
 
 ;; my prefered packages
 (defvar my/packages
-  '(elfeed erc-hl-nicks nasm-mode neotree php-mode which-key))
+  '(elfeed erc-hl-nicks lua-mode nasm-mode neotree php-mode which-key))
 
 ;; custom install function
 (defun my/install-packages ()
