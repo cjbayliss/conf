@@ -7,7 +7,7 @@
 ;;
 ;; NOTE: a better way to test the startup time is this 'oneliner' (the sleep is important):
 ;;
-;;     $ x=0; while [ $x -lt 10 ]; do time emacs -kill; x=$((x + 1)); sleep 1; done
+;;     $ x=0; while [ $x -lt 10 ]; do time emacs -kill; x=$((x + 1)); sleep 2; done
 ;;
 ;; on my Macbook 4,1 (2008) the average is: 74.9ms
 
