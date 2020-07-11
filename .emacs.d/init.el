@@ -205,6 +205,10 @@
   (my/load-lisp)
   (setq-default show-trailing-whitespace nil)
 
+  ;; if we don't create ~/.emacs.d/elfeed, elfeed will create ~/.elfeed instead
+  ;; of creating elfeed-db-directory
+  (mkdir (concat user-emacs-directory "elfeed") t)
+
   ;; set elfeed's... feeds
   (setq elfeed-feeds '("https://blog.jeff.over.bz/rss.xml"
                        "https://blog.mattcen.com/rss"
