@@ -22,9 +22,13 @@ export ENV="$XDG_CONFIG_HOME/sh/shrc"
 export EMAIL="cjb@cjb.sh"
 export NAME="Christopher Bayliss"
 export TIME_STYLE=long-iso
-export PATH="$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.config/composer/vendor/bin/"
+export PATH="$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$HOME/.local/share/npm/bin"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+# should i be compelled to use npm, set some sane stuff
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 
 # make virsh use qemu:///system by default
 export LIBVIRT_DEFAULT_URI='qemu:///system'
