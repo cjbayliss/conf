@@ -7,7 +7,7 @@
 ;;
 ;; NOTE: a better way to test the startup time is this 'oneliner' (the sleep is important):
 ;;
-;;     $ x=0; while [ $x -lt 10 ]; do time emacs -kill; x=$((x + 1)); sleep 2; done
+;;     $ x=0; while [ $x -lt 10 ]; do time emacs --no-site-lisp -nw -kill; x=$((x + 1)); sleep 2; done
 ;;
 ;; on my Macbook 4,1 (2008) the average is: 74.9ms
 
@@ -17,6 +17,7 @@
       make-backup-files nil
       require-final-newline t
       c-basic-offset 4
+      browse-url-browser-function 'eww-browse-url
 
       ;; modified from: http://cyber.com.au/~twb/.emacs
       gnus-sum-thread-tree-false-root "──○ "
@@ -28,9 +29,6 @@
       gnus-sum-thread-tree-vertical "│ "
       gnus-user-date-format-alist '((t . "%b %e"))
       gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
-
-      ;; set the default browser to the sane one...
-      browse-url-browser-function 'browse-url-firefox
 
       ;; get stuff out of the home dir
       gnus-directory (concat user-emacs-directory "news")
@@ -218,7 +216,6 @@
                        "https://danluu.com/atom.xml"
                        "https://deftly.net/rss.xml"
                        "https://jvns.ca/atom.xml"
-                       "https://lwn.net/headlines/rss"
                        "https://nullprogram.com/feed/"
                        "https://pine64.org/blog/rss"
                        "https://planet.freedesktop.org/rss20.xml"
@@ -227,7 +224,8 @@
                        "https://planet.kernel.org/rss20.xml"
                        "https://rachelbythebay.com/w/atom.xml"
                        "https://sachachua.com/blog/category/emacs-news/feed"
-                       "https://security.gentoo.org/glsa/feed.rss")
+                       "https://security.gentoo.org/glsa/feed.rss"
+                       "https://voicesoftheelephpant.com/feed/podcast/")
         elfeed-db-directory (concat user-emacs-directory "elfeed"))
   (require 'elfeed)
   (elfeed))
