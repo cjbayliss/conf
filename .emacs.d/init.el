@@ -70,15 +70,33 @@
 (global-set-key "\C-ch" 'hl-line-mode)
 (global-set-key "\C-cf" 'my/neotree-toggle)
 
-;; don't start rcirc by accident
-(fmakunbound 'irc)
-
 ;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out.
+;; custom irc func to load erc and join networks automatically
+(defun irc ()
+  "Connect to IRC."
+  (interactive)
+
+  ;; these bits need to be here **before** you start ERC
+  (setq erc-prompt-for-nickserv-password nil
+        ;; set this here, the auto resize is below
+        erc-fill-column 157)
+
+  (load "~/.emacs.d/erc")
+  (require 'erc-services)
+  (erc-services-mode +1)
+
+  (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
+  (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
+
 ;; ERC config
 (with-eval-after-load "erc"
   (require 'erc-goodies)
 
-  (setq erc-fill-function 'erc-fill-static
+  (setq erc-autojoin-channels-alist
+        '(("freenode.net" "##asm" "#emacs" "#guile" "#guix" "#lisp" "#scheme" "#xebian")
+          ("oftc.net" "#debian-devel" "#debian-next"))
+        erc-autojoin-timing 'ident
+        erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
         erc-interpret-mirc-color t
         erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT")
@@ -94,6 +112,7 @@
   (erc-notifications-mode +1)
   (erc-scrolltobottom-enable)
   (erc-spelling-mode +1)
+  (ido-mode +1)
   (global-hl-line-mode -1)
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
