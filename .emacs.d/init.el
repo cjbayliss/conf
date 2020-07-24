@@ -9,7 +9,7 @@
 ;;
 ;;     $ x=0; while [ $x -lt 10 ]; do time emacs --no-site-lisp -nw -kill; x=$((x + 1)); sleep 2; done
 ;;
-;; on my Macbook 4,1 (2008) the average is: 74.9ms
+;; on my Macbook 4,1 (2008) the average is: 62.4ms
 
 ;; general emacs settings
 (setq inhibit-startup-screen t
@@ -235,6 +235,7 @@
                        "https://danluu.com/atom.xml"
                        "https://deftly.net/rss.xml"
                        "https://jvns.ca/atom.xml"
+                       "https://microkerneldude.wordpress.com/feed/"
                        "https://nullprogram.com/feed/"
                        "https://pine64.org/blog/rss"
                        "https://planet.freedesktop.org/rss20.xml"
