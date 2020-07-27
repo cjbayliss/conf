@@ -167,8 +167,8 @@
                                     (setq-default fill-column 72)
                                     (load-file (concat user-emacs-directory "lisp/git-commit-message-mode.el"))
                                     (require 'git-commit-message-mode)
-                                    (git-commit-message-mode))))
-
+                                    (git-commit-message-mode)
+                                    (flyspell-mode))))
 
 ;; if I'm editing a C file, I *probably* want the linux style
 (add-hook 'c-mode-common-hook
