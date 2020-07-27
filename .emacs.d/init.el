@@ -17,7 +17,7 @@
       make-backup-files nil
       require-final-newline t
       c-basic-offset 4
-      browse-url-browser-function 'eww-browse-url
+      browse-url-browser-function 'browse-url-firefox
 
       ;; modified from: http://cyber.com.au/~twb/.emacs
       gnus-sum-thread-tree-false-root "──○ "

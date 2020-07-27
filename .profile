@@ -25,6 +25,7 @@ export TIME_STYLE=long-iso
 export PATH="$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$HOME/.local/share/npm/bin"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GIT_PAGER="diff-highlight | less -F -X"
 export MOZC_CONFIGURATION_DIRECTORY="$XDG_CONFIG_HOME/mozc"
 # should i be compelled to use npm, set some sane stuff
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
