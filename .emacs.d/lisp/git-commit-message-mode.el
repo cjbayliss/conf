@@ -41,7 +41,7 @@
 (defvar commit-message-files-face 'commit-message-files-face)
 
 (defconst commit-message-highlights
-  `((,(format "^%s\\(.+\\)" (make-string 50 ?.))
+  `((,(format "\\`%s\\(.+\\)" (make-string 50 ?.))
      (1 font-lock-warning-face))
     ("\\(\t.*$\\)" 1 commit-message-files-face t) ;; set the files line face first
     ("\\<\\(new file\\|modified\\):" 1 commit-message-added-face t)
