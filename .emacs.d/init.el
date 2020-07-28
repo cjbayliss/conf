@@ -13,11 +13,18 @@
 
 ;; general emacs settings
 (setq inhibit-startup-screen t
+      initial-scratch-message nil
       column-number-mode t
       make-backup-files nil
       require-final-newline t
       c-basic-offset 4
       browse-url-browser-function 'browse-url-firefox
+      ;; setting this to low has an impact on startup, so set it high, then set
+      ;; it low later in emacs-start-hook
+      gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6
+      package-enable-at-startup nil
+      package--init-file-ensured t
 
       ;; modified from: http://cyber.com.au/~twb/.emacs
       gnus-sum-thread-tree-false-root "──○ "
@@ -33,20 +40,7 @@
       ;; get stuff out of the home dir
       gnus-directory (concat user-emacs-directory "news")
       gnus-startup-file (concat user-emacs-directory "newsrc")
-      gnus-init-file (concat user-emacs-directory "gnus")
-      ;; setting this to low has an impact on startup, so set it high, then set
-      ;; it low later in emacs-start-hook
-      gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6
-      package-enable-at-startup nil
-      package--init-file-ensured t
-      initial-scratch-message ";; ┌─┐┌┐┬┬ ┬ ┌─┐┌┬┐┌─┐┌─┐┌─┐
-;; │┌┐│└┤│ │ ├┤ │││├─┤│  └─┐
-;; └─┘┴ ┴└─┘ └─┘┴ ┴┴ ┴└─┘└─┘
-;; This buffer is for text that is not saved, and for Lisp evaluation.
-;; To create a file, visit it with C-x C-f and enter text in its buffer.
-
-")
+      gnus-init-file (concat user-emacs-directory "gnus"))
 
 (setq-default fill-column 79
               frame-background-mode 'dark
