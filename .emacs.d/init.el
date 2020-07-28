@@ -130,7 +130,8 @@
                (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
 
   ;; fix ERC prompt colours
-  (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
+  (custom-set-faces '(erc-button ((t (:foreground "brightcyan" :underline t))))
+                    '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
                     '(erc-input-face ((t (:foreground "white")))))
 
   ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
