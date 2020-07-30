@@ -87,7 +87,7 @@
   (require 'erc-goodies)
 
   (setq erc-autojoin-channels-alist
-        '(("freenode.net" "##asm" "#emacs" "#freenode" "#guile" "#guix" "#lisp" "#scheme" "#xebian")
+        '(("freenode.net" "##asm" "#chicken" "#emacs" "#freenode" "#gentoo-lisp" "#guile" "#lisp" "#scheme" "#xebian")
           ("oftc.net" "#debian-devel" "#debian-next"))
         erc-autojoin-timing 'ident
         erc-fill-function 'erc-fill-static
