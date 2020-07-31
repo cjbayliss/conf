@@ -1,0 +1,3 @@
+# -*- sh -*-
+# NOTE: make sure to add this to the end of /etc/bash/bashrc
+[ -n "$XDG_CONFIG_HOME" ] && . "$XDG_CONFIG_HOME/bash/bashrc"

@@ -3,6 +3,7 @@ escape C-z
 
 # basic settings
 set border 0
+set historysize 0
 # see: https://en.wikipedia.org/wiki/X11_color_names
 set fgcolor white
 set bgcolor black
@@ -12,7 +13,7 @@ exec xsetroot -solid gray15 -cursor_name left_ptr
 bind C-d exec dmenu_run -b -fn 'Iosevka Term Slab'
 bind c exec sst
 bind C-c exec sst
-bind C-f exec firefox
+bind C-f exec HOME=$XDG_CONFIG_HOME/naughty-program firefox
 
 # top level keys
 definekey top XF86MonBrightnessDown exec brightnessctl set 5%-

@@ -18,7 +18,7 @@ if test -z "${XDG_RUNTIME_DIR}"; then
     fi
 fi
 
-export ENV="$XDG_CONFIG_HOME/sh/shrc"
+export ENV="$XDG_CONFIG_HOME/bash/bashrc"
 export EMAIL="cjb@cjb.sh"
 export NAME="Christopher Bayliss"
 export TIME_STYLE=long-iso
@@ -27,6 +27,8 @@ export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export GIT_PAGER="diff-highlight | less -F -X"
 export MOZC_CONFIGURATION_DIRECTORY="$XDG_CONFIG_HOME/mozc"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 # should i be compelled to use npm, set some sane stuff
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
@@ -53,7 +55,5 @@ if [ -f /usr/bin/xdg-user-dirs-update ]; then
     xdg-user-dirs-update --set VIDEOS "$HOME/videos"
 fi
 
-# NOTE: this *must* go last
-if [ -n "$BASH_VERSION" ] && [ -r ~/.bashrc ] ; then
-    . ~/.bashrc
-fi
+# source POSIX ENV NOTE: bash *requires* this goes last
+[ -n "$ENV" ] && . "$ENV"
