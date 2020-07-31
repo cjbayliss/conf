@@ -19,6 +19,8 @@
       require-final-newline t
       c-basic-offset 4
       browse-url-browser-function 'browse-url-firefox
+      scheme-program-name "csi -n"
+
       ;; setting this to low has an impact on startup, so set it high, then set
       ;; it low later in emacs-start-hook
       gc-cons-threshold most-positive-fixnum
@@ -36,16 +38,18 @@
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
-;; hide the menubar early, i.e. not in a hook
+;; enable/disable modes that can't go in the startup hook
 (menu-bar-mode -1)
+(save-place-mode +1)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
 (global-set-key "\C-cb" 'browse-url-at-point)
-(global-set-key "\C-cl" 'display-line-numbers-mode)
-(global-set-key "\C-ch" 'hl-line-mode)
 (global-set-key "\C-cf" 'my/neotree-toggle)
+(global-set-key "\C-ch" 'hl-line-mode)
+(global-set-key "\C-cl" 'display-line-numbers-mode)
+(global-set-key "\C-cs" 'run-scheme)
 
 ;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out.
 ;; custom irc func to load erc and join networks automatically
@@ -89,7 +93,6 @@
   (erc-notifications-mode +1)
   (erc-scrolltobottom-enable)
   (erc-spelling-mode +1)
-  (ido-mode +1)
   (global-hl-line-mode -1)
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
@@ -158,6 +161,11 @@
 
 ;; eww settings
 (with-eval-after-load "eww"
+  (setq-default show-trailing-whitespace nil))
+
+;; don't use hl-line-mode or show-trailing-whitespace in scheme repl
+(with-eval-after-load "cmuscheme"
+  (global-hl-line-mode -1)
   (setq-default show-trailing-whitespace nil))
 
 ;; instead of loading hl-todo (which compiled, takes about 10ms on my machine)
@@ -262,7 +270,6 @@
             (delete-selection-mode +1)
             (global-hl-line-mode +1)
             (ido-mode +1)
-            (save-place-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
             (which-key-mode)))

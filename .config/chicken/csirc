@@ -1,15 +1,8 @@
 ;;; -*- scheme -*-
 
-;; https://depp.brause.cc/breadline/examples/.csirc
-;; make chicken quieter
+;; copied from https://depp.brause.cc/breadline/examples/.csirc
 (import (chicken load))
 (load-verbose #f)
-
-;; set repl prompt
-(import (chicken repl))
-(repl-prompt ">>> ")
-
-;; readline using breadline https://depp.brause.cc/breadline
 (let ()
   (import (chicken format))
   (import (chicken process-context))
