@@ -269,7 +269,6 @@
             ;; enable/disable modes (save-place-mode slows down startup by ~4ms)
             (delete-selection-mode +1)
             (global-hl-line-mode +1)
-            (ido-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
             (which-key-mode)))
