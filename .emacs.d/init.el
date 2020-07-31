@@ -26,17 +26,6 @@
       package-enable-at-startup nil
       package--init-file-ensured t
 
-      ;; modified from: http://cyber.com.au/~twb/.emacs
-      gnus-sum-thread-tree-false-root "──○ "
-      gnus-sum-thread-tree-indent "  "
-      gnus-sum-thread-tree-leaf-with-other "├─● "
-      gnus-sum-thread-tree-root "■ "
-      gnus-sum-thread-tree-single-indent ""
-      gnus-sum-thread-tree-single-leaf "╰─● "
-      gnus-sum-thread-tree-vertical "│ "
-      gnus-user-date-format-alist '((t . "%b %e"))
-      gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
-
       ;; get stuff out of the home dir
       gnus-directory (concat user-emacs-directory "news")
       gnus-startup-file (concat user-emacs-directory "newsrc")
@@ -47,14 +36,8 @@
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
-;; enable/disable modes
-(show-paren-mode +1)
-(delete-selection-mode +1)
+;; hide the menubar early, i.e. not in a hook
 (menu-bar-mode -1)
-
-;; yes, these modes slow down startup by about 4ms total 😢
-(save-place-mode +1)
-(global-hl-line-mode +1)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -87,7 +70,7 @@
   (require 'erc-goodies)
 
   (setq erc-autojoin-channels-alist
-        '(("freenode.net" "##asm" "#chicken" "#emacs" "#freenode" "#gentoo-lisp" "#guile" "#lisp" "#scheme" "#xebian")
+        '(("freenode.net" "##asm" "#chicken" "#emacs" "#freenode" "#gentoo-lisp" "#guile" "#lisp" "##lisp" "#scheme" "#xebian")
           ("oftc.net" "#debian-devel" "#debian-next"))
         erc-autojoin-timing 'ident
         erc-fill-function 'erc-fill-static
@@ -123,9 +106,10 @@
   (add-to-list 'erc-mode-hook
                (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
 
-  ;; fix ERC prompt colours
-  (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
-                    '(erc-input-face ((t (:foreground "white")))))
+  ;; fix ERC prompt colours when in a terminal
+  (unless (display-graphic-p)
+    (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
+                      '(erc-input-face ((t (:foreground "white"))))))
 
   ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
   ;; has lived, but since you know how to use git you'll find out in no time!!
@@ -172,6 +156,10 @@
                   tab-width 8
                   indent-tabs-mode t)))
 
+;; eww settings
+(with-eval-after-load "eww"
+  (setq-default show-trailing-whitespace nil))
+
 ;; instead of loading hl-todo (which compiled, takes about 10ms on my machine)
 (defface highlight-todo-face
   '((t :foreground "yellow" :background "black" :inverse-video t :weight bold))
@@ -209,7 +197,7 @@
   (my/load-lisp)
   (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  ;; create and set lisp directory
+  ;; create and set lisp directory FIXME: this is broken
   (mkdir (concat user-emacs-directory "lisp") t)
   (setq package-user-dir (concat user-emacs-directory "lisp"))
   (package-initialize)
@@ -261,6 +249,7 @@
     (require 'neotree))
   (neotree-toggle))
 
+;; put slow modes &c in this hook for a faster startup! 🥳
 (add-hook 'emacs-startup-hook
           (lambda ()
             ;; a high gc-cons-threshold causes input lag on my laptop every x
@@ -269,31 +258,39 @@
                   gc-cons-percentage 0.1)
             ;; load which-key with little startup impact
             (add-to-list 'load-path (car (file-expand-wildcards (concat user-emacs-directory "lisp/which-key*") t)))
+            ;; enable/disable modes (save-place-mode slows down startup by ~4ms)
+            (delete-selection-mode +1)
+            (global-hl-line-mode +1)
+            (ido-mode +1)
+            (save-place-mode +1)
+            (show-paren-mode +1)
             (require 'which-key)
             (which-key-mode)))
 
-;; believe it or not, this **doesn't** increase emacs init time
-(custom-set-faces
- '(line-number-current-line ((t (:background "darkolivegreen" :foreground "chocolate1"))))
- '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
- '(region ((t (:inverse-video t))))
- '(show-paren-match ((t (:foreground "steelblue1"))))
- '(vc-edited-state ((t (:foreground "#553333" :slant oblique :weight bold))))
- '(vc-up-to-date-state ((t (:foreground "#335533" :slant oblique :weight bold)))))
+(unless (display-graphic-p)
+  ;; believe it or not, this **doesn't** increase emacs init time
+  (custom-set-faces
+   '(line-number-current-line ((t (:inherit hl-line))))
+   '(mode-line ((t (:background "grey75" :foreground "black"))))
+   '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
+   '(region ((t (:inverse-video t))))
+   '(show-paren-match ((t (:foreground "steelblue1"))))
+   '(vc-edited-state ((t (:foreground "#553333" :slant oblique :weight bold))))
+   '(vc-up-to-date-state ((t (:foreground "#335533" :slant oblique :weight bold))))))
 
-;; ah shit, you've mistakenly opened graphical emacs, here let me help you out:
+;; when emacs 27 is released, I'm considering switch to the GUI
 (when (display-graphic-p)
-  (set-background-color "black")
-  (set-foreground-color "white")
-  (custom-set-faces '(mode-line ((t (:background "grey75" :foreground "black")))))
+  (custom-set-faces '(line-number-current-line ((t (:inherit hl-line))))
+                    '(fringe ((t (:inherit default :background "#fafafa" :foreground "#9B9B9B")))))
+  (load-theme 'leuven)
   (add-to-list 'initial-frame-alist '(fullscreen . maximized))
   (when (member "Iosevka Term Slab" (font-family-list))
     (set-frame-font "Iosevka Term Slab-11" t t))
   (when (member "Noto Color Emoji" (font-family-list))
     (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
   ;; why this **isn't** default is beyond me.
-  (setq mouse-yank-at-point t)
+  (setq mouse-yank-at-point t
+        browse-url-browser-function 'eww-browse-url)
   (setq-default cursor-type '(hbar . 2))
-  (fringe-mode 0)
   (scroll-bar-mode -1)
   (tool-bar-mode -1))
