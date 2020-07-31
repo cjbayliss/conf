@@ -87,7 +87,7 @@ if [ -n "$BASH_VERSION" ]; then
     }
 
     # overly complex due to tab completion breaking with simpler approaches -_-
-    PS1='\[\e[0m\]\u@\h:\[\e[36m\]$(pwd | sed "s/\/home\/'$USER'/~/")\[\e[0m\]$([ -n "$(__git_branch)" ] && printf " [")\[\e[$(__git_status)m\]$(__git_branch)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf "]")> '
+    PS1='\[\e[0m\]\u@\h:\[\e[36m\]\w\[\e[0m\]$([ -n "$(__git_branch)" ] && printf " [")\[\e[$(__git_status)m\]$(__git_branch)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf "]")> '
 
     # nice manpage colours
     man() {
