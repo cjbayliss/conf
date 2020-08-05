@@ -177,12 +177,12 @@
 
 ;; my prefered packages
 (defvar my/packages
-  '(acme
+  '(acme-theme
     elfeed
     erc-hl-nicks
     lua-mode
     nasm-mode
-    monokai
+    monokai-theme
     php-mode
     which-key))
 
