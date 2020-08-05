@@ -1,16 +1,3 @@
-;; there may be strange approaches in this conifg, here are two reasons why:
-;;
-;;     1. i'm an idiot who doesn't know elisp.
-;;
-;;     2. it's faster, and keeps my emacs-init-time below 0.2s on my very old
-;;     Macbook. (current init time 2019-04-27: 0.0s)
-;;
-;; NOTE: a better way to test the startup time is this 'oneliner' (the sleep is important):
-;;
-;;     $ x=0; while [ $x -lt 10 ]; do time emacs --no-site-lisp -nw -kill; x=$((x + 1)); sleep 2; done
-;;
-;; on my Macbook 4,1 (2008) the average is: 62.4ms
-
 ;; general emacs settings
 (setq inhibit-startup-screen t
       initial-scratch-message nil
@@ -20,11 +7,10 @@
       c-basic-offset 4
       browse-url-browser-function 'browse-url-firefox
       scheme-program-name "csi -n"
-
-      ;; setting this to low has an impact on startup, so set it high, then set
-      ;; it low later in emacs-start-hook
-      gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6
+      eww-search-prefix "https://duckduckgo.com/lite/?q="
+      shr-width 120
+      battery-mode-line-format "[%b%p%% %L]"
+      display-time-string-forms '((format-time-string " %I:%M%p " now))
       package-enable-at-startup nil
       package--init-file-ensured t
 
@@ -34,7 +20,6 @@
       gnus-init-file (concat user-emacs-directory "gnus"))
 
 (setq-default fill-column 79
-              frame-background-mode 'dark
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
@@ -45,9 +30,9 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
+(global-set-key [f6] 'toggle-theme)
 (global-set-key "\C-cb" 'browse-url-at-point)
-(global-set-key "\C-cf" 'my/neotree-toggle)
-(global-set-key "\C-ch" 'hl-line-mode)
+(global-set-key "\C-ch" 'global-hl-line-mode)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 (global-set-key "\C-cs" 'run-scheme)
 
@@ -74,7 +59,17 @@
   (require 'erc-goodies)
 
   (setq erc-autojoin-channels-alist
-        '(("freenode.net" "##asm" "#chicken" "#emacs" "#freenode" "#gentoo-lisp" "#guile" "#lisp" "##lisp" "#scheme" "#xebian")
+        '(("freenode.net"
+           "##asm"
+           "#chicken"
+           "#emacs"
+           "#freenode"
+           "#gentoo-lisp"
+           "#guile"
+           "#lisp"
+           "##lisp"
+           "#scheme"
+           "#xebian")
           ("oftc.net" "#debian-devel" "#debian-next"))
         erc-autojoin-timing 'ident
         erc-fill-function 'erc-fill-static
@@ -93,6 +88,7 @@
   (erc-notifications-mode +1)
   (erc-scrolltobottom-enable)
   (erc-spelling-mode +1)
+  (ido-mode +1)
   (global-hl-line-mode -1)
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
@@ -108,11 +104,6 @@
   ;; keep ERC buffer pined to bottom
   (add-to-list 'erc-mode-hook
                (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
-
-  ;; fix ERC prompt colours when in a terminal
-  (unless (display-graphic-p)
-    (custom-set-faces '(erc-prompt-face ((t (:foreground "brightwhite" :background nil :weight bold))))
-                      '(erc-input-face ((t (:foreground "white"))))))
 
   ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
   ;; has lived, but since you know how to use git you'll find out in no time!!
@@ -141,15 +132,6 @@
                                (my/load-lisp)
                                (require 'lua-mode)
                                (lua-mode))))
-
-;; git-commit-message-mode
-(add-to-list 'auto-mode-alist
-             '("COMMIT_EDITMSG" . (lambda ()
-                                    (setq-default fill-column 72)
-                                    (load-file (concat user-emacs-directory "lisp/git-commit-message-mode.el"))
-                                    (require 'git-commit-message-mode)
-                                    (git-commit-message-mode)
-                                    (flyspell-mode))))
 
 ;; if I'm editing a C file, I *probably* want the linux style
 (add-hook 'c-mode-common-hook
@@ -195,7 +177,14 @@
 
 ;; my prefered packages
 (defvar my/packages
-  '(elfeed erc-hl-nicks lua-mode nasm-mode neotree php-mode which-key))
+  '(acme
+    elfeed
+    erc-hl-nicks
+    lua-mode
+    nasm-mode
+    monokai
+    php-mode
+    which-key))
 
 ;; custom install function
 (defun my/install-packages ()
@@ -245,58 +234,85 @@
                        "https://sachachua.com/blog/category/emacs-news/feed"
                        "https://security.gentoo.org/glsa/feed.rss"
                        "https://voicesoftheelephpant.com/feed/podcast/")
-        elfeed-db-directory (concat user-emacs-directory "elfeed"))
+        elfeed-db-directory (concat user-emacs-directory "elfeed")
+        elfeed-search-filter "@1-week-ago")
   (require 'elfeed)
   (elfeed))
-
-;; load neotree if not loaded and toggle
-(defun my/neotree-toggle()
-  (interactive)
-  (unless (featurep 'neotree)
-    (my/load-lisp)
-    (require 'neotree))
-  (neotree-toggle))
 
 ;; put slow modes &c in this hook for a faster startup! 🥳
 (add-hook 'emacs-startup-hook
           (lambda ()
-            ;; a high gc-cons-threshold causes input lag on my laptop every x
-            ;; seconds, so set it crazy small 😬
-            (setq gc-cons-threshold 100
-                  gc-cons-percentage 0.1)
             ;; load which-key with little startup impact
             (add-to-list 'load-path (car (file-expand-wildcards (concat user-emacs-directory "lisp/which-key*") t)))
             ;; enable/disable modes (save-place-mode slows down startup by ~4ms)
             (delete-selection-mode +1)
+            (display-battery-mode +1)
+            (display-time-mode +1)
             (global-hl-line-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
             (which-key-mode)))
 
 (unless (display-graphic-p)
+  (setq-default frame-background-mode 'dark)
   ;; believe it or not, this **doesn't** increase emacs init time
   (custom-set-faces
    '(line-number-current-line ((t (:inherit hl-line))))
-   '(mode-line ((t (:background "grey75" :foreground "black"))))
    '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
    '(region ((t (:inverse-video t))))
    '(show-paren-match ((t (:foreground "steelblue1"))))
    '(vc-edited-state ((t (:foreground "#553333" :slant oblique :weight bold))))
    '(vc-up-to-date-state ((t (:foreground "#335533" :slant oblique :weight bold))))))
 
+(defun dark-theme ()
+  "default dark theme"
+  (add-to-list
+   'custom-theme-load-path (car (file-expand-wildcards
+                                 (concat user-emacs-directory "lisp/monokai*") t)))
+  (disable-theme 'acme)
+  (load-theme 'monokai t))
+
+(defun light-theme ()
+  "default dark theme"
+  (add-to-list
+   'custom-theme-load-path (car (file-expand-wildcards
+                                 (concat user-emacs-directory "lisp/acme*") t)))
+  (disable-theme 'monokai)
+  (load-theme 'acme t))
+
+(defun toggle-theme ()
+  "toggle between a light and dark theme"
+  (interactive)
+  (if (eq (car custom-enabled-themes) 'acme)
+      (dark-theme)
+    (light-theme)))
+
+;; https://www.youtube.com/watch?v=UbxUSsFXYo4
+(defun 9-to-5 ()
+  "workin' 9 to 5, what a way to make a livin'"
+  (if (and (>= (string-to-number (format-time-string "%H%M")) 0900)
+           (<= (string-to-number (format-time-string "%H%M")) 1700))
+      (light-theme)
+    (dark-theme)))
+
 ;; when emacs 27 is released, I'm considering switch to the GUI
 (when (display-graphic-p)
-  (custom-set-faces '(line-number-current-line ((t (:inherit hl-line))))
-                    '(fringe ((t (:inherit default :background "#fafafa" :foreground "#9B9B9B")))))
-  (load-theme 'leuven)
-  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-  (when (member "Iosevka Term Slab" (font-family-list))
-    (set-frame-font "Iosevka Term Slab-11" t t))
-  (when (member "Noto Color Emoji" (font-family-list))
-    (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
-  ;; why this **isn't** default is beyond me.
-  (setq mouse-yank-at-point t
-        browse-url-browser-function 'eww-browse-url)
-  (setq-default cursor-type '(hbar . 2))
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1))
+  (9-to-5)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (custom-set-faces
+               '(fringe ((t (:inherit nil))))
+               '(line-number-current-line ((t (:inherit hl-line))))
+               '(variable-pitch ((t (:height 1.3 :family "Sans Serif")))))
+              (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+              (when (member "Iosevka Term Slab" (font-family-list))
+                (set-frame-font "Iosevka Term Slab-11" t t))
+              (when (member "Noto Color Emoji" (font-family-list))
+                (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
+              ;; why this **isn't** default is beyond me.
+              (setq mouse-yank-at-point t
+                    browse-url-browser-function 'eww-browse-url)
+              (setq-default cursor-type '(hbar . 2))
+              (fringe-mode 0)
+              (scroll-bar-mode -1)
+              (tool-bar-mode -1))))
