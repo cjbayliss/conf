@@ -6,10 +6,6 @@ if [ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ] ; then
 fi
 
 # 🐑
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-
 if test -z "${XDG_RUNTIME_DIR}"; then
     export XDG_RUNTIME_DIR=/tmp/${UID}-runtime-dir
     if ! test -d "${XDG_RUNTIME_DIR}"; then
@@ -17,6 +13,10 @@ if test -z "${XDG_RUNTIME_DIR}"; then
         chmod 0700 "${XDG_RUNTIME_DIR}"
     fi
 fi
+export XDG_CONFIG_HOME="$HOME/.config"
+# why would I store this? put it in /tmp
+export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/cache"
+export XDG_DATA_HOME="$HOME/.local/share"
 
 export ENV="$XDG_CONFIG_HOME/bash/bashrc"
 export EMAIL="cjb@cjb.sh"
@@ -37,8 +37,10 @@ export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 # make virsh use qemu:///system by default
 export LIBVIRT_DEFAULT_URI='qemu:///system'
 
+# some programs need $XDG_CACHE_HOME to be already created
+mkdir -p "$XDG_CACHE_HOME"
 # start the ssh-agent. requires the package 'keychain'
-[ -f /usr/bin/keychain ] && eval "$(keychain --eval --quiet --quick --dir ~/.cache/keychain)"
+[ -f /usr/bin/keychain ] && eval "$(keychain --eval --quiet --quick --dir $XDG_CACHE_HOME)"
 
 # color dirs/files nicely
 [ -f /usr/bin/dircolors ] && eval "$(dircolors)"
