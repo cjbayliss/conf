@@ -1,3 +1,0 @@
-#!/bin/sh
-
-notify-send "$(cmus-remote -Q | grep -e 'tag artist '  -e 'tag title '  | sort -r | sed -e 's/tag title //' -e 's/tag artist/ -/' | tr -d '\n')"
