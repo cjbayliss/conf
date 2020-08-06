@@ -177,12 +177,10 @@
 
 ;; my prefered packages
 (defvar my/packages
-  '(acme-theme
-    elfeed
+  '(elfeed
     erc-hl-nicks
     lua-mode
     nasm-mode
-    monokai-theme
     php-mode
     which-key))
 
@@ -264,36 +262,32 @@
    '(vc-edited-state ((t (:foreground "#553333" :slant oblique :weight bold))))
    '(vc-up-to-date-state ((t (:foreground "#335533" :slant oblique :weight bold))))))
 
-(defun dark-theme ()
-  "default dark theme"
-  (add-to-list
-   'custom-theme-load-path (car (file-expand-wildcards
-                                 (concat user-emacs-directory "lisp/monokai*") t)))
-  (disable-theme 'acme)
-  (load-theme 'monokai t))
+(defun dark-background-mode ()
+  "set the background mode to dark"
+  (setq-default frame-background-mode 'dark)
+  (set-background-color "black")
+  (set-foreground-color "white"))
 
-(defun light-theme ()
-  "default dark theme"
-  (add-to-list
-   'custom-theme-load-path (car (file-expand-wildcards
-                                 (concat user-emacs-directory "lisp/acme*") t)))
-  (disable-theme 'monokai)
-  (load-theme 'acme t))
+(defun light-background-mode ()
+  "set the background mode to light"
+  (setq-default frame-background-mode 'light)
+  (set-background-color "white")
+  (set-foreground-color "black"))
 
 (defun toggle-theme ()
   "toggle between a light and dark theme"
   (interactive)
-  (if (eq (car custom-enabled-themes) 'acme)
-      (dark-theme)
-    (light-theme)))
+  (if (string-equal frame-background-mode "light")
+      (dark-background-mode)
+    (light-background-mode)))
 
 ;; https://www.youtube.com/watch?v=UbxUSsFXYo4
 (defun 9-to-5 ()
   "workin' 9 to 5, what a way to make a livin'"
   (if (and (>= (string-to-number (format-time-string "%H%M")) 0900)
            (<= (string-to-number (format-time-string "%H%M")) 1700))
-      (light-theme)
-    (dark-theme)))
+      (light-background-mode)
+    (dark-background-mode)))
 
 ;; when emacs 27 is released, I'm considering switch to the GUI
 (when (display-graphic-p)
