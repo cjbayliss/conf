@@ -13,6 +13,12 @@
       display-time-string-forms '((format-time-string " %I:%M%p " now))
       package-enable-at-startup nil
       package--init-file-ensured t
+      scroll-step 1
+      scroll-conservatively 10000
+      mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-follow-mouse 't
+      mouse-yank-at-point t
 
       ;; get stuff out of the home dir
       gnus-directory (concat user-emacs-directory "news")
@@ -20,6 +26,7 @@
       gnus-init-file (concat user-emacs-directory "gnus"))
 
 (setq-default fill-column 79
+              frame-background-mode 'dark
               indent-tabs-mode nil
               show-trailing-whitespace t)
 
@@ -251,31 +258,28 @@
             (require 'which-key)
             (which-key-mode)))
 
-(unless (display-graphic-p)
-  (setq-default frame-background-mode 'dark)
-  ;; believe it or not, this **doesn't** increase emacs init time
-  (custom-set-faces
-   '(line-number-current-line ((t (:inherit hl-line))))
-   '(mode-line-buffer-id ((t (:foreground "red" :background nil :weight bold :slant oblique))))
-   '(region ((t (:inverse-video t))))
-   '(show-paren-match ((t (:foreground "steelblue1"))))
-   '(vc-edited-state ((t (:foreground "#553333" :slant oblique :weight bold))))
-   '(vc-up-to-date-state ((t (:foreground "#335533" :slant oblique :weight bold))))))
+;;  believe it or not, this **doesn't** increase emacs init time
+(custom-set-faces
+ '(fringe ((t (:inherit nil))))
+ '(line-number-current-line ((t (:inherit hl-line))))
+ '(variable-pitch ((t (:height 1.1 :family "Sans Serif")))))
 
 (defun dark-background-mode ()
   "set the background mode to dark"
   (setq-default frame-background-mode 'dark)
+  (custom-set-faces '(region ((t (:background "RoyalBlue4")))))
   (set-background-color "black")
   (set-foreground-color "white"))
 
 (defun light-background-mode ()
   "set the background mode to light"
   (setq-default frame-background-mode 'light)
+  (custom-set-faces '(region ((t (:background "light blue")))))
   (set-background-color "white")
   (set-foreground-color "black"))
 
 (defun toggle-theme ()
-  "toggle between a light and dark theme"
+  "toggle between light and dark mode"
   (interactive)
   (if (string-equal frame-background-mode "light")
       (dark-background-mode)
@@ -289,23 +293,17 @@
       (light-background-mode)
     (dark-background-mode)))
 
-;; when emacs 27 is released, I'm considering switch to the GUI
+;; GUI config
 (when (display-graphic-p)
   (9-to-5)
   (add-hook 'emacs-startup-hook
             (lambda ()
-              (custom-set-faces
-               '(fringe ((t (:inherit nil))))
-               '(line-number-current-line ((t (:inherit hl-line))))
-               '(variable-pitch ((t (:height 1.3 :family "Sans Serif")))))
               (add-to-list 'initial-frame-alist '(fullscreen . maximized))
               (when (member "Iosevka Term Slab" (font-family-list))
                 (set-frame-font "Iosevka Term Slab-11" t t))
               (when (member "Noto Color Emoji" (font-family-list))
                 (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
-              ;; why this **isn't** default is beyond me.
-              (setq mouse-yank-at-point t
-                    browse-url-browser-function 'eww-browse-url)
+              (setq browse-url-browser-function 'eww-browse-url)
               (setq-default cursor-type '(hbar . 2))
               (fringe-mode 0)
               (scroll-bar-mode -1)
