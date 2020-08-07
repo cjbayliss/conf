@@ -12,7 +12,10 @@ alias wget="wget --no-hsts"
 alias emacs="emacs --no-site-lisp"
 alias firefox="HOME=$XDG_CONFIG_HOME/naughty-program firefox"
 
-alias genpass="[ $(< /proc/sys/kernel/random/entropy_avail) -gt 200 ] && tr -dc '[0-9A-Za-z~\!\@\#$%^&*()_+]' </dev/urandom | fold -w 25 | head -n 10 || printf \"WTF is wrong with your system?\n\""
+# FIXME: this will only work on linux systems
+alias randstring="[ $(cat /proc/sys/kernel/random/entropy_avail) -gt 200 ] &&
+                  tr -dc '[0-9A-Za-z~\!\@\#$%^&*()_+]' </dev/urandom | fold -w 25 | head -n 10 ||
+                  printf \"WTF is wrong with your system?\n\""
 
 # so uh, yeeaaaaah... https://github.com/tmux/tmux/issues/142
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
