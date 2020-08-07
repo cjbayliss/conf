@@ -9,6 +9,9 @@
       scheme-program-name "csi -n"
       eww-search-prefix "https://duckduckgo.com/lite/?q="
       shr-width 120
+      shr-use-colors nil
+      shr-inhibit-images t
+      shr-discard-aria-hidden t
       battery-mode-line-format "[%b%p%% %L]"
       display-time-string-forms '((format-time-string " %I:%M%p " now))
       package-enable-at-startup nil
@@ -28,7 +31,7 @@
 (setq-default fill-column 79
               frame-background-mode 'dark
               indent-tabs-mode nil
-              show-trailing-whitespace t)
+              show-trailing-whitespace nil)
 
 ;; enable/disable modes that can't go in the startup hook
 (menu-bar-mode -1)
@@ -39,7 +42,7 @@
 ;; keybinds
 (global-set-key [f6] 'toggle-theme)
 (global-set-key "\C-cb" 'browse-url-at-point)
-(global-set-key "\C-ch" 'global-hl-line-mode)
+(global-set-key "\C-ch" 'hl-line-mode)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 (global-set-key "\C-cs" 'run-scheme)
 
@@ -253,10 +256,15 @@
             (delete-selection-mode +1)
             (display-battery-mode +1)
             (display-time-mode +1)
-            (global-hl-line-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
             (which-key-mode)))
+
+;; programming mode settings
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (hl-line-mode +1)
+            (setq show-trailing-whitespace t)))
 
 ;;  believe it or not, this **doesn't** increase emacs init time
 (custom-set-faces
