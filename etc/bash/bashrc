@@ -1,3 +1,0 @@
-# -*- sh -*-
-# NOTE: make sure to add this to the end of /etc/bash/bashrc
-[ -n "$ENV" ] && . "$ENV"

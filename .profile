@@ -18,11 +18,14 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 
-export ENV="$XDG_CONFIG_HOME/bash/bashrc"
+export POSIXLY_CORRECT=y
+export ENV="$XDG_CONFIG_HOME/sh/shrc"
 export EMAIL="cjb@cjb.sh"
 export NAME="Christopher Bayliss"
 export TIME_STYLE=long-iso
-export PATH="$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$HOME/.local/share/npm/bin"
+MY_HOME_PATHS="$HOME/.bin:$HOME/.local/bin"
+RUBBISH_VENDOR_PATHS="$HOME/.config/composer/vendor/bin:$HOME/.local/share/npm/bin"
+export PATH="$PATH:$MY_HOME_PATHS:$RUBBISH_VENDOR_PATHS"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export GIT_PAGER="diff-highlight | less -F -X"
@@ -56,6 +59,3 @@ if [ -f /usr/bin/xdg-user-dirs-update ]; then
     xdg-user-dirs-update --set PICTURES "$HOME/pictures"
     xdg-user-dirs-update --set VIDEOS "$HOME/videos"
 fi
-
-# source POSIX ENV NOTE: bash *requires* this goes last
-[ -n "$ENV" ] && . "$ENV"
