@@ -37,23 +37,8 @@
 
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
-
-(require 'notifications)
-
-;; TODO: make this only notify for *new* emails, and not all unread emails
-(defun my/gnus-notify ()
-  "send a new emails notification"
-  ;; YUK.
-  (setq my/email-count (gnus-group-unread "INBOX"))
-  (unless (< my/email-count 1)
-    (notifications-notify
-     :title "Gnus"
-     :body (format "You have %s new %s!" my/email-count (if (= my/email-count 1)
-                                                            "email"
-                                                          "emails"))
-     :app-icon nil)))
-
-(add-hook 'gnus-after-getting-new-news-hook 'my/gnus-notify t)
+(add-hook 'gnus-after-getting-new-news-hook 'display-time-event-handler)
+(add-hook 'gnus-group-mode-hook 'display-time-event-handler)
 
 ;; setup this demon *after* gnus has loaded, otherwise it does not work
 (with-eval-after-load "gnus"

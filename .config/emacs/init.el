@@ -12,8 +12,6 @@
       shr-use-colors nil
       shr-inhibit-images t
       shr-discard-aria-hidden t
-      battery-mode-line-format "[%b%p%% %L]"
-      display-time-string-forms '((format-time-string " %I:%M%p " now))
       package-enable-at-startup nil
       package--init-file-ensured t
       mouse-yank-at-point t
@@ -21,7 +19,17 @@
       ;; get stuff out of the home dir
       gnus-directory (concat user-emacs-directory "news")
       gnus-startup-file (concat user-emacs-directory "newsrc")
-      gnus-init-file (concat user-emacs-directory "gnus"))
+      gnus-init-file (concat user-emacs-directory "gnus")
+
+      ;; new mail indicator in the mode line
+      display-time-mail-function
+      (lambda ()
+        (when (boundp 'gnus-newsrc-alist)
+          (let ((unread (gnus-group-unread "INBOX")))
+            (when (and (numberp unread)
+                       (> unread 0))
+              t))))
+      display-time-use-mail-icon t)
 
 (setq-default fill-column 79
               frame-background-mode 'dark
@@ -35,7 +43,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
-(global-set-key [f6] 'toggle-theme)
+(global-set-key [f6] 'toggle-background-mode)
 (global-set-key [XF86AudioPlay] 'emms-play/pause-handler)
 (global-set-key [XF86AudioNext] 'emms-next)
 (global-set-key [XF86AudioPrev] 'emms-previous)
@@ -89,8 +97,15 @@
         erc-prompt-for-password nil
         erc-rename-buffers t
         erc-server "chat.au.freenode.net"
-        erc-server-reconnect-timeout 60
+        erc-server-reconnect-timeout 300
         erc-track-exclude-server-buffer t
+        erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                                  "324" "329" "332" "333" "353" "477")
+        erc-current-nick-highlight-type 'nick
+        erc-track-use-faces t
+        erc-track-faces-priority-list
+        '(erc-current-nick-face)
+        erc-track-priority-faces-only 'all
         erc-user-full-name "Christopher Bayliss")
 
   (erc-scrolltobottom-enable)
@@ -252,7 +267,6 @@
             (add-to-list 'load-path (car (file-expand-wildcards (concat user-emacs-directory "lisp/which-key*") t)))
             ;; enable/disable modes (save-place-mode slows down startup by ~4ms)
             (delete-selection-mode +1)
-            (display-battery-mode +1)
             (display-time-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
@@ -305,18 +319,24 @@ tags are rare (even in my Baroque collection)"
 (defun dark-background-mode ()
   "set the background mode to dark"
   (setq-default frame-background-mode 'dark)
-  (custom-set-faces '(region ((t (:background "RoyalBlue4")))))
+  (custom-set-faces '(mode-line ((t (:background "gray20" :foreground "white" :box (:line-width -1 :color "gray25")))))
+                    '(region ((t (:background "RoyalBlue4")))))
   (set-background-color "black")
-  (set-foreground-color "white"))
+  (set-foreground-color "white")
+  (when (featurep 'erc-hl-nicks)
+    (erc-hl-nicks-refresh-colors)))
 
 (defun light-background-mode ()
   "set the background mode to light"
   (setq-default frame-background-mode 'light)
-  (custom-set-faces '(region ((t (:background "light blue")))))
+  (custom-set-faces '(mode-line ((t (:background "gray75" :foreground "black" :box (:line-width -1 :color "gray70")))))
+                    '(region ((t (:background "light blue")))))
   (set-background-color "white")
-  (set-foreground-color "black"))
+  (set-foreground-color "black")
+  (when (featurep 'erc-hl-nicks)
+    (erc-hl-nicks-refresh-colors)))
 
-(defun toggle-theme ()
+(defun toggle-background-mode ()
   "toggle between light and dark mode"
   (interactive)
   (if (string-equal frame-background-mode "light")
