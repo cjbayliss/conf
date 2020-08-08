@@ -275,7 +275,8 @@
 tags are rare (even in my Baroque collection)"
     (emms-browse-by-performer)
     (emms-browser-add-tracks)
-    (emms-random))
+    (emms-shuffle)
+    (emms-start))
   (if (or (not emms-player-playing-p)
           emms-player-stopped-p)
       (emms-random-play-all)
