@@ -16,11 +16,6 @@
       display-time-string-forms '((format-time-string " %I:%M%p " now))
       package-enable-at-startup nil
       package--init-file-ensured t
-      scroll-step 1
-      scroll-conservatively 10000
-      mouse-wheel-scroll-amount '(1 ((shift) . 1))
-      mouse-wheel-progressive-speed nil
-      mouse-wheel-follow-mouse 't
       mouse-yank-at-point t
 
       ;; get stuff out of the home dir
@@ -41,6 +36,9 @@
 
 ;; keybinds
 (global-set-key [f6] 'toggle-theme)
+(global-set-key [XF86AudioPlay] 'emms-play/pause-handler)
+(global-set-key [XF86AudioNext] 'emms-next)
+(global-set-key [XF86AudioPrev] 'emms-previous)
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-ch" 'hl-line-mode)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
@@ -57,7 +55,7 @@
         ;; set this here, the auto resize is below
         erc-fill-column 157)
 
-  (load "~/.emacs.d/erc")
+  (load (concat user-emacs-directory "erc"))
   (require 'erc-services)
   (erc-services-mode +1)
 
@@ -95,7 +93,6 @@
         erc-track-exclude-server-buffer t
         erc-user-full-name "Christopher Bayliss")
 
-  (erc-notifications-mode +1)
   (erc-scrolltobottom-enable)
   (erc-spelling-mode +1)
   (ido-mode +1)
@@ -188,6 +185,7 @@
 ;; my prefered packages
 (defvar my/packages
   '(elfeed
+    emms
     erc-hl-nicks
     lua-mode
     nasm-mode
@@ -265,6 +263,37 @@
           (lambda ()
             (hl-line-mode +1)
             (setq show-trailing-whitespace t)))
+
+;; emms
+(defun emms-play/pause-handler ()
+  "determine best course of action when pressing play/pause button"
+  (interactive)
+  (unless (featurep 'emms)
+    (load-emms))
+  (defun emms-random-play-all ()
+    "hacky solution to play all songs in random mode. 'performer'
+tags are rare (even in my Baroque collection)"
+    (emms-browse-by-performer)
+    (emms-browser-add-tracks)
+    (emms-random))
+  (if (or (not emms-player-playing-p)
+          emms-player-stopped-p)
+      (emms-random-play-all)
+    (emms-pause)))
+
+(defun load-emms ()
+  "load and configure emms"
+  (my/load-lisp)
+  (require 'emms-setup)
+  (require 'emms-info)
+  (emms-standard)
+  (emms-all)
+  (emms-default-players)
+  (setq emms-player-list (list emms-player-mpv)
+        emms-source-file-default-directory "~/music/")
+  (add-to-list 'emms-player-base-format-list "opus")
+  (emms-player-set emms-player-mpv 'regex
+                   (apply #'emms-player-simple-regexp emms-player-base-format-list)))
 
 ;;  believe it or not, this **doesn't** increase emacs init time
 (custom-set-faces
