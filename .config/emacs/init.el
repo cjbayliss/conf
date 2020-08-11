@@ -1,35 +1,55 @@
 ;; general emacs settings
-(setq inhibit-startup-screen t
-      initial-scratch-message nil
-      column-number-mode t
-      make-backup-files nil
-      require-final-newline t
+(setq browse-url-browser-function 'w3m-browse-url
       c-basic-offset 4
-      browse-url-browser-function 'browse-url-firefox
-      scheme-program-name "csi -n"
+      column-number-mode t
       eww-search-prefix "https://duckduckgo.com/lite/?q="
-      shr-width 120
-      shr-use-colors nil
-      shr-inhibit-images t
-      shr-discard-aria-hidden t
-      package-enable-at-startup nil
-      package--init-file-ensured t
+      inhibit-startup-screen t
+      initial-scratch-message nil
+      make-backup-files nil
       mouse-yank-at-point t
+      package--init-file-ensured t
+      package-enable-at-startup nil
+      require-final-newline t
+      scheme-program-name "csi -n"
+      shr-discard-aria-hidden t
+      shr-inhibit-images t
+      shr-use-colors nil
+      shr-width 120
+
+      ;; w3m
+      w3m-add-user-agent nil
+      w3m-bookmark-file-coding-system 'utf-8
+      w3m-coding-system 'utf-8
+      w3m-default-coding-system 'utf-8
+      w3m-default-display-inline-images t
+      w3m-default-save-directory "~/downloads/"
+      w3m-enable-google-feeling-lucky nil
+      w3m-file-coding-system 'utf-8
+      w3m-file-name-coding-system 'utf-8
+      w3m-home-page "about:blank"
+      w3m-key-binding 'info
+      w3m-pop-up-windows nil
+      w3m-search-engine-alist
+      '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
+        ("duckduckgo" "https://duckduckgo.com/lite" nil "q=%s"))
+      w3m-search-default-engine "duckduckgo"
+      w3m-show-decoded-url nil          ; http://bugs.debian.org/457909
+      w3m-show-graphic-icons-in-header-line nil
+      w3m-show-graphic-icons-in-mode-line nil
+      w3m-terminal-coding-system 'utf-8
+      w3m-track-mouse nil
+      w3m-use-cookies nil
+      w3m-use-favicon nil
+      w3m-use-header-line nil
+      w3m-use-mule-ucs t
+      w3m-use-symbol t
+      w3m-use-tab-menubar nil
+      w3m-use-toolbar nil
 
       ;; get stuff out of the home dir
       gnus-directory (concat user-emacs-directory "news")
       gnus-startup-file (concat user-emacs-directory "newsrc")
-      gnus-init-file (concat user-emacs-directory "gnus")
-
-      ;; new mail indicator in the mode line
-      display-time-mail-function
-      (lambda ()
-        (when (boundp 'gnus-newsrc-alist)
-          (let ((unread (gnus-group-unread "INBOX")))
-            (when (and (numberp unread)
-                       (> unread 0))
-              t))))
-      display-time-use-mail-icon t)
+      gnus-init-file (concat user-emacs-directory "gnus"))
 
 (setq-default fill-column 79
               frame-background-mode 'dark
@@ -39,6 +59,7 @@
 ;; enable/disable modes that can't go in the startup hook
 (menu-bar-mode -1)
 (save-place-mode +1)
+(ido-mode 'buffers) ;; only for buffer switching
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -101,16 +122,10 @@
         erc-track-exclude-server-buffer t
         erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                   "324" "329" "332" "333" "353" "477")
-        erc-current-nick-highlight-type 'nick
-        erc-track-use-faces t
-        erc-track-faces-priority-list
-        '(erc-current-nick-face)
-        erc-track-priority-faces-only 'all
         erc-user-full-name "Christopher Bayliss")
 
   (erc-scrolltobottom-enable)
   (erc-spelling-mode +1)
-  (ido-mode +1)
   (global-hl-line-mode -1)
   (setq-default show-trailing-whitespace nil)
   (show-paren-mode -1)
@@ -199,7 +214,8 @@
 
 ;; my prefered packages
 (defvar my/packages
-  '(elfeed
+  '(alect-themes
+    elfeed
     emms
     erc-hl-nicks
     lua-mode
@@ -263,8 +279,8 @@
 ;; put slow modes &c in this hook for a faster startup! 🥳
 (add-hook 'emacs-startup-hook
           (lambda ()
-            ;; load which-key with little startup impact
-            (add-to-list 'load-path (car (file-expand-wildcards (concat user-emacs-directory "lisp/which-key*") t)))
+            (my/load-lisp)
+            (load-library "w3m")
             ;; enable/disable modes (save-place-mode slows down startup by ~4ms)
             (delete-selection-mode +1)
             (display-time-mode +1)
@@ -313,26 +329,35 @@ tags are rare (even in my Baroque collection)"
 ;;  believe it or not, this **doesn't** increase emacs init time
 (custom-set-faces
  '(fringe ((t (:inherit nil))))
+ '(header-line ((t (:height 1.0))))
  '(line-number-current-line ((t (:inherit hl-line))))
  '(variable-pitch ((t (:height 1.1 :family "Sans Serif")))))
 
 (defun dark-background-mode ()
   "set the background mode to dark"
+  (add-to-list 'load-path (car (file-expand-wildcards
+                                (concat user-emacs-directory "lisp/alect*") t)))
+  (add-to-list 'custom-theme-load-path (car (file-expand-wildcards
+                                             (concat user-emacs-directory "lisp/alect*") t)))
   (setq-default frame-background-mode 'dark)
-  (custom-set-faces '(mode-line ((t (:background "gray20" :foreground "white" :box (:line-width -1 :color "gray25")))))
-                    '(region ((t (:background "RoyalBlue4")))))
   (set-background-color "black")
   (set-foreground-color "white")
+  (disable-theme 'alect-light)
+  (load-theme 'alect-dark t)
   (when (featurep 'erc-hl-nicks)
     (erc-hl-nicks-refresh-colors)))
 
 (defun light-background-mode ()
   "set the background mode to light"
+  (add-to-list 'load-path (car (file-expand-wildcards
+                                (concat user-emacs-directory "lisp/alect*") t)))
+  (add-to-list 'custom-theme-load-path (car (file-expand-wildcards
+                                             (concat user-emacs-directory "lisp/alect*") t)))
   (setq-default frame-background-mode 'light)
-  (custom-set-faces '(mode-line ((t (:background "gray75" :foreground "black" :box (:line-width -1 :color "gray70")))))
-                    '(region ((t (:background "light blue")))))
   (set-background-color "white")
   (set-foreground-color "black")
+  (disable-theme 'alect-dark)
+  (load-theme 'alect-light t)
   (when (featurep 'erc-hl-nicks)
     (erc-hl-nicks-refresh-colors)))
 
@@ -357,11 +382,10 @@ tags are rare (even in my Baroque collection)"
   (add-hook 'emacs-startup-hook
             (lambda ()
               (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-              (when (member "Iosevka Term Slab" (font-family-list))
-                (set-frame-font "Iosevka Term Slab-11" t t))
+              (when (member "Iosevka Term" (font-family-list))
+                (set-frame-font "Iosevka Term Medium-11" t t))
               (when (member "Noto Color Emoji" (font-family-list))
                 (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
-              (setq browse-url-browser-function 'eww-browse-url)
               (setq-default cursor-type '(hbar . 2))
               (fringe-mode 0)
               (scroll-bar-mode -1)

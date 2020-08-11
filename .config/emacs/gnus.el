@@ -31,7 +31,17 @@
       message-directory (concat user-emacs-directory "mail")
       nnfolder-directory (concat user-emacs-directory "mail/archive")
       gnus-gcc-mark-as-read t
-      mm-text-html-renderer 'gnus-w3m)
+      mm-text-html-renderer 'gnus-w3m
+      ;; new mail indicator in the mode line
+      display-time-mail-function
+      (lambda ()
+        (when (get-process "*nnimap*")
+          (when (boundp 'gnus-newsrc-alist)
+            (let ((unread (gnus-group-unread "INBOX")))
+              (when (and (numberp unread)
+                         (> unread 0))
+                t)))))
+      display-time-mail-string "[NEW Mail!]")
 
 (global-display-line-numbers-mode -1)
 
