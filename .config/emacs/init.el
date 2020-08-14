@@ -2,6 +2,7 @@
 (setq browse-url-browser-function 'w3m-browse-url
       c-basic-offset 4
       column-number-mode t
+      dired-listing-switches "-alhF"
       eww-search-prefix "https://duckduckgo.com/lite/?q="
       inhibit-startup-screen t
       initial-scratch-message nil
@@ -12,9 +13,9 @@
       require-final-newline t
       scheme-program-name "csi -n"
       shr-discard-aria-hidden t
-      shr-inhibit-images t
       shr-use-colors nil
       shr-width 120
+      woman-fill-column 120
 
       ;; w3m
       w3m-add-user-agent nil
@@ -26,6 +27,7 @@
       w3m-enable-google-feeling-lucky nil
       w3m-file-coding-system 'utf-8
       w3m-file-name-coding-system 'utf-8
+      w3m-fill-column 120
       w3m-home-page "about:blank"
       w3m-key-binding 'info
       w3m-pop-up-windows nil
@@ -45,6 +47,29 @@
       w3m-use-symbol t
       w3m-use-tab-menubar nil
       w3m-use-toolbar nil
+
+      ;; elfeed
+      elfeed-feeds '("https://blog.jeff.over.bz/rss.xml"
+                     "https://blog.mattcen.com/rss"
+                     "https://christine.website/blog.rss"
+                     "https://cjb.sh/articles/feed.xml"
+                     "https://codingquark.com/feed.xml"
+                     "https://danluu.com/atom.xml"
+                     "https://deftly.net/rss.xml"
+                     "https://jvns.ca/atom.xml"
+                     "https://microkerneldude.wordpress.com/feed/"
+                     "https://nullprogram.com/feed/"
+                     "https://pine64.org/blog/rss"
+                     "https://planet.freedesktop.org/rss20.xml"
+                     "https://planet.gentoo.org/rss20.xml"
+                     "https://planet.gnu.org/atom.xml"
+                     "https://planet.kernel.org/rss20.xml"
+                     "https://rachelbythebay.com/w/atom.xml"
+                     "https://sachachua.com/blog/category/emacs-news/feed"
+                     "https://security.gentoo.org/glsa/feed.rss"
+                     "https://voicesoftheelephpant.com/feed/podcast/")
+      elfeed-db-directory (concat user-emacs-directory "elfeed")
+      elfeed-search-filter "@1-week-ago"
 
       ;; get stuff out of the home dir
       gnus-directory (concat user-emacs-directory "news")
@@ -126,12 +151,6 @@
 
   (erc-scrolltobottom-enable)
   (erc-spelling-mode +1)
-  (global-hl-line-mode -1)
-  (setq-default show-trailing-whitespace nil)
-  (show-paren-mode -1)
-
-  ;; load and require erc-hl-nicks
-  (my/load-lisp)
   (require 'erc-hl-nicks)
   (erc-hl-nicks)
 
@@ -150,7 +169,6 @@
 ;; load php stuff grumble grumble
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" . (lambda ()
-                               (my/load-lisp)
                                (require 'php-mode)
                                (php-mode)
                                (setq c-basic-offset 4)
@@ -159,14 +177,12 @@
 ;; load nasm-mode instead of the broken(?) asm-mode
 (add-to-list 'auto-mode-alist
              '("\\.\\(asm\\|nasm\\|S\\|s\\)\\'" . (lambda ()
-                                                    (my/load-lisp)
                                                     (require 'nasm-mode)
                                                     (nasm-mode))))
 
 ;; lua-mode
 (add-to-list 'auto-mode-alist
              '("\\.lua\\'" . (lambda ()
-                               (my/load-lisp)
                                (require 'lua-mode)
                                (lua-mode))))
 
@@ -177,15 +193,6 @@
                   c-basic-offset 8
                   tab-width 8
                   indent-tabs-mode t)))
-
-;; eww settings
-(with-eval-after-load "eww"
-  (setq-default show-trailing-whitespace nil))
-
-;; don't use hl-line-mode or show-trailing-whitespace in scheme repl
-(with-eval-after-load "cmuscheme"
-  (global-hl-line-mode -1)
-  (setq-default show-trailing-whitespace nil))
 
 ;; instead of loading hl-todo (which compiled, takes about 10ms on my machine)
 (defface highlight-todo-face
@@ -201,26 +208,16 @@
   (interactive "DByte compile directory: ")
   (byte-recompile-directory directory 0))
 
-;; it takes almost 10ms add these load paths, so put it in a function, and call
-;; when needed instead of every time i open emacs
-(defun my/load-lisp ()
-  "function to load lisp when needed"
-  ;; add site-lisp and user lisp to load path
-  (let ((default-directory  "/usr/share/emacs/site-lisp/"))
-    (normal-top-level-add-subdirs-to-load-path))
-  (let ((default-directory
-          (concat user-emacs-directory "lisp")))
-    (normal-top-level-add-subdirs-to-load-path)))
-
 ;; my prefered packages
 (defvar my/packages
-  '(alect-themes
-    elfeed
+  '(elfeed
     emms
     erc-hl-nicks
     lua-mode
     nasm-mode
     php-mode
+    transmission
+    w3m
     which-key))
 
 ;; custom install function
@@ -228,11 +225,9 @@
   "install my/packages"
   (interactive)
   (require 'package)
-  (my/load-lisp)
   (setq package-enable-at-startup nil)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  ;; create and set lisp directory FIXME: this is broken
-  (mkdir (concat user-emacs-directory "lisp") t)
+  (make-directory (concat user-emacs-directory "lisp") t)
   (setq package-user-dir (concat user-emacs-directory "lisp"))
   (package-initialize)
   (package-refresh-contents)
@@ -240,69 +235,14 @@
     (unless (package-installed-p x)
       (package-install x))))
 
-;; elfeed setup
-(defun rss()
-  "function to load then start elfeed"
-  (interactive)
-  (my/load-lisp)
-  (setq-default show-trailing-whitespace nil)
-
-  ;; if we don't create ~/.emacs.d/elfeed, elfeed will create ~/.elfeed instead
-  ;; of creating elfeed-db-directory
-  (mkdir (concat user-emacs-directory "elfeed") t)
-
-  ;; set elfeed's... feeds
-  (setq elfeed-feeds '("https://blog.jeff.over.bz/rss.xml"
-                       "https://blog.mattcen.com/rss"
-                       "https://christine.website/blog.rss"
-                       "https://cjb.sh/articles/feed.xml"
-                       "https://codingquark.com/feed.xml"
-                       "https://danluu.com/atom.xml"
-                       "https://deftly.net/rss.xml"
-                       "https://jvns.ca/atom.xml"
-                       "https://microkerneldude.wordpress.com/feed/"
-                       "https://nullprogram.com/feed/"
-                       "https://pine64.org/blog/rss"
-                       "https://planet.freedesktop.org/rss20.xml"
-                       "https://planet.gentoo.org/rss20.xml"
-                       "https://planet.gnu.org/atom.xml"
-                       "https://planet.kernel.org/rss20.xml"
-                       "https://rachelbythebay.com/w/atom.xml"
-                       "https://sachachua.com/blog/category/emacs-news/feed"
-                       "https://security.gentoo.org/glsa/feed.rss"
-                       "https://voicesoftheelephpant.com/feed/podcast/")
-        elfeed-db-directory (concat user-emacs-directory "elfeed")
-        elfeed-search-filter "@1-week-ago")
-  (require 'elfeed)
-  (elfeed))
-
-;; put slow modes &c in this hook for a faster startup! 🥳
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (my/load-lisp)
-            (load-library "w3m")
-            ;; enable/disable modes (save-place-mode slows down startup by ~4ms)
-            (delete-selection-mode +1)
-            (display-time-mode +1)
-            (show-paren-mode +1)
-            (require 'which-key)
-            (which-key-mode)))
-
-;; programming mode settings
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (hl-line-mode +1)
-            (setq show-trailing-whitespace t)))
-
-;; emms
+;; play/pause music, or start playing at random if nothing is playing
 (defun emms-play/pause-handler ()
   "determine best course of action when pressing play/pause button"
   (interactive)
   (unless (featurep 'emms)
-    (load-emms))
+    (emms-browser))
   (defun emms-random-play-all ()
-    "hacky solution to play all songs in random mode. 'performer'
-tags are rare (even in my Baroque collection)"
+    "hacky solution to play all songs in random mode."
     (emms-browse-by-performer)
     (emms-browser-add-tracks)
     (emms-shuffle)
@@ -312,75 +252,46 @@ tags are rare (even in my Baroque collection)"
       (emms-random-play-all)
     (emms-pause)))
 
-(defun load-emms ()
-  "load and configure emms"
-  (my/load-lisp)
-  (require 'emms-setup)
-  (require 'emms-info)
-  (emms-standard)
-  (emms-all)
-  (emms-default-players)
-  (setq emms-player-list (list emms-player-mpv)
-        emms-source-file-default-directory "~/music/")
-  (add-to-list 'emms-player-base-format-list "opus")
-  (emms-player-set emms-player-mpv 'regex
-                   (apply #'emms-player-simple-regexp emms-player-base-format-list)))
-
-;;  believe it or not, this **doesn't** increase emacs init time
-(custom-set-faces
- '(fringe ((t (:inherit nil))))
- '(header-line ((t (:height 1.0))))
- '(line-number-current-line ((t (:inherit hl-line))))
- '(variable-pitch ((t (:height 1.1 :family "Sans Serif")))))
-
 (defun dark-background-mode ()
   "set the background mode to dark"
-  (add-to-list 'load-path (car (file-expand-wildcards
-                                (concat user-emacs-directory "lisp/alect*") t)))
-  (add-to-list 'custom-theme-load-path (car (file-expand-wildcards
-                                             (concat user-emacs-directory "lisp/alect*") t)))
   (setq-default frame-background-mode 'dark)
   (set-background-color "black")
-  (set-foreground-color "white")
-  (disable-theme 'alect-light)
-  (load-theme 'alect-dark t)
-  (when (featurep 'erc-hl-nicks)
-    (erc-hl-nicks-refresh-colors)))
+  (set-foreground-color "white"))
 
 (defun light-background-mode ()
   "set the background mode to light"
-  (add-to-list 'load-path (car (file-expand-wildcards
-                                (concat user-emacs-directory "lisp/alect*") t)))
-  (add-to-list 'custom-theme-load-path (car (file-expand-wildcards
-                                             (concat user-emacs-directory "lisp/alect*") t)))
   (setq-default frame-background-mode 'light)
   (set-background-color "white")
-  (set-foreground-color "black")
-  (disable-theme 'alect-dark)
-  (load-theme 'alect-light t)
-  (when (featurep 'erc-hl-nicks)
-    (erc-hl-nicks-refresh-colors)))
+  (set-foreground-color "black"))
 
 (defun toggle-background-mode ()
   "toggle between light and dark mode"
   (interactive)
   (if (string-equal frame-background-mode "light")
       (dark-background-mode)
-    (light-background-mode)))
+    (light-background-mode))
+  (when (featurep 'erc-hl-nicks)
+    (erc-hl-nicks-refresh-colors)))
 
-;; https://www.youtube.com/watch?v=UbxUSsFXYo4
-(defun 9-to-5 ()
-  "workin' 9 to 5, what a way to make a livin'"
+;; GUI config
+(when (display-graphic-p)
+  ;; https://www.youtube.com/watch?v=UbxUSsFXYo4
+  ;; workin' 9 to 5, what a way to make a livin'
   (if (and (>= (string-to-number (format-time-string "%H%M")) 0900)
            (<= (string-to-number (format-time-string "%H%M")) 1700))
       (light-background-mode)
     (dark-background-mode)))
 
-;; GUI config
-(when (display-graphic-p)
-  (9-to-5)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
+;; put slow modes &c in this hook for a faster startup! 🥳
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            ;; enable/disable modes
+            (delete-selection-mode +1)
+            (display-time-mode +1)
+            (show-paren-mode +1)
+            (require 'which-key)
+            (which-key-mode)
+            (when (display-graphic-p)
               (add-to-list 'initial-frame-alist '(fullscreen . maximized))
               (when (member "Iosevka Term" (font-family-list))
                 (set-frame-font "Iosevka Term Medium-11" t t))
@@ -390,3 +301,44 @@ tags are rare (even in my Baroque collection)"
               (fringe-mode 0)
               (scroll-bar-mode -1)
               (tool-bar-mode -1))))
+
+;; programming mode settings
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (hl-line-mode +1)
+            (setq show-trailing-whitespace t)))
+
+;; emms config
+(add-hook 'emms-browser-mode-hook
+          (lambda ()
+            (require 'emms-setup)
+            (require 'emms-info)
+            (emms-standard)
+            (emms-all)
+            (emms-default-players)
+            (setq emms-player-list (list emms-player-mpv)
+                  emms-source-file-default-directory "~/music/"
+                  emms-mode-line-mode-line-function 'emms-mode-line-playlist-current)
+            (add-to-list 'emms-player-base-format-list "opus")
+            (emms-player-set emms-player-mpv 'regex
+                             (apply #'emms-player-simple-regexp emms-player-base-format-list))))
+
+;; add site lisp
+(let ((default-directory  "/usr/share/emacs/site-lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
+(let ((default-directory (concat user-emacs-directory "lisp")))
+  (normal-top-level-add-subdirs-to-load-path))
+
+;; autoloads
+(autoload 'elfeed "elfeed" "RSS/Atom feed reader." t)
+(autoload 'emms-browser "emms-browser" "Emacs Multi Media System." t)
+(autoload 'transmission "transmission" "RPC controller for transmission-daemon." t)
+(autoload 'w3m "w3m" "Visit the World Wide Web using w3m!" t)
+(autoload 'w3m-browse-url "w3m" "Browse url using w3m." t)
+
+;;  custom faces
+(custom-set-faces
+ '(fringe ((t (:inherit nil))))
+ '(header-line ((t (:height 1.0))))
+ '(line-number-current-line ((t (:inherit hl-line))))
+ '(variable-pitch ((t (:height 1.0 :family "Monospace")))))
