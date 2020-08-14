@@ -1,0 +1,26 @@
+{
+    "policies": {
+        "CaptivePortal": false,
+        "DisableAppUpdate": true,
+        "DisableBuiltinPDFViewer": true,
+        "DisableFeedbackCommands": true,
+        "DisableFirefoxAccounts": true,
+        "DisableFirefoxScreenshots": true,
+        "DisableFirefoxStudies": true,
+        "DisablePocket": true,
+        "DisableTelemetry": true,
+        "NetworkPrediction": false,
+        "NoDefaultBookmarks": true,
+        "SearchEngines": {
+            "Default": "DuckDuckGo",
+            "Remove": [
+                "Amazon.com",
+                "Amazon.com.au",
+                "Bing",
+                "eBay",
+                "Google",
+                "Twitter"
+            ]
+        }
+    }
+}
