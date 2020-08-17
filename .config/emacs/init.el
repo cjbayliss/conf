@@ -16,6 +16,7 @@
       shr-use-colors nil
       shr-width 120
       woman-fill-column 120
+      custom-file (concat user-emacs-directory "/custom.el")
 
       ;; w3m
       w3m-add-user-agent nil
@@ -70,6 +71,10 @@
                      "https://voicesoftheelephpant.com/feed/podcast/")
       elfeed-db-directory (concat user-emacs-directory "elfeed")
       elfeed-search-filter "@1-week-ago"
+
+      ;; for faster startup
+      gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6
 
       ;; get stuff out of the home dir
       gnus-directory (concat user-emacs-directory "news")
@@ -209,16 +214,18 @@
   (byte-recompile-directory directory 0))
 
 ;; my prefered packages
-(defvar my/packages
-  '(elfeed
-    emms
-    erc-hl-nicks
-    lua-mode
-    nasm-mode
-    php-mode
-    transmission
-    w3m
-    which-key))
+(setq my/packages
+      '(elfeed
+        emms
+        erc-hl-nicks
+        lua-mode
+        modus-operandi-theme
+        modus-vivendi-theme
+        nasm-mode
+        php-mode
+        transmission
+        w3m
+        which-key))
 
 ;; custom install function
 (defun my/install-packages ()
@@ -252,17 +259,64 @@
       (emms-random-play-all)
     (emms-pause)))
 
+(defun alternative-emms-mode-line-function (n)
+  "Alternative emms mode-line function for people with
+Baroque/Classical/Romantic music in their library. No more long
+titles breaking your mode-line!"
+  (if (> (length (format emms-mode-line-format
+                         (emms-track-get (emms-playlist-current-selected-track) 'info-title)))
+         n)
+      (substring (format emms-mode-line-format
+                         (emms-track-get (emms-playlist-current-selected-track) 'info-title)) 0 n)
+    (format emms-mode-line-format
+            (emms-track-description (emms-playlist-current-selected-track)))))
+
+;; setup mode-line
+;; https://emacs.stackexchange.com/a/37270
+(defun create-mode-line-list (left right)
+  "Create a list containing contents of LEFT,
+`window-total-width' minus length of LEFT & RIGHT, and RIGHT."
+  (let* ((available-width (- (window-total-width)
+                             (+ (length (format-mode-line left))
+                                (length (format-mode-line right))
+                                1))))   ; add a space
+    (append left
+            (list (format (format "%%%ds" available-width) ""))
+            right)))
+
+(defvar custom-mode-line-format
+  (remove 'mode-line-misc-info mode-line-format))
+
+(setq-default mode-line-format
+              '((:eval (create-mode-line-list
+                        custom-mode-line-format
+                        '((:eval (if (featurep 'emms)
+                                     (concat emms-mode-line-string
+                                             emms-playing-time-string
+                                             display-time-string)
+                                   display-time-string)))))))
+
+;; add themes https://www.emacswiki.org/emacs/CustomThemes
+(let ((basedir (concat user-emacs-directory "lisp/")))
+  (dolist (f (directory-files basedir))
+    (if (string-match-p "theme" f)
+        (add-to-list 'custom-theme-load-path (concat basedir f)))))
+
 (defun dark-background-mode ()
   "set the background mode to dark"
+  (disable-theme 'modus-operandi)
   (setq-default frame-background-mode 'dark)
   (set-background-color "black")
-  (set-foreground-color "white"))
+  (set-foreground-color "white")
+  (load-theme 'modus-vivendi t))
 
 (defun light-background-mode ()
   "set the background mode to light"
+  (disable-theme 'modus-vivendi)
   (setq-default frame-background-mode 'light)
   (set-background-color "white")
-  (set-foreground-color "black"))
+  (set-foreground-color "black")
+  (load-theme 'modus-operandi t))
 
 (defun toggle-background-mode ()
   "toggle between light and dark mode"
@@ -272,6 +326,15 @@
     (light-background-mode))
   (when (featurep 'erc-hl-nicks)
     (erc-hl-nicks-refresh-colors)))
+
+;; https://stackoverflow.com/a/20693389/
+(defun remap-faces-default-attributes ()
+  (let ((family (face-attribute 'default :family))
+        (height (face-attribute 'default :height)))
+    (mapcar (lambda (face)
+              (face-remap-add-relative
+               face :family family :height height))
+            (face-list))))
 
 ;; GUI config
 (when (display-graphic-p)
@@ -285,6 +348,11 @@
 ;; put slow modes &c in this hook for a faster startup! 🥳
 (add-hook 'emacs-startup-hook
           (lambda ()
+            ;; restore default gc-cons-*
+            (setq gc-cons-threshold 800000
+                  gc-cons-percentage 0.1)
+            (custom-set-faces
+             '(bold ((t (:weight semi-bold)))))
             ;; enable/disable modes
             (delete-selection-mode +1)
             (display-time-mode +1)
@@ -298,6 +366,8 @@
               (when (member "Noto Color Emoji" (font-family-list))
                 (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
               (setq-default cursor-type '(hbar . 2))
+              (add-hook 'minibuffer-setup-hook 'remap-faces-default-attributes)
+              (add-hook 'change-major-mode-after-body-hook 'remap-faces-default-attributes)
               (fringe-mode 0)
               (scroll-bar-mode -1)
               (tool-bar-mode -1))))
@@ -306,6 +376,7 @@
 (add-hook 'prog-mode-hook
           (lambda ()
             (hl-line-mode +1)
+            (display-line-numbers-mode +1)
             (setq show-trailing-whitespace t)))
 
 ;; emms config
@@ -317,8 +388,11 @@
             (emms-all)
             (emms-default-players)
             (setq emms-player-list (list emms-player-mpv)
+                  emms-mode-line-format " [ %s"
+                  emms-playing-time-display-format " | %s ] "
                   emms-source-file-default-directory "~/music/"
-                  emms-mode-line-mode-line-function 'emms-mode-line-playlist-current)
+                  emms-mode-line-mode-line-function (lambda ()
+                                                      (alternative-emms-mode-line-function 50))) ; emms-mode-line-playlist-current
             (add-to-list 'emms-player-base-format-list "opus")
             (emms-player-set emms-player-mpv 'regex
                              (apply #'emms-player-simple-regexp emms-player-base-format-list))))
@@ -335,10 +409,3 @@
 (autoload 'transmission "transmission" "RPC controller for transmission-daemon." t)
 (autoload 'w3m "w3m" "Visit the World Wide Web using w3m!" t)
 (autoload 'w3m-browse-url "w3m" "Browse url using w3m." t)
-
-;;  custom faces
-(custom-set-faces
- '(fringe ((t (:inherit nil))))
- '(header-line ((t (:height 1.0))))
- '(line-number-current-line ((t (:inherit hl-line))))
- '(variable-pitch ((t (:height 1.0 :family "Monospace")))))
