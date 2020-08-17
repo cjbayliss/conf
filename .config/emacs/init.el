@@ -214,18 +214,18 @@
   (byte-recompile-directory directory 0))
 
 ;; my prefered packages
-(setq my/packages
-      '(elfeed
-        emms
-        erc-hl-nicks
-        lua-mode
-        modus-operandi-theme
-        modus-vivendi-theme
-        nasm-mode
-        php-mode
-        transmission
-        w3m
-        which-key))
+(defvar my/packages
+  '(elfeed
+    emms
+    erc-hl-nicks
+    lua-mode
+    modus-operandi-theme
+    modus-vivendi-theme
+    nasm-mode
+    php-mode
+    transmission
+    w3m
+    which-key))
 
 ;; custom install function
 (defun my/install-packages ()
