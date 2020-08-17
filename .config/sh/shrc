@@ -32,7 +32,6 @@ __cleanup() {
     rm ~/.*hist*
     rm ~/.lesshst
     rm ~/.viminfo
-    rm -rf ~/.w3m
     clear
 }
 
@@ -40,6 +39,11 @@ trap __cleanup EXIT
 
 # everything up until here should work in any POSIX shell 🙂
 if [ -n "$BASH_VERSION" ]; then
+    # completion
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    fi
+
     # append to histfile, don't duplicate, unlimit hist size, set histfile path
     shopt -s histappend
     HISTCONTROL=ignoreboth
