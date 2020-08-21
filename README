@@ -5,15 +5,15 @@ My standard \*NIX config
 
 Some of it is nice, but most of it is boring.
 
-In early 2019 I started a fresh repo, part of this was because I wanted have
-faster clone times, but most of it was because I was embarrassed of the
-mistakes of my past, stupid workarounds, and wot not.
+In early 2019 I started a fresh repo, part of this was because I wanted
+have faster clone times, but most of it was because I was embarrassed of
+the mistakes of my past, stupid workarounds, and wot not.
 
 In 2020 I merged my previous years history into one repo, this is that
-repo. Hopefully nothing has been lost from the start. (2014) Sadly the two
-repos that were always separate, but related, are not easy to merge. Said repos
-contained my original emacs config, and my separate Macbook Pro 11,1 config
-(laptop I since sold)
+repo. Hopefully nothing has been lost from the start. (2014) Sadly the
+two repos that were always separate, but related, are not easy to
+merge. Said repos contained my original emacs config, and my separate
+Macbook Pro 11,1 config (laptop I since sold)
 
 ffmpeg
 ------
@@ -29,9 +29,9 @@ cut out section::
 FIXME:
 ------
 
-* find a solution for RSS/atom feeds that uses stock GNU Emacs. elfeed is the
-  best I can find so far, but doesn't ship with GNU Emacs. Gnus is slooooow,
-  and breaks if a feed is down for a day.
+* find a solution for RSS/atom feeds that uses stock GNU Emacs. elfeed
+  is the best I can find so far, but doesn't ship with GNU Emacs. Gnus
+  is slooooow, and breaks if a feed is down for a day.
 
 * use SASL for IRC.
 

@@ -1,95 +1,97 @@
 ;; general emacs settings
-(setq browse-url-browser-function 'w3m-browse-url
-      c-basic-offset 4
-      column-number-mode t
-      custom-file (concat user-emacs-directory "/custom.el")
-      dired-listing-switches "-alhF"
-      eww-search-prefix "https://duckduckgo.com/lite/?q="
-      inhibit-startup-screen t
-      initial-scratch-message nil
-      make-backup-files nil
-      mouse-yank-at-point t
-      package--init-file-ensured t
-      package-enable-at-startup nil
-      require-final-newline t
-      scheme-program-name "csi -n"
-      shr-discard-aria-hidden t
-      shr-use-colors nil
-      shr-width 120
-      woman-fill-column 120
+(setq
+ browse-url-browser-function 'w3m-browse-url
+ c-basic-offset 4
+ column-number-mode t
+ custom-file (concat user-emacs-directory "/custom.el")
+ dired-listing-switches "-alhF"
+ eww-search-prefix "https://duckduckgo.com/lite/?q="
+ inhibit-startup-screen t
+ initial-scratch-message nil
+ make-backup-files nil
+ mouse-yank-at-point t
+ package--init-file-ensured t
+ package-enable-at-startup nil
+ require-final-newline t
+ scheme-program-name "csi -n"
+ shr-discard-aria-hidden t
+ shr-use-colors nil
+ shr-width 120
+ woman-fill-column fill-column
 
-      ;; w3m
-      w3m-add-user-agent nil
-      w3m-bookmark-file-coding-system 'utf-8
-      w3m-coding-system 'utf-8
-      w3m-default-coding-system 'utf-8
-      w3m-default-display-inline-images t
-      w3m-default-save-directory "~/downloads/"
-      w3m-enable-google-feeling-lucky nil
-      w3m-file-coding-system 'utf-8
-      w3m-file-name-coding-system 'utf-8
-      w3m-fill-column 120
-      w3m-home-page "about:blank"
-      w3m-key-binding 'info
-      w3m-pop-up-windows nil
-      w3m-search-engine-alist
-      '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
-        ("duckduckgo" "https://duckduckgo.com/lite" nil "q=%s"))
-      w3m-search-default-engine "duckduckgo"
-      w3m-show-decoded-url nil          ; http://bugs.debian.org/457909
-      w3m-show-graphic-icons-in-header-line nil
-      w3m-show-graphic-icons-in-mode-line nil
-      w3m-terminal-coding-system 'utf-8
-      w3m-track-mouse nil
-      w3m-use-cookies nil
-      w3m-use-favicon nil
-      w3m-use-header-line nil
-      w3m-use-mule-ucs t
-      w3m-use-symbol t
-      w3m-use-tab-menubar nil
-      w3m-use-toolbar nil
+ ;; w3m
+ w3m-add-user-agent nil
+ w3m-bookmark-file-coding-system 'utf-8
+ w3m-coding-system 'utf-8
+ w3m-default-coding-system 'utf-8
+ w3m-default-display-inline-images t
+ w3m-default-save-directory "~/downloads/"
+ w3m-enable-google-feeling-lucky nil
+ w3m-file-coding-system 'utf-8
+ w3m-file-name-coding-system 'utf-8
+ w3m-fill-column 120
+ w3m-home-page "about:blank"
+ w3m-key-binding 'info
+ w3m-pop-up-windows nil
+ w3m-search-engine-alist
+ '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
+   ("duckduckgo" "https://duckduckgo.com/lite" nil "q=%s"))
+ w3m-search-default-engine "duckduckgo"
+ w3m-show-decoded-url nil          ; http://bugs.debian.org/457909
+ w3m-show-graphic-icons-in-header-line nil
+ w3m-show-graphic-icons-in-mode-line nil
+ w3m-terminal-coding-system 'utf-8
+ w3m-track-mouse nil
+ w3m-use-cookies nil
+ w3m-use-favicon nil
+ w3m-use-header-line nil
+ w3m-use-mule-ucs t
+ w3m-use-symbol t
+ w3m-use-tab-menubar nil
+ w3m-use-toolbar nil
 
-      ;; elfeed
-      elfeed-feeds '("https://blog.jeff.over.bz/rss.xml"
-                     "https://blog.mattcen.com/rss"
-                     "https://christine.website/blog.rss"
-                     "https://cjb.sh/articles/feed.xml"
-                     "https://codingquark.com/feed.xml"
-                     "https://danluu.com/atom.xml"
-                     "https://deftly.net/rss.xml"
-                     "https://jvns.ca/atom.xml"
-                     "https://microkerneldude.wordpress.com/feed/"
-                     "https://nullprogram.com/feed/"
-                     "https://pine64.org/blog/rss"
-                     "https://planet.freedesktop.org/rss20.xml"
-                     "https://planet.gentoo.org/rss20.xml"
-                     "https://planet.gnu.org/atom.xml"
-                     "https://planet.kernel.org/rss20.xml"
-                     "https://rachelbythebay.com/w/atom.xml"
-                     "https://sachachua.com/blog/category/emacs-news/feed"
-                     "https://security.gentoo.org/glsa/feed.rss"
-                     "https://voicesoftheelephpant.com/feed/podcast/")
-      elfeed-db-directory (concat user-emacs-directory "elfeed")
-      elfeed-search-filter "@1-week-ago"
+ ;; elfeed
+ elfeed-feeds '("https://blog.jeff.over.bz/rss.xml"
+                "https://blog.mattcen.com/rss"
+                "https://christine.website/blog.rss"
+                "https://cjb.sh/articles/feed.xml"
+                "https://codingquark.com/feed.xml"
+                "https://danluu.com/atom.xml"
+                "https://deftly.net/rss.xml"
+                "https://jvns.ca/atom.xml"
+                "https://microkerneldude.wordpress.com/feed/"
+                "https://nullprogram.com/feed/"
+                "https://pine64.org/blog/rss"
+                "https://planet.freedesktop.org/rss20.xml"
+                "https://planet.gentoo.org/rss20.xml"
+                "https://planet.gnu.org/atom.xml"
+                "https://planet.kernel.org/rss20.xml"
+                "https://rachelbythebay.com/w/atom.xml"
+                "https://sachachua.com/blog/category/emacs-news/feed"
+                "https://security.gentoo.org/glsa/feed.rss"
+                "https://voicesoftheelephpant.com/feed/podcast/")
+ elfeed-db-directory (concat user-emacs-directory "elfeed")
+ elfeed-search-filter "@1-week-ago"
 
-      ;; for faster startup
-      gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6
+ ;; for faster startup
+ gc-cons-threshold most-positive-fixnum
+ gc-cons-percentage 0.6
 
-      ;; get stuff out of the home dir
-      gnus-directory (concat user-emacs-directory "news")
-      gnus-startup-file (concat user-emacs-directory "newsrc")
-      gnus-init-file (concat user-emacs-directory "gnus"))
+ ;; get stuff out of the home dir
+ gnus-directory (concat user-emacs-directory "news")
+ gnus-startup-file (concat user-emacs-directory "newsrc")
+ gnus-init-file (concat user-emacs-directory "gnus"))
 
-(setq-default fill-column 79
-              frame-background-mode 'dark
-              indent-tabs-mode nil
-              show-trailing-whitespace nil)
+(setq-default
+ fill-column 72                         ; 72 is better
+ frame-background-mode 'dark
+ indent-tabs-mode nil
+ show-trailing-whitespace nil)
 
 ;; enable/disable modes that can't go in the startup hook
 (menu-bar-mode -1)
 (save-place-mode +1)
-(ido-mode 'buffers) ;; only for buffer switching
+(ido-mode 'buffers)                     ; only for buffer switching
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -111,15 +113,20 @@
 
   ;; these bits need to be here **before** you start ERC
   (setq erc-prompt-for-nickserv-password nil
-        ;; set this here, the auto resize is below
-        erc-fill-column 157)
+        erc-fill-column 157)            ; the auto resize is below
 
   (load (concat user-emacs-directory "erc"))
   (require 'erc-services)
   (erc-services-mode +1)
 
-  (erc-tls :server "chat.au.freenode.net" :port 6697 :nick "cjb" :full-name "Christopher Bayliss")
-  (erc-tls :server "irc.oftc.net" :port 6697 :nick "cjbayliss" :full-name "Christopher Bayliss"))
+  (erc-tls :server "chat.au.freenode.net"
+           :port 6697
+           :nick "cjb"
+           :full-name "Christopher Bayliss")
+  (erc-tls :server "irc.oftc.net"
+           :port 6697
+           :nick "cjbayliss"
+           :full-name "Christopher Bayliss"))
 
 ;; ERC config
 (with-eval-after-load "erc"
@@ -164,11 +171,14 @@
                (lambda () (setq erc-fill-column (- (window-width) 2))))
   ;; keep ERC buffer pined to bottom
   (add-to-list 'erc-mode-hook
-               (lambda () (set (make-local-variable 'scroll-conservatively) 100)))
+               (lambda ()
+                 (set
+                  (make-local-variable 'scroll-conservatively) 100)))
 
-  ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what life it
-  ;; has lived, but since you know how to use git you'll find out in no time!!
-  ;; (yes, I felt like writing about this paren for no reason at all.)
+  ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what
+  ;; life it has lived, but since you know how to use git you'll find
+  ;; out in no time!! (yes, I felt like writing about this paren for no
+  ;; reason at all.)
   )
 
 ;; load php stuff grumble grumble
@@ -199,13 +209,20 @@
                   tab-width 8
                   indent-tabs-mode t)))
 
-;; instead of loading hl-todo (which compiled, takes about 10ms on my machine)
+;; instead of loading hl-todo
 (defface highlight-todo-face
-  '((t :foreground "yellow" :background "black" :inverse-video t :weight bold))
+  '((t :foreground "yellow"
+       :background "black"
+       :inverse-video t
+       :weight bold))
   "Basic face for highlighting TODO &c.")
 (defvar highlight-todo-face 'highlight-todo-face)
-(add-hook 'prog-mode-hook (lambda ()
-                            (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\):" 1 highlight-todo-face t)))))
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (font-lock-add-keywords
+             nil
+             '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\):"
+                1 highlight-todo-face t)))))
 
 ;; emacs should already have this function, does it and i can't find it?
 (defun byte-compile-directory (directory)
@@ -224,6 +241,7 @@
     nasm-mode
     php-mode
     transmission
+    vterm
     w3m
     which-key))
 
@@ -233,7 +251,8 @@
   (interactive)
   (require 'package)
   (setq package-enable-at-startup nil)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
   (make-directory (concat user-emacs-directory "lisp") t)
   (setq package-user-dir (concat user-emacs-directory "lisp"))
   (package-initialize)
@@ -323,14 +342,18 @@
             (require 'which-key)
             (which-key-mode)
             (when (display-graphic-p)
-              (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+              (add-to-list 'initial-frame-alist
+                           '(fullscreen . maximized))
               (when (member "Iosevka Term" (font-family-list))
                 (set-frame-font "Iosevka Term Medium-11" t t))
               (when (member "Noto Color Emoji" (font-family-list))
-                (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
+                (set-fontset-font t 'unicode
+                                  "Noto Color Emoji" nil 'prepend))
               (setq-default cursor-type '(hbar . 2))
-              (add-hook 'minibuffer-setup-hook 'remap-faces-default-attributes)
-              (add-hook 'change-major-mode-after-body-hook 'remap-faces-default-attributes)
+              (add-hook 'minibuffer-setup-hook
+                        'remap-faces-default-attributes)
+              (add-hook 'change-major-mode-after-body-hook
+                        'remap-faces-default-attributes)
               (fringe-mode 0)
               (scroll-bar-mode -1)
               (tool-bar-mode -1))))
@@ -354,10 +377,12 @@
                   emms-mode-line-format " [ %s"
                   emms-playing-time-display-format " | %s ] "
                   emms-source-file-default-directory "~/music/"
-                  emms-mode-line-mode-line-function 'emms-mode-line-playlist-current)
+                  emms-mode-line-mode-line-function
+                  'emms-mode-line-playlist-current)
             (add-to-list 'emms-player-base-format-list "opus")
             (emms-player-set emms-player-mpv 'regex
-                             (apply #'emms-player-simple-regexp emms-player-base-format-list))))
+                             (apply #'emms-player-simple-regexp
+                                    emms-player-base-format-list))))
 
 ;; add site lisp
 (let ((default-directory  "/usr/share/emacs/site-lisp/"))
@@ -368,6 +393,8 @@
 ;; autoloads
 (autoload 'elfeed "elfeed" "RSS/Atom feed reader." t)
 (autoload 'emms-browser "emms-browser" "Emacs Multi Media System." t)
-(autoload 'transmission "transmission" "RPC controller for transmission-daemon." t)
+(autoload 'transmission
+  "transmission" "RPC controller for transmission-daemon." t)
+(autoload 'vterm "vterm" "The best terminal emulator in emacs." t)
 (autoload 'w3m "w3m" "Visit the World Wide Web using w3m!" t)
 (autoload 'w3m-browse-url "w3m" "Browse url using w3m." t)
