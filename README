@@ -1,3 +1,5 @@
+.. -*- mode: rst -*-
+
 My standard \*NIX config
 ========================
 
@@ -16,17 +18,13 @@ contained my original emacs config, and my separate Macbook Pro 11,1 config
 ffmpeg
 ------
 
-convert music to opus:
+convert music to opus::
 
-::
+  for i in *.mp3; do ffmpeg -i "$i" -acodec libopus -b:a 256000 -vbr off "${i%.*}.opus"; done
 
-   for i in *.mp3; do ffmpeg -i "$i" -acodec libopus -b:a 256000 -vbr off "${i%.*}.opus"; done
+cut out section::
 
-cut out section:
-
-::
-
-   ffmpeg -i in.opus -ss 00:00:20 -to 00:00:40 -c copy out.opus
+  ffmpeg -i in.opus -ss 00:00:20 -to 00:00:40 -c copy out.opus
 
 FIXME:
 ------
