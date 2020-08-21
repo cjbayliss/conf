@@ -4,7 +4,7 @@
 alias grep="grep --color=auto"
 alias ls="ls -h --color=auto"
 alias ip="ip -c"
-[ ! -f "$(which htop)" ] && alias htop="free -h; echo; uptime; echo; ps au"
+[ ! -f "$(which htop)" ] && alias htop="free -m; echo; uptime; echo; ps au"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
 alias wget="wget --no-hsts"
@@ -16,9 +16,6 @@ alias firefox="HOME=$XDG_CONFIG_HOME/naughty-program firefox"
 alias randstring="[ $(cat /proc/sys/kernel/random/entropy_avail) -gt 200 ] &&
                   tr -dc '[0-9A-Za-z~\!\@\#$%^&*()_+]' </dev/urandom | fold -w 25 | head -n 10 ||
                   printf \"WTF is wrong with your system?\n\""
-
-# so uh, yeeaaaaah... https://github.com/tmux/tmux/issues/142
-alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
 
 # make startx use $XDG_CONFIG_HOME/x11/xsession
 alias startx="startx $XDG_CONFIG_HOME/x11/xsession"
