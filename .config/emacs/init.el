@@ -2,6 +2,7 @@
 (setq browse-url-browser-function 'w3m-browse-url
       c-basic-offset 4
       column-number-mode t
+      custom-file (concat user-emacs-directory "/custom.el")
       dired-listing-switches "-alhF"
       eww-search-prefix "https://duckduckgo.com/lite/?q="
       inhibit-startup-screen t
@@ -16,7 +17,6 @@
       shr-use-colors nil
       shr-width 120
       woman-fill-column 120
-      custom-file (concat user-emacs-directory "/custom.el")
 
       ;; w3m
       w3m-add-user-agent nil
@@ -259,43 +259,6 @@
       (emms-random-play-all)
     (emms-pause)))
 
-(defun alternative-emms-mode-line-function (n)
-  "Alternative emms mode-line function for people with
-Baroque/Classical/Romantic music in their library. No more long
-titles breaking your mode-line!"
-  (if (> (length (format emms-mode-line-format
-                         (emms-track-get (emms-playlist-current-selected-track) 'info-title)))
-         n)
-      (substring (format emms-mode-line-format
-                         (emms-track-get (emms-playlist-current-selected-track) 'info-title)) 0 n)
-    (format emms-mode-line-format
-            (emms-track-description (emms-playlist-current-selected-track)))))
-
-;; setup mode-line
-;; https://emacs.stackexchange.com/a/37270
-(defun create-mode-line-list (left right)
-  "Create a list containing contents of LEFT,
-`window-total-width' minus length of LEFT & RIGHT, and RIGHT."
-  (let* ((available-width (- (window-total-width)
-                             (+ (length (format-mode-line left))
-                                (length (format-mode-line right))
-                                1))))   ; add a space
-    (append left
-            (list (format (format "%%%ds" available-width) ""))
-            right)))
-
-(defvar custom-mode-line-format
-  (remove 'mode-line-misc-info mode-line-format))
-
-(setq-default mode-line-format
-              '((:eval (create-mode-line-list
-                        custom-mode-line-format
-                        '((:eval (if (featurep 'emms)
-                                     (concat emms-mode-line-string
-                                             emms-playing-time-string
-                                             display-time-string)
-                                   display-time-string)))))))
-
 ;; add themes https://www.emacswiki.org/emacs/CustomThemes
 (let ((basedir (concat user-emacs-directory "lisp/")))
   (dolist (f (directory-files basedir))
@@ -391,8 +354,7 @@ titles breaking your mode-line!"
                   emms-mode-line-format " [ %s"
                   emms-playing-time-display-format " | %s ] "
                   emms-source-file-default-directory "~/music/"
-                  emms-mode-line-mode-line-function (lambda ()
-                                                      (alternative-emms-mode-line-function 50))) ; emms-mode-line-playlist-current
+                  emms-mode-line-mode-line-function 'emms-mode-line-playlist-current)
             (add-to-list 'emms-player-base-format-list "opus")
             (emms-player-set emms-player-mpv 'regex
                              (apply #'emms-player-simple-regexp emms-player-base-format-list))))
