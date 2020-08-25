@@ -45,7 +45,6 @@
  w3m-use-cookies nil
  w3m-use-favicon nil
  w3m-use-header-line nil
- w3m-use-mule-ucs t
  w3m-use-symbol t
  w3m-use-tab-menubar nil
  w3m-use-toolbar nil
@@ -134,13 +133,9 @@
 
   (setq erc-autojoin-channels-alist
         '(("freenode.net"
-           "##asm"
            "#chicken"
            "#emacs"
-           "#freenode"
            "#gentoo-lisp"
-           "#guile"
-           "#lisp"
            "##lisp"
            "#scheme"
            "#xebian")
@@ -195,12 +190,6 @@
                                                     (require 'nasm-mode)
                                                     (nasm-mode))))
 
-;; lua-mode
-(add-to-list 'auto-mode-alist
-             '("\\.lua\\'" . (lambda ()
-                               (require 'lua-mode)
-                               (lua-mode))))
-
 ;; if I'm editing a C file, I *probably* want the linux style
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -230,37 +219,6 @@
   (interactive "DByte compile directory: ")
   (byte-recompile-directory directory 0))
 
-;; my prefered packages
-(defvar my/packages
-  '(elfeed
-    emms
-    erc-hl-nicks
-    lua-mode
-    modus-operandi-theme
-    modus-vivendi-theme
-    nasm-mode
-    php-mode
-    transmission
-    vterm
-    w3m
-    which-key))
-
-;; custom install function
-(defun my/install-packages ()
-  "install my/packages"
-  (interactive)
-  (require 'package)
-  (setq package-enable-at-startup nil)
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/") t)
-  (make-directory (concat user-emacs-directory "lisp") t)
-  (setq package-user-dir (concat user-emacs-directory "lisp"))
-  (package-initialize)
-  (package-refresh-contents)
-  (dolist (x my/packages)
-    (unless (package-installed-p x)
-      (package-install x))))
-
 ;; play/pause music, or start playing at random if nothing is playing
 (defun emms-play/pause-handler ()
   "determine best course of action when pressing play/pause button"
@@ -277,6 +235,94 @@
           emms-player-stopped-p)
       (emms-random-play-all)
     (emms-pause)))
+
+
+;; https://stackoverflow.com/a/20693389/
+(defun remap-faces-default-attributes ()
+  (let ((family (face-attribute 'default :family))
+        (height (face-attribute 'default :height)))
+    (mapcar (lambda (face)
+              (face-remap-add-relative
+               face :family family :height height))
+            (face-list))))
+
+;; programming mode settings
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (hl-line-mode +1)
+            (display-line-numbers-mode +1)
+            (setq show-trailing-whitespace t)))
+
+;; can global-hl-mode-mode be disabled *just* for ERC?
+(mapc (lambda (x)
+        (add-hook x 'hl-line-mode +1))
+      '(text-mode-hook
+        dired-mode-hook
+        elfeed-show-mode-hook
+        w3m-mode-hook
+        eww-mode-hook))
+
+;; emms config
+(add-hook 'emms-browser-mode-hook
+          (lambda ()
+            (require 'emms-setup)
+            (require 'emms-info)
+            (emms-standard)
+            (emms-all)
+            (emms-default-players)
+            (setq emms-player-list (list emms-player-mpv)
+                  emms-mode-line-format " [ %s"
+                  emms-playing-time-display-format " | %s ] "
+                  emms-source-file-default-directory "~/music/"
+                  emms-mode-line-mode-line-function
+                  'emms-mode-line-playlist-current)
+            (add-to-list 'emms-player-base-format-list "opus")
+            (emms-player-set emms-player-mpv 'regex
+                             (apply #'emms-player-simple-regexp
+                                    emms-player-base-format-list))))
+
+;; make sure these directories exists
+(unless (file-directory-p (concat user-emacs-directory "lisp"))
+  (make-directory (concat user-emacs-directory "lisp") t))
+(unless (file-directory-p (concat user-emacs-directory "emms"))
+  (make-directory (concat user-emacs-directory "emms") t))
+
+;; add site lisp
+(let ((default-directory  "/usr/share/emacs/site-lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
+(let ((default-directory (concat user-emacs-directory "lisp")))
+  (normal-top-level-add-subdirs-to-load-path))
+
+;; ensure packages
+(mapc (lambda (x)
+        (unless (locate-library (symbol-name x))
+          (unless (featurep 'package)
+            (require 'package)
+            (add-to-list 'package-archives
+                         '("melpa" . "https://melpa.org/packages/") t)
+            (setq package-user-dir (concat user-emacs-directory "lisp"))
+            (package-initialize)
+            (package-refresh-contents))
+          (package-install x)))
+      '(elfeed
+        emms
+        erc-hl-nicks
+        modus-operandi-theme
+        modus-vivendi-theme
+        nasm-mode
+        php-mode
+        transmission
+        vterm
+        w3m
+        which-key))
+
+;; autoloads
+(mapc (lambda (x)
+        (autoload x (symbol-name x) nil t))
+      '(elfeed emms-browser transmission vterm w3m))
+(autoload 'w3m-browse-url "w3m" nil t)
+
+;; NOTE: everything after here should go last.
 
 ;; add themes https://www.emacswiki.org/emacs/CustomThemes
 (let ((basedir (concat user-emacs-directory "lisp/")))
@@ -303,20 +349,11 @@
 (defun toggle-background-mode ()
   "toggle between light and dark mode"
   (interactive)
-  (if (string-equal frame-background-mode "light")
+  (if (eq frame-background-mode 'light)
       (dark-background-mode)
     (light-background-mode))
   (when (featurep 'erc-hl-nicks)
     (erc-hl-nicks-refresh-colors)))
-
-;; https://stackoverflow.com/a/20693389/
-(defun remap-faces-default-attributes ()
-  (let ((family (face-attribute 'default :family))
-        (height (face-attribute 'default :height)))
-    (mapcar (lambda (face)
-              (face-remap-add-relative
-               face :family family :height height))
-            (face-list))))
 
 ;; GUI config
 (when (display-graphic-p)
@@ -357,44 +394,3 @@
               (fringe-mode 0)
               (scroll-bar-mode -1)
               (tool-bar-mode -1))))
-
-;; programming mode settings
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (hl-line-mode +1)
-            (display-line-numbers-mode +1)
-            (setq show-trailing-whitespace t)))
-
-;; emms config
-(add-hook 'emms-browser-mode-hook
-          (lambda ()
-            (require 'emms-setup)
-            (require 'emms-info)
-            (emms-standard)
-            (emms-all)
-            (emms-default-players)
-            (setq emms-player-list (list emms-player-mpv)
-                  emms-mode-line-format " [ %s"
-                  emms-playing-time-display-format " | %s ] "
-                  emms-source-file-default-directory "~/music/"
-                  emms-mode-line-mode-line-function
-                  'emms-mode-line-playlist-current)
-            (add-to-list 'emms-player-base-format-list "opus")
-            (emms-player-set emms-player-mpv 'regex
-                             (apply #'emms-player-simple-regexp
-                                    emms-player-base-format-list))))
-
-;; add site lisp
-(let ((default-directory  "/usr/share/emacs/site-lisp/"))
-  (normal-top-level-add-subdirs-to-load-path))
-(let ((default-directory (concat user-emacs-directory "lisp")))
-  (normal-top-level-add-subdirs-to-load-path))
-
-;; autoloads
-(autoload 'elfeed "elfeed" "RSS/Atom feed reader." t)
-(autoload 'emms-browser "emms-browser" "Emacs Multi Media System." t)
-(autoload 'transmission
-  "transmission" "RPC controller for transmission-daemon." t)
-(autoload 'vterm "vterm" "The best terminal emulator in emacs." t)
-(autoload 'w3m "w3m" "Visit the World Wide Web using w3m!" t)
-(autoload 'w3m-browse-url "w3m" "Browse url using w3m." t)
