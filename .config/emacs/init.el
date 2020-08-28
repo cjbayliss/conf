@@ -50,25 +50,32 @@
  w3m-use-toolbar nil
 
  ;; elfeed
- elfeed-feeds '("https://blog.jeff.over.bz/rss.xml"
-                "https://blog.mattcen.com/rss"
-                "https://christine.website/blog.rss"
-                "https://cjb.sh/articles/feed.xml"
-                "https://codingquark.com/feed.xml"
-                "https://danluu.com/atom.xml"
-                "https://deftly.net/rss.xml"
-                "https://jvns.ca/atom.xml"
-                "https://microkerneldude.wordpress.com/feed/"
-                "https://nullprogram.com/feed/"
-                "https://pine64.org/blog/rss"
-                "https://planet.freedesktop.org/rss20.xml"
-                "https://planet.gentoo.org/rss20.xml"
-                "https://planet.gnu.org/atom.xml"
-                "https://planet.kernel.org/rss20.xml"
-                "https://rachelbythebay.com/w/atom.xml"
-                "https://sachachua.com/blog/category/emacs-news/feed"
-                "https://security.gentoo.org/glsa/feed.rss"
-                "https://voicesoftheelephpant.com/feed/podcast/")
+ elfeed-feeds
+ '("https://0pointer.net/blog/index.rss20"
+   "https://blog.alicef.me/feeds/all.atom.xml"
+   "https://blog.jeff.over.bz/rss.xml"
+   "https://blog.mattcen.com/rss"
+   "https://blogs.gentoo.org/mgorny/feed/"
+   "https://blogs.igalia.com/apinheiro/feed/"
+   "https://christine.website/blog.rss"
+   "https://cjb.sh/articles/feed.xml"
+   "https://codingquark.com/feed.xml"
+   "https://danluu.com/atom.xml"
+   "https://deftly.net/rss.xml"
+   "https://heronsperch.blogspot.com/feeds/posts/default?alt=rss"
+   "https://jvns.ca/atom.xml"
+   "https://keithp.com/blogs/index.rss"
+   "https://librelounge.org/rss-feed-ogg.rss"
+   "https://melissawen.github.io/feed.xml"
+   "https://microkerneldude.wordpress.com/feed/"
+   "https://mjg59.dreamwidth.org/data/rss"
+   "https://nullprogram.com/feed/"
+   "https://pine64.org/blog/rss"
+   "https://rosenzweig.io/blog/feed.xml"
+   "https://sachachua.com/blog/category/emacs-news/feed"
+   "https://security.gentoo.org/glsa/feed.rss"
+   "https://trofi.github.io/feed/rss.xml"
+   "https://wingolog.org/feed/atom")
  elfeed-db-directory (concat user-emacs-directory "elfeed")
  elfeed-search-filter "@1-week-ago"
 
@@ -200,10 +207,9 @@
 
 ;; instead of loading hl-todo
 (defface highlight-todo-face
-  '((t :foreground "yellow"
-       :background "black"
-       :inverse-video t
-       :weight bold))
+  '((t :inherit font-lock-warning-face
+       :weight bold
+       :slant italic))
   "Basic face for highlighting TODO &c.")
 (defvar highlight-todo-face 'highlight-todo-face)
 (add-hook 'prog-mode-hook
