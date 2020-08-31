@@ -10,7 +10,6 @@ alias poweroff="sudo /sbin/poweroff"
 alias wget="wget --no-hsts"
 # i once removed this having forgot how slow debian's site-lisp is -_-
 alias emacs="emacs --no-site-lisp"
-alias firefox="HOME=$XDG_CONFIG_HOME/naughty-program firefox"
 
 # FIXME: this will only work on linux systems
 alias randstring="[ $(cat /proc/sys/kernel/random/entropy_avail) -gt 200 ] &&

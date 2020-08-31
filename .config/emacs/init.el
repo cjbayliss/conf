@@ -106,6 +106,11 @@
 (global-set-key [XF86AudioPlay] 'emms-play/pause-handler)
 (global-set-key [XF86AudioNext] 'emms-next)
 (global-set-key [XF86AudioPrev] 'emms-previous)
+(global-set-key [XF86AudioLowerVolume] 'alsa-lower-volume)
+(global-set-key [XF86AudioRaiseVolume] 'alsa-raise-volume)
+(global-set-key [XF86AudioMute] 'alsa-mute)
+(global-set-key [XF86MonBrightnessDown] 'back-light-down)
+(global-set-key [XF86MonBrightnessUp] 'back-light-up)
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-ch" 'hl-line-mode)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
@@ -188,7 +193,8 @@
              '("\\.php\\'" . (lambda ()
                                (require 'php-mode)
                                (php-mode)
-                               (setq c-basic-offset 4)
+                               (setq c-basic-offset 4
+                                     indent-tabs-mode nil)
                                (php-enable-psr2-coding-style))))
 
 ;; load nasm-mode instead of the broken(?) asm-mode
@@ -242,7 +248,6 @@
       (emms-random-play-all)
     (emms-pause)))
 
-
 ;; https://stackoverflow.com/a/20693389/
 (defun remap-faces-default-attributes ()
   (let ((family (face-attribute 'default :family))
@@ -251,6 +256,33 @@
               (face-remap-add-relative
                face :family family :height height))
             (face-list))))
+
+;; alsa volume control
+(defun alsa-raise-volume ()
+  (interactive)
+  (shell-command
+   "amixer set Master 2%+ unmute | grep 'Mono:' | cut -d' ' -f6"))
+
+(defun alsa-lower-volume ()
+  (interactive)
+  (shell-command
+   "amixer set Master 2%- unmute | grep 'Mono:' | cut -d' ' -f6"))
+
+(defun alsa-mute ()
+  (interactive)
+  (shell-command
+   "amixer set Master toggle | grep 'Mono:' | cut -d' ' -f8"))
+
+;; back-light control
+(defun back-light-up ()
+  (interactive)
+  (shell-command
+   "brightnessctl set +5% | grep Current | cut -d' ' -f4"))
+
+(defun back-light-down ()
+  (interactive)
+  (shell-command
+   "brightnessctl set 5%- | grep Current | cut -d' ' -f4"))
 
 ;; programming mode settings
 (add-hook 'prog-mode-hook
@@ -311,8 +343,10 @@
             (package-refresh-contents))
           (package-install x)))
       '(elfeed
+        elpher
         emms
         erc-hl-nicks
+        exwm
         modus-operandi-theme
         modus-vivendi-theme
         nasm-mode
@@ -325,7 +359,7 @@
 ;; autoloads
 (mapc (lambda (x)
         (autoload x (symbol-name x) nil t))
-      '(elfeed emms-browser transmission vterm w3m))
+      '(elfeed elpher emms-browser transmission vterm w3m))
 (autoload 'w3m-browse-url "w3m" nil t)
 
 ;; NOTE: everything after here should go last.
@@ -399,4 +433,8 @@
                         'remap-faces-default-attributes)
               (fringe-mode 0)
               (scroll-bar-mode -1)
-              (tool-bar-mode -1))))
+              (tool-bar-mode -1)
+
+              ;; start exwm
+              (require 'exwm)
+              (exwm-enable))))
