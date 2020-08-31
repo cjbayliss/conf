@@ -22,21 +22,13 @@ export ENV="$XDG_CONFIG_HOME/sh/shrc"
 export EMAIL="cjb@cjb.sh"
 export NAME="Christopher Bayliss"
 export TIME_STYLE=long-iso
-MY_HOME_PATHS="$HOME/.bin:$HOME/.local/bin"
-RUBBISH_VENDOR_PATHS="$HOME/.config/composer/vendor/bin:$HOME/.local/share/npm/bin:$HOME/.local/share/go/bin/"
-export PATH="$PATH:$MY_HOME_PATHS:$RUBBISH_VENDOR_PATHS"
+export PATH="$PATH:$HOME/.local/bin"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export GIT_PAGER="diff-highlight | less -F -X"
 export MOZC_CONFIGURATION_DIRECTORY="$XDG_CONFIG_HOME/mozc"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-# should i be compelled to use npm, set some sane stuff
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
-export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
-export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
-# golang
-export GOPATH="$XDG_DATA_HOME/go"
 
 # make virsh use qemu:///system by default
 export LIBVIRT_DEFAULT_URI='qemu:///system'
