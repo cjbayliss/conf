@@ -15,8 +15,8 @@ two repos that were always separate, but related, are not easy to
 merge. Said repos contained my original emacs config, and my separate
 Macbook Pro 11,1 config (laptop I since sold)
 
-ffmpeg
-------
+helpful:
+--------
 
 convert music to opus::
 
@@ -26,6 +26,10 @@ cut out section::
 
   ffmpeg -i in.opus -ss 00:00:20 -to 00:00:40 -c copy out.opus
 
+in ``top``, for [subjectively] easier information, press::
+
+  1tm
+  
 FIXME:
 ------
 
