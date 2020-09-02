@@ -4,7 +4,6 @@
 alias grep="grep --color=auto"
 alias ls="ls -h --color=auto"
 alias ip="ip -c"
-[ ! -f "$(which htop)" ] && alias htop="free -m; echo; uptime; echo; ps au"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
 alias wget="wget --no-hsts"
@@ -19,8 +18,9 @@ alias randstring="[ $(cat /proc/sys/kernel/random/entropy_avail) -gt 200 ] &&
 # make startx use $XDG_CONFIG_HOME/x11/xsession
 alias startx="startx $XDG_CONFIG_HOME/x11/xsession"
 
+# FIXME: needs more testing!!
 # setup a PS1 that *should* work in any POSIX compliant shell
-PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed 's/\/home\/'$USER'/~/')\$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')> "
+PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed 's/\/home\/'$USER'/~/')\$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')\$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/[\1]/')> "
 
 # cleanup on exit
 __cleanup() {
