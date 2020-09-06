@@ -104,7 +104,6 @@ pref("devtools.onboarding.telemetry.logged", false);
 pref("dom.battery.enabled", false);
 pref("dom.event.clipboardevents.enabled", false);
 pref("dom.event.contextmenu.enabled", false);
-pref("dom.storage.enabled", false);
 pref("dom.webaudio.enabled", false);
 pref("experiments.activeExperiment", false);
 pref("experiments.enabled", false);
