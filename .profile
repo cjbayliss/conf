@@ -29,7 +29,6 @@ export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 
 # some programs need $XDG_CACHE_HOME to exist
 mkdir -p "$XDG_CACHE_HOME"
-touch "$XDG_RUNTIME_DIR/Xauthority"
 
 # start the ssh-agent. requires the package 'keychain'
 [ -f /usr/bin/keychain ] && eval "$(keychain --eval --quiet --quick --dir $XDG_CACHE_HOME)"
