@@ -14,10 +14,9 @@ if [ -z "${XDG_RUNTIME_DIR}" ]; then
     fi
 fi
 export XDG_CONFIG_HOME="$HOME/.config"
-# why would I store this? put it in /tmp
+# why store this? put it in /tmp
 export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-
 export ENV="$XDG_CONFIG_HOME/sh/shrc"
 export EMAIL="cjb@cjb.sh"
 export NAME="Christopher Bayliss"
@@ -25,26 +24,19 @@ export TIME_STYLE=long-iso
 export PATH="$PATH:$HOME/.local/bin"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export GIT_PAGER="diff-highlight | less -F -X"
-export MOZC_CONFIGURATION_DIRECTORY="$XDG_CONFIG_HOME/mozc"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 
-# make virsh use qemu:///system by default
-export LIBVIRT_DEFAULT_URI='qemu:///system'
-
-# some programs need $XDG_CACHE_HOME to be already created
+# some programs need $XDG_CACHE_HOME to exist
 mkdir -p "$XDG_CACHE_HOME"
 touch "$XDG_RUNTIME_DIR/Xauthority"
+
 # start the ssh-agent. requires the package 'keychain'
 [ -f /usr/bin/keychain ] && eval "$(keychain --eval --quiet --quick --dir $XDG_CACHE_HOME)"
 
-# color dirs/files nicely
-[ -f /usr/bin/dircolors ] && eval "$(dircolors)"
-
 # set default directories
 if [ -f /usr/bin/xdg-user-dirs-update ]; then
-    xdg-user-dirs-update --set DESKTOP "$HOME/dev"
+    xdg-user-dirs-update --set DESKTOP "$HOME/dev/desktop"
     xdg-user-dirs-update --set DOWNLOAD "$HOME/downloads"
     xdg-user-dirs-update --set TEMPLATES "$HOME/dev/templates"
     xdg-user-dirs-update --set PUBLICSHARE "$HOME/dev/public"
@@ -52,9 +44,4 @@ if [ -f /usr/bin/xdg-user-dirs-update ]; then
     xdg-user-dirs-update --set MUSIC "$HOME/music"
     xdg-user-dirs-update --set PICTURES "$HOME/pictures"
     xdg-user-dirs-update --set VIDEOS "$HOME/videos"
-fi
-
-# NOTE: this *must* go last
-if [ -n "$BASH_VERSION" ] && [ -r ~/.bashrc ] ; then
-    . ~/.bashrc
 fi

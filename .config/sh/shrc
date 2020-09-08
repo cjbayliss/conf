@@ -1,9 +1,6 @@
 #!/bin/sh
 
 # alias stuff
-alias grep="grep --color=auto"
-alias ls="ls -h --color=auto"
-alias ip="ip -c"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
 alias wget="wget --no-hsts"
@@ -16,11 +13,24 @@ alias randstring="[ $(cat /proc/sys/kernel/random/entropy_avail) -gt 200 ] &&
                   printf \"WTF is wrong with your system?\n\""
 
 # make startx use $XDG_CONFIG_HOME/x11/xsession
-alias startx="startx $XDG_CONFIG_HOME/x11/xsession"
+alias startx="xinit $XDG_CONFIG_HOME/x11/xsession -- vt$(tty | tail -c2)"
 
 # FIXME: needs more testing!!
 # setup a PS1 that *should* work in any POSIX compliant shell
-PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed 's/\/home\/'$USER'/~/')\$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')\$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/[\1]/')> "
+__git_prompt() {
+    BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')"
+    STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/[\1]/')"
+    printf "%s%s" "$BRANCH" "$STATUS"
+}
+PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed 's/\/home\/'$USER'/~/')\$(__git_prompt)> "
+
+# setup ksh if under ksh
+if [ -n "$KSH_VERSION" ]; then
+    # don't put duplicate lines or lines starting with space in the history.
+    HISTCONTROL=ignorespace:ignoredups
+    HISTFILE="$XDG_DATA_HOME/ksh-history"
+    HISTSIZE=10000
+fi
 
 # cleanup on exit
 __cleanup() {
