@@ -24,12 +24,14 @@ __git_prompt() {
 }
 PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed 's/\/home\/'$USER'/~/')\$(__git_prompt)> "
 
+# common history file
+HISTFILE="$XDG_DATA_HOME/history"
+
 # setup ksh if under ksh
 if [ -n "$KSH_VERSION" ]; then
     # don't put duplicate lines or lines starting with space in the history.
     HISTCONTROL=ignorespace:ignoredups
-    HISTFILE="$XDG_DATA_HOME/ksh-history"
-    HISTSIZE=10000
+    HISTSIZE=100000
 fi
 
 # cleanup on exit
