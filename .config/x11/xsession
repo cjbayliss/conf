@@ -15,5 +15,11 @@ export XDG_DOWNLOAD_DIR="$HOME/downloads"
 export XDG_MUSIC_DIR="$HOME/music"
 export XDG_VIDEOS_DIR="$HOME/videos"
 
+# imput method
+export XMODIFIERS=@im=exwm-xim
+export GTK_IM_MODULE=xim
+export QT_IM_MODULE=xim
+export CLUTTER_IM_MODULE=xim
+
 # Now start EXWM! :)
 exec emacs

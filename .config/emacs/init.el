@@ -102,15 +102,6 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
-(global-set-key [f6] 'toggle-background-mode)
-(global-set-key [XF86AudioPlay] 'emms-play/pause-handler)
-(global-set-key [XF86AudioNext] 'emms-next)
-(global-set-key [XF86AudioPrev] 'emms-previous)
-(global-set-key [XF86AudioLowerVolume] 'alsa-lower-volume)
-(global-set-key [XF86AudioRaiseVolume] 'alsa-raise-volume)
-(global-set-key [XF86AudioMute] 'alsa-mute)
-(global-set-key [XF86MonBrightnessDown] 'back-light-down)
-(global-set-key [XF86MonBrightnessUp] 'back-light-up)
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-ch" 'hl-line-mode)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
@@ -147,6 +138,7 @@
         '(("freenode.net"
            "#chicken"
            "#emacs"
+           "#gentoo-hardened"
            "#gentoo-lisp"
            "##lisp"
            "#scheme"
@@ -395,6 +387,40 @@
   (when (featurep 'erc-hl-nicks)
     (erc-hl-nicks-refresh-colors)))
 
+(defun start-exwm ()
+  "start exwm"
+  (require 'exwm)
+  (require 'exwm-xim)
+
+  (setq exwm-input-global-keys
+        `(([f6] . toggle-background-mode)
+          ([XF86AudioLowerVolume] . alsa-lower-volume)
+          ([XF86AudioRaiseVolume] . alsa-raise-volume)
+          ([XF86AudioMute] . alsa-mute)
+          ([XF86MonBrightnessDown] . back-light-down)
+          ([XF86MonBrightnessUp] . back-light-up)
+          ([XF86AudioNext] . emms-next)
+          ([XF86AudioPlay] . emms-play/pause-handler)
+          ([XF86AudioPrev] . emms-previous)
+          ([XF86LaunchB] . (lambda (command)
+                             (interactive (list
+                                           (read-shell-command "$ ")))
+                             (start-process-shell-command command nil
+                                                          command))))
+
+        exwm-input-simulation-keys
+        '(([?\C-w] . [?\C-x])
+          ([?\M-w] . [?\C-c])
+          ([?\C-y] . [?\C-v])))
+
+  (add-hook 'exwm-update-class-hook
+            (lambda ()
+              (exwm-workspace-rename-buffer exwm-class-name)))
+
+  (exwm-xim-enable)
+  (push ?\C-\\ exwm-input-prefix-keys)
+  (exwm-enable))
+
 ;; GUI config
 (when (display-graphic-p)
   ;; https://www.youtube.com/watch?v=UbxUSsFXYo4
@@ -434,7 +460,4 @@
               (fringe-mode 0)
               (scroll-bar-mode -1)
               (tool-bar-mode -1)
-
-              ;; start exwm
-              (require 'exwm)
-              (exwm-enable))))
+              (start-exwm))))
