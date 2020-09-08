@@ -343,7 +343,6 @@
         modus-vivendi-theme
         nasm-mode
         php-mode
-        transmission
         vterm
         w3m
         which-key))
@@ -351,7 +350,7 @@
 ;; autoloads
 (mapc (lambda (x)
         (autoload x (symbol-name x) nil t))
-      '(elfeed elpher emms-browser transmission vterm w3m))
+      '(elfeed elpher emms-browser vterm w3m))
 (autoload 'w3m-browse-url "w3m" nil t)
 
 ;; NOTE: everything after here should go last.
