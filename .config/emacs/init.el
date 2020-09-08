@@ -403,7 +403,7 @@
           ([XF86AudioPrev] . emms-previous)
           ([XF86LaunchB] . (lambda (command)
                              (interactive (list
-                                           (read-shell-command "$ ")))
+                                           (read-shell-command "Run: ")))
                              (start-process-shell-command command nil
                                                           command))))
 

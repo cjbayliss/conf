@@ -44,8 +44,6 @@
            t)))))
  display-time-mail-string "[NEW Mail!]")
 
-(global-display-line-numbers-mode -1)
-
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)
 (add-hook 'gnus-after-getting-new-news-hook
