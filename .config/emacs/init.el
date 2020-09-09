@@ -17,7 +17,6 @@
  shr-discard-aria-hidden t
  shr-use-colors nil
  shr-width 120
- woman-fill-column fill-column
 
  ;; w3m
  w3m-add-user-agent nil
@@ -26,27 +25,22 @@
  w3m-default-coding-system 'utf-8
  w3m-default-display-inline-images t
  w3m-default-save-directory "~/downloads/"
- w3m-enable-google-feeling-lucky nil
+ w3m-display-mode 'tabbed
  w3m-file-coding-system 'utf-8
  w3m-file-name-coding-system 'utf-8
  w3m-fill-column 120
  w3m-home-page "about:blank"
  w3m-key-binding 'info
- w3m-pop-up-windows nil
+ w3m-profile-directory (concat (getenv "XDG_CACHE_HOME") "/w3m")
  w3m-search-engine-alist
  '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
-   ("duckduckgo" "https://duckduckgo.com/lite" nil "q=%s"))
+   ("duckduckgo" "https://lite.duckduckgo.com/lite" nil "q=%s"))
  w3m-search-default-engine "duckduckgo"
- w3m-show-decoded-url nil          ; http://bugs.debian.org/457909
- w3m-show-graphic-icons-in-header-line nil
- w3m-show-graphic-icons-in-mode-line nil
  w3m-terminal-coding-system 'utf-8
  w3m-track-mouse nil
  w3m-use-cookies nil
  w3m-use-favicon nil
- w3m-use-header-line nil
  w3m-use-symbol t
- w3m-use-tab-menubar nil
  w3m-use-toolbar nil
 
  ;; elfeed
@@ -316,6 +310,8 @@
   (make-directory (concat user-emacs-directory "lisp") t))
 (unless (file-directory-p (concat user-emacs-directory "emms"))
   (make-directory (concat user-emacs-directory "emms") t))
+(unless (file-directory-p (concat (getenv "XDG_CACHE_HOME") "/w3m"))
+  (make-directory (concat (getenv "XDG_CACHE_HOME") "/w3m") t))
 
 ;; add site lisp
 (let ((default-directory  "/usr/share/emacs/site-lisp/"))
