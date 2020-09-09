@@ -22,7 +22,8 @@ __git_prompt() {
     STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/[\1]/')"
     printf "%s%s" "$BRANCH" "$STATUS"
 }
-PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed 's/\/home\/'$USER'/~/')\$(__git_prompt)> "
+
+PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt)> "
 
 # common history file
 HISTFILE="$XDG_DATA_HOME/history"
