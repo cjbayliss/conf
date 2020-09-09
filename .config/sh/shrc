@@ -7,11 +7,6 @@ alias wget="wget --no-hsts"
 # i once removed this having forgot how slow debian's site-lisp is -_-
 alias emacs="emacs --no-site-lisp"
 
-# # FIXME: this only works on linux systems & shouldn't be an alias
-# alias randstring="[ $(cat /proc/sys/kernel/random/entropy_avail) -gt 200 ] &&
-#                   tr -dc '[0-9A-Za-z~\!\@\#$%^&*()_+]' </dev/urandom | fold -w 25 | head -n 10 ||
-#                   printf \"WTF is wrong with your system?\n\""
-
 # make startx use $XDG_CONFIG_HOME/x11/xsession
 alias startx="xinit $XDG_CONFIG_HOME/x11/xsession -- vt$(tty | tail -c2)"
 
