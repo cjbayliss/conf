@@ -27,8 +27,8 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 
-# some programs need $XDG_CACHE_HOME to exist
-mkdir -p "$XDG_CACHE_HOME"
+# ensure $XDG_*_HOME exists
+mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 
 # start the ssh-agent. requires the package 'keychain'
 [ -f /usr/bin/keychain ] && eval "$(keychain --eval --quiet --quick --dir $XDG_CACHE_HOME)"
