@@ -27,12 +27,8 @@ PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed 's/\/home\/'$USER'/~/')\$(__git
 # common history file
 HISTFILE="$XDG_DATA_HOME/history"
 
-# setup ksh if under ksh
-if [ -n "$KSH_VERSION" ]; then
-    # don't put duplicate lines or lines starting with space in the history.
-    HISTCONTROL=ignorespace:ignoredups
-    HISTSIZE=100000
-fi
+# ksh wants to delete history by default, rein it in
+[ -n "$KSH_VERSION" ] && HISTSIZE=100000
 
 # cleanup on exit
 __cleanup() {
@@ -40,6 +36,11 @@ __cleanup() {
     rm ~/.*hist*
     rm ~/.lesshst
     rm ~/.viminfo
+    rm -rf ~/.cache
+    rm -rf ~/.w3m
+    # delete duplicate lines & line starting with space
+    awk '!/^ /&&!x[$0]++' "$XDG_DATA_HOME/history" > "$XDG_CACHE_HOME/cleaned_history" \
+        && mv "$XDG_CACHE_HOME/cleaned_history" "$XDG_DATA_HOME/history"
     clear
 }
 
