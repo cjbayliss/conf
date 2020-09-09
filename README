@@ -26,10 +26,11 @@ cut out section::
 
   ffmpeg -i in.opus -ss 00:00:20 -to 00:00:40 -c copy out.opus
 
-in ``top``, for [subjectively] easier information, press::
+in the procps-ng version of ``top``, for [subjectively] easier
+information, press::
 
   1tm
-  
+
 FIXME:
 ------
 
