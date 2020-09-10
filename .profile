@@ -24,14 +24,16 @@ export TIME_STYLE=long-iso
 export PATH="$PATH:$HOME/.local/bin"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GIT_PAGER="less -F"
 
 # ensure $XDG_*_HOME exists
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 
 # start the ssh-agent. requires the package 'keychain'
 [ -f /usr/bin/keychain ] && eval "$(keychain --eval --quiet --quick --dir $XDG_CACHE_HOME)"
+
+# color dirs/files nicely
+[ -f /usr/bin/dircolors ] && eval "$(dircolors)"
 
 # set default directories
 if [ -f /usr/bin/xdg-user-dirs-update ]; then
@@ -43,4 +45,9 @@ if [ -f /usr/bin/xdg-user-dirs-update ]; then
     xdg-user-dirs-update --set MUSIC "$HOME/music"
     xdg-user-dirs-update --set PICTURES "$HOME/pictures"
     xdg-user-dirs-update --set VIDEOS "$HOME/videos"
+fi
+
+# NOTE: this *must* go last
+if [ -n "$BASH_VERSION" ] && [ -r ~/.bashrc ] ; then
+    . ~/.bashrc
 fi

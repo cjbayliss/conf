@@ -1,6 +1,9 @@
 #!/bin/sh
 
 # alias stuff
+alias grep="grep --color=auto"
+alias ls="ls -h --color=auto"
+alias ip="ip -c"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
 alias wget="wget --no-hsts"
@@ -41,3 +44,52 @@ __cleanup() {
 }
 
 trap __cleanup EXIT
+
+# nice features in bash
+if [ -n "$BASH_VERSION" ]; then
+    # source bash-completion
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
+
+    # better history
+    shopt -s histappend
+    HISTCONTROL=ignoreboth
+    HISTSIZE=-1
+    HISTFILESIZE=-1
+    HISTFILE="$XDG_DATA_HOME/bash-history"
+
+    # check the window size after each command and, if necessary, update
+    # the values of LINES and COLUMNS.
+    shopt -s checkwinsize
+
+    # better completion (imo)
+    bind "set colored-completion-prefix on"
+    bind "set colored-stats on"
+    bind "set menu-complete-display-prefix on"
+    bind "set show-all-if-ambiguous on"
+    bind "set completion-query-items 0"
+    bind "TAB:menu-complete"
+    bind "\"\e[Z\": menu-complete-backward"
+
+    # git info for prompt
+    __git_branch() {
+        BRANCH="$(git branch 2>/dev/null | awk '/^\*/{$1=""; $0=$0; $1=$1; print}')"
+        [ -n "$BRANCH" ] && printf "%s" "$BRANCH"
+    }
+
+    __git_status() {
+        STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n')"
+        [ -n "$STATUS" ] && printf "%s" "$STATUS"
+    }
+
+    # FIXME: make this simpler. The problem? if you use colour codes in
+    # the bash prompt they *must* be in the form of '\[\e[32m\]',
+    # i.e. the start '\[' and end '\]' braces need to exist. If you
+    # don't format them this way, bash doesn't calculate the correct
+    # length of the prompt and break completion. Thus this monstrosity:
+    PS1='\[\e[0m\]\u@\h:\[\e[36m\]\w\[\e[0m\]$([ -n "$(__git_branch)" ] && printf " [")\[\e[32m\]$(__git_branch)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf "]")$([ -n "$(__git_status)" ] && printf "[")\[\e[31m\]$(__git_status)\[\e[0m\]$([ -n "$(__git_status)" ] && printf "]")> '
+
+fi
