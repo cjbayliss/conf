@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # alias stuff
-alias grep="grep --color=auto"
-alias ls="ls -h --color=auto"
+alias grep="grep --color=always"
+alias ls="ls -h --color=always"
 alias ip="ip -c"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
@@ -21,7 +21,12 @@ __git_prompt() {
     printf "%s%s" "$BRANCH" "$STATUS"
 }
 
-PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt)> "
+# FreeBSD's ash can't eval in the prompt
+if [ "$(uname)" != "FreeBSD" ] || [ -n "$KSH_VERSION" ]; then
+    PS1="$USER@${HOSTNAME:=$(hostname)}:\$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt)> "
+else
+    PS1="$USER@${HOSTNAME:=$(hostname)}> "
+fi
 
 # common history file
 HISTFILE="$XDG_DATA_HOME/history"
@@ -85,11 +90,16 @@ if [ -n "$BASH_VERSION" ]; then
         [ -n "$STATUS" ] && printf "%s" "$STATUS"
     }
 
+    # '\w' doesn't work on FreeBSD
+    __current_dir() {
+        printf "%s" "$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')"
+    }
+
     # FIXME: make this simpler. The problem? if you use colour codes in
     # the bash prompt they *must* be in the form of '\[\e[32m\]',
     # i.e. the start '\[' and end '\]' braces need to exist. If you
     # don't format them this way, bash doesn't calculate the correct
     # length of the prompt and break completion. Thus this monstrosity:
-    PS1='\[\e[0m\]\u@\h:\[\e[36m\]\w\[\e[0m\]$([ -n "$(__git_branch)" ] && printf " [")\[\e[32m\]$(__git_branch)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf "]")$([ -n "$(__git_status)" ] && printf "[")\[\e[31m\]$(__git_status)\[\e[0m\]$([ -n "$(__git_status)" ] && printf "]")> '
+    PS1='\[\e[0m\]\u@\h:\[\e[36m\]$(__current_dir)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf " [")\[\e[32m\]$(__git_branch)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf "]")$([ -n "$(__git_status)" ] && printf "[")\[\e[31m\]$(__git_status)\[\e[0m\]$([ -n "$(__git_status)" ] && printf "]")> '
 
 fi
