@@ -250,7 +250,7 @@
         (add-hook x 'hl-line-mode +1))
       '(text-mode-hook
         dired-mode-hook
-        w3m-mode-hook)
+        w3m-mode-hook))
 
 ;; emms config
 (add-hook 'emms-browser-mode-hook
