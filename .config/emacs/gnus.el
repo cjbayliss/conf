@@ -1,20 +1,22 @@
+;; Various functions and configurations for Gnus
+;;
+;; Written in 2019, 2020 by Christopher Bayliss <cjb@cjb.sh>
+;;
+;; To the extent possible under law, the author(s) have dedicated all
+;; copyright and related and neighboring rights to this software to the
+;; public domain worldwide. This software is distributed without any
+;; warranty.
+;;
+;; You should have received a copy of the CC0 Public Domain Dedication
+;; along with this software. If not, see
+;; <http://creativecommons.org/publicdomain/zero/1.0/>.
+
 ;; email
 (setq
  gnus-select-method '(nnimap "email"
                              (nnimap-address "mail.gandi.net")
                              (nnimap-server-port 993)
                              (nnimap-stream ssl))
-
- ;; modified from: http://cyber.com.au/~twb/.emacs
- gnus-sum-thread-tree-false-root "──○ "
- gnus-sum-thread-tree-indent "  "
- gnus-sum-thread-tree-leaf-with-other "├─● "
- gnus-sum-thread-tree-root "■ "
- gnus-sum-thread-tree-single-indent ""
- gnus-sum-thread-tree-single-leaf "╰─● "
- gnus-sum-thread-tree-vertical "│ "
- gnus-user-date-format-alist '((t . "%b %e"))
- gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
 
  ;; use smtp to send email
  send-mail-function 'smtpmail-send-it
@@ -32,17 +34,7 @@
  message-directory (concat user-emacs-directory "mail")
  nnfolder-directory (concat user-emacs-directory "mail/archive")
  gnus-gcc-mark-as-read t
- mm-text-html-renderer 'gnus-w3m
- ;; new mail indicator in the mode line
- display-time-mail-function
- (lambda ()
-   (when (get-process "*nnimap*")
-     (when (boundp 'gnus-newsrc-alist)
-       (let ((unread (gnus-group-unread "INBOX")))
-         (when (and (numberp unread)
-                    (> unread 0))
-           t)))))
- display-time-mail-string "[NEW Mail!]")
+ mm-text-html-renderer 'gnus-w3m)
 
 (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
 (add-hook 'gnus-group-mode-hook 'hl-line-mode)

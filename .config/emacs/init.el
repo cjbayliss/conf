@@ -1,3 +1,16 @@
+;; Various functions and configurations for GNU Emacs
+;;
+;; Written in 2018, 2019, 2020 by Christopher Bayliss <cjb@cjb.sh>
+;;
+;; To the extent possible under law, the author(s) have dedicated all
+;; copyright and related and neighboring rights to this software to the
+;; public domain worldwide. This software is distributed without any
+;; warranty.
+;;
+;; You should have received a copy of the CC0 Public Domain Dedication
+;; along with this software. If not, see
+;; <http://creativecommons.org/publicdomain/zero/1.0/>.
+
 ;; general emacs settings
 (setq
  browse-url-browser-function 'w3m-browse-url
@@ -202,15 +215,6 @@
       (emms-random-play-all)
     (emms-pause)))
 
-;; https://stackoverflow.com/a/20693389/
-(defun remap-faces-default-attributes ()
-  (let ((family (face-attribute 'default :family))
-        (height (face-attribute 'default :height)))
-    (mapcar (lambda (face)
-              (face-remap-add-relative
-               face :family family :height height))
-            (face-list))))
-
 ;; alsa volume control
 (defun alsa-raise-volume ()
   (interactive)
@@ -317,11 +321,13 @@
 
 ;; NOTE: everything after here should go last.
 
-;; add themes https://www.emacswiki.org/emacs/CustomThemes
-(let ((basedir (concat user-emacs-directory "lisp/")))
-  (dolist (f (directory-files basedir))
-    (if (string-match-p "theme" f)
-        (add-to-list 'custom-theme-load-path (concat basedir f)))))
+(mapc (lambda (x)
+        (add-to-list
+         'custom-theme-load-path
+         (car (file-expand-wildcards
+               (concat user-emacs-directory "lisp/"
+                       (symbol-name x) "*")))))
+      '(modus-operandi modus-vivendi))
 
 (defun dark-background-mode ()
   "set the background mode to dark"
@@ -414,10 +420,6 @@
                 (set-fontset-font t 'unicode
                                   "Noto Color Emoji" nil 'prepend))
               (setq-default cursor-type '(hbar . 2))
-              (add-hook 'minibuffer-setup-hook
-                        'remap-faces-default-attributes)
-              (add-hook 'change-major-mode-after-body-hook
-                        'remap-faces-default-attributes)
               (fringe-mode 0)
               (scroll-bar-mode -1)
               (tool-bar-mode -1)
