@@ -18,7 +18,6 @@
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
  dired-listing-switches "-alhF"
- eww-search-prefix "https://duckduckgo.com/lite/?q="
  inhibit-startup-screen t
  initial-scratch-message nil
  make-backup-files nil
@@ -27,9 +26,6 @@
  package-enable-at-startup nil
  require-final-newline t
  scheme-program-name "csi -n"
- shr-discard-aria-hidden t
- shr-use-colors nil
- shr-width 120
 
  ;; w3m
  w3m-add-user-agent nil
@@ -45,10 +41,10 @@
  w3m-home-page "about:blank"
  w3m-key-binding 'info
  w3m-profile-directory (concat (getenv "XDG_CACHE_HOME") "/w3m")
+ w3m-search-default-engine "duckduckgo"
  w3m-search-engine-alist
  '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
    ("duckduckgo" "https://lite.duckduckgo.com/lite" nil "q=%s"))
- w3m-search-default-engine "duckduckgo"
  w3m-terminal-coding-system 'utf-8
  w3m-track-mouse nil
  w3m-use-cookies nil
@@ -254,8 +250,7 @@
         (add-hook x 'hl-line-mode +1))
       '(text-mode-hook
         dired-mode-hook
-        w3m-mode-hook
-        eww-mode-hook))
+        w3m-mode-hook)
 
 ;; emms config
 (add-hook 'emms-browser-mode-hook
