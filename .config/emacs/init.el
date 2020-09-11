@@ -43,36 +43,6 @@
  w3m-use-symbol t
  w3m-use-toolbar nil
 
- ;; elfeed
- elfeed-feeds
- '("https://0pointer.net/blog/index.rss20"
-   "https://blog.alicef.me/feeds/all.atom.xml"
-   "https://blog.jeff.over.bz/rss.xml"
-   "https://blog.mattcen.com/rss"
-   "https://blogs.gentoo.org/mgorny/feed/"
-   "https://blogs.igalia.com/apinheiro/feed/"
-   "https://christine.website/blog.rss"
-   "https://cjb.sh/articles/feed.xml"
-   "https://codingquark.com/feed.xml"
-   "https://danluu.com/atom.xml"
-   "https://deftly.net/rss.xml"
-   "https://heronsperch.blogspot.com/feeds/posts/default?alt=rss"
-   "https://jvns.ca/atom.xml"
-   "https://keithp.com/blogs/index.rss"
-   "https://librelounge.org/rss-feed-ogg.rss"
-   "https://melissawen.github.io/feed.xml"
-   "https://microkerneldude.wordpress.com/feed/"
-   "https://mjg59.dreamwidth.org/data/rss"
-   "https://nullprogram.com/feed/"
-   "https://pine64.org/blog/rss"
-   "https://rosenzweig.io/blog/feed.xml"
-   "https://sachachua.com/blog/category/emacs-news/feed"
-   "https://security.gentoo.org/glsa/feed.rss"
-   "https://trofi.github.io/feed/rss.xml"
-   "https://wingolog.org/feed/atom")
- elfeed-db-directory (concat user-emacs-directory "elfeed")
- elfeed-search-filter "@1-week-ago"
-
  ;; for faster startup
  gc-cons-threshold most-positive-fixnum
  gc-cons-percentage 0.6
@@ -282,7 +252,6 @@
         (add-hook x 'hl-line-mode +1))
       '(text-mode-hook
         dired-mode-hook
-        elfeed-show-mode-hook
         w3m-mode-hook
         eww-mode-hook))
 
@@ -330,8 +299,7 @@
             (package-initialize)
             (package-refresh-contents))
           (package-install x)))
-      '(elfeed
-        elpher
+      '(elpher
         emms
         erc-hl-nicks
         exwm
@@ -346,7 +314,7 @@
 ;; autoloads
 (mapc (lambda (x)
         (autoload x (symbol-name x) nil t))
-      '(elfeed elpher emms-browser vterm w3m))
+      '(elpher emms-browser vterm w3m))
 (autoload 'w3m-browse-url "w3m" nil t)
 
 ;; NOTE: everything after here should go last.
