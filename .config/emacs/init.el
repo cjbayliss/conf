@@ -101,13 +101,11 @@
   (setq erc-autojoin-channels-alist
         '(("freenode.net"
            "#chicken"
-           "#emacs"
            "#gentoo-hardened"
            "#gentoo-lisp"
            "##lisp"
            "#scheme"
-           "#xebian")
-          ("oftc.net" "#debian-devel" "#debian-next"))
+           "#xebian"))
         erc-autojoin-timing 'ident
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 15
