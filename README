@@ -1,7 +1,5 @@
-.. -*- mode: rst -*-
-
-My standard \*NIX config
-========================
+My standard *NIX config
+-----------------------
 
 Some of it is nice, but most of it is boring.
 
@@ -18,16 +16,18 @@ Macbook Pro 11,1 config (laptop I since sold)
 helpful:
 --------
 
-convert music to opus::
+convert music to opus:
 
-  for i in *.mp3; do ffmpeg -i "$i" -acodec libopus -b:a 256000 -vbr off "${i%.*}.opus"; done
+  for i in *.mp3; do \
+   ffmpeg -i "$i" -acodec libopus -b:a 256000 -vbr off "${i%.*}.opus"; \
+  done
 
-cut out section::
+cut out section:
 
   ffmpeg -i in.opus -ss 00:00:20 -to 00:00:40 -c copy out.opus
 
-in the procps-ng version of ``top``, for [subjectively] easier
-information, press::
+in the procps-ng version of 'top', for [subjectively] easier
+information, press:
 
   1tm
 
