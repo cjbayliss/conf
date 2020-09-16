@@ -17,9 +17,11 @@
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
+ dark-theme 'modus-vivendi
  dired-listing-switches "-alhF"
  inhibit-startup-screen t
  initial-scratch-message nil
+ light-theme 'modus-operandi
  make-backup-files nil
  mouse-yank-at-point t
  package--init-file-ensured t
@@ -324,28 +326,27 @@
                        (symbol-name x) "*")))))
       '(modus-operandi modus-vivendi))
 
-(defun dark-background-mode ()
-  "set the background mode to dark"
-  (disable-theme 'modus-operandi)
-  (setq-default frame-background-mode 'dark)
-  (set-background-color "black")
-  (set-foreground-color "white")
-  (load-theme 'modus-vivendi t))
-
-(defun light-background-mode ()
-  "set the background mode to light"
-  (disable-theme 'modus-vivendi)
-  (setq-default frame-background-mode 'light)
-  (set-background-color "white")
-  (set-foreground-color "black")
-  (load-theme 'modus-operandi t))
-
-(defun toggle-background-mode ()
-  "toggle between light and dark mode"
+(defun background-mode (&optional mode)
+  "set or toggle the background `mode'"
   (interactive)
-  (if (eq frame-background-mode 'light)
-      (dark-background-mode)
-    (light-background-mode))
+  (disable-theme (car custom-enabled-themes))
+  (when mode
+    (setq-default frame-background-mode mode))
+  (unless mode
+    (cond ((eq frame-background-mode 'dark)
+           (setq-default frame-background-mode 'light))
+          ((eq frame-background-mode 'light)
+           (setq-default frame-background-mode 'dark))))
+  (cond ((eq frame-background-mode 'dark)
+         (set-background-color "black")
+         (set-foreground-color "white")
+         (when (boundp 'dark-theme)
+           (load-theme dark-theme t)))
+        ((eq frame-background-mode 'light)
+         (set-background-color "white")
+         (set-foreground-color "black")
+         (when (boundp 'light-theme)
+           (load-theme light-theme t))))
   (when (featurep 'erc-hl-nicks)
     (erc-hl-nicks-refresh-colors)))
 
@@ -355,7 +356,7 @@
   (require 'exwm-xim)
 
   (setq exwm-input-global-keys
-        `(([f6] . toggle-background-mode)
+        `(([f6] . background-mode)
           ([XF86AudioLowerVolume] . alsa-lower-volume)
           ([XF86AudioRaiseVolume] . alsa-raise-volume)
           ([XF86AudioMute] . alsa-mute)
@@ -389,8 +390,8 @@
   ;; workin' 9 to 5, what a way to make a livin'
   (if (and (>= (string-to-number (format-time-string "%H%M")) 0900)
            (<= (string-to-number (format-time-string "%H%M")) 1700))
-      (light-background-mode)
-    (dark-background-mode)))
+      (background-mode 'light)
+    (background-mode 'dark)))
 
 ;; put slow modes &c in this hook for a faster startup! 🥳
 (add-hook 'emacs-startup-hook
