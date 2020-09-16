@@ -407,8 +407,6 @@
             (require 'which-key)
             (which-key-mode)
             (when (display-graphic-p)
-              (add-to-list 'initial-frame-alist
-                           '(fullscreen . maximized))
               (when (member "Iosevka Term" (font-family-list))
                 (set-frame-font "Iosevka Term Medium-11" t t))
               (when (member "Noto Color Emoji" (font-family-list))
