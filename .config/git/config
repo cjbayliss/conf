@@ -1,2 +1,4 @@
 [init]
 	templateDir = /home/cjb/.config/git/template
+[status]
+	short = true
