@@ -43,8 +43,3 @@ if [ -f /usr/bin/xdg-user-dirs-update ]; then
     xdg-user-dirs-update --set PICTURES "$HOME/pictures"
     xdg-user-dirs-update --set VIDEOS "$HOME/videos"
 fi
-
-# NOTE: this *must* go last
-if [ -n "$BASH_VERSION" ] && [ -r ~/.bashrc ] ; then
-    . ~/.bashrc
-fi

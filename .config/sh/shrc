@@ -69,11 +69,4 @@ if [ -n "$BASH_VERSION" ]; then
     # check the window size after each command and, if necessary, update
     # the values of LINES and COLUMNS.
     shopt -s checkwinsize
-
-    # better completion (imo)
-    bind "set menu-complete-display-prefix on"
-    bind "set show-all-if-ambiguous on"
-    bind "set completion-query-items 0"
-    bind "TAB:menu-complete"
-    bind "\"\e[Z\": menu-complete-backward"
 fi
