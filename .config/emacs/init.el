@@ -219,7 +219,7 @@
 
 (defun backlightctl (options)
   "pass `options' to 'light' and get current level"
-  (shell-command (format "light %s && light -G" options)))
+  (shell-command (format "light %s && light" options)))
 
 ;; programming mode settings
 (add-hook 'prog-mode-hook
