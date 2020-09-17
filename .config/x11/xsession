@@ -22,4 +22,4 @@ export QT_IM_MODULE=xim
 export CLUTTER_IM_MODULE=xim
 
 # Now start EXWM! :)
-exec emacs
+exec emacs --no-site-lisp

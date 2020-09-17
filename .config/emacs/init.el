@@ -257,7 +257,7 @@
   (make-directory (concat (getenv "XDG_CACHE_HOME") "/w3m") t))
 
 ;; add site lisp
-(let ((default-directory  "/usr/share/emacs/site-lisp/"))
+(let ((default-directory "/usr/share/emacs/site-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 (let ((default-directory (concat user-emacs-directory "lisp")))
   (normal-top-level-add-subdirs-to-load-path))
@@ -373,7 +373,16 @@
   (if (and (>= (string-to-number (format-time-string "%H%M")) 0900)
            (<= (string-to-number (format-time-string "%H%M")) 1700))
       (background-mode 'light)
-    (background-mode 'dark)))
+    (background-mode 'dark))
+  (custom-set-faces '(bold ((t (:weight semi-bold)))))
+  (when (member "Iosevka Term" (font-family-list))
+    (set-frame-font "Iosevka Term Medium-11" t t))
+  (when (member "Noto Color Emoji" (font-family-list))
+    (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
+  (setq-default cursor-type '(hbar . 2))
+  (fringe-mode 0)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1))
 
 ;; put slow modes &c in this hook for a faster startup! 🥳
 (add-hook 'emacs-startup-hook
@@ -381,8 +390,6 @@
             ;; restore default gc-cons-*
             (setq gc-cons-threshold 800000
                   gc-cons-percentage 0.1)
-            (custom-set-faces
-             '(bold ((t (:weight semi-bold)))))
             ;; enable/disable modes
             (delete-selection-mode +1)
             (display-time-mode +1)
@@ -390,13 +397,4 @@
             (require 'which-key)
             (which-key-mode)
             (when (display-graphic-p)
-              (when (member "Iosevka Term" (font-family-list))
-                (set-frame-font "Iosevka Term Medium-11" t t))
-              (when (member "Noto Color Emoji" (font-family-list))
-                (set-fontset-font t 'unicode
-                                  "Noto Color Emoji" nil 'prepend))
-              (setq-default cursor-type '(hbar . 2))
-              (fringe-mode 0)
-              (scroll-bar-mode -1)
-              (tool-bar-mode -1)
               (start-exwm))))
