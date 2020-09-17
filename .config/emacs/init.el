@@ -162,12 +162,6 @@
                                      indent-tabs-mode nil)
                                (php-enable-psr2-coding-style))))
 
-;; load nasm-mode instead of the broken(?) asm-mode
-(add-to-list 'auto-mode-alist
-             '("\\.\\(asm\\|nasm\\|S\\|s\\)\\'" . (lambda ()
-                                                    (require 'nasm-mode)
-                                                    (nasm-mode))))
-
 ;; if I'm editing a C file, I *probably* want the linux style
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -304,7 +298,6 @@
         exwm
         modus-operandi-theme
         modus-vivendi-theme
-        nasm-mode
         php-mode
         vterm
         w3m
