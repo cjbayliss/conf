@@ -201,21 +201,15 @@
       (emms-random-play-all)
     (emms-pause)))
 
-;; alsa volume control
-(defun alsa-raise-volume ()
-  (interactive)
-  (shell-command
-   "amixer set Master 2%+ unmute | grep 'Mono:' | cut -d' ' -f6"))
-
-(defun alsa-lower-volume ()
-  (interactive)
-  (shell-command
-   "amixer set Master 2%- unmute | grep 'Mono:' | cut -d' ' -f6"))
-
-(defun alsa-mute ()
-  (interactive)
-  (shell-command
-   "amixer set Master toggle | grep 'Mono:' | cut -d' ' -f8"))
+(defun alsactl (&optional volume)
+  "set `volume' or toggle mute"
+  (when volume
+    (shell-command
+     (format "amixer set Master %s unmute |\
+               awk -F\"[][]\" '/dB/ { print $2 }'" volume)))
+  (unless volume
+    (shell-command "amixer set Master toggle |\
+                     awk -F\"[][]\" '/dB/ { print $6 }'")))
 
 (defun backlightctl (options)
   "pass `options' to 'light' and get current level"
@@ -337,9 +331,13 @@
 
   (setq exwm-input-global-keys
         `(([f6] . background-mode)
-          ([XF86AudioLowerVolume] . alsa-lower-volume)
-          ([XF86AudioRaiseVolume] . alsa-raise-volume)
-          ([XF86AudioMute] . alsa-mute)
+          ([XF86AudioLowerVolume] . (lambda()
+                                      (interactive)
+                                      (alsactl "2%-")))
+          ([XF86AudioRaiseVolume] . (lambda()
+                                      (interactive)
+                                      (alsactl "2%+")))
+          ([XF86AudioMute] . (lambda () (interactive) (alsactl)))
           ([XF86MonBrightnessDown] . (lambda()
                                        (interactive)
                                        (backlightctl "-U 5")))
