@@ -32,9 +32,6 @@ mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 # start the ssh-agent. requires the package 'keychain'
 [ -f /usr/bin/keychain ] && eval "$(keychain --eval --quiet --quick --dir $XDG_CACHE_HOME)"
 
-# color dirs/files nicely
-[ -f /usr/bin/dircolors ] && eval "$(dircolors)"
-
 # set default directories
 if [ -f /usr/bin/xdg-user-dirs-update ]; then
     xdg-user-dirs-update --set DESKTOP "$HOME/dev/desktop"

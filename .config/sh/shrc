@@ -2,8 +2,8 @@
 
 # alias stuff
 alias grep="grep --color=always"
-alias ls="ls -h --color=always"
-alias ip="ip -c"
+alias ls="ls -hF"
+[ -n "$(which ip)" ] && alias ip="ip -br"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
 alias wget="wget --no-hsts"
@@ -17,7 +17,7 @@ alias startx="xinit $XDG_CONFIG_HOME/x11/xsession -- vt$(tty | tail -c2)"
 # setup a PS1 that *should* work in any POSIX compliant shell
 __git_prompt() {
     BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')"
-    STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/[\1]/')"
+    [ "$(git ls-files 2>/dev/null | wc -l)" -lt 1000 ] && STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/[\1]/')" || STATUS="[NOSTAT]"
     printf "%s%s" "$BRANCH" "$STATUS"
 }
 
@@ -43,7 +43,7 @@ __cleanup() {
     rm -rf ~/.cache
     rm -rf ~/.w3m
     # delete duplicate lines & line starting with space
-    awk '!/^ /&&!x[$0]++' "$XDG_DATA_HOME/history" > "$XDG_CACHE_HOME/cleaned_history" \
+    awk '!/^ /&&!x[$0]++' "$XDG_DATA_HOME/history" "$XDG_DATA_HOME/bash-history" > "$XDG_CACHE_HOME/cleaned_history" \
         && mv "$XDG_CACHE_HOME/cleaned_history" "$XDG_DATA_HOME/history"
     clear
 }
@@ -78,28 +78,4 @@ if [ -n "$BASH_VERSION" ]; then
     bind "set completion-query-items 0"
     bind "TAB:menu-complete"
     bind "\"\e[Z\": menu-complete-backward"
-
-    # git info for prompt
-    __git_branch() {
-        BRANCH="$(git branch 2>/dev/null | awk '/^\*/{$1=""; $0=$0; $1=$1; print}')"
-        [ -n "$BRANCH" ] && printf "%s" "$BRANCH"
-    }
-
-    __git_status() {
-        STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n')"
-        [ -n "$STATUS" ] && printf "%s" "$STATUS"
-    }
-
-    # '\w' doesn't work on FreeBSD
-    __current_dir() {
-        printf "%s" "$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')"
-    }
-
-    # FIXME: make this simpler. The problem? if you use colour codes in
-    # the bash prompt they *must* be in the form of '\[\e[32m\]',
-    # i.e. the start '\[' and end '\]' braces need to exist. If you
-    # don't format them this way, bash doesn't calculate the correct
-    # length of the prompt and break completion. Thus this monstrosity:
-    PS1='\[\e[0m\]\u@\h:\[\e[36m\]$(__current_dir)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf " [")\[\e[32m\]$(__git_branch)\[\e[0m\]$([ -n "$(__git_branch)" ] && printf "]")$([ -n "$(__git_status)" ] && printf "[")\[\e[31m\]$(__git_status)\[\e[0m\]$([ -n "$(__git_status)" ] && printf "]")> '
-
 fi
