@@ -184,12 +184,6 @@
              '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\):"
                 1 highlight-todo-face t)))))
 
-;; emacs should already have this function, does it and i can't find it?
-(defun byte-compile-directory (directory)
-  "compile contents of a directory"
-  (interactive "DByte compile directory: ")
-  (byte-recompile-directory directory 0))
-
 ;; play/pause music, or start playing at random if nothing is playing
 (defun emms-play/pause-handler ()
   "determine best course of action when pressing play/pause button"
