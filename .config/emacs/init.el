@@ -217,13 +217,9 @@
   (shell-command
    "amixer set Master toggle | grep 'Mono:' | cut -d' ' -f8"))
 
-(defun backlightctl (step)
-  "increase/decrease backlight brightness by `step'"
-  (interactive "SStep: ")
-  (message "[%s]"
-           (nth 3 (split-string
-                   (shell-command-to-string
-                    (format "brightnessctl -m set %s" step)) ","))))
+(defun backlightctl (options)
+  "pass `options' to 'light' and get current level"
+  (shell-command (format "light %s && light -G" options)))
 
 ;; programming mode settings
 (add-hook 'prog-mode-hook
@@ -346,10 +342,10 @@
           ([XF86AudioMute] . alsa-mute)
           ([XF86MonBrightnessDown] . (lambda()
                                        (interactive)
-                                       (backlightctl "5%-")))
+                                       (backlightctl "-U 5")))
           ([XF86MonBrightnessUp] . (lambda()
                                      (interactive)
-                                     (backlightctl "+5%")))
+                                     (backlightctl "-A 5")))
           ([XF86AudioNext] . emms-next)
           ([XF86AudioPlay] . emms-play/pause-handler)
           ([XF86AudioPrev] . emms-previous)
