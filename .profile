@@ -26,6 +26,21 @@ export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export GIT_PAGER="less -F"
 
+# find a suitable editor
+if [ -f "$(which ed)" ]; then
+    EDITOR="ed"
+elif [ -f "$(which vi)" ]; then
+    EDITOR="vi"
+elif [ -f "$(which mg)" ]; then
+    EDITOR="mg"
+elif [ -f "$(which nano)" ]; then
+    EDITOR="nano"
+else
+    echo "WHAA! does this system even have an editor!?"
+fi
+export EDITOR
+export VISUAL="$EDITOR"
+
 # ensure $XDG_*_HOME exists
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 
