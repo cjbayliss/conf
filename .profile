@@ -20,6 +20,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export ENV="$XDG_CONFIG_HOME/sh/shrc"
 export EMAIL="cjb@cjb.sh"
 export NAME="Christopher Bayliss"
+export NO_COLOR=1
 export TIME_STYLE=long-iso
 export PATH="$PATH:$HOME/.local/bin"
 export LESSHISTFILE='/dev/null'
