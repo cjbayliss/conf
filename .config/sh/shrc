@@ -6,9 +6,9 @@ alias ls="ls -hF"
 [ -n "$(which ip)" ] && alias ip="ip -br"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
-alias wget="wget --no-hsts"
 # i once removed this having forgot how slow debian's site-lisp is -_-
 alias emacs="emacs --no-site-lisp"
+alias vim="vim -u $XDG_CONFIG_HOME/vim/vimrc"
 
 # make startx use $XDG_CONFIG_HOME/x11/xsession
 alias startx="xinit $XDG_CONFIG_HOME/x11/xsession -- vt$(tty | tail -c2)"
