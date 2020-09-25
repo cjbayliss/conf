@@ -21,5 +21,5 @@ export GTK_IM_MODULE=xim
 export QT_IM_MODULE=xim
 export CLUTTER_IM_MODULE=xim
 
-# Now start EXWM! :)
-exec emacs --no-site-lisp
+# now start ratpoison! :)
+exec ratpoison -f "$XDG_CONFIG_HOME/ratpoison/config"

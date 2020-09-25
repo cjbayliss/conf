@@ -1,0 +1,42 @@
+# prefix key
+escape C-z
+
+# basic settings
+set border 0
+set barborder 0
+set barpadding 8 4
+set historysize 0
+set bargravity c
+set winname class
+msgwait 2
+startup_message off
+
+# see: https://en.wikipedia.org/wiki/X11_color_names
+set fgcolor pink
+set bgcolor gray15
+exec xsetroot -solid gray15 -cursor_name left_ptr
+
+# keybinds
+bind b select
+bind C-b windows
+bind C-d exec
+bind C-e exec emacs
+bind C-f exec firefox
+
+# top level keys
+definekey top XF86MonBrightnessDown exec light -U 5
+definekey top XF86MonBrightnessUp exec light -A 5
+
+definekey top XF86AudioNext exec emacsclient -e "(emms-next)"
+definekey top XF86AudioPlay exec emacsclient -e "(emms-play/pause-handler)"
+definekey top XF86AudioPrev exec emacsclient -e "(emms-previous)"
+
+# alsa systems
+definekey top XF86AudioLowerVolume exec ratpoison -c "echo $(amixer set Master 2%- unmute | awk -F"[][]" '/dB/ { print $2 }')"
+definekey top XF86AudioRaiseVolume exec ratpoison -c "echo $(amixer set Master 2%+ unmute | awk -F"[][]" '/dB/ { print $2 }')"
+definekey top XF86AudioMute exec ratpoison -c "echo $(amixer set Master toggle | awk -F"[][]" '/dB/ { print $6 }')"
+
+# pulseaudio systems
+# definekey top XF86AudioLowerVolume exec ratpoison -c "echo $(pactl set-sink-volume @DEFAULT_SINK@ -2% && pactl list sinks | awk '/^[[:space:]]Volume:/ {print $5}')"
+# definekey top XF86AudioRaiseVolume exec ratpoison -c "echo $(pactl set-sink-volume @DEFAULT_SINK@ +2% && pactl list sinks | awk '/^[[:space:]]Volume:/ {print $5}')"
+# definekey top XF86AudioMute exec ratpoison -c "echo $(pactl set-sink-mute @DEFAULT_SINK@ toggle && pactl list sinks | awk '/Mute:/ {print $2}')"

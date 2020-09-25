@@ -81,6 +81,7 @@
 (global-set-key "\C-ch" 'hl-line-mode)
 (global-set-key "\C-cl" 'display-line-numbers-mode)
 (global-set-key "\C-cs" 'run-scheme)
+(global-set-key [f6] 'background-mode)
 
 ;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out.
 ;; custom irc func to load erc and join networks automatically
@@ -201,20 +202,6 @@
       (emms-random-play-all)
     (emms-pause)))
 
-(defun alsactl (&optional volume)
-  "set `volume' or toggle mute"
-  (when volume
-    (shell-command
-     (format "amixer set Master %s unmute |\
-               awk -F\"[][]\" '/dB/ { print $2 }'" volume)))
-  (unless volume
-    (shell-command "amixer set Master toggle |\
-                     awk -F\"[][]\" '/dB/ { print $6 }'")))
-
-(defun backlightctl (options)
-  "pass `options' to 'light' and get current level"
-  (shell-command (format "light %s && light" options)))
-
 ;; programming mode settings
 (add-hook 'prog-mode-hook
           (lambda ()
@@ -276,7 +263,6 @@
       '(elpher
         emms
         erc-hl-nicks
-        exwm
         modus-operandi-theme
         modus-vivendi-theme
         php-mode
@@ -324,48 +310,6 @@
   (when (featurep 'erc-hl-nicks)
     (erc-hl-nicks-refresh-colors)))
 
-(defun start-exwm ()
-  "start exwm"
-  (require 'exwm)
-  (require 'exwm-xim)
-
-  (setq exwm-input-global-keys
-        `(([f6] . background-mode)
-          ([XF86AudioLowerVolume] . (lambda()
-                                      (interactive)
-                                      (alsactl "2%-")))
-          ([XF86AudioRaiseVolume] . (lambda()
-                                      (interactive)
-                                      (alsactl "2%+")))
-          ([XF86AudioMute] . (lambda () (interactive) (alsactl)))
-          ([XF86MonBrightnessDown] . (lambda()
-                                       (interactive)
-                                       (backlightctl "-U 5")))
-          ([XF86MonBrightnessUp] . (lambda()
-                                     (interactive)
-                                     (backlightctl "-A 5")))
-          ([XF86AudioNext] . emms-next)
-          ([XF86AudioPlay] . emms-play/pause-handler)
-          ([XF86AudioPrev] . emms-previous)
-          ([XF86LaunchB] . (lambda (command)
-                             (interactive (list
-                                           (read-shell-command "Run: ")))
-                             (start-process-shell-command command nil
-                                                          command))))
-
-        exwm-input-simulation-keys
-        '(([?\C-w] . [?\C-x])
-          ([?\M-w] . [?\C-c])
-          ([?\C-y] . [?\C-v])))
-
-  (add-hook 'exwm-update-class-hook
-            (lambda ()
-              (exwm-workspace-rename-buffer exwm-class-name)))
-
-  (exwm-xim-enable)
-  (push ?\C-\\ exwm-input-prefix-keys)
-  (exwm-enable))
-
 ;; GUI config
 (when (display-graphic-p)
   ;; https://www.youtube.com/watch?v=UbxUSsFXYo4
@@ -382,7 +326,8 @@
   (setq-default cursor-type '(hbar . 2))
   (fringe-mode 0)
   (scroll-bar-mode -1)
-  (tool-bar-mode -1))
+  (tool-bar-mode -1)
+  (server-start))
 
 ;; put slow modes &c in this hook for a faster startup! 🥳
 (add-hook 'emacs-startup-hook
@@ -395,6 +340,4 @@
             (display-time-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
-            (which-key-mode)
-            (when (display-graphic-p)
-              (start-exwm))))
+            (which-key-mode)))
