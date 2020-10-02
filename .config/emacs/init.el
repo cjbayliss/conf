@@ -1,6 +1,6 @@
 ;; Various functions and configurations for GNU Emacs
 ;;
-;; Written in 2018, 2019, 2020 by Christopher Bayliss <cjb@cjb.sh>
+;; Written in 2018, 2019, 2020 by Christopher Bayliss <christopher.j.bayliss@gmail.com>
 ;;
 ;; To the extent possible under law, the author(s) have dedicated all
 ;; copyright and related and neighboring rights to this software to the
