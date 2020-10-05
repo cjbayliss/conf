@@ -13,7 +13,7 @@
 
 ;; general emacs settings
 (setq
- browse-url-browser-function 'w3m-browse-url
+ browse-url-browser-function 'browse-url-firefox
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
