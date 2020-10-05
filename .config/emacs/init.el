@@ -28,6 +28,7 @@
  package-enable-at-startup nil
  require-final-newline t
  scheme-program-name "csi -n"
+ inferior-lisp-program "sbcl --no-userinit"
 
  ;; w3m
  w3m-add-user-agent nil
@@ -79,7 +80,8 @@
 ;; keybinds
 (global-set-key "\C-cb" 'browse-url-at-point)
 (global-set-key "\C-ch" 'hl-line-mode)
-(global-set-key "\C-cl" 'display-line-numbers-mode)
+(global-set-key "\C-cl" 'run-lisp)
+(global-set-key "\C-cn" 'display-line-numbers-mode)
 (global-set-key "\C-cs" 'run-scheme)
 (global-set-key [f6] 'background-mode)
 
@@ -170,6 +172,11 @@
                   c-basic-offset 8
                   tab-width 8
                   indent-tabs-mode t)))
+
+;; passing --eval in inferior-lisp-program is broken
+(add-hook 'inferior-lisp-mode-hook
+          (lambda ()
+            (lisp-eval-string "(require 'sb-aclrepl)")))
 
 ;; instead of loading hl-todo
 (defface highlight-todo-face
