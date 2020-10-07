@@ -2,6 +2,7 @@
 pref("accessibility.force_disabled", 1);
 pref("accessibility.typeaheadfind", false);
 pref("accessibility.typeaheadfind.flashBar", 0);
+pref("apz.gtk.kinetic_scroll.enabled", false);
 pref("browser.chrome.favicons", false);
 pref("browser.chrome.site_icons", false);
 pref("browser.safebrowsing.enabled", false);
