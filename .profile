@@ -5,6 +5,9 @@ if [ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ] ; then
     setterm --powersave on --blank 1
 fi
 
+# set default umask
+umask 077
+
 # 🐑
 if [ -z "${XDG_RUNTIME_DIR}" ]; then
     export XDG_RUNTIME_DIR=/tmp/${UID:=$(id -u $USER)}-runtime-dir
