@@ -16,10 +16,6 @@
                 "install_url": "https://addons.mozilla.org/firefox/downloads/latest/historyblock/latest.xpi",
                 "installation_mode": "normal_installed"
             },
-            "https-by-default@robwu.nl": {
-                "install_url": "https://addons.mozilla.org/firefox/downloads/latest/https-by-default/latest.xpi",
-                "installation_mode": "normal_installed"
-            },
             "uBlock0@raymondhill.net": {
                 "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
                 "installation_mode": "normal_installed"

@@ -13,6 +13,7 @@ pref("browser.tabs.warnOnClose", false);
 pref("browser.uidensity", 1);
 pref("browser.urlbar.trimURLs", false);
 pref("dom.event.contextmenu.enabled", false);
+pref("dom.security.https_only_mode", true);
 pref("extensions.getAddons.showPane", false);
 pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 pref("font.default.x-western", "sans-serif");
