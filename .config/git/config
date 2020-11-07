@@ -1,4 +1,7 @@
 [init]
-	templateDir = /home/cjb/.config/git/template
+	defaultBranch = main
 [status]
 	short = true
+[user]
+	email = christopher.j.bayliss@gmail.com
+	name = Christopher Bayliss
