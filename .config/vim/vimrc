@@ -1,8 +1,8 @@
 let skip_defaults_vim=1
 filetype off
 syntax on
-let &background = strftime("%H") < 17 ? "light" : "dark"
 
+set background=dark
 set backspace=2
 set encoding=utf-8
 set expandtab
