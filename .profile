@@ -31,13 +31,15 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export GIT_PAGER="less -F"
 
 # find a suitable editor
-if [ -f "$(which ed)" ]; then
+if [ -f "$(which vim 2>/dev/null)" ]; then
+    EDITOR="vim"
+elif [ -f "$(which ed 2>/dev/null)" ]; then
     EDITOR="ed"
-elif [ -f "$(which vi)" ]; then
+elif [ -f "$(which vi 2>/dev/null)" ]; then
     EDITOR="vi"
-elif [ -f "$(which mg)" ]; then
+elif [ -f "$(which mg 2>/dev/null)" ]; then
     EDITOR="mg"
-elif [ -f "$(which nano)" ]; then
+elif [ -f "$(which nano 2>/dev/null)" ]; then
     EDITOR="nano"
 else
     echo "WHAA! does this system even have an editor!?"
