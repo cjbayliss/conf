@@ -14,6 +14,9 @@ set tabstop=4
 set textwidth=72
 set viminfo=""
 
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
 autocmd Filetype c,h,cpp,hpp setl noet ts=8 sts=8 sw=8 tw=79
 autocmd Filetype python setl tw=79
 
