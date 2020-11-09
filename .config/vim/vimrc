@@ -16,3 +16,5 @@ set viminfo=""
 
 autocmd Filetype c,cpp setl ts=8 sts=8 sw=8 tw=79
 autocmd Filetype python setl tw=79
+
+set formatoptions=cq
