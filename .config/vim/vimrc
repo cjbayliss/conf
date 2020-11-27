@@ -2,6 +2,7 @@ let skip_defaults_vim=1
 filetype off
 syntax on
 
+set noautoindent
 set background=dark
 set backspace=2
 set encoding=utf-8
