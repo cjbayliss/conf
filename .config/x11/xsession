@@ -1,8 +1,6 @@
 # set the white balance
 redshift -O 4800 &
-
-# "xmodmap is deprecated" <-- tell me that when setxkbmap has feature parity.
-xmodmap "$XDG_CONFIG_HOME/x11/xmodmap"
+feh --no-fehbg --bg-fill "$HOME/dev/default.png" &
 xrdb "$XDG_CONFIG_HOME/x11/xresources"
 
 # real smooth scrolling in FF
@@ -21,5 +19,5 @@ export GTK_IM_MODULE=xim
 export QT_IM_MODULE=xim
 export CLUTTER_IM_MODULE=xim
 
-# now start exwm! :)
-exec emacs --no-site-lisp
+# now start i3! :)
+exec i3

@@ -24,6 +24,7 @@ export ENV="$XDG_CONFIG_HOME/sh/shrc"
 export EMAIL="christopher.j.bayliss@gmail.com"
 export NAME="Christopher Bayliss"
 export NO_COLOR=1
+export MAILCAPS="$MAILCAPS:$XDG_CONFIG_HOME/mutt/mailcap"
 export TIME_STYLE=long-iso
 export PATH="$PATH:$HOME/.local/bin"
 export LESSHISTFILE='/dev/null'
@@ -46,4 +47,9 @@ if [ -f /usr/bin/xdg-user-dirs-update ]; then
     xdg-user-dirs-update --set MUSIC "$HOME/music"
     xdg-user-dirs-update --set PICTURES "$HOME/pictures"
     xdg-user-dirs-update --set VIDEOS "$HOME/videos"
+fi
+
+# NOTE: this *must* go last
+if [ -n "$BASH_VERSION" ] && [ -r ~/.bashrc ] ; then
+    . ~/.bashrc
 fi

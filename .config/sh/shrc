@@ -3,11 +3,9 @@
 # alias stuff
 alias grep="grep --color=auto"
 alias ls="ls -hF"
-[ -n "$(which ip)" ] && alias ip="ip -br"
+[ -n "$(which ip 2>/dev/null)" ] && alias ip="ip -br"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
-# i once removed this having forgot how slow debian's site-lisp is -_-
-alias emacs="emacs --no-site-lisp"
 
 # make startx use $XDG_CONFIG_HOME/x11/xsession
 alias startx="xinit $XDG_CONFIG_HOME/x11/xsession -- vt$(tty | tail -c2)"
@@ -41,7 +39,7 @@ __cleanup() {
     rm ~/.viminfo
     rm -rf ~/.cache
     rm -rf ~/.w3m
-    # delete duplicate lines & line starting with space
+    # delete duplicate lines & lines starting with space
     awk '!/^ /&&!x[$0]++' "$XDG_DATA_HOME/history" "$XDG_DATA_HOME/bash-history" > "$XDG_CACHE_HOME/cleaned_history" \
         && mv "$XDG_CACHE_HOME/cleaned_history" "$XDG_DATA_HOME/history"
     clear
@@ -68,4 +66,29 @@ if [ -n "$BASH_VERSION" ]; then
     # check the window size after each command and, if necessary, update
     # the values of LINES and COLUMNS.
     shopt -s checkwinsize
+fi
+
+# and nice features in zsh
+if [ -n "$ZSH_VERSION" ]; then
+    bindkey -e
+    bindkey '^[[Z' reverse-menu-complete
+    set -o no_hup
+    set -o inc_append_history
+    set -o hist_ignore_all_dups
+    set -o hist_ignore_space
+    SAVEHIST=100000
+    HISTSIZE=100000
+    HISTFILE="$XDG_DATA_HOME/zsh-history"
+    zle_highlight+=(paste:none)
+
+    # by default you can't open URLs with '?' in them...
+    set -o no_nomatch
+
+    # enable better compeletion
+    autoload -Uz compinit && compinit -d "$XDG_DATA_HOME/zcompdump"
+    zstyle ':completion:*' rehash true
+
+    # no idea how zsh's PROMPT works, so use PS1
+    set -o prompt_subst
+    PS1='%n@%m:%~%f$(__git_prompt)> '
 fi
