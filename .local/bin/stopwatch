@@ -1,0 +1,51 @@
+#!/usr/bin/python3
+
+import queue, sys, termios, time, threading, tty
+
+
+def get_keypress():
+    fd = sys.stdin.fileno()
+    # see termios(3)
+    tc_attr = termios.tcgetattr(fd)
+    try:
+        tty.setraw(fd)
+        return sys.stdin.read(1)
+    finally:
+        # restore tcattr
+        termios.tcsetattr(fd, termios.TCSADRAIN, tc_attr)
+
+
+def input_thread(q):
+    try:
+        return q.put(get_keypress())
+    finally:
+        if q.get(False) == " ":
+            q.put(" ")
+        else:
+            input_thread(q)
+
+
+def get_from_input_thread(q):
+    try:
+        return q.get(False)
+    except queue.Empty:
+        return None
+
+
+def stopwatch_thread(q, start):
+    while True:
+        elapsed = time.strftime("%H:%M:%S", time.gmtime(int(time.monotonic()) - start))
+        if get_from_input_thread(q) == " ":
+            print(elapsed)
+            break
+        else:
+            print(elapsed, end="\r")
+            time.sleep(1)
+
+
+if __name__ == "__main__":
+    queues = queue.Queue(1)
+    threading.Thread(
+        target=stopwatch_thread, args=(queues, int(time.monotonic()))
+    ).start()
+    threading.Thread(target=input_thread, args=(queues,)).start()
