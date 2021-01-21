@@ -1,0 +1,4 @@
+accept_bad_cookie 2
+show_cookie false
+use_cookie false
+view_unseenobject false
