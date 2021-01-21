@@ -3,6 +3,9 @@
 # turn off the screen after 1 min
 if [ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ] ; then
     setterm --powersave on --blank 1
+
+    # set redshift
+    redshift -m drm -PO 4800 &
 fi
 
 # set default umask
