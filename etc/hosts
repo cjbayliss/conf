@@ -1,33 +1,5 @@
 ### -*- mode: conf -*-
 
-## webpages or orgs that facilitate hate
-0.0.0.0 4chan.org
-0.0.0.0 www.4chan.org
-0.0.0.0 4channel.org
-0.0.0.0 www.4channel.org
-0.0.0.0 boards.4chan.org
-0.0.0.0 boards.4channel.org
-0.0.0.0 4cdn.org
-0.0.0.0 i.4cdn.org
-0.0.0.0 twitter.com
-0.0.0.0 www.twitter.com
-0.0.0.0 news.ycombinator.com
-
-## get off google (this one is gonna take a bit, as such
-## mail.google.com isn't blocked yet.)
-0.0.0.0 google.com
-0.0.0.0 www.google.com
-0.0.0.0 google.com.au
-0.0.0.0 www.google.com.au
-
-## no more news
-# (note, I only block sites I would consider visiting, not the rubbish
-# murdock evil news)
-0.0.0.0 abc.net.au
-0.0.0.0 www.abc.net.au
-0.0.0.0 theguardian.com
-0.0.0.0 www.theguardian.com
-
 ## block evil mozilla stuff
 0.0.0.0 incoming.telemetry.mozilla.org
 0.0.0.0 firefox.settings.services.mozilla.com
