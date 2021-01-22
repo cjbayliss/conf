@@ -113,10 +113,10 @@ bindsym XF86AudioPrev exec "cmus-remote --prev"
 # notifications
 #exec mako --default-timeout 5000
 
-# turn off screen after 60s, and lock after 10m
+# turn off screen after 5m, and lock after 10m
 exec swayidle -w \
         timeout 600 'swaylock -f -c 000000' \
-        timeout 60 'swaymsg "output * dpms off"' \
+        timeout 300 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"'
 
 # ibus stuff
