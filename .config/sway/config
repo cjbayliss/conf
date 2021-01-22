@@ -30,6 +30,10 @@ bindsym $mod+Return exec sakura
 bindsym $mod+d exec sakura -t menu -e "sh -c 'dmenu_path | fzf | xargs swaymsg exec'" 
 for_window [title="^menu$"] border pixel 2, floating enable
 
+# screenshots
+bindsym f12 exec grim
+bindsym shift+f12 exec grim -g "$(slurp)"
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
