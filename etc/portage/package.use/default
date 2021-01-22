@@ -1,0 +1,20 @@
+*/* PYTHON_TARGETS: -python2_7
+
+app-emulation/qemu sdl
+dev-db/sqlite secure-delete
+dev-lang/python sqlite
+dev-libs/light udev
+dev-vcs/git -perl
+mail-client/mutt vanilla
+media-fonts/noto cjk
+media-libs/freetype harfbuzz
+media-libs/libpng apng
+media-libs/libsdl2 gles2
+media-sound/beets chromaprint ffmpeg lastfm thumbnail
+media-sound/cmus opus
+media-video/ffmpeg gnutls libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx wavpack webp x264 x265 xcb
+media-video/mpv cli drm jpeg libmpv -xv
+sys-devel/llvm gold
+www-client/firefox clang dbus -system-libvpx L10N: en-GB
+x11-libs/cairo X
+x11-libs/gdk-pixbuf jpeg

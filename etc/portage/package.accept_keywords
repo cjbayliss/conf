@@ -1,0 +1,12 @@
+app-shells/fzf
+dev-libs/capstone
+dev-libs/light
+dev-python/audioread
+dev-python/black
+dev-python/jellyfish
+dev-python/munkres
+dev-python/pyacoustid
+dev-util/radare2
+dev-vcs/git
+media-sound/beets
+net-p2p/tremc
