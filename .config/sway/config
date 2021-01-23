@@ -27,8 +27,9 @@ floating_modifier $mod
 
 # sakura is a libvte terminal that doesn't pull in needless dependencies
 bindsym $mod+Return exec sakura
-bindsym $mod+d exec sakura -t menu -e "sh -c 'dmenu_path | fzf | xargs swaymsg exec'" 
-for_window [title="^menu$"] border pixel 2, floating enable
+
+# strange scaling hack to get better spacing in bemenu
+bindsym $mod+d exec BEMENU_SCALE=3 bemenu-run -b -p '' --fn "Monospace 4" --hb "#338833" --hf "#FFFFFF" -H 6
 
 # screenshots
 bindsym f12 exec grim

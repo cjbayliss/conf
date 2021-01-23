@@ -6,8 +6,7 @@ app-i18n/ibus-anthy
 app-misc/tmux
 app-portage/gentoolkit
 app-shells/bash-completion
-app-shells/fzf
-dev-lang/go
+dev-libs/bemenu
 dev-libs/light
 dev-python/black
 dev-util/indent
@@ -41,7 +40,6 @@ sys-power/powertop
 sys-process/cronie
 www-client/firefox
 www-client/w3m
-x11-misc/dmenu
 x11-misc/redshift
 x11-misc/xdg-user-dirs
 x11-terms/sakura
