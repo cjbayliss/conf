@@ -7,9 +7,6 @@ alias ls="ls -hF"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
 
-# make startx use $XDG_CONFIG_HOME/x11/xsession
-alias startx="xinit $XDG_CONFIG_HOME/x11/xsession -- vt$(tty | tail -c2)"
-
 __git_prompt() {
     BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')"
     [ "$(git ls-files 2>/dev/null | wc -l)" -lt 1000 ] && \
