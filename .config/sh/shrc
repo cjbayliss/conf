@@ -9,7 +9,7 @@ alias poweroff="sudo /sbin/poweroff"
 
 __git_prompt() {
     BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')"
-    [ "$(git ls-files 2>/dev/null | wc -l)" -lt 1000 ] && \
+    [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] && \
         STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/[\1]/')" || STATUS="[NOSTAT]"
     printf "%s%s" "$BRANCH" "$STATUS"
 }
