@@ -7,10 +7,10 @@ dev-libs/light udev
 dev-vcs/git -perl
 mail-client/mutt vanilla
 media-fonts/noto cjk
+media-libs/chromaprint tools
 media-libs/freetype harfbuzz
 media-libs/libpng apng
 media-libs/libsdl2 gles2
-media-sound/beets chromaprint ffmpeg lastfm thumbnail
 media-sound/cmus opus
 media-video/ffmpeg gnutls libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx wavpack webp x264 x265 xcb
 media-video/mpv cli drm jpeg libmpv -xv
