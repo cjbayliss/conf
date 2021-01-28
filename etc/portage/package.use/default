@@ -16,5 +16,12 @@ media-video/ffmpeg gnutls libass libdrm libxml2 mp3 openh264 opus srt theora vor
 media-video/mpv cli drm jpeg libmpv -xv
 sys-devel/llvm gold
 www-client/firefox clang dbus -system-libvpx L10N: en-GB
-x11-libs/cairo X
 x11-libs/gdk-pixbuf jpeg
+
+# FIXME: the firefox and sakura ebuilds wrongly require X in gtk+/cairo,
+# which pulls in more X requirements for no reason: 
+media-libs/libepoxy X
+media-libs/libglvnd X
+media-libs/mesa X
+x11-libs/cairo X
+x11-libs/gtk+ X
