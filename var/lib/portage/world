@@ -3,7 +3,6 @@ app-editors/vim
 app-emulation/qemu
 app-eselect/eselect-repository
 app-misc/tmux
-app-portage/gentoolkit
 dev-libs/bemenu
 dev-libs/light
 dev-python/black
@@ -32,7 +31,6 @@ sys-kernel/genkernel
 sys-kernel/gentoo-sources
 sys-power/powertop
 sys-process/cronie
-sys-process/htop
 www-client/firefox
 www-client/w3m
 x11-misc/redshift

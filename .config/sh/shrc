@@ -6,6 +6,8 @@ alias ls="ls -hF"
 [ -n "$(which ip 2>/dev/null)" ] && alias ip="ip -br"
 alias ix="curl -F 'f:1=<-' ix.io"
 alias poweroff="sudo /sbin/poweroff"
+alias top="top -u $USER"
+alias equery="printf 'Use emerge instead, e.g. emerge -pvqO bash\n'"
 
 __git_prompt() {
     BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')"
