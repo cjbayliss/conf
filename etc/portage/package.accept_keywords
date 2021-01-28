@@ -2,7 +2,6 @@ dev-libs/bemenu
 dev-libs/capstone
 dev-libs/light
 dev-python/audioread
-dev-python/black
 dev-python/jellyfish
 dev-python/munkres
 dev-python/pyacoustid
