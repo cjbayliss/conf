@@ -29,8 +29,7 @@ export NAME="Christopher Bayliss"
 export NO_COLOR=1
 export MAILCAPS="$MAILCAPS:$XDG_CONFIG_HOME/mutt/mailcap"
 export TIME_STYLE=long-iso
-export PATH="$PATH:$HOME/.local/bin:$HOME/.local/share/bin:$XDG_DATA_HOME/go/bin"
-export GOPATH="$XDG_DATA_HOME/go"
+export PATH="$PATH:$HOME/.local/bin"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export GIT_PAGER="less -F"
