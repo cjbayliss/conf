@@ -5,3 +5,16 @@ dev-python/pyacoustid
 dev-python/pylast
 dev-python/pyxdg
 media-libs/chromaprint
+
+# ibus
+app-i18n/ibus-anthy
+
+# sway
+gui-apps/grim
+gui-apps/slurp
+
+# tremc
+net-p2p/transmission
+
+# bash
+app-shells/bash-completion
