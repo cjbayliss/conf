@@ -3,8 +3,6 @@
 import secrets
 import string
 
-pool = string.ascii_letters + string.digits + "!@#$%^&*()_+-"
-
 
 def randstring(pool, length):
     return "".join(secrets.choice(pool) for i in range(length))
@@ -19,4 +17,4 @@ def randomnumber():
 
 
 for i in range(randomnumber()):
-    print(randstring(pool, randomnumber()))
+    print(randstring(string.ascii_letters + "0123456789!@#$%^&*()_+", randomnumber()))
