@@ -30,4 +30,12 @@ match NonASCII "[^\x00-\x7F]"
 autocmd Filetype c,h,cpp,hpp setl noet ts=8 sts=8 sw=8 tw=79
 autocmd Filetype python setl tw=79
 
+" see :help xterm-bracketed-paste
+if &term =~ "tmux"
+    let &t_BE = "\e[?2004h"
+    let &t_BD = "\e[?2004l"
+    exec "set t_PS=\e[200~"
+    exec "set t_PE=\e[201~"
+endif
+
 set formatoptions=cq
