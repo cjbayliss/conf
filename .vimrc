@@ -6,15 +6,23 @@ set background=dark
 set backspace=2
 set encoding=utf-8
 set expandtab
+set incsearch
 set noautoindent
 set nocompatible
 set ruler
 set shiftwidth=4
 set softtabstop=4
+set t_md= " disable ALL bold
 set tabstop=4
 set textwidth=72
-set viminfo=""
-set t_md= " disable ALL bold
+set title
+set titleold=
+set viminfo^=h
+
+" don't want to see these TYVM.
+set viminfo+=n$XDG_DATA_HOME/viminfo
+set backupdir=$XDG_CACHE_HOME
+set directory=$XDG_CACHE_HOME
 
 highlight Comment cterm=italic ctermfg=140
 highlight Conditional cterm=italic ctermfg=202
