@@ -1,2 +1,0 @@
-keymap  yy      EXTERN_LINK 'tmux set-buffer'
-keymap  YY      EXTERN      'tmux set-buffer'
