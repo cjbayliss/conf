@@ -33,6 +33,7 @@ export PATH="$PATH:$HOME/.local/bin"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export GIT_PAGER="less -F"
+export SSH_ASKPASS="emacs-askpass"
 
 # ensure $XDG_*_HOME exists
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
