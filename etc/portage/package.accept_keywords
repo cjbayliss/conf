@@ -8,4 +8,6 @@ dev-python/pyacoustid
 dev-util/radare2
 dev-vcs/git
 media-sound/beets
-net-p2p/tremc
+dev-lisp/sbcl
+dev-lisp/asdf
+dev-lisp/uiop

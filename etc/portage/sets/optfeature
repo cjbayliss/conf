@@ -13,8 +13,11 @@ app-i18n/ibus-anthy
 gui-apps/grim
 gui-apps/slurp
 
-# tremc
-net-p2p/transmission
-
 # bash
 app-shells/bash-completion
+
+# emacs
+app-text/aspell
+dev-lisp/sbcl
+dev-scheme/chicken
+media-sound/opus-tools

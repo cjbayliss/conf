@@ -5,3 +5,5 @@
 [user]
 	email = christopher.j.bayliss@gmail.com
 	name = Christopher Bayliss
+[pull]
+	ff = only

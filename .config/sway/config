@@ -8,7 +8,8 @@ hide_edge_borders --i3 both
 font pango:monospace 0
 
 # background
-output '*' background '#000000' solid_color
+#output '*' background '#000000' solid_color
+output '*' bg '~/pictures/wallpaper.png' fill
 
 # disable legacy stuff
 xwayland false
@@ -25,11 +26,12 @@ set $mod Mod4
 # move windows with mouse+$mod
 floating_modifier $mod
 
-# sakura is a libvte terminal that doesn't pull in needless dependencies
-bindsym $mod+Return exec sakura
-
-# strange scaling hack to get better spacing in bemenu
-bindsym $mod+d exec BEMENU_SCALE=3 bemenu-run -b -p '' --fn "Monospace 4" --hb "#338833" --hf "#FFFFFF" -H 6
+# NOTE: build emacs from the 'feature/pgtk' branch with:
+#
+#     ./configure --with-pgtk --prefix="$HOME/.local/"
+#
+bindsym $mod+Return exec $HOME/.local/bin/emacs
+bindsym $mod+f exec firefox
 
 # screenshots
 bindsym f12 exec grim
@@ -111,9 +113,14 @@ bindsym XF86AudioLowerVolume exec "amixer set Master 2%- unmute"
 bindsym XF86AudioMute exec "amixer set Master toggle"
 
 # control cmus
-bindsym XF86AudioPlay exec "cmus-remote --pause"
-bindsym XF86AudioNext exec "cmus-remote --next"
-bindsym XF86AudioPrev exec "cmus-remote --prev"
+# bindsym XF86AudioPlay exec "cmus-remote --pause"
+# bindsym XF86AudioNext exec "cmus-remote --next"
+# bindsym XF86AudioPrev exec "cmus-remote --prev"
+
+# control emms
+bindsym XF86AudioPlay exec emacsclient -e "(emms-play/pause-handler)"
+bindsym XF86AudioNext exec emacsclient -e "(emms-next)"
+bindsym XF86AudioPrev exec emacsclient -e "(emms-previous)"
 
 # notifications
 #exec mako --default-timeout 5000
