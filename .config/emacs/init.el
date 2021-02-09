@@ -19,6 +19,7 @@
  custom-file (concat user-emacs-directory "/custom.el")
  dark-theme 'modus-vivendi
  dired-listing-switches "-alhF"
+ inferior-lisp-program "sbcl --no-userinit"
  inhibit-startup-screen t
  initial-scratch-message nil
  light-theme 'modus-operandi
@@ -28,7 +29,8 @@
  package-enable-at-startup nil
  require-final-newline t
  scheme-program-name "csi -n"
- inferior-lisp-program "sbcl --no-userinit"
+ webpaste-paste-confirmation t
+ webpaste-provider-priority '("dpaste.org")
 
  ;; w3m
  w3m-add-user-agent nil
@@ -85,6 +87,8 @@
 (global-set-key "\C-cp" 'run-python)
 (global-set-key "\C-cs" 'run-scheme)
 (global-set-key "\C-cv" 'vterm)
+(global-set-key (kbd "C-c C-p C-b") 'webpaste-paste-buffer)
+(global-set-key (kbd "C-c C-p C-r") 'webpaste-paste-region)
 (global-set-key [f5] 'background-mode)
 
 ;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out.
@@ -291,6 +295,7 @@
         php-mode
         vterm
         w3m
+        webpaste
         which-key))
 
 ;; autoloads
@@ -298,6 +303,8 @@
         (autoload x (symbol-name x) nil t))
       '(elpher emms-browser vterm w3m))
 (autoload 'w3m-browse-url "w3m" nil t)
+(autoload 'webpaste-paste-buffer "webpaste" nil t)
+(autoload 'webpaste-paste-region "webpaste" nil t)
 
 ;; NOTE: everything after here should go last.
 
