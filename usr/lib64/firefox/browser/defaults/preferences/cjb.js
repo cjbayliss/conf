@@ -56,6 +56,7 @@ pref("general.warnOnAboutConfig", false);
 pref("geo.enabled", false);
 pref("geo.wifi.uri", "");
 pref("network.IDN_show_punycode", true);
+pref("network.security.esni.enabled", true);
 pref("permissions.default.camera", 2);
 pref("permissions.default.desktop-notification", 2);
 pref("permissions.default.geo", 2);
