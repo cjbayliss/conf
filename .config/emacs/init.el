@@ -120,10 +120,14 @@
 
   (setq erc-autojoin-channels-alist
         '(("freenode.net"
+           "#bash"
            "#chicken"
+           "#gentoo-dev"
            "#gentoo-hardened"
            "#gentoo-lisp"
+           "#gentoo-security"
            "##lisp"
+           "#python"
            "#scheme"
            "#xebian"))
         erc-autojoin-timing 'ident
