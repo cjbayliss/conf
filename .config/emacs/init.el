@@ -122,6 +122,7 @@
         '(("freenode.net"
            "#bash"
            "#chicken"
+           "#emacs"
            "#gentoo-dev"
            "#gentoo-hardened"
            "#gentoo-lisp"
