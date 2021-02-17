@@ -5,6 +5,7 @@ pref("accessibility.typeaheadfind.flashBar", 0);
 pref("apz.gtk.kinetic_scroll.enabled", false);
 pref("browser.chrome.favicons", false);
 pref("browser.chrome.site_icons", false);
+pref("browser.display.use_document_fonts", 0);
 pref("browser.safebrowsing.enabled", false);
 pref("browser.search.suggest.enabled", false);
 pref("browser.search.update", false);
