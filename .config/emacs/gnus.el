@@ -1,6 +1,6 @@
 ;; Various functions and configurations for Gnus
 ;;
-;; Written in 2019, 2020 by Christopher Bayliss <christopher.j.bayliss@gmail.com>
+;; Written in 2019, 2020, 2021 by Christopher Bayliss <snwyi3@protonmail.com>
 ;;
 ;; To the extent possible under law, the author(s) have dedicated all
 ;; copyright and related and neighboring rights to this software to the
@@ -14,23 +14,21 @@
 ;; email
 (setq
  gnus-select-method '(nnimap "email"
-                             (nnimap-address "mail.gandi.net")
-                             (nnimap-server-port 993)
-                             (nnimap-stream ssl))
+                             (nnimap-address "localhost")
+                             (nnimap-server-port 1143)
+                             (nnimap-stream plain))
 
  ;; use smtp to send email
  send-mail-function 'smtpmail-send-it
- smtpmail-smtp-server "mail.gandi.net"
- smtpmail-smtp-service 587
+ smtpmail-smtp-server "localhost"
+ smtpmail-smtp-service 1025
 
  ;; make subbed groups visible
  gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"
- gnus-permanently-visible-groups "INBOX\\|Sent\\|archive\\|cyber"
+ gnus-permanently-visible-groups "INBOX\\|Sent\\|cyber"
  gnus-asynchronous t
  gnus-use-cache 'passive
 
- ;; copy sent emails to Sent
- gnus-message-archive-group "nnimap+email:Sent"
  message-directory (concat user-emacs-directory "mail")
  nnfolder-directory (concat user-emacs-directory "mail/archive")
  gnus-gcc-mark-as-read t

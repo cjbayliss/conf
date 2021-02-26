@@ -1,6 +1,6 @@
 ;; Various functions and configurations for GNU Emacs
 ;;
-;; Written in 2018, 2019, 2020 by Christopher Bayliss <christopher.j.bayliss@gmail.com>
+;; Written in 2018, 2019, 2020, 2021 by Christopher Bayliss <snwyi3@protonmail.com>
 ;;
 ;; To the extent possible under law, the author(s) have dedicated all
 ;; copyright and related and neighboring rights to this software to the
@@ -129,6 +129,7 @@
            "#gentoo-security"
            "##lisp"
            "#python"
+           "##rust"
            "#scheme"
            "#xebian"))
         erc-autojoin-timing 'ident
@@ -175,6 +176,13 @@
                                (setq c-basic-offset 4
                                      indent-tabs-mode nil)
                                (php-enable-psr2-coding-style))))
+
+;; rust
+(add-to-list 'auto-mode-alist
+             '("\\.rs\\|.rlib\\'" . (lambda ()
+                                      (require 'rust-mode)
+                                      (rust-mode)
+                                      (setq rust-format-on-save t))))
 
 ;; if I'm editing a C file, I *probably* want the linux style
 (add-hook 'c-mode-common-hook
@@ -298,6 +306,7 @@
         modus-operandi-theme
         modus-vivendi-theme
         php-mode
+        rust-mode
         vterm
         w3m
         webpaste
