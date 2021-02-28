@@ -4,7 +4,6 @@ app-editors/emacs
 app-emulation/qemu
 app-eselect/eselect-repository
 dev-libs/light
-dev-python/black
 dev-util/indent
 dev-util/radare2
 dev-vcs/git

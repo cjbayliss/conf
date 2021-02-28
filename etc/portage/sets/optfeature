@@ -6,18 +6,20 @@ dev-python/pylast
 dev-python/pyxdg
 media-libs/chromaprint
 
-# ibus
-app-i18n/ibus-anthy
-
 # sway
 gui-apps/grim
 gui-apps/slurp
-
-# bash
-app-shells/bash-completion
 
 # emacs
 app-text/aspell
 dev-lisp/sbcl
 dev-scheme/chicken
 media-sound/opus-tools
+
+# devel/languages
+dev-lang/go
+dev-python/beautifulsoup
+dev-python/black
+
+# editor (need one, or $EDITOR is broken)
+sys-apps/ed
