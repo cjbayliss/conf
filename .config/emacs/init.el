@@ -17,6 +17,7 @@
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
+ diff-refine nil
  dired-listing-switches "-alhF"
  inferior-lisp-program "sbcl --no-userinit"
  inhibit-startup-screen t
@@ -336,6 +337,10 @@
   ;; kaolin-valley-dark is too low contrast by default
   (custom-set-faces '(bold ((t (:weight semi-bold))))
                     '(default ((t (:background "#1b1818"))))
+                    '(diff-added ((t (:background "#1f4733"))))
+                    '(diff-indicator-added ((t (:background "#1f4733"))))
+                    '(diff-indicator-removed ((t (:background "#42242d"))))
+                    '(diff-removed ((t (:background "#42242d"))))
                     '(hl-line ((t (:background "#262221"))))
                     '(line-number ((t (:background "#1e1b1a"))))
                     '(show-paren-match ((t (:background nil)))))
