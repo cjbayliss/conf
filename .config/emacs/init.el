@@ -17,12 +17,10 @@
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
- dark-theme 'modus-vivendi
  dired-listing-switches "-alhF"
  inferior-lisp-program "sbcl --no-userinit"
  inhibit-startup-screen t
  initial-scratch-message nil
- light-theme 'modus-operandi
  make-backup-files nil
  mouse-yank-at-point t
  package--init-file-ensured t
@@ -86,7 +84,6 @@
 (global-set-key "\C-cn" 'display-line-numbers-mode)
 (global-set-key "\C-cp" 'run-python)
 (global-set-key "\C-cs" 'run-scheme)
-(global-set-key "\C-cv" 'vterm)
 (global-set-key (kbd "C-c C-p C-b") 'webpaste-paste-buffer)
 (global-set-key (kbd "C-c C-p C-r") 'webpaste-paste-region)
 (global-set-key [f5] 'background-mode)
@@ -197,6 +194,11 @@
           (lambda ()
             (lisp-eval-string "(require 'sb-aclrepl)")))
 
+;; https://stackoverflow.com/a/47587185
+(add-to-list 'display-buffer-alist
+             (cons "\\*Async Shell Command\\*.*"
+                   (cons #'display-buffer-no-window nil)))
+
 ;; instead of loading hl-todo
 (defface highlight-todo-face
   '((t :inherit font-lock-warning-face
@@ -303,11 +305,9 @@
       '(elpher
         emms
         erc-hl-nicks
-        modus-operandi-theme
-        modus-vivendi-theme
+        kaolin-themes
         php-mode
         rust-mode
-        vterm
         w3m
         webpaste
         which-key))
@@ -315,7 +315,7 @@
 ;; autoloads
 (mapc (lambda (x)
         (autoload x (symbol-name x) nil t))
-      '(elpher emms-browser vterm w3m))
+      '(elpher emms-browser w3m))
 (autoload 'w3m-browse-url "w3m" nil t)
 (autoload 'webpaste-paste-buffer "webpaste" nil t)
 (autoload 'webpaste-paste-region "webpaste" nil t)
@@ -328,41 +328,17 @@
          (car (file-expand-wildcards
                (concat user-emacs-directory "lisp/"
                        (symbol-name x) "*")))))
-      '(modus-operandi modus-vivendi))
-
-(defun background-mode (&optional mode)
-  "set or toggle the background `mode'"
-  (interactive)
-  (disable-theme (car custom-enabled-themes))
-  (when mode
-    (setq-default frame-background-mode mode))
-  (unless mode
-    (cond ((eq frame-background-mode 'dark)
-           (setq-default frame-background-mode 'light))
-          ((eq frame-background-mode 'light)
-           (setq-default frame-background-mode 'dark))))
-  (cond ((eq frame-background-mode 'dark)
-         (set-background-color "black")
-         (set-foreground-color "white")
-         (when (boundp 'dark-theme)
-           (load-theme dark-theme t)))
-        ((eq frame-background-mode 'light)
-         (set-background-color "white")
-         (set-foreground-color "black")
-         (when (boundp 'light-theme)
-           (load-theme light-theme t))))
-  (when (featurep 'erc-hl-nicks)
-    (erc-hl-nicks-refresh-colors)))
+      '(kaolin))
 
 ;; GUI config
 (when (display-graphic-p)
-  ;; https://www.youtube.com/watch?v=UbxUSsFXYo4
-  ;; workin' 9 to 5, what a way to make a livin'
-  (if (and (>= (string-to-number (format-time-string "%H%M")) 0900)
-           (<= (string-to-number (format-time-string "%H%M")) 1700))
-      (background-mode 'light)
-    (background-mode 'dark))
-  (custom-set-faces '(bold ((t (:weight semi-bold)))))
+  (load-theme 'kaolin-valley-dark t)
+  ;; kaolin-valley-dark is too low contrast by default
+  (custom-set-faces '(bold ((t (:weight semi-bold))))
+                    '(default ((t (:background "#1b1818"))))
+                    '(hl-line ((t (:background "#262221"))))
+                    '(line-number ((t (:background "#1e1b1a"))))
+                    '(show-paren-match ((t (:background nil)))))
   (when (member "Iosevka Fixed" (font-family-list))
     (set-frame-font "Iosevka Fixed-11" t t))
   (when (member "Noto Color Emoji" (font-family-list))
