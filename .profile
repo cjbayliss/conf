@@ -27,13 +27,9 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export EMAIL="snwyi3@protonmail.com"
 export NAME="Christopher Bayliss"
 export NO_COLOR=1
-export MAILCAPS="$MAILCAPS:$XDG_CONFIG_HOME/mutt/mailcap"
 export TIME_STYLE=long-iso
 export GOPATH="$HOME/.local/go"
 export PATH="$PATH:$HOME/.local/bin:$GOPATH/bin"
-export LESSHISTFILE='/dev/null'
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export GIT_PAGER="less -F"
 export SSH_ASKPASS="emacs-askpass"
 
 # ensure $XDG_*_HOME exists
