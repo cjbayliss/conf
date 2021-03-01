@@ -79,14 +79,18 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
-(global-set-key "\C-cb" 'browse-url-at-point)
-(global-set-key "\C-ch" 'hl-line-mode)
-(global-set-key "\C-cl" 'run-lisp)
-(global-set-key "\C-cn" 'display-line-numbers-mode)
-(global-set-key "\C-cp" 'run-python)
-(global-set-key "\C-cs" 'run-scheme)
 (global-set-key (kbd "C-c C-p C-b") 'webpaste-paste-buffer)
 (global-set-key (kbd "C-c C-p C-r") 'webpaste-paste-region)
+(global-set-key (kbd "C-c b") 'browse-url-at-point)
+(global-set-key (kbd "C-c h") 'hl-line-mode)
+(global-set-key (kbd "C-c l") 'run-lisp)
+(global-set-key (kbd "C-c n") 'display-line-numbers-mode)
+(global-set-key (kbd "C-c p") 'run-python)
+(global-set-key (kbd "C-c s") 'run-scheme)
+(global-set-key (kbd "C-h f") 'helpful-function)
+(global-set-key (kbd "C-h k") 'helpful-key)
+(global-set-key (kbd "C-h o") 'helpful-symbol)
+(global-set-key (kbd "C-h v") 'helpful-variable)
 (global-set-key [f5] 'background-mode)
 
 ;; see https://github.com/jorgenschaefer/circe/wiki/Configuration
@@ -142,7 +146,8 @@
            :nick "cjbayliss"
            :nickserv-password my/return-password
            :channels (:after-auth "#llvm"
-                                  "#qemu"))
+                                  "#qemu"
+                                  "#virt"))
           ("Cyber"
            :host "127.0.0.1"
            :port "6667"
@@ -325,6 +330,7 @@
         elpher
         emms
         erc-hl-nicks
+        helpful
         kaolin-themes
         php-mode
         rust-mode
@@ -339,6 +345,10 @@
 (autoload 'w3m-browse-url "w3m" nil t)
 (autoload 'webpaste-paste-buffer "webpaste" nil t)
 (autoload 'webpaste-paste-region "webpaste" nil t)
+;; helpful.el autoloads
+(mapc (lambda (x)
+        (autoload x "helpful" nil t))
+      '(helpful-function helpful-key helpful-symbol helpful-variable))
 
 ;; NOTE: everything after here should go last.
 
