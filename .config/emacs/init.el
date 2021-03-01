@@ -18,7 +18,7 @@
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
  diff-refine nil
- dired-listing-switches "-alhF"
+ dired-listing-switches "-ABlhF"
  inferior-lisp-program "sbcl --no-userinit"
  inhibit-startup-screen t
  initial-scratch-message nil
@@ -89,76 +89,92 @@
 (global-set-key (kbd "C-c C-p C-r") 'webpaste-paste-region)
 (global-set-key [f5] 'background-mode)
 
-;; FIXME: switch to SASL. I tried circe, but almost pulled my hair out.
-;; custom irc func to load erc and join networks automatically
+;; see https://github.com/jorgenschaefer/circe/wiki/Configuration
+;; this function is probably under the GPL3, at least that is what circe
+;; is licensed as.
+;; begin probable GPL3 code
+(defun my/fetch-password (&rest params)
+  (require 'auth-source)
+  (let ((match (car (apply 'auth-source-search params))))
+    (if match
+        (let ((secret (plist-get match :secret)))
+          (if (functionp secret)
+              (funcall secret)
+            secret))
+      (error "Password not found for %S" params))))
+
+(defun my/return-password (server)
+  (my/fetch-password :host server))
+;; end probable GPL3 code
+
+;; custom irc function
 (defun irc ()
   "Connect to IRC."
   (interactive)
 
-  ;; these bits need to be here **before** you start ERC
-  (setq erc-prompt-for-nickserv-password nil
-        erc-fill-column 157)            ; the auto resize is below
+  (require 'circe)
+  (require 'circe-color-nicks)
+  (enable-circe-color-nicks)
 
-  (load (concat user-emacs-directory "erc"))
-  (require 'erc-services)
-  (erc-services-mode +1)
+  (add-hook 'lui-mode-hook 'my-lui-setup)
+  (defun my-lui-setup ()
+    (setq fringes-outside-margins t
+          word-wrap t
+          wrap-prefix "      "))
 
-  (erc-tls :server "chat.au.freenode.net"
-           :port 6697
-           :nick "cjb"
-           :full-name "Christopher Bayliss")
-  (erc-tls :server "irc.oftc.net"
-           :port 6697
+  (setq lui-fill-type nil
+        lui-time-stamp-position 'left
+        lui-time-stamp-format "%H:%M "
+        lui-time-stamp-only-when-changed-p nil
+        circe-format-say "<{nick}> {body}"
+        circe-format-action "[{nick} {body}]"
+        circe-format-self-say circe-format-say
+        circe-format-self-action circe-format-action
+        circe-reduce-lurker-spam t
+        circe-color-nicks-everywhere t
+        lui-flyspell-p t
+        circe-default-nick "cjbayliss"
+        circe-default-realname "Christopher Bayliss"
+        circe-network-options
+        '(("OFTC"
+           :tls t
+           :host "irc.oftc.net"
            :nick "cjbayliss"
-           :full-name "Christopher Bayliss"))
+           :nickserv-password my/return-password
+           :channels (:after-auth "#llvm"
+                                  "#qemu"))
+          ("Cyber"
+           :host "127.0.0.1"
+           :port "6667"
+           :nick "cjb"
+           :channels ("#cyber"))
+          ("Freenode"
+           :tls t
+           :host "chat.au.freenode.net"
+           :nick "cjb"
+           :sasl-username "cjb"
+           :sasl-password my/return-password
+           :channels (:after-auth "#chicken"
+                                  "#emacs"
+                                  "#gentoo-dev"
+                                  "#gentoo-hardened"
+                                  "#gentoo-lisp"
+                                  "#gentoo-security"
+                                  "##lisp"
+                                  "#python"
+                                  "##rust"
+                                  "#scheme"
+                                  "#voidlinux"
+                                  "#xebian"))))
+  (circe "Cyber")
+  (circe "OFTC")
+  (circe "Freenode")
 
-;; ERC config
-(with-eval-after-load "erc"
-  (require 'erc-goodies)
-
-  (setq erc-autojoin-channels-alist
-        '(("freenode.net"
-           "#bash"
-           "#chicken"
-           "#emacs"
-           "#gentoo-dev"
-           "#gentoo-hardened"
-           "#gentoo-lisp"
-           "#gentoo-security"
-           "##lisp"
-           "#python"
-           "##rust"
-           "#scheme"
-           "#xebian"))
-        erc-autojoin-timing 'ident
-        erc-fill-function 'erc-fill-static
-        erc-fill-static-center 15
-        erc-interpret-mirc-color t
-        erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT")
-        erc-prompt (lambda () (concat "[" (buffer-name) "]"))
-        erc-prompt-for-nickserv-password nil
-        erc-prompt-for-password nil
-        erc-rename-buffers t
-        erc-server "chat.au.freenode.net"
-        erc-server-reconnect-timeout 300
-        erc-track-exclude-server-buffer t
-        erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
-                                  "324" "329" "332" "333" "353" "477")
-        erc-user-full-name "Christopher Bayliss")
-
-  (erc-scrolltobottom-enable)
-  (erc-spelling-mode +1)
-  (require 'erc-hl-nicks)
-  (erc-hl-nicks)
-
-  ;; make ERC use full buffer width
-  (add-to-list 'window-configuration-change-hook
-               (lambda () (setq erc-fill-column (- (window-width) 2))))
-  ;; keep ERC buffer pined to bottom
-  (add-to-list 'erc-mode-hook
-               (lambda ()
-                 (set
-                  (make-local-variable 'scroll-conservatively) 100)))
+  (custom-set-faces '(circe-my-message-face ((t (:foreground "thistle"))))
+                    '(circe-originator-face ((t (:weight bold))))
+                    '(circe-prompt-face ((t (:foreground "cyan1"))))
+                    '(circe-server-face ((t (:foreground "gray35"))))
+                    '(lui-time-stamp-face ((t (:foreground "gray40")))))
 
   ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what
   ;; life it has lived, but since you know how to use git you'll find
@@ -196,9 +212,11 @@
             (lisp-eval-string "(require 'sb-aclrepl)")))
 
 ;; https://stackoverflow.com/a/47587185
+;; begin unknown licensed code
 (add-to-list 'display-buffer-alist
              (cons "\\*Async Shell Command\\*.*"
                    (cons #'display-buffer-no-window nil)))
+;; end unknown licensed code
 
 ;; instead of loading hl-todo
 (defface highlight-todo-face
@@ -303,7 +321,8 @@
             (package-initialize)
             (package-refresh-contents))
           (package-install x)))
-      '(elpher
+      '(circe
+        elpher
         emms
         erc-hl-nicks
         kaolin-themes
