@@ -19,6 +19,7 @@
  custom-file (concat user-emacs-directory "/custom.el")
  diff-refine nil
  dired-listing-switches "-ABlhF"
+ ido-enable-flex-matching t
  inferior-lisp-program "sbcl --no-userinit"
  inhibit-startup-screen t
  initial-scratch-message nil
@@ -91,6 +92,7 @@
 (global-set-key (kbd "C-h k") 'helpful-key)
 (global-set-key (kbd "C-h o") 'helpful-symbol)
 (global-set-key (kbd "C-h v") 'helpful-variable)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key [f5] 'background-mode)
 
 ;; see https://github.com/jorgenschaefer/circe/wiki/Configuration
@@ -281,7 +283,7 @@
             (display-line-numbers-mode +1)
             (setq show-trailing-whitespace t)))
 
-;; can global-hl-mode-mode be disabled *just* for ERC?
+;; can global-hl-mode-mode be disabled *just* for IRC?
 (mapc (lambda (x)
         (add-hook x 'hl-line-mode +1))
       '(text-mode-hook
@@ -335,7 +337,6 @@
       '(circe
         elpher
         emms
-        erc-hl-nicks
         helpful
         kaolin-themes
         php-mode
@@ -398,6 +399,7 @@
             ;; enable/disable modes
             (delete-selection-mode +1)
             (display-time-mode +1)
+            (savehist-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
             (which-key-mode)))
