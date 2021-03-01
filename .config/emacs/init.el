@@ -171,7 +171,6 @@
                                   "#scheme"
                                   "#voidlinux"
                                   "#xebian"))))
-  (circe "Cyber")
   (circe "OFTC")
   (circe "Freenode")
 
@@ -186,6 +185,13 @@
   ;; out in no time!! (yes, I felt like writing about this paren for no
   ;; reason at all.)
   )
+
+;; separate cyber irc function
+(defun irc-cyber ()
+  (interactive)
+  (if (featurep 'circe)
+      (circe "Cyber")
+    (error "circe not setup, try M-x irc RET first")))
 
 ;; load php stuff grumble grumble
 (add-to-list 'auto-mode-alist
