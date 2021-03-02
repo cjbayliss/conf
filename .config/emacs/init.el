@@ -120,6 +120,9 @@
 
   (require 'circe)
   (require 'circe-color-nicks)
+  ;; better nick colours
+  (require 'erc-hl-nicks)
+  (setf (symbol-function 'circe-nick-color-for-nick) (symbol-function 'erc-hl-nicks-color-for-nick))
   (enable-circe-color-nicks)
 
   (add-hook 'lui-mode-hook 'my-lui-setup)
@@ -132,6 +135,8 @@
         lui-time-stamp-position 'left
         lui-time-stamp-format "%H:%M "
         lui-time-stamp-only-when-changed-p nil
+        circe-default-part-message ""
+        circe-default-quit-message ""
         circe-format-say "<{nick}> {body}"
         circe-format-action "[{nick} {body}]"
         circe-format-self-say circe-format-say
@@ -337,6 +342,7 @@
       '(circe
         elpher
         emms
+        erc-hl-nicks
         helpful
         kaolin-themes
         php-mode
