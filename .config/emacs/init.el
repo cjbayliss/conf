@@ -179,6 +179,10 @@
   (circe "OFTC")
   (circe "Freenode")
 
+  (custom-set-faces
+   '(circe-my-message-face ((t (:foreground "gray60" :slant oblique))))
+   '(circe-originator-face ((t (:foreground "#f78fe7")))))
+
   ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what
   ;; life it has lived, but since you know how to use git you'll find
   ;; out in no time!! (yes, I felt like writing about this paren for no
