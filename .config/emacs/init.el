@@ -92,7 +92,6 @@
 (global-set-key (kbd "C-h o") 'helpful-symbol)
 (global-set-key (kbd "C-h v") 'helpful-variable)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key [f5] 'background-mode)
 
 ;; see https://github.com/jorgenschaefer/circe/wiki/Configuration
 ;; this function is probably under the GPL3, at least that is what circe
@@ -259,20 +258,6 @@
           emms-player-stopped-p)
       (emms-random-play-all)
     (emms-pause)))
-
-(defun alsactl (&optional volume)
-  "set `volume' or toggle mute"
-  (when volume
-    (shell-command
-     (format "amixer set Master %s unmute |\
-               awk -F\"[][]\" '/dB/ { print $2 }'" volume)))
-  (unless volume
-    (shell-command "amixer set Master toggle |\
-                     awk -F\"[][]\" '/dB/ { print $6 }'")))
-
-(defun backlightctl (options)
-  "pass `options' to 'light' and get current level"
-  (shell-command (format "light %s && light" options)))
 
 ;; programming mode settings
 (add-hook 'prog-mode-hook
