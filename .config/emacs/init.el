@@ -17,7 +17,6 @@
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
- diff-refine nil
  dired-listing-switches "-ABlhF"
  ido-enable-flex-matching t
  inferior-lisp-program "sbcl --no-userinit"
@@ -181,12 +180,6 @@
   (circe "OFTC")
   (circe "Freenode")
 
-  (custom-set-faces '(circe-my-message-face ((t (:foreground "thistle"))))
-                    '(circe-originator-face ((t (:weight bold))))
-                    '(circe-prompt-face ((t (:foreground "cyan1"))))
-                    '(circe-server-face ((t (:foreground "gray35"))))
-                    '(lui-time-stamp-face ((t (:foreground "gray40")))))
-
   ;; BEHOLD!! this lone paren, isn't it beautiful? One must wonder what
   ;; life it has lived, but since you know how to use git you'll find
   ;; out in no time!! (yes, I felt like writing about this paren for no
@@ -344,7 +337,6 @@
         emms
         erc-hl-nicks
         helpful
-        kaolin-themes
         php-mode
         rust-mode
         w3m
@@ -365,27 +357,10 @@
 
 ;; NOTE: everything after here should go last.
 
-(mapc (lambda (x)
-        (add-to-list
-         'custom-theme-load-path
-         (car (file-expand-wildcards
-               (concat user-emacs-directory "lisp/"
-                       (symbol-name x) "*")))))
-      '(kaolin))
-
 ;; GUI config
 (when (display-graphic-p)
-  (load-theme 'kaolin-valley-dark t)
-  ;; kaolin-valley-dark is too low contrast by default
-  (custom-set-faces '(bold ((t (:weight semi-bold))))
-                    '(default ((t (:background "#1b1818"))))
-                    '(diff-added ((t (:background "#1f4733"))))
-                    '(diff-indicator-added ((t (:background "#1f4733"))))
-                    '(diff-indicator-removed ((t (:background "#42242d"))))
-                    '(diff-removed ((t (:background "#42242d"))))
-                    '(hl-line ((t (:background "#262221"))))
-                    '(line-number ((t (:background "#1e1b1a"))))
-                    '(show-paren-match ((t (:background nil)))))
+  (load-theme 'modus-vivendi)
+  (custom-set-faces '(bold ((t (:weight semi-bold)))))
   (when (member "Iosevka Fixed" (font-family-list))
     (set-frame-font "Iosevka Fixed-11" t t))
   (when (member "Noto Color Emoji" (font-family-list))
