@@ -79,8 +79,6 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
-(global-set-key (kbd "C-c C-p C-b") 'webpaste-paste-buffer)
-(global-set-key (kbd "C-c C-p C-r") 'webpaste-paste-region)
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
 (global-set-key (kbd "C-c e /") "🤷")
 (global-set-key (kbd "C-c e [") "🤦")
@@ -94,6 +92,8 @@
 (global-set-key (kbd "C-c n") 'display-line-numbers-mode)
 (global-set-key (kbd "C-c p") 'run-python)
 (global-set-key (kbd "C-c s") 'run-scheme)
+(global-set-key (kbd "C-c w b") 'webpaste-paste-buffer)
+(global-set-key (kbd "C-c w r") 'webpaste-paste-region)
 (global-set-key (kbd "C-h f") 'helpful-function)
 (global-set-key (kbd "C-h k") 'helpful-key)
 (global-set-key (kbd "C-h o") 'helpful-symbol)
