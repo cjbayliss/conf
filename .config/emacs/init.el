@@ -13,7 +13,7 @@
 
 ;; general emacs settings
 (setq
- browse-url-browser-function 'browse-url-firefox
+ browse-url-browser-function 'browse-url-qutebrowser
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
@@ -142,6 +142,7 @@
         lui-time-stamp-only-when-changed-p nil
         circe-default-part-message ""
         circe-default-quit-message ""
+        circe-fool-list '("{^_^}")
         circe-format-say "<{nick}> {body}"
         circe-format-action "[{nick} {body}]"
         circe-format-self-say circe-format-say
@@ -173,15 +174,14 @@
            :sasl-password my/return-password
            :channels (:after-auth "#chicken"
                                   "#emacs"
-                                  "#gentoo-dev"
-                                  "#gentoo-hardened"
-                                  "#gentoo-lisp"
                                   "#gentoo-security"
                                   "##lisp"
+                                  "#nixos"
+                                  "#nixos-security"
                                   "#python"
+                                  "#qutebrowser"
                                   "##rust"
                                   "#scheme"
-                                  "#voidlinux"
                                   "#xebian"))))
   (circe "OFTC")
   (circe "Freenode")
@@ -302,6 +302,10 @@
             (emms-player-set emms-player-mpv 'regex
                              (apply #'emms-player-simple-regexp
                                     emms-player-base-format-list))))
+
+;; browse-url and browse-url-at-point require 'new-window' afaict
+(defun browse-url-qutebrowser (url &optional new-window)
+  (start-process (concat "qutebrowser " url) nil "qutebrowser" url))
 
 ;; make sure these directories exists
 (unless (file-directory-p (concat user-emacs-directory "lisp"))
