@@ -13,12 +13,15 @@
 
 ;; general emacs settings
 (setq
- browse-url-browser-function 'browse-url-qutebrowser
+ browse-url-browser-function 'w3m-browse-url
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
  dired-listing-switches "-ABlhF"
+ doom-modeline-height 20
+ doom-modeline-icon nil
  ido-enable-flex-matching t
+ ido-ignore-buffers '("\\` " "^\*")
  inferior-lisp-program "sbcl --no-userinit"
  inhibit-startup-screen t
  initial-scratch-message nil
@@ -54,6 +57,7 @@
  w3m-use-cookies nil
  w3m-use-favicon nil
  w3m-use-symbol t
+ w3m-use-title-buffer-name t
  w3m-use-toolbar nil
 
  ;; for faster startup
@@ -89,6 +93,7 @@
 (global-set-key (kbd "C-c e s") "🙂")
 (global-set-key (kbd "C-c h") 'hl-line-mode)
 (global-set-key (kbd "C-c l") 'run-lisp)
+(global-set-key (kbd "C-c m") 'proced)
 (global-set-key (kbd "C-c n") 'display-line-numbers-mode)
 (global-set-key (kbd "C-c p") 'run-python)
 (global-set-key (kbd "C-c s") 'run-scheme)
@@ -127,7 +132,8 @@
   (require 'circe-color-nicks)
   ;; better nick colours
   (require 'erc-hl-nicks)
-  (setf (symbol-function 'circe-nick-color-for-nick) (symbol-function 'erc-hl-nicks-color-for-nick))
+  (setf (symbol-function 'circe-nick-color-for-nick)
+        (symbol-function 'erc-hl-nicks-color-for-nick))
   (enable-circe-color-nicks)
 
   (add-hook 'lui-mode-hook 'my-lui-setup)
@@ -280,8 +286,8 @@
 ;; can global-hl-mode-mode be disabled *just* for IRC?
 (mapc (lambda (x)
         (add-hook x 'hl-line-mode +1))
-      '(text-mode-hook
-        dired-mode-hook
+      '(dired-mode-hook
+        text-mode-hook
         w3m-mode-hook))
 
 ;; emms config
@@ -303,9 +309,42 @@
                              (apply #'emms-player-simple-regexp
                                     emms-player-base-format-list))))
 
-;; browse-url and browse-url-at-point require 'new-window' afaict
-(defun browse-url-qutebrowser (url &optional new-window)
-  (start-process (concat "qutebrowser " url) nil "qutebrowser" url))
+;; default startup message
+(defun display-startup-echo-area-message ()
+  (message (concat "In the beginning the Emacs was created. This has "
+                   "made a lot of people very angry and been widely "
+                   "regarded as a bad move.")))
+
+;; custom doom-modeline stuff
+(with-eval-after-load 'doom-modeline
+  (doom-modeline-def-segment misc-info
+    ;; delete display-time-string, will add later to end of mode-line
+    (delq 'display-time-string global-mode-string)
+    (when (and (doom-modeline--active)
+               (not doom-modeline--limited-width-p))
+      (format-mode-line '("" global-mode-string)
+                        'doom-modeline-buffer-minor-mode)))
+
+  (doom-modeline-def-segment display-time
+    ;; pretty time and system load
+    (when (and (doom-modeline--active)
+               (not doom-modeline--limited-width-p))
+      (format-mode-line '(" " display-time-string " ") 'bold)))
+
+  (doom-modeline-def-modeline 'main
+    '(bar workspace-name window-number modals matches buffer-info
+          remote-host buffer-position word-count parrot
+          selection-info)
+
+    '(objed-state misc-info persp-name battery grip irc mu4e gnus
+                  github debug repl lsp minor-modes input-method
+                  indent-info buffer-encoding major-mode process
+                  vcs display-time checker)))
+
+;; eshell stuff
+(with-eval-after-load 'eshell
+  (require 'fish-completion)
+  (global-fish-completion-mode))
 
 ;; make sure these directories exists
 (unless (file-directory-p (concat user-emacs-directory "lisp"))
@@ -333,9 +372,11 @@
             (package-refresh-contents))
           (package-install x)))
       '(circe
+        doom-modeline
         elpher
         emms
         erc-hl-nicks
+        fish-completion
         helpful
         php-mode
         rust-mode
@@ -360,11 +401,37 @@
 ;; GUI config
 (when (display-graphic-p)
   (load-theme 'modus-vivendi)
-  (custom-set-faces '(bold ((t (:weight semi-bold)))))
-  (when (member "Iosevka Fixed" (font-family-list))
-    (set-frame-font "Iosevka Fixed-11" t t))
+  (custom-set-faces
+   '(bold ((t (:weight semi-bold))))
+   '(doom-modeline-bar ((t (:inherit mode-line))))
+   '(doom-modeline-bar-inactive
+     ((t
+       (:inherit mode-line-inactive :background nil :foreground nil)))))
+
+  ;; !@#$%^ FONTS
+  (when (member "Iosevka Fixed SS06" (font-family-list))
+    (set-frame-font "Iosevka Fixed SS06-11" 'keep-size t))
+  ;; 😜
   (when (member "Noto Color Emoji" (font-family-list))
     (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
+  ;; 한국어/조선말
+  (when (member "Baekmuk Gulim" (font-family-list))
+    (set-fontset-font t 'unicode "Baekmuk Gulim-11" nil 'prepend))
+  ;; 日本語
+  (when (member "IPAGothic" (font-family-list))
+    (set-fontset-font t 'unicode "IPAGothic-11" nil 'prepend))
+  ;; Latin/Cyrillic
+  (when (member "Iosevka Fixed SS06" (font-family-list))
+    (set-fontset-font t 'unicode "Iosevka Fixed SS06-11" nil 'prepend))
+  ;; force font size and family everywhere
+  (add-hook 'window-state-change-hook
+            (lambda ()
+              (mapc (lambda (face)
+                      (set-face-attribute face nil
+                                          :height 110
+                                          :family "Monospace"))
+                    (face-list))))
+
   (setq-default cursor-type '(hbar . 2))
   (fringe-mode 0)
   (scroll-bar-mode -1)
@@ -382,5 +449,7 @@
             (display-time-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)
+            (require 'doom-modeline)
             (require 'which-key)
+            (doom-modeline-mode)
             (which-key-mode)))
