@@ -24,23 +24,37 @@ qutebrowser.api.interceptor.register(rewrite_request)
 c.content.blocking.method = "both"
 
 # load local config
-config.load_autoconfig(True)
+config.load_autoconfig(False)
 
 c.url.searchengines[
     "DEFAULT"
 ] = "https://duckduckgo.com/?q={}&kae=b&kak=-1&kax=-1&kaq=-1&kao=-1&kap=-1&kau=-1&kaj=m&k1=-1&ko=s&kac=1&kt=n&km=l&ka=n"
 
-# disable annoying stuff
+# stuff
 c.content.autoplay = False
 c.content.desktop_capture = False
 c.content.geolocation = False
+c.content.headers.do_not_track = False
+c.content.javascript.prompt = False
+c.content.media.audio_capture = False
+c.content.media.audio_video_capture = False
+c.content.media.video_capture = False
+c.content.mouse_lock = False
 c.content.notifications = False
+c.content.persistent_storage = False
+c.content.register_protocol_handler = False
+c.content.ssl_strict = True
+c.content.xss_auditing = True
+c.downloads.location.directory = "$HOME/downloads"
+c.downloads.location.prompt = False
+c.prompt.filebrowser = False
 c.tabs.show = "never"
 
 # disable CVEs
 c.content.javascript.enabled = False
 # except for these sites...
 config.set("content.javascript.enabled", True, "*://anilist.co/*")
+config.set("content.javascript.enabled", True, "*://codeberg.org/*")
 config.set("content.javascript.enabled", True, "*://discord.com/*")
 config.set("content.javascript.enabled", True, "*://duckduckgo.com/*")
 config.set("content.javascript.enabled", True, "*://github.com/*")
@@ -55,6 +69,7 @@ config.set("content.javascript.enabled", True, "devtools://*")
 config.set("content.javascript.enabled", True, "qute://*/*")
 
 # custom CSS (block ads, force better fonts, etc)
+c.colors.webpage.bg = "#ededed"
 c.content.user_stylesheets = "$HOME/.config/qutebrowser/default.css"
 
 # editor command
@@ -73,9 +88,9 @@ c.fonts.default_family = "monospace"
 c.fonts.default_size = "11pt"
 c.fonts.web.family.fantasy = None
 c.fonts.web.family.fixed = "Iosevka Fixed"
-c.fonts.web.family.sans_serif = "Liberation Sans"
-c.fonts.web.family.serif = "Liberation Sans"
-c.fonts.web.family.standard = "Liberation Sans"
+c.fonts.web.family.sans_serif = "Inter"
+c.fonts.web.family.serif = "Inter"
+c.fonts.web.family.standard = "Inter"
 c.fonts.web.size.default = 17
 c.fonts.web.size.default_fixed = 15
 c.fonts.web.size.minimum = 15
@@ -107,6 +122,8 @@ config.bind("<Alt+x>", "set-cmd-text :")
 config.bind("<Ctrl+Space>", "hint links tab-bg")
 config.bind("<Ctrl+r>", "set-cmd-text ?")
 config.bind("<Ctrl+s>", "set-cmd-text /")
+config.bind("<Ctrl+x><Ctrl+->", "zoom-out")
+config.bind("<Ctrl+x><Ctrl+=>", "zoom-in")
 config.bind("<Ctrl+x><Ctrl+c>", "quit")
 config.bind("<Ctrl+x><Ctrl+f>", "set-cmd-text -s :open -t")
 config.bind("<Ctrl+x><Ctrl+l>", "config-source")
@@ -116,9 +133,21 @@ config.bind("<Ctrl+x>b", "set-cmd-text -s :tab-select")
 config.bind("<Ctrl+x>k<Return>", "tab-close")
 config.bind("<Ctrl+x>l", "reload")
 config.bind("<Ctrl+x>v", "hint links spawn mpv {hint-url}")
-config.bind("<Ctrl-x><Ctrl-->", "zoom-out")
-config.bind("<Ctrl-x><Ctrl-=>", "zoom-in")
-config.bind("<Ctrl-y>", "insert-text {clipboard}")
+config.bind("<Ctrl+y>", "insert-text {clipboard}")
+
+# javascript toggle
+config.bind(
+    "<Ctrl-x>jt",
+    "config-cycle -p -t -u *://{url:host}/* content.javascript.enabled ;; reload",
+)
+config.bind(
+    "<Ctrl-x>je",
+    "config-cycle -p -u *://{url:host}/* content.javascript.enabled ;; reload",
+)
+config.bind(
+    "<Ctrl-x>ja",
+    "config-cycle -p -t -u *://*.{url:host}/* content.javascript.enabled ;; reload",
+)
 
 # bindings for command mode
 config.bind("<Alt+n>", "command-history-next", mode="command")
@@ -144,11 +173,11 @@ config.bind("<Escape><Escape><Escape>", "mode-leave", mode="insert")
 
 # bindings for prompt mode
 config.bind("<Ctrl+g>", "mode-leave", mode="prompt")
+config.bind("<Ctrl+x><Ctrl+n>", "prompt-accept no", mode="prompt")
+config.bind("<Ctrl+x><Ctrl+y>", "prompt-accept yes", mode="prompt")
 config.bind("<Down>", "prompt-item-focus next", mode="prompt")
 config.bind("<Escape><Escape><Escape>", "mode-leave", mode="prompt")
 config.bind("<Return>", "prompt-accept", mode="prompt")
 config.bind("<Shift+Tab>", "prompt-item-focus prev", mode="prompt")
 config.bind("<Tab>", "prompt-item-focus next", mode="prompt")
 config.bind("<Up>", "prompt-item-focus prev", mode="prompt")
-config.bind("n", "prompt-accept no", mode="prompt")
-config.bind("y", "prompt-accept yes", mode="prompt")

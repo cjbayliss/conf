@@ -16,18 +16,27 @@ h5,
 h6,
 html,
 p {
-    font-family: "Liberation Sans", sans-serif !important;
+    font-family: "Inter", sans-serif !important;
 }
 
 /* force Iosevka Fixed for mono stuff. FIXME: make this work for all mono fonts.*/
 .blob-code span,
 .blob-code,
 .blob-num,
+.code,
+.code-view :not(.fa):not(.svg):not(.icon),
 .diff-line-num,
+.feeds .news .commit-id
+.file-info-entry,
+.lines-num span:after,
 .text-mono,
+.ui .sha.label,
+code *,
 code,
-pre {
+pre,
+pre * {
     font-family: "Iosevka Fixed", monospace !important;
+    font-size: 11pt !important;
 }
 
 /* block ads */
