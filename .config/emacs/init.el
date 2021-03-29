@@ -183,6 +183,7 @@
                                   "#gentoo-security"
                                   "##lisp"
                                   "#nixos"
+                                  "#nixos-dev"
                                   "#nixos-security"
                                   "#python"
                                   "#qutebrowser"
@@ -224,6 +225,12 @@
                                       (require 'rust-mode)
                                       (rust-mode)
                                       (setq rust-format-on-save t))))
+
+;; nix
+(add-to-list 'auto-mode-alist
+             '("\\.nix\\'" . (lambda ()
+                                      (require 'nix-mode)
+                                      (nix-mode))))
 
 ;; if I'm editing a C file, I *probably* want the linux style
 (add-hook 'c-mode-common-hook
@@ -331,6 +338,7 @@
                (not doom-modeline--limited-width-p))
       (format-mode-line '(" " display-time-string " ") 'bold)))
 
+  ;; main mode-line
   (doom-modeline-def-modeline 'main
     '(bar workspace-name window-number modals matches buffer-info
           remote-host buffer-position word-count parrot
@@ -339,7 +347,15 @@
     '(objed-state misc-info persp-name battery grip irc mu4e gnus
                   github debug repl lsp minor-modes input-method
                   indent-info buffer-encoding major-mode process
-                  vcs display-time checker)))
+                  vcs display-time checker))
+  ;; IRC, etc
+  (doom-modeline-def-modeline 'special
+    '(bar window-number modals matches buffer-info
+          buffer-position word-count parrot selection-info)
+
+    '(objed-state misc-info battery irc-buffers debug minor-modes
+                  input-method indent-info buffer-encoding
+                  major-mode process display-time checker)))
 
 ;; eshell stuff
 (with-eval-after-load 'eshell
@@ -378,6 +394,7 @@
         erc-hl-nicks
         fish-completion
         helpful
+        nix-mode
         php-mode
         rust-mode
         w3m
