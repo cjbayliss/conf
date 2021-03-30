@@ -35,10 +35,6 @@ c.content.autoplay = False
 c.content.desktop_capture = False
 c.content.geolocation = False
 c.content.headers.do_not_track = False
-c.content.javascript.prompt = False
-c.content.media.audio_capture = False
-c.content.media.audio_video_capture = False
-c.content.media.video_capture = False
 c.content.mouse_lock = False
 c.content.notifications = False
 c.content.persistent_storage = False
@@ -86,14 +82,8 @@ c.colors.statusbar.url.success.https.fg = "#44bc44"
 # fonts
 c.fonts.default_family = "monospace"
 c.fonts.default_size = "11pt"
-c.fonts.web.family.fantasy = None
-c.fonts.web.family.fixed = "Iosevka Fixed"
-c.fonts.web.family.sans_serif = "Inter"
-c.fonts.web.family.serif = "Inter"
-c.fonts.web.family.standard = "Inter"
 c.fonts.web.size.default = 17
-c.fonts.web.size.default_fixed = 15
-c.fonts.web.size.minimum = 15
+c.fonts.web.size.minimum = 14
 
 # emacs style keybinds
 c.bindings.default = {}
@@ -173,11 +163,20 @@ config.bind("<Escape><Escape><Escape>", "mode-leave", mode="insert")
 
 # bindings for prompt mode
 config.bind("<Ctrl+g>", "mode-leave", mode="prompt")
-config.bind("<Ctrl+x><Ctrl+n>", "prompt-accept no", mode="prompt")
-config.bind("<Ctrl+x><Ctrl+y>", "prompt-accept yes", mode="prompt")
 config.bind("<Down>", "prompt-item-focus next", mode="prompt")
 config.bind("<Escape><Escape><Escape>", "mode-leave", mode="prompt")
 config.bind("<Return>", "prompt-accept", mode="prompt")
 config.bind("<Shift+Tab>", "prompt-item-focus prev", mode="prompt")
 config.bind("<Tab>", "prompt-item-focus next", mode="prompt")
 config.bind("<Up>", "prompt-item-focus prev", mode="prompt")
+config.bind("n", "prompt-accept no", mode="prompt")
+config.bind("y", "prompt-accept yes", mode="prompt")
+
+# bindings for yesno mode
+config.bind("<Ctrl+g>", "mode-leave", mode="yesno")
+config.bind("<Escape><Escape><Escape>", "mode-leave", mode="yesno")
+config.bind("<Return>", "prompt-accept", mode="yesno")
+config.bind("N", "prompt-accept --save no", mode="yesno")
+config.bind("Y", "prompt-accept --save yes", mode="yesno")
+config.bind("n", "prompt-accept no", mode="yesno")
+config.bind("y", "prompt-accept yes", mode="yesno")

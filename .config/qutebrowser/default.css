@@ -25,10 +25,12 @@ p {
 .blob-num,
 .code,
 .code-view :not(.fa):not(.svg):not(.icon),
+.commit-id,
 .diff-line-num,
-.feeds .news .commit-id
 .file-info-entry,
 .lines-num span:after,
+.lines-num,
+.mono,
 .text-mono,
 .ui .sha.label,
 code *,
