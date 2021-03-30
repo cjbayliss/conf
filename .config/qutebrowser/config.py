@@ -83,7 +83,7 @@ c.colors.statusbar.url.success.https.fg = "#44bc44"
 c.fonts.default_family = "monospace"
 c.fonts.default_size = "11pt"
 c.fonts.web.size.default = 17
-c.fonts.web.size.minimum = 14
+c.fonts.web.size.minimum = 15
 
 # emacs style keybinds
 c.bindings.default = {}

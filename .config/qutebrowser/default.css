@@ -16,7 +16,7 @@ h5,
 h6,
 html,
 p {
-    font-family: "Inter", sans-serif !important;
+    font-family: "Liberation Sans", sans-serif !important;
 }
 
 /* force Iosevka Fixed for mono stuff. FIXME: make this work for all mono fonts.*/
