@@ -58,6 +58,7 @@
 
 ;; keybinds
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
+(global-set-key (kbd "C-c e") 'ido-emoji)
 (global-set-key (kbd "C-c h") 'hl-line-mode)
 (global-set-key (kbd "C-c l") 'run-lisp)
 (global-set-key (kbd "C-c m") 'proced)
@@ -288,6 +289,29 @@
   (message (concat "In the beginning the Emacs was created. This has "
                    "made a lot of people very angry and been widely "
                    "regarded as a bad move.")))
+
+;; list of emoji I'm likely to use
+(defvar ido-emoji-list
+  '("🙂" "🤷" "🤦" "🥳" "🤣" "🤨" "😜" "👍" "😱" "😭"))
+
+(defun build-ido-emoji-list ()
+  "Return a list of emoji with their Unicode names built from the
+`ido-emoji-list'."
+  (let (emoji-list)
+    (dolist (emoji ido-emoji-list)
+      (push (format "%s %s"
+                    emoji
+                    (get-char-code-property (string-to-char emoji)
+                                            'name))
+            emoji-list))
+    (nreverse emoji-list)))
+
+(defun ido-emoji ()
+  "An emoji picker!"
+  (interactive)
+  (insert
+   (substring
+    (ido-completing-read "Insert emoji: " (build-ido-emoji-list)) 0 1)))
 
 ;; custom doom-modeline stuff
 (with-eval-after-load 'doom-modeline
