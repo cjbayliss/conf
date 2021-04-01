@@ -13,7 +13,7 @@
 
 ;; general emacs settings
 (setq
- browse-url-browser-function 'w3m-browse-url
+ browse-url-browser-function 'browse-url-qutebrowser
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
@@ -32,33 +32,7 @@
  require-final-newline t
  scheme-program-name "csi -n"
  webpaste-paste-confirmation t
- webpaste-provider-priority '("dpaste.org")
-
- ;; w3m
- w3m-add-user-agent nil
- w3m-bookmark-file-coding-system 'utf-8
- w3m-coding-system 'utf-8
- w3m-default-coding-system 'utf-8
- w3m-default-display-inline-images t
- w3m-default-save-directory "~/downloads/"
- w3m-display-mode 'tabbed
- w3m-file-coding-system 'utf-8
- w3m-file-name-coding-system 'utf-8
- w3m-fill-column 120
- w3m-home-page "about:blank"
- w3m-key-binding 'info
- w3m-profile-directory (concat (getenv "XDG_CACHE_HOME") "/w3m")
- w3m-search-default-engine "duckduckgo"
- w3m-search-engine-alist
- '(("wikipedia" "https://en.wikipedia.org/wiki/Special:Search/%s")
-   ("duckduckgo" "https://lite.duckduckgo.com/lite" nil "q=%s"))
- w3m-terminal-coding-system 'utf-8
- w3m-track-mouse nil
- w3m-use-cookies nil
- w3m-use-favicon nil
- w3m-use-symbol t
- w3m-use-title-buffer-name t
- w3m-use-toolbar nil
+ webpaste-provider-priority '("dpaste.org" "bpa.st")
 
  ;; for faster startup
  gc-cons-threshold most-positive-fixnum
@@ -84,13 +58,6 @@
 
 ;; keybinds
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
-(global-set-key (kbd "C-c e /") "🤷")
-(global-set-key (kbd "C-c e [") "🤦")
-(global-set-key (kbd "C-c e c") "🥳")
-(global-set-key (kbd "C-c e l") "😂")
-(global-set-key (kbd "C-c e o") "🤨")
-(global-set-key (kbd "C-c e p") "😜")
-(global-set-key (kbd "C-c e s") "🙂")
 (global-set-key (kbd "C-c h") 'hl-line-mode)
 (global-set-key (kbd "C-c l") 'run-lisp)
 (global-set-key (kbd "C-c m") 'proced)
@@ -99,10 +66,6 @@
 (global-set-key (kbd "C-c s") 'run-scheme)
 (global-set-key (kbd "C-c w b") 'webpaste-paste-buffer)
 (global-set-key (kbd "C-c w r") 'webpaste-paste-region)
-(global-set-key (kbd "C-h f") 'helpful-function)
-(global-set-key (kbd "C-h k") 'helpful-key)
-(global-set-key (kbd "C-h o") 'helpful-symbol)
-(global-set-key (kbd "C-h v") 'helpful-variable)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; see https://github.com/jorgenschaefer/circe/wiki/Configuration
@@ -176,6 +139,7 @@
            :tls t
            :host "chat.au.freenode.net"
            :nick "cjb"
+           :sasl-strict t
            :sasl-username "cjb"
            :sasl-password my/return-password
            :channels (:after-auth "#chicken"
@@ -229,8 +193,8 @@
 ;; nix
 (add-to-list 'auto-mode-alist
              '("\\.nix\\'" . (lambda ()
-                                      (require 'nix-mode)
-                                      (nix-mode))))
+                               (require 'nix-mode)
+                               (nix-mode))))
 
 ;; if I'm editing a C file, I *probably* want the linux style
 (add-hook 'c-mode-common-hook
@@ -294,8 +258,7 @@
 (mapc (lambda (x)
         (add-hook x 'hl-line-mode +1))
       '(dired-mode-hook
-        text-mode-hook
-        w3m-mode-hook))
+        text-mode-hook))
 
 ;; emms config
 (add-hook 'emms-browser-mode-hook
@@ -315,6 +278,10 @@
             (emms-player-set emms-player-mpv 'regex
                              (apply #'emms-player-simple-regexp
                                     emms-player-base-format-list))))
+
+;; browse-url and browse-url-at-point require 'new-window' afaict
+(defun browse-url-qutebrowser (url &optional new-window)
+  (start-process (concat "qutebrowser " url) nil "qutebrowser" url))
 
 ;; default startup message
 (defun display-startup-echo-area-message ()
@@ -367,8 +334,6 @@
   (make-directory (concat user-emacs-directory "lisp") t))
 (unless (file-directory-p (concat user-emacs-directory "emms"))
   (make-directory (concat user-emacs-directory "emms") t))
-(unless (file-directory-p (concat (getenv "XDG_CACHE_HOME") "/w3m"))
-  (make-directory (concat (getenv "XDG_CACHE_HOME") "/w3m") t))
 
 ;; add site lisp
 (let ((default-directory "/usr/share/emacs/site-lisp/"))
@@ -393,25 +358,18 @@
         emms
         erc-hl-nicks
         fish-completion
-        helpful
         nix-mode
         php-mode
         rust-mode
-        w3m
         webpaste
         which-key))
 
 ;; autoloads
 (mapc (lambda (x)
         (autoload x (symbol-name x) nil t))
-      '(elpher emms-browser w3m))
-(autoload 'w3m-browse-url "w3m" nil t)
+      '(elpher emms-browser))
 (autoload 'webpaste-paste-buffer "webpaste" nil t)
 (autoload 'webpaste-paste-region "webpaste" nil t)
-;; helpful.el autoloads
-(mapc (lambda (x)
-        (autoload x "helpful" nil t))
-      '(helpful-function helpful-key helpful-symbol helpful-variable))
 
 ;; NOTE: everything after here should go last.
 
