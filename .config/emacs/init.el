@@ -292,7 +292,7 @@
 
 ;; list of emoji I'm likely to use
 (defvar ido-emoji-list
-  '("🙂" "🤷" "🤦" "🥳" "🤣" "🤨" "😜" "👍" "😱" "😭"))
+  '("🙂" "🤷" "🤦" "🥳" "🤣" "🤨" "😜" "👍" "👌" "😱" "😭" "😑"))
 
 (defun build-ido-emoji-list ()
   "Return a list of emoji with their Unicode names built from the
