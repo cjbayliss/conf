@@ -112,7 +112,7 @@
         lui-time-stamp-only-when-changed-p nil
         circe-default-part-message ""
         circe-default-quit-message ""
-        circe-fool-list '("{^_^}")
+        circe-fool-list '("{^_^}" "gnUser")
         circe-format-say "<{nick}> {body}"
         circe-format-action "[{nick} {body}]"
         circe-format-self-say circe-format-say
@@ -292,7 +292,8 @@
 
 ;; list of emoji I'm likely to use
 (defvar ido-emoji-list
-  '("🙂" "🤷" "🤦" "🥳" "🤣" "🤨" "😜" "👍" "👌" "😱" "😭" "😑"))
+  '("🙂" "🤷" "🤦" "🥳" "🤣" "🤨" "😜" "😬" "👋" "👍" "👌" "😱"
+    "😭" "😑" "💃"))
 
 (defun build-ido-emoji-list ()
   "Return a list of emoji with their Unicode names built from the
