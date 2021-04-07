@@ -1,0 +1,52 @@
+# this is a starting point, hope to expand later
+
+# standard non-sense
+https-strict: * true
+https-strict: behind-the-scene false
+matrix-off: about-scheme true
+matrix-off: behind-the-scene true
+matrix-off: chrome-extension-scheme true
+matrix-off: chrome-scheme true
+matrix-off: moz-extension-scheme true
+matrix-off: opera-scheme true
+matrix-off: qute-scheme true
+matrix-off: vivaldi-scheme true
+matrix-off: wyciwyg-scheme true
+noscript-spoof: * true
+referrer-spoof: * true
+referrer-spoof: behind-the-scene false
+
+# heavy lifting
+* * * block
+* * cookie block
+* * css allow
+* * frame block
+* * image allow
+* 1st-party * allow
+* 1st-party frame allow
+
+# logins
+animelab.com 1st-party cookie allow
+codeberg.org 1st-party cookie allow
+discord.com 1st-party cookie allow
+github.com 1st-party cookie allow
+gitlab.com 1st-party cookie allow
+youtube.com 1st-party cookie allow
+
+# git* sites
+github.com githubassets.com * allow
+gitlab.com gitlab-static.net * allow
+
+# youtube and youtube music
+youtube.com googlevideo.com * allow
+youtube.com ytimg.com * allow
+
+# common CDNs 😑
+* akamaized.net * allow
+
+# block local addresses...
+* 127 * block
+* 192.168 * block
+* [::1] * block
+* localhost * block
+

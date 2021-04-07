@@ -1,3 +1,6 @@
+# load local config
+config.load_autoconfig(False)
+
 import qutebrowser.api.interceptor
 
 # poor person's adblock
@@ -21,14 +24,31 @@ def rewrite_request(request: qutebrowser.api.interceptor.Request):
 
 qutebrowser.api.interceptor.register(block_request)
 qutebrowser.api.interceptor.register(rewrite_request)
-c.content.blocking.method = "both"
 
-# load local config
-config.load_autoconfig(False)
+import sys, os
+
+sys.path.append(os.path.join(sys.path[0], "jmatrix"))
+config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
+
+c.content.blocking.adblock.lists = [
+    "https://easylist.to/easylist/easylist.txt",
+    "https://easylist.to/easylist/easyprivacy.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badware.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2020.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2021.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/legacy.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/privacy.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt",
+    "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
+    "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
+]
 
 c.url.searchengines[
     "DEFAULT"
-] = "https://duckduckgo.com/?q={}&kae=b&kak=-1&kax=-1&kaq=-1&kao=-1&kap=-1&kau=-1&kaj=m&k1=-1&ko=s&kac=1&kt=n&km=l&ka=n"
+] = "https://duckduckgo.com/?q={}&kae=b&kak=-1&kax=-1&kaq=-1&kao=-1&kap=-1&kau=-1&kaj=m&k1=-1&ko=s&kl=wt-wt&kk=-1&kt=n&ka=n&km=m"
 
 # stuff
 c.content.autoplay = False
@@ -85,14 +105,13 @@ c.fonts.default_size = "11pt"
 c.fonts.web.size.default = 17
 c.fonts.web.size.minimum = 15
 
-# emacs style keybinds
+# emacs style keybinds (NOTE: NOT PERFECT, OR EVEN GOOD 😑)
 c.bindings.default = {}
 
 # input like normal
 c.input.forward_unbound_keys = "all"
 c.input.insert_mode.auto_enter = False
 c.input.insert_mode.auto_leave = False
-c.input.insert_mode.plugins = False
 
 # bindings for normal mode
 config.bind("0", "fake-key 0")
@@ -107,21 +126,23 @@ config.bind("8", "fake-key 8")
 config.bind("9", "fake-key 9")
 config.bind("<Alt+[>", "back")
 config.bind("<Alt+]>", "forward")
+config.bind("<Alt+l>", "set-cmd-text -s :open")
 config.bind("<Alt+w>", "yank selection")
 config.bind("<Alt+x>", "set-cmd-text :")
 config.bind("<Ctrl+Space>", "hint links tab-bg")
-config.bind("<Ctrl+r>", "set-cmd-text ?")
+config.bind("<Ctrl+l>", "set-cmd-text -s :open -t")
+config.bind("<Ctrl+r>", "set-cmd-text /")
 config.bind("<Ctrl+s>", "set-cmd-text /")
 config.bind("<Ctrl+x><Ctrl+->", "zoom-out")
+config.bind("<Ctrl+x><Ctrl+0>", "zoom 100")
 config.bind("<Ctrl+x><Ctrl+=>", "zoom-in")
 config.bind("<Ctrl+x><Ctrl+c>", "quit")
-config.bind("<Ctrl+x><Ctrl+f>", "set-cmd-text -s :open -t")
 config.bind("<Ctrl+x><Ctrl+l>", "config-source")
+config.bind("<Ctrl+x><Ctrl+r>", "reload")
 config.bind("<Ctrl+x><Left>", "tab-prev")
 config.bind("<Ctrl+x><Right>", "tab-next")
 config.bind("<Ctrl+x>b", "set-cmd-text -s :tab-select")
 config.bind("<Ctrl+x>k<Return>", "tab-close")
-config.bind("<Ctrl+x>l", "reload")
 config.bind("<Ctrl+x>v", "hint links spawn mpv {hint-url}")
 config.bind("<Ctrl+y>", "insert-text {clipboard}")
 
