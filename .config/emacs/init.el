@@ -261,6 +261,12 @@
       '(dired-mode-hook
         text-mode-hook))
 
+;; 🤨
+(defun term-turn-off-echo ()
+  (setq comint-process-echoes t))
+
+(add-hook 'term-mode-hook 'term-turn-off-echo)
+
 ;; emms config
 (add-hook 'emms-browser-mode-hook
           (lambda ()
