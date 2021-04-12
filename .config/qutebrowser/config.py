@@ -1,7 +1,6 @@
-# load local config
-config.load_autoconfig(False)
-
 import qutebrowser.api.interceptor
+import sys
+import os
 
 # poor person's adblock
 def block_request(request: qutebrowser.api.interceptor.Request):
@@ -21,14 +20,27 @@ def rewrite_request(request: qutebrowser.api.interceptor.Request):
         request.request_url.setHost("teddit.net")
         request.redirect(request.request_url)
 
+    if "twitter.com" in request.request_url.host():
+        request.request_url.setHost("twiiit.com")
+        request.redirect(request.request_url)
+
+
+# force https
+def upgrade_to_https(request: qutebrowser.api.interceptor.Request):
+    if request.request_url.scheme() == "http":
+        request.request_url.setScheme("https")
+        request.redirect(request.request_url)
+
 
 qutebrowser.api.interceptor.register(block_request)
 qutebrowser.api.interceptor.register(rewrite_request)
-
-import sys, os
+qutebrowser.api.interceptor.register(upgrade_to_https)
 
 sys.path.append(os.path.join(sys.path[0], "jmatrix"))
 config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
+
+# don't load local config
+config.load_autoconfig(False)
 
 c.content.blocking.adblock.lists = [
     "https://easylist.to/easylist/easylist.txt",
