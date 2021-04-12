@@ -29,8 +29,8 @@ floating_modifier $mod
 #
 #     ./configure --with-pgtk --prefix="$HOME/.local/"
 #
-bindsym $mod+s exec pidof emacs && swaymsg [app_id=\"emacs\"] focus || $HOME/.local/bin/emacs
-bindsym $mod+f exec pidof firefox && swaymsg [app_id=\"firefox-wayland\"] focus || firefox
+bindsym $mod+s exec swaymsg [app_id=\"emacs\"] focus || $HOME/.local/bin/emacs
+bindsym $mod+f exec swaymsg [app_id=\"org.qutebrowser.qutebrowser\"] focus || qutebrowser
 
 # lock the screen
 bindsym $mod+l exec swaylock -f -i $HOME/pictures/wallpaper.png -s fill
