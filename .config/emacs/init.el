@@ -18,6 +18,7 @@
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
  dired-listing-switches "-ABlhF"
+ eshell-ls-initial-args "-h"
  doom-modeline-height 20
  doom-modeline-icon nil
  ido-enable-flex-matching t
@@ -261,12 +262,6 @@
       '(dired-mode-hook
         text-mode-hook))
 
-;; 🤨
-(defun term-turn-off-echo ()
-  (setq comint-process-echoes t))
-
-(add-hook 'term-mode-hook 'term-turn-off-echo)
-
 ;; emms config
 (add-hook 'emms-browser-mode-hook
           (lambda ()
@@ -356,9 +351,11 @@
                   major-mode process display-time checker)))
 
 ;; eshell stuff
-(with-eval-after-load 'eshell
-  (require 'fish-completion)
-  (global-fish-completion-mode))
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (setenv "PAGER" "cat")
+            (require 'fish-completion)
+            (global-fish-completion-mode)))
 
 ;; make sure these directories exists
 (unless (file-directory-p (concat user-emacs-directory "lisp"))

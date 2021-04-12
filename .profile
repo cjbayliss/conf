@@ -23,11 +23,8 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # why store this? put it in /tmp
 export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-[ -f "$XDG_CONFIG_HOME/sh/shrc" ] && export ENV="$XDG_CONFIG_HOME/sh/shrc"
 export EMAIL="snwyi3@protonmail.com"
 export NAME="Christopher Bayliss"
-export NO_COLOR=1
-export TIME_STYLE=long-iso
 export GOPATH="$HOME/.local/go"
 export PATH="$PATH:$HOME/.local/bin:$GOPATH/bin"
 export SSH_ASKPASS="emacs-askpass"
