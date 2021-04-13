@@ -1,9 +1,9 @@
-import qutebrowser.api.interceptor
+from qutebrowser.api import interceptor
 import sys
 import os
 
 # poor person's adblock
-def block_request(request: qutebrowser.api.interceptor.Request):
+def block_request(request: interceptor.Request):
     if (  # youtube ads
         "youtube.com" in request.request_url.host()
         and "&adformat=" in request.request_url.query()
@@ -14,27 +14,26 @@ def block_request(request: qutebrowser.api.interceptor.Request):
         request.block()
 
 
-# rewrite url(s) (more later lol)
-def rewrite_request(request: qutebrowser.api.interceptor.Request):
+# i can't get this to redirect twitter or youtube... 😑
+def rewrite_request(request: interceptor.Request):
     if "reddit.com" in request.request_url.host():
         request.request_url.setHost("teddit.net")
         request.redirect(request.request_url)
 
-    if "twitter.com" in request.request_url.host():
-        request.request_url.setHost("twiiit.com")
-        request.redirect(request.request_url)
-
 
 # force https
-def upgrade_to_https(request: qutebrowser.api.interceptor.Request):
-    if request.request_url.scheme() == "http":
+def upgrade_to_https(request: interceptor.Request):
+    if (
+        request.request_url.scheme() == "http"
+        and "ix.io" not in request.request_url.host()
+    ):
         request.request_url.setScheme("https")
         request.redirect(request.request_url)
 
 
-qutebrowser.api.interceptor.register(block_request)
-qutebrowser.api.interceptor.register(rewrite_request)
-qutebrowser.api.interceptor.register(upgrade_to_https)
+interceptor.register(block_request)
+interceptor.register(rewrite_request)
+interceptor.register(upgrade_to_https)
 
 sys.path.append(os.path.join(sys.path[0], "jmatrix"))
 config.source("jmatrix/jmatrix/integrations/qutebrowser.py")
@@ -63,7 +62,9 @@ c.url.searchengines[
 ] = "https://duckduckgo.com/?q={}&kae=b&kak=-1&kax=-1&kaq=-1&kao=-1&kap=-1&kau=-1&kaj=m&k1=-1&ko=s&kl=wt-wt&kk=-1&kt=n&ka=n&km=m"
 
 # stuff
+c.content.dns_prefetch = False
 c.content.autoplay = False
+c.content.canvas_reading = False
 c.content.desktop_capture = False
 c.content.geolocation = False
 c.content.headers.do_not_track = False
@@ -72,6 +73,7 @@ c.content.notifications = False
 c.content.persistent_storage = False
 c.content.register_protocol_handler = False
 c.content.ssl_strict = True
+c.content.webgl = False
 c.content.xss_auditing = True
 c.downloads.location.directory = "$HOME/downloads"
 c.downloads.location.prompt = False
@@ -90,6 +92,7 @@ config.set("content.javascript.enabled", True, "*://gitlab.com/*")
 config.set("content.javascript.enabled", True, "*://music.youtube.com/*")
 config.set("content.javascript.enabled", True, "*://www.animelab.com/*")
 config.set("content.javascript.enabled", True, "*://www.crunchyroll.com/*")
+config.set("content.javascript.enabled", True, "*://www.twitch.tv/*")
 config.set("content.javascript.enabled", True, "*://www.youtube.com/*")
 config.set("content.javascript.enabled", True, "chrome-devtools://*")
 config.set("content.javascript.enabled", True, "chrome://*/*")

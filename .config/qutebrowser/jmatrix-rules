@@ -39,7 +39,10 @@ gitlab.com gitlab-static.net * allow
 
 # youtube and youtube music
 youtube.com googlevideo.com * allow
+youtube.com gstatic.com * allow
 youtube.com ytimg.com * allow
+
+twitch.tv twitchcdn.net * allow
 
 # common CDNs 😑
 * akamaized.net * allow

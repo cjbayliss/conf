@@ -26,7 +26,9 @@ p {
 .code,
 .code-view :not(.fa):not(.svg):not(.icon),
 .commit-id,
+.commit-ref,
 .diff-line-num,
+.file-info,
 .file-info-entry,
 .lines-num span:after,
 .lines-num,
@@ -43,7 +45,11 @@ pre * {
 
 /* block ads */
 #masthead-ad,
+.js-consent-banner,
+.js-dismissable-hero,
 .promotion-chunk,
-.result--ad--good {
+.result--ad--good,
+.ytd-display-ad-renderer
+{
     display: none !important;
 }
