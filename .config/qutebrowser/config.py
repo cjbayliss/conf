@@ -101,6 +101,7 @@ config.set("content.javascript.enabled", True, "qute://*/*")
 
 # custom CSS (block ads, force better fonts, etc)
 c.colors.webpage.bg = "#ededed"
+c.colors.webpage.preferred_color_scheme = "dark"
 c.content.user_stylesheets = "$HOME/.config/qutebrowser/default.css"
 
 # editor command
