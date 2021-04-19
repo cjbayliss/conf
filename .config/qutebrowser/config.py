@@ -1,6 +1,7 @@
 from qutebrowser.api import interceptor
-import sys
 import os
+import sys
+import time
 
 # poor person's adblock
 def block_request(request: interceptor.Request):
@@ -57,10 +58,6 @@ c.content.blocking.adblock.lists = [
     "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
 ]
 
-c.url.searchengines[
-    "DEFAULT"
-] = "https://duckduckgo.com/?q={}&kae=b&kak=-1&kax=-1&kaq=-1&kao=-1&kap=-1&kau=-1&kaj=m&k1=-1&ko=s&kl=wt-wt&kk=-1&kt=n&ka=n&km=m"
-
 # stuff
 c.content.dns_prefetch = False
 c.content.autoplay = False
@@ -101,7 +98,6 @@ config.set("content.javascript.enabled", True, "qute://*/*")
 
 # custom CSS (block ads, force better fonts, etc)
 c.colors.webpage.bg = "#ededed"
-c.colors.webpage.preferred_color_scheme = "dark"
 c.content.user_stylesheets = "$HOME/.config/qutebrowser/default.css"
 
 # editor command
@@ -111,9 +107,38 @@ c.editor.command = ["emacsclient", "{}"]
 c.url.default_page = "about:blank"
 c.url.start_pages = "about:blank"
 
-# softer status bar colors
-c.colors.statusbar.normal.fg = "#f4f4f4"
-c.colors.statusbar.url.success.https.fg = "#44bc44"
+if int(time.strftime("%H", time.localtime())) <= 17:
+    # try to get my prefered firefox theme here. (Pastel Clouds)
+    background = "qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #edf7a0, stop:0.2 #9df398, stop:0.4 #d3daf7, stop:6 #cbb0f3, stop:0.8 #ec9be7, stop:1 #f298b4)"
+    c.colors.completion.category.bg = "#dcdcdc"
+    c.colors.completion.category.border.bottom = "#999"
+    c.colors.completion.category.border.top = "#999"
+    c.colors.completion.category.fg = "#333"
+    c.colors.completion.even.bg = "#ededed"
+    c.colors.completion.fg = "#333"
+    c.colors.completion.odd.bg = "#ededed"
+    c.colors.completion.scrollbar.bg = "#ededed"
+    c.colors.completion.scrollbar.fg = "#333"
+    c.colors.statusbar.command.bg = background
+    c.colors.statusbar.command.fg = "#333"
+    c.colors.statusbar.normal.bg = background
+    c.colors.statusbar.normal.fg = "#333"
+    c.colors.statusbar.progress.bg = "#333"
+    c.colors.statusbar.url.fg = "#333388"
+    c.colors.statusbar.url.hover.fg = "#000"
+    c.colors.statusbar.url.success.http.fg = "#883333"
+    c.colors.statusbar.url.success.https.fg = "#333"
+else:
+    # it's after 5:00 PM, use dark themes etc
+    c.colors.completion.category.bg = "#222"
+    c.colors.completion.even.bg = "#111"
+    c.colors.completion.odd.bg = "#111"
+    c.colors.webpage.preferred_color_scheme = "dark"
+
+c.completion.scrollbar.padding = 0
+c.completion.scrollbar.width = 0
+c.completion.shrink = True
+c.statusbar.position = "top"
 
 # fonts
 c.fonts.default_family = "monospace"
