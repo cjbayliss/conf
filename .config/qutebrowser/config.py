@@ -107,7 +107,7 @@ c.editor.command = ["emacsclient", "{}"]
 c.url.default_page = "about:blank"
 c.url.start_pages = "about:blank"
 
-if int(time.strftime("%H", time.localtime())) <= 17:
+if int(time.strftime("%H", time.localtime())) < 17:
     # try to get my prefered firefox theme here. (Pastel Clouds)
     background = "qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #edf7a0, stop:0.2 #9df398, stop:0.4 #d3daf7, stop:6 #cbb0f3, stop:0.8 #ec9be7, stop:1 #f298b4)"
     c.colors.completion.category.bg = "#dcdcdc"
