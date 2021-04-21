@@ -129,9 +129,7 @@
            :host "irc.oftc.net"
            :nick "cjbayliss"
            :nickserv-password my/return-password
-           :channels (:after-auth "#llvm"
-                                  "#qemu"
-                                  "#virt"))
+           :channels (:after-auth "#llvm"))
           ("Cyber"
            :host "127.0.0.1"
            :port "6667"
@@ -145,17 +143,10 @@
            :sasl-username "cjb"
            :sasl-password my/return-password
            :channels (:after-auth "#chicken"
-                                  "#emacs"
-                                  "#gentoo-security"
                                   "##lisp"
-                                  "#nixos"
-                                  "#nixos-dev"
-                                  "#nixos-security"
                                   "#python"
-                                  "#qutebrowser"
                                   "##rust"
-                                  "#scheme"
-                                  "#xebian"))))
+                                  "#scheme"))))
   (circe "OFTC")
   (circe "Freenode")
 
