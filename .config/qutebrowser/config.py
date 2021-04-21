@@ -1,7 +1,10 @@
 from qutebrowser.api import interceptor
 import os
+import requests
+import secrets
 import sys
 import time
+
 
 # poor person's adblock
 def block_request(request: interceptor.Request):
@@ -15,10 +18,28 @@ def block_request(request: interceptor.Request):
         request.block()
 
 
+# very quick hack... and it isn't fast at all, but gets the job done.
+def random_url():
+    if secrets.randbelow(2) == 0:
+        rand_github = requests.get(
+            "https://api.github.com/repositories",
+            params={"since": secrets.randbelow(300000000)},
+        )
+        return rand_github.json()[0]["html_url"]
+    else:
+        return "https://en.wikipedia.org/wiki/Special:Random"
+
+
 # i can't get this to redirect twitter or youtube... 😑
 def rewrite_request(request: interceptor.Request):
     if "reddit.com" in request.request_url.host():
         request.request_url.setHost("teddit.net")
+        request.redirect(request.request_url)
+    elif (
+        "news.ycombinator.com" in request.request_url.host()
+        or "lobste.rs" in request.request_url.host()
+    ):
+        request.request_url.setUrl(random_url())
         request.redirect(request.request_url)
 
 
