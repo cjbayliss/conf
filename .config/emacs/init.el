@@ -388,6 +388,7 @@
   (when (member "Iosevka Fixed SS06" (font-family-list))
     (set-fontset-font t 'unicode "Iosevka Fixed SS06-11" nil 'prepend))
 
+  (setq x-gtk-use-system-tooltips nil)
   (setq-default cursor-type '(hbar . 2))
   (fringe-mode 0)
   (scroll-bar-mode -1)
