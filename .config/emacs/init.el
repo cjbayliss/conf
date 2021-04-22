@@ -243,6 +243,8 @@
 ;; programming mode settings
 (add-hook 'prog-mode-hook
           (lambda ()
+            (require 'highlight-numbers)
+            (highlight-numbers-mode +1)
             (hl-line-mode +1)
             (display-line-numbers-mode +1)
             (setq show-trailing-whitespace t)))
@@ -377,6 +379,8 @@
         emms
         erc-hl-nicks
         fish-completion
+        highlight-numbers
+        modus-themes
         nix-mode
         php-mode
         rust-mode
@@ -394,7 +398,11 @@
 
 ;; GUI config
 (when (display-graphic-p)
-  (load-theme 'modus-vivendi)
+  (require 'modus-themes)
+  (setq modus-themes-slanted-constructs t
+        modus-themes-no-mixed-fonts t)
+  (modus-themes-load-themes)
+  (modus-themes-load-vivendi)
   (custom-set-faces
    '(bold ((t (:weight semi-bold))))
    '(doom-modeline-bar ((t (:inherit mode-line))))
@@ -417,14 +425,6 @@
   ;; Latin/Cyrillic
   (when (member "Iosevka Fixed SS06" (font-family-list))
     (set-fontset-font t 'unicode "Iosevka Fixed SS06-11" nil 'prepend))
-  ;; force font size and family everywhere
-  (add-hook 'window-state-change-hook
-            (lambda ()
-              (mapc (lambda (face)
-                      (set-face-attribute face nil
-                                          :height 110
-                                          :family "Monospace"))
-                    (face-list))))
 
   (setq-default cursor-type '(hbar . 2))
   (fringe-mode 0)
