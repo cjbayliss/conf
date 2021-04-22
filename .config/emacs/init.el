@@ -380,6 +380,7 @@
         erc-hl-nicks
         fish-completion
         highlight-numbers
+        magit
         modus-themes
         nix-mode
         php-mode
@@ -437,13 +438,15 @@
           (lambda ()
             ;; restore default gc-cons-*
             (setq gc-cons-threshold 800000
-                  gc-cons-percentage 0.1)
+                  gc-cons-percentage 0.1
+                  magit-auto-revert-mode nil)
             ;; enable/disable modes
             (delete-selection-mode +1)
             (display-time-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)
             (require 'doom-modeline)
+            (require 'magit)
             (require 'which-key)
             (doom-modeline-mode)
             (which-key-mode)))
