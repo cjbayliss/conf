@@ -309,41 +309,6 @@
    (substring
     (ido-completing-read "Insert emoji: " (build-ido-emoji-list)) 0 1)))
 
-;; custom doom-modeline stuff
-(with-eval-after-load 'doom-modeline
-  (doom-modeline-def-segment misc-info
-    ;; delete display-time-string, will add later to end of mode-line
-    (delq 'display-time-string global-mode-string)
-    (when (and (doom-modeline--active)
-               (not doom-modeline--limited-width-p))
-      (format-mode-line '("" global-mode-string)
-                        'doom-modeline-buffer-minor-mode)))
-
-  (doom-modeline-def-segment display-time
-    ;; pretty time and system load
-    (when (and (doom-modeline--active)
-               (not doom-modeline--limited-width-p))
-      (format-mode-line '(" " display-time-string " ") 'bold)))
-
-  ;; main mode-line
-  (doom-modeline-def-modeline 'main
-    '(bar workspace-name window-number modals matches buffer-info
-          remote-host buffer-position word-count parrot
-          selection-info)
-
-    '(objed-state misc-info persp-name battery grip irc mu4e gnus
-                  github debug repl lsp minor-modes input-method
-                  indent-info buffer-encoding major-mode process
-                  vcs display-time checker))
-  ;; IRC, etc
-  (doom-modeline-def-modeline 'special
-    '(bar window-number modals matches buffer-info
-          buffer-position word-count parrot selection-info)
-
-    '(objed-state misc-info battery irc-buffers debug minor-modes
-                  input-method indent-info buffer-encoding
-                  major-mode process display-time checker)))
-
 ;; eshell stuff
 (add-hook 'eshell-mode-hook
           (lambda ()
@@ -375,7 +340,6 @@
             (package-refresh-contents))
           (package-install x)))
       '(circe
-        doom-modeline
         elpher
         emms
         erc-hl-nicks
@@ -406,12 +370,7 @@
         modus-themes-no-mixed-fonts t)
   (modus-themes-load-themes)
   (modus-themes-load-vivendi)
-  (custom-set-faces
-   '(bold ((t (:weight semi-bold))))
-   '(doom-modeline-bar ((t (:inherit mode-line))))
-   '(doom-modeline-bar-inactive
-     ((t
-       (:inherit mode-line-inactive :background nil :foreground nil)))))
+  (custom-set-faces '(bold ((t (:weight semi-bold)))))
 
   ;; !@#$%^ FONTS
   (when (member "Iosevka Fixed SS06" (font-family-list))
@@ -446,7 +405,5 @@
             (display-time-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)
-            (require 'doom-modeline)
             (require 'which-key)
-            (doom-modeline-mode)
             (which-key-mode)))
