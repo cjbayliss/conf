@@ -58,6 +58,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; keybinds
+(global-set-key (kbd "C-c C-b") 'vc-msg-show)
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
 (global-set-key (kbd "C-c e") 'ido-emoji)
 (global-set-key (kbd "C-c h") 'hl-line-mode)
@@ -380,11 +381,11 @@
         erc-hl-nicks
         fish-completion
         highlight-numbers
-        magit
         modus-themes
         nix-mode
         php-mode
         rust-mode
+        vc-msg
         webpaste
         which-key))
 
@@ -392,6 +393,7 @@
 (mapc (lambda (x)
         (autoload x (symbol-name x) nil t))
       '(elpher emms-browser))
+(autoload 'vc-msg-show "vc-msg" nil t)
 (autoload 'webpaste-paste-buffer "webpaste" nil t)
 (autoload 'webpaste-paste-region "webpaste" nil t)
 
@@ -438,15 +440,13 @@
           (lambda ()
             ;; restore default gc-cons-*
             (setq gc-cons-threshold 800000
-                  gc-cons-percentage 0.1
-                  magit-auto-revert-mode nil)
+                  gc-cons-percentage 0.1)
             ;; enable/disable modes
             (delete-selection-mode +1)
             (display-time-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)
             (require 'doom-modeline)
-            (require 'magit)
             (require 'which-key)
             (doom-modeline-mode)
             (which-key-mode)))
