@@ -398,13 +398,42 @@
 ;; put slow modes &c in this hook for a faster startup! 🥳
 (add-hook 'emacs-startup-hook
           (lambda ()
-            ;; restore default gc-cons-*
-            (setq gc-cons-threshold 800000
-                  gc-cons-percentage 0.1)
+            ;; setup the modeline (in this hook to only get run once)
+            (delete (nth 4 mode-line-modes) mode-line-modes)
+            (setq-default mode-line-format
+                          '("%e"
+                            mode-line-front-space
+                            mode-line-mule-info
+                            mode-line-client
+                            (:eval (if (buffer-modified-p)
+                                       (format-mode-line
+                                        'mode-line-modified 'warning)
+                                     mode-line-modified))
+                            mode-line-remote
+                            mode-line-frame-identification
+                            mode-line-buffer-identification
+                            "   "
+                            mode-line-position
+                            (vc-mode vc-mode)
+                            "  "
+                            (:eval (format-mode-line 'mode-line-modes
+                                                     'font-lock-doc-face))
+                            (:eval (format-mode-line
+                                    '(:eval (delq 'display-time-string
+                                                  global-mode-string))
+                                    'font-lock-comment-delimiter-face))
+                            (:eval (format-mode-line
+                                    '(" " display-time-string) 'bold))
+                            mode-line-end-spaces))
+
             ;; enable/disable modes
             (delete-selection-mode +1)
             (display-time-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
-            (which-key-mode)))
+            (which-key-mode)
+
+            ;; restore default gc-cons-*
+            (setq gc-cons-threshold 800000
+                  gc-cons-percentage 0.1)))
