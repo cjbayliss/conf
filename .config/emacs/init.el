@@ -203,6 +203,21 @@
           (lambda ()
             (lisp-eval-string "(require 'sb-aclrepl)")))
 
+;; miscellaneous dired stuff
+(add-hook 'dired-mode-hook
+          (lambda ()
+            ;; first up, don't create lots of dired buffers
+            (put 'dired-find-alternate-file 'disabled nil)
+            (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+            (define-key dired-mode-map (kbd "^")
+              (lambda () (interactive) (find-alternate-file "..")))
+            ;; also, quit means quit, please!
+            (define-key dired-mode-map (kbd "q")
+              (lambda () (interactive) (quit-window t)))
+            ;; nice colouring in dired
+            (require 'diredfl)
+            (diredfl-mode)))
+
 ;; https://stackoverflow.com/a/47587185
 ;; begin unknown licensed code
 (add-to-list 'display-buffer-alist
@@ -340,6 +355,7 @@
             (package-refresh-contents))
           (package-install x)))
       '(circe
+        diredfl
         elpher
         emms
         erc-hl-nicks
