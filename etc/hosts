@@ -1,5 +1,0 @@
-### -*- mode: conf -*-
-
-## block evil mozilla stuff
-0.0.0.0 incoming.telemetry.mozilla.org
-0.0.0.0 firefox.settings.services.mozilla.com

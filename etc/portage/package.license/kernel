@@ -1,3 +1,0 @@
-sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE
-sys-kernel/gentoo-sources b43-firmware
-sys-firmware/b43-firmware Broadcom
