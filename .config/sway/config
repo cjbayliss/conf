@@ -10,9 +10,6 @@ font pango:monospace 0
 # background
 output '*' background '#000000' solid_color
 
-# disable legacy stuff
-xwayland false
-
 # input config
 input '1452:553:appletouch' {
       tap enabled
@@ -25,15 +22,12 @@ set $mod Mod4
 # move windows with mouse+$mod
 floating_modifier $mod
 
-# NOTE: build emacs from the 'feature/pgtk' branch with:
-#
-#     ./configure --with-pgtk --prefix="$HOME/.local/"
-#
-bindsym $mod+s exec swaymsg [app_id=\"emacs\"] focus || $HOME/.local/bin/emacs
-bindsym $mod+f exec swaymsg [app_id=\"org.qutebrowser.qutebrowser\"] focus || qutebrowser
+# use the nixos pgtk emacs build
+bindsym $mod+s exec swaymsg [app_id=\"emacs\"] focus || emacs
+bindsym $mod+f exec swaymsg [app_id=\"firefox\"] focus || firefox
 
 # lock the screen
-bindsym $mod+l exec swaylock -f -i $HOME/pictures/wallpaper.png -s fill
+bindsym $mod+Alt+l exec swaylock -f -c 000000
 
 # screenshots
 bindsym f12 exec grim
@@ -80,10 +74,10 @@ bindsym $mod+r mode "resize"
 bindsym XF86MonBrightnessDown exec "light -U 5"
 bindsym XF86MonBrightnessUp exec "light -A 5"
 
-# alsa only systems
-bindsym XF86AudioRaiseVolume exec "amixer set Master 2%+ unmute"
-bindsym XF86AudioLowerVolume exec "amixer set Master 2%- unmute"
-bindsym XF86AudioMute exec "amixer set Master toggle"
+# pulseaudio systems
+bindsym XF86AudioRaiseVolume exec "pactl set-sink-mute @DEFAULT_SINK@ 0; pactl set-sink-volume @DEFAULT_SINK@ +2% "
+bindsym XF86AudioLowerVolume exec "pactl set-sink-mute @DEFAULT_SINK@ 0; pactl set-sink-volume @DEFAULT_SINK@ -2% "
+bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
 # control emms
 bindsym XF86AudioPlay exec emacsclient -e "(emms-play/pause-handler)"
@@ -94,5 +88,3 @@ bindsym XF86AudioPrev exec emacsclient -e "(emms-previous)"
 exec swayidle -w \
         timeout 120 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"'
-
-exec $HOME/.local/bin/emacs

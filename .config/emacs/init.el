@@ -1,6 +1,6 @@
 ;; Various functions and configurations for GNU Emacs
 ;;
-;; Written in 2018, 2019, 2020, 2021 by Christopher Bayliss <snwyi3@protonmail.com>
+;; Written in 2018, 2019, 2020, 2021 by Christopher Bayliss <cjb@cjb.sh>
 ;;
 ;; To the extent possible under law, the author(s) have dedicated all
 ;; copyright and related and neighboring rights to this software to the
@@ -13,7 +13,7 @@
 
 ;; general emacs settings
 (setq
- browse-url-browser-function 'browse-url-qutebrowser
+ browse-url-browser-function 'browse-url-firefox
  c-basic-offset 4
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
@@ -34,6 +34,16 @@
  scheme-program-name "csi -n"
  webpaste-paste-confirmation t
  webpaste-provider-priority '("dpaste.org" "bpa.st")
+
+ ;; eww
+ eww-download-directory (expand-file-name "~/downloads")
+ eww-header-line-format nil
+ eww-search-prefix "https://duckduckgo.com/lite/?q="
+ shr-cookie-policy nil
+ shr-discard-aria-hidden t
+ shr-max-image-proportion 0.6
+ shr-use-colors nil
+ shr-use-fonts nil
 
  ;; for faster startup
  gc-cons-threshold most-positive-fixnum
@@ -290,10 +300,6 @@
                              (apply #'emms-player-simple-regexp
                                     emms-player-base-format-list))))
 
-;; browse-url and browse-url-at-point require 'new-window' afaict
-(defun browse-url-qutebrowser (url &optional new-window)
-  (start-process (concat "qutebrowser " url) nil "qutebrowser" url))
-
 ;; default startup message
 (defun display-startup-echo-area-message ()
   (message (concat "In the beginning the Emacs was created. This has "
@@ -338,8 +344,6 @@
   (make-directory (concat user-emacs-directory "emms") t))
 
 ;; add site lisp
-(let ((default-directory "/usr/share/emacs/site-lisp/"))
-  (normal-top-level-add-subdirs-to-load-path))
 (let ((default-directory (concat user-emacs-directory "lisp")))
   (normal-top-level-add-subdirs-to-load-path))
 
@@ -389,8 +393,8 @@
   (custom-set-faces '(bold ((t (:weight semi-bold)))))
 
   ;; !@#$%^ FONTS
-  (when (member "Iosevka Fixed SS06" (font-family-list))
-    (set-frame-font "Iosevka Fixed SS06-11" 'keep-size t))
+  (when (member "Iosevka Fixed" (font-family-list))
+    (set-frame-font "Iosevka Fixed-11" 'keep-size t))
   ;; 😜
   (when (member "Noto Color Emoji" (font-family-list))
     (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
@@ -401,8 +405,8 @@
   (when (member "IPAGothic" (font-family-list))
     (set-fontset-font t 'unicode "IPAGothic-11" nil 'prepend))
   ;; Latin/Cyrillic
-  (when (member "Iosevka Fixed SS06" (font-family-list))
-    (set-fontset-font t 'unicode "Iosevka Fixed SS06-11" nil 'prepend))
+  (when (member "Iosevka Fixed" (font-family-list))
+    (set-fontset-font t 'unicode "Iosevka Fixed-11" nil 'prepend))
 
   (setq x-gtk-use-system-tooltips nil)
   (setq-default cursor-type '(hbar . 2))
