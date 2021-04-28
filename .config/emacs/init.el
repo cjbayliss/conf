@@ -466,14 +466,16 @@
                             mode-line-position
                             (vc-mode vc-mode)
                             "  "
+                            (:eval (when (boundp 'tracking-max-mode-line-entries)
+                                     tracking-mode-line-buffers))
                             (:eval (format-mode-line 'mode-line-modes
                                                      'font-lock-doc-face))
+                            (:eval (format-mode-line
+                                    '(" " display-time-string) 'bold))
                             (:eval (format-mode-line
                                     '(:eval (delq 'display-time-string
                                                   global-mode-string))
                                     'font-lock-comment-delimiter-face))
-                            (:eval (format-mode-line
-                                    '(" " display-time-string) 'bold))
                             mode-line-end-spaces))
 
             ;; enable/disable modes
