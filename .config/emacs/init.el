@@ -18,9 +18,9 @@
  column-number-mode t
  custom-file (concat user-emacs-directory "/custom.el")
  dired-listing-switches "-ABlhF"
- eshell-ls-initial-args "-h"
  doom-modeline-height 20
  doom-modeline-icon nil
+ eshell-ls-initial-args "-h"
  ido-enable-flex-matching t
  ido-ignore-buffers '("\\` " "^\*")
  inferior-lisp-program "sbcl --no-userinit"
@@ -77,6 +77,7 @@
 (global-set-key (kbd "C-c n") 'display-line-numbers-mode)
 (global-set-key (kbd "C-c p") 'run-python)
 (global-set-key (kbd "C-c s") 'run-scheme)
+(global-set-key (kbd "C-c v") 'cterm)
 (global-set-key (kbd "C-c w b") 'webpaste-paste-buffer)
 (global-set-key (kbd "C-c w r") 'webpaste-paste-region)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -336,6 +337,35 @@
             (setenv "PAGER" "cat")
             (require 'fish-completion)
             (global-fish-completion-mode)))
+
+;; please let me cut and paste, and other normal things
+(add-hook 'term-mode-hook
+          (lambda ()
+            (goto-address-mode +1)
+            (setq comint-process-echoes t)
+            (define-key term-raw-map (kbd "C-y") 'term-paste)
+            ;; quoted paste
+            (define-key term-raw-map (kbd "C-c C-y")
+              (lambda ()
+                (interactive)
+                (term-send-raw-string (format "\"%s\"" (current-kill 0)))))
+            (define-key term-raw-map (kbd "C-k")
+              (lambda ()
+                (interactive)
+                (term-send-raw-string "\C-k")
+                (kill-line)))))
+
+;; always kill-buffer after exit
+(defadvice term-handle-exit
+    (after term-kill-buffer-on-exit activate)
+  (kill-buffer))
+
+;; cterm, my first initial + term, yeah, so creative right?!! 🤦
+(defun cterm ()
+  (interactive)
+  (if (get-buffer "*ansi-term*")
+      (switch-to-buffer "*ansi-term*")
+    (ansi-term "/run/current-system/sw/bin/fish")))
 
 ;; make sure these directories exists
 (unless (file-directory-p (concat user-emacs-directory "lisp"))
