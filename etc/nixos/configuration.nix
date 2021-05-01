@@ -103,6 +103,7 @@
     pass
     python3
     redshift
+    tealdeer
     unzip
     wget
     youtube-dl
