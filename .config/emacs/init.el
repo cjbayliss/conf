@@ -356,9 +356,7 @@
                 (kill-line)))))
 
 ;; always kill-buffer after exit
-(defadvice term-handle-exit
-    (after term-kill-buffer-on-exit activate)
-  (kill-buffer))
+(advice-add 'term-handle-exit :after (lambda () kill-buffer))
 
 ;; cterm, my first initial + term, yeah, so creative right?!! 🤦
 (defun cterm ()
