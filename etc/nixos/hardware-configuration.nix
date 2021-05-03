@@ -8,7 +8,11 @@
   boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ata_piix" "ahci" "firewire_ohci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" "wl" ];
-  boot.kernelParams = [ "acpi_mask_gpe=0x17" "video=SVIDEO-1:d" "systemd.restore_state=0" ];
+  boot.kernelParams = [
+    "acpi_mask_gpe=0x17"
+    "video=SVIDEO-1:d"
+    "systemd.restore_state=0"
+  ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
   fileSystems."/" =

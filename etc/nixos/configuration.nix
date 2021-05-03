@@ -77,6 +77,7 @@
   };
 
   powerManagement.powertop.enable = true;
+  powerManagement.cpuFreqGovernor = "schedutil";
 
   users.users.cjb = {
     isNormalUser = true;
