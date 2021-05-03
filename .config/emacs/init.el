@@ -283,6 +283,8 @@
         text-mode-hook))
 
 ;; emms config
+;; for i in music/* { convert -resize 60x60 $i/cover.jpg $i/cover_small.png }
+;; for i in music/* { convert -resize 120x120 $i/cover.jpg $i/cover_medium.png }
 (add-hook 'emms-browser-mode-hook
           (lambda ()
             (require 'emms-setup)
