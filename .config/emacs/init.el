@@ -470,15 +470,16 @@
                                                      'font-lock-doc-face))
                             (:eval (format-mode-line
                                     '(" " display-time-string) 'bold))
+                            "  "
                             (:eval (format-mode-line
-                                    '(:eval (delq 'display-time-string
-                                                  global-mode-string))
+                                    mode-line-misc-info
                                     'font-lock-comment-delimiter-face))
                             mode-line-end-spaces))
 
             ;; enable/disable modes
             (delete-selection-mode +1)
             (display-time-mode +1)
+            (delq 'display-time-string global-mode-string)
             (savehist-mode +1)
             (show-paren-mode +1)
             (require 'which-key)
