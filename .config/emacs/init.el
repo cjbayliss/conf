@@ -291,8 +291,9 @@
             (emms-all)
             (emms-default-players)
             (setq emms-player-list (list emms-player-mpv)
-                  emms-mode-line-format " [ %s"
-                  emms-playing-time-display-format " | %s ] "
+                  emms-info-functions '(emms-info-opusinfo)
+                  emms-mode-line-format "%s"
+                  emms-playing-time-display-format " [%s] "
                   emms-source-file-default-directory "~/music/"
                   emms-mode-line-mode-line-function
                   'emms-mode-line-playlist-current)
