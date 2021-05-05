@@ -1,74 +1,107 @@
-;; Various functions and configurations for GNU Emacs
-;;
-;; Written in 2018, 2019, 2020, 2021 by Christopher Bayliss <cjb@cjb.sh>
-;;
-;; To the extent possible under law, the author(s) have dedicated all
-;; copyright and related and neighboring rights to this software to the
-;; public domain worldwide. This software is distributed without any
-;; warranty.
-;;
-;; You should have received a copy of the CC0 Public Domain Dedication
-;; along with this software. If not, see
-;; <http://creativecommons.org/publicdomain/zero/1.0/>.
+;;; Init --- GNU Emacs initialisation file
 
-;; general emacs settings
-(setq
- browse-url-browser-function 'browse-url-firefox
- c-basic-offset 4
- column-number-mode t
- custom-file (concat user-emacs-directory "/custom.el")
- dired-listing-switches "-ABlhF"
- doom-modeline-height 20
- doom-modeline-icon nil
- eshell-ls-initial-args "-h"
- ido-enable-flex-matching t
- ido-ignore-buffers '("\\` " "^\*")
- inferior-lisp-program "sbcl --no-userinit"
- inhibit-startup-screen t
- initial-scratch-message nil
- make-backup-files nil
- mouse-yank-at-point t
- package--init-file-ensured t
- package-enable-at-startup nil
- require-final-newline t
- scheme-program-name "csi -n"
- webpaste-paste-confirmation t
- webpaste-provider-priority '("dpaste.org" "bpa.st")
+;; Author: Christopher Bayliss <cjb@cjb.sh>
+;; Created: 2021-05-05
+;; SPDX-License-Identifier: CC0-1.0
 
- ;; eww
- eww-download-directory (expand-file-name "~/downloads")
- eww-header-line-format nil
- eww-search-prefix "https://duckduckgo.com/lite/?q="
- shr-cookie-policy nil
- shr-discard-aria-hidden t
- shr-max-image-proportion 0.6
- shr-use-colors nil
- shr-use-fonts nil
+;;; Commentary:
 
- ;; for faster startup
- gc-cons-threshold most-positive-fixnum
- gc-cons-percentage 0.6
+;; Complete rewrite of my old Emacs initialisation file.
 
- ;; get stuff out of the home dir
- gnus-directory (concat user-emacs-directory "news")
- gnus-startup-file (concat user-emacs-directory "newsrc")
- gnus-init-file (concat user-emacs-directory "gnus"))
+;; Raison d'être: readability > correctness > speed.
 
-(setq-default
- fill-column 72                         ; 72 is better
- frame-background-mode 'dark
- indent-tabs-mode nil
- show-trailing-whitespace nil)
+;;; Code:
 
-;; enable/disable modes that can't go in the startup hook
+;;;; Beginning of initialisation
+(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-percentage 0.6)
+
+;; load ensure-pkg
+(load (concat user-emacs-directory "lisp/ensure-pkg") nil nil)
+
+;;;; Setup modus themes
+(ensure-pkg 'modus-themes "https://gitlab.com/protesilaos/modus-themes")
+
+(require 'modus-themes)
+(setq modus-themes-slanted-constructs t)
+(setq modus-themes-no-mixed-fonts t)
+(modus-themes-load-themes)
+(modus-themes-load-vivendi)
+
+;;;; General Emacs configuration
+(setq browse-url-browser-function 'browse-url-firefox)
+(setq c-basic-offset 4)
+(setq column-number-mode t)
+(setq custom-file (concat user-emacs-directory "/custom.el"))
+(setq make-backup-files nil)
+(setq package--init-file-ensured t)
+(setq require-final-newline t)
+
+(setq-default fill-column 72)		; 72 is better for my display
+(setq-default indent-tabs-mode nil)
+(setq-default show-trailing-whitespace nil)
+
 (menu-bar-mode -1)
 (save-place-mode +1)
-(ido-mode 'buffers)                     ; only for buffer switching
+
+;; these modes are slow to load, add them to this hook instead.
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (delete-selection-mode +1)
+            (savehist-mode +1)
+            (show-paren-mode +1)))
+
+;; global-hl-line-mode is overkill
+(mapc (lambda (x)
+        (add-hook x 'hl-line-mode +1))
+      '(dired-mode-hook
+        text-mode-hook))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; keybinds
-(global-set-key (kbd "C-c C-b") 'vc-msg-show)
+;; Disable/change startup messages
+(setq inhibit-startup-screen t)
+(setq initial-scratch-message nil)
+(defun display-startup-echo-area-message ()
+  (message (concat "In the beginning the Emacs was created. This has "
+                   "made a lot of people very angry and been widely "
+                   "regarded as a bad move.")))
+
+;; don't popup the async-shell-command buffer
+(add-to-list 'display-buffer-alist
+             (cons "\\*Async Shell Command\\*.*"
+                   (cons #'display-buffer-no-window nil)))
+
+;;;; Setup fonts
+(when (display-graphic-p)
+  ;; default font
+  (when (member "Iosevka Fixed" (font-family-list))
+    (set-frame-font "Iosevka Fixed-11" 'keep-size t))
+  ;; 😜
+  (when (member "Noto Color Emoji" (font-family-list))
+    (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
+  ;; 한국어/조선말
+  (when (member "Baekmuk Gulim" (font-family-list))
+    (set-fontset-font t 'unicode "Baekmuk Gulim-11" nil 'prepend))
+  ;; 日本語
+  (when (member "IPAGothic" (font-family-list))
+    (set-fontset-font t 'unicode "IPAGothic-11" nil 'prepend))
+  ;; Latin/Cyrillic
+  (when (member "Iosevka Fixed" (font-family-list))
+    (set-fontset-font t 'unicode "Iosevka Fixed-11" nil 'prepend)))
+
+;;;; Setup GUI only stuff
+(when (display-graphic-p)
+  (setq mouse-yank-at-point t)
+  (setq x-gtk-use-system-tooltips nil)
+  (setq-default cursor-type '(hbar . 2))
+  (fringe-mode 0)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (server-start))
+
+;;;; Keybindings
+(global-set-key (kbd "C-c /") 'vc-msg-show)
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
 (global-set-key (kbd "C-c e") 'ido-emoji)
 (global-set-key (kbd "C-c h") 'hl-line-mode)
@@ -78,9 +111,49 @@
 (global-set-key (kbd "C-c p") 'run-python)
 (global-set-key (kbd "C-c s") 'run-scheme)
 (global-set-key (kbd "C-c v") 'cterm)
-(global-set-key (kbd "C-c w b") 'webpaste-paste-buffer)
-(global-set-key (kbd "C-c w r") 'webpaste-paste-region)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;;;; Ido
+(setq ido-enable-flex-matching t)
+(setq ido-ignore-buffers '("\\` " "^\*"))
+(ido-mode 'buffers)                     ; only for buffer switching
+
+;;;; Which-key
+(ensure-pkg 'which-key "https://github.com/justbur/emacs-which-key")
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (require 'which-key)
+            (which-key-mode)))
+
+;;;; Ido-emoji
+;; list of emoji I'm likely to use
+(defvar ido-emoji-list
+  '("🙂" "🤷" "🤦" "🥳" "🤣" "🤨" "😜" "😬" "👋" "👍" "👌" "😱"
+    "🤮" "😭" "😑" "💃"))
+
+(defun build-ido-emoji-list ()
+  "Return a list of emoji with their Unicode names built from the
+`ido-emoji-list'."
+  (let (emoji-list)
+    (dolist (emoji ido-emoji-list)
+      (push (format "%s %s"
+                    emoji
+                    (get-char-code-property (string-to-char emoji)
+                                            'name))
+            emoji-list))
+    (nreverse emoji-list)))
+
+(defun ido-emoji ()
+  "An emoji picker!"
+  (interactive)
+  (insert
+   (substring
+    (ido-completing-read "Insert emoji: " (build-ido-emoji-list)) 0 1)))
+
+;;;; Circe
+(ensure-pkg 'circe "https://github.com/jorgenschaefer/circe")
+(ensure-pkg 'erc-hl-nicks "https://github.com/leathekd/erc-hl-nicks")
 
 ;; see https://github.com/jorgenschaefer/circe/wiki/Configuration
 ;; this function is probably under the GPL3, at least that is what circe
@@ -179,47 +252,17 @@
       (circe "Cyber")
     (error "circe not setup, try M-x irc RET first")))
 
-;; load php stuff grumble grumble
-(add-to-list 'auto-mode-alist
-             '("\\.php\\'" . (lambda ()
-                               (require 'php-mode)
-                               (php-mode)
-                               (setq c-basic-offset 4
-                                     indent-tabs-mode nil)
-                               (php-enable-psr2-coding-style))))
+;;;; Dired
+(ensure-pkg 'diredfl "https://github.com/purcell/diredfl")
 
-;; rust
-(add-to-list 'auto-mode-alist
-             '("\\.rs\\|.rlib\\'" . (lambda ()
-                                      (require 'rust-mode)
-                                      (rust-mode)
-                                      (setq rust-format-on-save t))))
+(setq dired-listing-switches "-ABlhF")
 
-;; nix
-(add-to-list 'auto-mode-alist
-             '("\\.nix\\'" . (lambda ()
-                               (require 'nix-mode)
-                               (nix-mode))))
-
-;; if I'm editing a C file, I *probably* want the linux style
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (setq c-default-style "linux"
-                  c-basic-offset 8
-                  tab-width 8
-                  indent-tabs-mode t)))
-
-;; passing --eval in inferior-lisp-program is broken
-(add-hook 'inferior-lisp-mode-hook
-          (lambda ()
-            (lisp-eval-string "(require 'sb-aclrepl)")))
-
-;; miscellaneous dired stuff
 (add-hook 'dired-mode-hook
           (lambda ()
             ;; first up, don't create lots of dired buffers
             (put 'dired-find-alternate-file 'disabled nil)
-            (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+            (define-key
+              dired-mode-map (kbd "RET") 'dired-find-alternate-file)
             (define-key dired-mode-map (kbd "^")
               (lambda () (interactive) (find-alternate-file "..")))
             ;; also, quit means quit, please!
@@ -229,26 +272,97 @@
             (require 'diredfl)
             (diredfl-mode)))
 
-;; https://stackoverflow.com/a/47587185
-;; begin unknown licensed code
-(add-to-list 'display-buffer-alist
-             (cons "\\*Async Shell Command\\*.*"
-                   (cons #'display-buffer-no-window nil)))
-;; end unknown licensed code
-
-;; instead of loading hl-todo
-(defface highlight-todo-face
-  '((t :inherit font-lock-warning-face
-       :weight bold
-       :slant italic))
-  "Basic face for highlighting TODO &c.")
-(defvar highlight-todo-face 'highlight-todo-face)
-(add-hook 'prog-mode-hook
+;;;; Term/ansi-term
+;; please let me cut and paste, and other normal things
+(add-hook 'term-mode-hook
           (lambda ()
-            (font-lock-add-keywords
-             nil
-             '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\):"
-                1 highlight-todo-face t)))))
+            (goto-address-mode +1)
+            (setq comint-process-echoes t)
+            (define-key term-raw-map (kbd "C-y") 'term-paste)
+            ;; quoted paste
+            (define-key term-raw-map (kbd "C-c C-y")
+              (lambda ()
+                (interactive)
+                (term-send-raw-string
+                 (format "\"%s\"" (current-kill 0)))))
+            (define-key term-raw-map (kbd "C-k")
+              (lambda ()
+                (interactive)
+                (term-send-raw-string "\C-k")
+                (kill-line)))))
+
+;; always kill-buffer after exit
+(advice-add 'term-handle-exit :filter-return #'kill-buffer)
+
+;; cterm, my first initial + term, yeah, so creative right?!! 🤦
+(defun cterm ()
+  (interactive)
+  (if (get-buffer "*ansi-term*")
+      (switch-to-buffer "*ansi-term*")
+    (ansi-term "/run/current-system/sw/bin/fish")))
+
+;;;; Eshell
+(ensure-pkg 'fish-completion "https://gitlab.com/ambrevar/emacs-fish-completion")
+(setq eshell-ls-initial-args "-h")
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (setenv "PAGER" "cat")
+            (require 'fish-completion)
+            (global-fish-completion-mode)))
+
+;;;; Eww
+(setq eww-download-directory (expand-file-name "~/downloads"))
+(setq eww-header-line-format nil)
+(setq eww-search-prefix "https://duckduckgo.com/lite/?q=")
+(setq shr-cookie-policy nil)
+(setq shr-discard-aria-hidden t)
+(setq shr-max-image-proportion 0.6)
+(setq shr-use-colors nil)
+(setq shr-use-fonts nil)
+
+;;;; Elpher
+(ensure-pkg 'elpher "git://thelambdalab.xyz/elpher.git")
+(autoload 'elpher "elpher" nil t)
+
+;;;; Elfeed
+(ensure-pkg 'elfeed "https://github.com/skeeto/elfeed")
+(autoload 'elfeed "elfeed" nil t)
+
+(unless (file-directory-p (concat user-emacs-directory "elfeed"))
+  (make-directory (concat user-emacs-directory "elfeed") t))
+
+(setq elfeed-db-directory (concat user-emacs-directory "elfeed"))
+(setq elfeed-search-filter "+blog +unread")
+
+(setq elfeed-feeds
+      '(("https://0pointer.net/blog/index.rss20" blog)
+        ("https://blog.alicef.me/feeds/all.atom.xml" blog)
+        ("https://blog.jeff.over.bz/rss.xml" blog)
+        ("https://blog.mattcen.com/rss" blog)
+        ("https://blogs.gentoo.org/mgorny/feed/" blog)
+        ("https://blogs.igalia.com/apinheiro/feed/" blog)
+        ("https://christine.website/blog.rss" blog)
+        ("https://codingquark.com/feed.xml" blog)
+        ("https://danluu.com/atom.xml" blog)
+        ("https://deftly.net/rss.xml" blog)
+        ("https://heronsperch.blogspot.com/feeds/posts/default?alt=rss" blog)
+        ("https://jvns.ca/atom.xml" blog)
+        ("https://keithp.com/blogs/index.rss" blog)
+        ("https://melissawen.github.io/feed.xml" blog)
+        ("https://microkerneldude.wordpress.com/feed/" blog)
+        ("https://mjg59.dreamwidth.org/data/rss" blog)
+        ("https://nullprogram.com/feed/" blog)
+        ("https://rosenzweig.io/blog/feed.xml" blog)
+        ("https://sachachua.com/blog/category/emacs-news/feed" blog emacs)
+        ("https://trofi.github.io/feed/rss.xml" blog)
+        ("https://wingolog.org/feed/atom" blog guile)))
+
+;;;; GNU/Emms
+(ensure-pkg 'emms "https://git.savannah.gnu.org/git/emms.git")
+(autoload 'emms-browser "emms-browser" nil t)
+
+(unless (file-directory-p (concat user-emacs-directory "emms"))
+  (make-directory (concat user-emacs-directory "emms") t))
 
 ;; play/pause music, or start playing at random if nothing is playing
 (defun emms-play/pause-handler ()
@@ -267,29 +381,13 @@
       (emms-random-play-all)
     (emms-pause)))
 
-;; programming mode settings
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (require 'highlight-numbers)
-            (highlight-numbers-mode +1)
-            (hl-line-mode +1)
-            (display-line-numbers-mode +1)
-            (setq show-trailing-whitespace t)))
-
-;; can global-hl-mode-mode be disabled *just* for IRC?
-(mapc (lambda (x)
-        (add-hook x 'hl-line-mode +1))
-      '(dired-mode-hook
-        text-mode-hook))
-
 ;; emms config
-;; for i in music/* { convert -resize 60x60 $i/cover.jpg $i/cover_small.png }
-;; for i in music/* { convert -resize 120x120 $i/cover.jpg $i/cover_medium.png }
+;; for i in ~/music/* { convert -resize 60x60 $i/cover.jpg $i/cover_small.png }
+;; for i in ~/music/* { convert -resize 120x120 $i/cover.jpg $i/cover_medium.png }
 (add-hook 'emms-browser-mode-hook
           (lambda ()
             (require 'emms-setup)
             (require 'emms-info)
-            (emms-standard)
             (emms-all)
             (emms-default-players)
             (setq emms-player-list (list emms-player-mpv)
@@ -304,190 +402,150 @@
                              (apply #'emms-player-simple-regexp
                                     emms-player-base-format-list))))
 
-;; default startup message
-(defun display-startup-echo-area-message ()
-  (message (concat "In the beginning the Emacs was created. This has "
-                   "made a lot of people very angry and been widely "
-                   "regarded as a bad move.")))
+;;;; Webpaste
+(ensure-pkg 'request "https://github.com/tkf/emacs-request")
+(ensure-pkg 'webpaste "https://github.com/etu/webpaste.el")
 
-;; list of emoji I'm likely to use
-(defvar ido-emoji-list
-  '("🙂" "🤷" "🤦" "🥳" "🤣" "🤨" "😜" "😬" "👋" "👍" "👌" "😱"
-    "😭" "😑" "💃"))
-
-(defun build-ido-emoji-list ()
-  "Return a list of emoji with their Unicode names built from the
-`ido-emoji-list'."
-  (let (emoji-list)
-    (dolist (emoji ido-emoji-list)
-      (push (format "%s %s"
-                    emoji
-                    (get-char-code-property (string-to-char emoji)
-                                            'name))
-            emoji-list))
-    (nreverse emoji-list)))
-
-(defun ido-emoji ()
-  "An emoji picker!"
-  (interactive)
-  (insert
-   (substring
-    (ido-completing-read "Insert emoji: " (build-ido-emoji-list)) 0 1)))
-
-;; eshell stuff
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            (setenv "PAGER" "cat")
-            (require 'fish-completion)
-            (global-fish-completion-mode)))
-
-;; please let me cut and paste, and other normal things
-(add-hook 'term-mode-hook
-          (lambda ()
-            (goto-address-mode +1)
-            (setq comint-process-echoes t)
-            (define-key term-raw-map (kbd "C-y") 'term-paste)
-            ;; quoted paste
-            (define-key term-raw-map (kbd "C-c C-y")
-              (lambda ()
-                (interactive)
-                (term-send-raw-string (format "\"%s\"" (current-kill 0)))))
-            (define-key term-raw-map (kbd "C-k")
-              (lambda ()
-                (interactive)
-                (term-send-raw-string "\C-k")
-                (kill-line)))))
-
-;; always kill-buffer after exit
-(advice-add 'term-handle-exit :filter-return #'kill-buffer)
-
-;; cterm, my first initial + term, yeah, so creative right?!! 🤦
-(defun cterm ()
-  (interactive)
-  (if (get-buffer "*ansi-term*")
-      (switch-to-buffer "*ansi-term*")
-    (ansi-term "/run/current-system/sw/bin/fish")))
-
-;; make sure these directories exists
-(unless (file-directory-p (concat user-emacs-directory "lisp"))
-  (make-directory (concat user-emacs-directory "lisp") t))
-(unless (file-directory-p (concat user-emacs-directory "emms"))
-  (make-directory (concat user-emacs-directory "emms") t))
-
-;; add site lisp
-(let ((default-directory (concat user-emacs-directory "lisp")))
-  (normal-top-level-add-subdirs-to-load-path))
-
-;; ensure packages
-(mapc (lambda (x)
-        (unless (locate-library (symbol-name x))
-          (unless (featurep 'package)
-            (require 'package)
-            (add-to-list 'package-archives
-                         '("melpa" . "https://melpa.org/packages/") t)
-            (setq package-user-dir (concat user-emacs-directory "lisp"))
-            (package-initialize)
-            (package-refresh-contents))
-          (package-install x)))
-      '(circe
-        diredfl
-        elpher
-        emms
-        erc-hl-nicks
-        fish-completion
-        highlight-numbers
-        modus-themes
-        nix-mode
-        php-mode
-        rust-mode
-        vc-msg
-        webpaste
-        which-key))
-
-;; autoloads
-(mapc (lambda (x)
-        (autoload x (symbol-name x) nil t))
-      '(elpher emms-browser))
-(autoload 'vc-msg-show "vc-msg" nil t)
 (autoload 'webpaste-paste-buffer "webpaste" nil t)
 (autoload 'webpaste-paste-region "webpaste" nil t)
 
-;; NOTE: everything after here should go last.
+(setq webpaste-paste-confirmation t)
+(setq webpaste-provider-priority '("paste.rs" "bpa.st" "dpaste.org"))
 
-;; GUI config
-(when (display-graphic-p)
-  (require 'modus-themes)
-  (setq modus-themes-slanted-constructs t
-        modus-themes-no-mixed-fonts t)
-  (modus-themes-load-themes)
-  (modus-themes-load-vivendi)
-  (custom-set-faces '(bold ((t (:weight semi-bold)))))
+(global-set-key (kbd "C-c w b") 'webpaste-paste-buffer)
+(global-set-key (kbd "C-c w r") 'webpaste-paste-region)
 
-  ;; !@#$%^ FONTS
-  (when (member "Iosevka Fixed" (font-family-list))
-    (set-frame-font "Iosevka Fixed-11" 'keep-size t))
-  ;; 😜
-  (when (member "Noto Color Emoji" (font-family-list))
-    (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
-  ;; 한국어/조선말
-  (when (member "Baekmuk Gulim" (font-family-list))
-    (set-fontset-font t 'unicode "Baekmuk Gulim-11" nil 'prepend))
-  ;; 日本語
-  (when (member "IPAGothic" (font-family-list))
-    (set-fontset-font t 'unicode "IPAGothic-11" nil 'prepend))
-  ;; Latin/Cyrillic
-  (when (member "Iosevka Fixed" (font-family-list))
-    (set-fontset-font t 'unicode "Iosevka Fixed-11" nil 'prepend))
+;;;; Version Control
+(ensure-pkg 'popup "https://github.com/auto-complete/popup-el")
+(ensure-pkg 'vc-msg "https://github.com/redguardtoo/vc-msg")
+(autoload 'vc-msg-show "vc-msg" nil t)
 
-  (setq x-gtk-use-system-tooltips nil)
-  (setq-default cursor-type '(hbar . 2))
-  (fringe-mode 0)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (server-start))
-
-;; put slow modes &c in this hook for a faster startup! 🥳
-(add-hook 'emacs-startup-hook
+;;;; Programming modes
+;; common config for all prog-modes
+(add-hook 'prog-mode-hook
           (lambda ()
-            ;; setup the modeline (in this hook to only get run once)
-            (delete (nth 4 mode-line-modes) mode-line-modes)
-            (setq-default mode-line-format
-                          '("%e"
-                            mode-line-front-space
-                            mode-line-mule-info
-                            mode-line-client
-                            (:eval (if (buffer-modified-p)
-                                       (format-mode-line
-                                        'mode-line-modified 'warning)
-                                     mode-line-modified))
-                            mode-line-remote
-                            mode-line-frame-identification
-                            mode-line-buffer-identification
-                            "   "
-                            mode-line-position
-                            (vc-mode vc-mode)
-                            "  "
-                            (:eval (when (boundp 'tracking-max-mode-line-entries)
-                                     tracking-mode-line-buffers))
-                            (:eval (format-mode-line 'mode-line-modes
-                                                     'font-lock-doc-face))
-                            (:eval (format-mode-line
-                                    '(" " display-time-string) 'bold))
-                            "  "
-                            (:eval (format-mode-line
-                                    mode-line-misc-info
-                                    'font-lock-comment-delimiter-face))
-                            mode-line-end-spaces))
+            (hl-line-mode +1)
+            (display-line-numbers-mode +1)
+            (setq show-trailing-whitespace t)))
 
-            ;; enable/disable modes
-            (delete-selection-mode +1)
-            (display-time-mode +1)
-            (delq 'display-time-string global-mode-string)
-            (savehist-mode +1)
-            (show-paren-mode +1)
-            (require 'which-key)
-            (which-key-mode)
+;; highlight numbers in all prog-modes
+(ensure-pkg 'parent-mode "https://github.com/Fanael/parent-mode")
+(ensure-pkg 'highlight-numbers "https://github.com/Fanael/highlight-numbers")
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (require 'highlight-numbers)
+            (highlight-numbers-mode +1)))
 
-            ;; restore default gc-cons-*
-            (setq gc-cons-threshold 800000
-                  gc-cons-percentage 0.1)))
+;; instead of loading hl-todo
+(defface highlight-todo-face
+  '((t :inherit font-lock-warning-face
+       :weight bold
+       :slant italic))
+  "Basic face for highlighting TODO &c.")
+(defvar highlight-todo-face 'highlight-todo-face)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (font-lock-add-keywords
+             nil
+             '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\):"
+                1 highlight-todo-face t)))))
+
+;; php
+(ensure-pkg 'php-mode "https://github.com/emacs-php/php-mode" "/lisp")
+(add-to-list 'auto-mode-alist
+             '("\\.php\\'" .
+               (lambda ()
+                 (require 'php-mode)
+                 (php-mode)
+                 (setq c-basic-offset 4)
+                 (setq indent-tabs-mode nil)
+                 (php-enable-psr2-coding-style))))
+
+;; rust
+(ensure-pkg 'rust-mode "https://github.com/rust-lang/rust-mode")
+(add-to-list 'auto-mode-alist
+             '("\\.rs\\|.rlib\\'" .
+               (lambda ()
+                 (require 'rust-mode)
+                 (rust-mode)
+                 (setq rust-format-on-save t))))
+
+;; nix
+(ensure-pkg 'mmm-mode "https://github.com/purcell/mmm-mode")
+(ensure-pkg 'nix-mode "https://github.com/NixOS/nix-mode")
+(add-to-list 'auto-mode-alist
+             '("\\.nix\\'" .
+               (lambda ()
+                 (require 'nix-mode)
+                 (nix-mode))))
+
+;; C
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (setq c-basic-offset 8)
+            (setq c-default-style "linux")
+            (setq indent-tabs-mode t)
+            (setq tab-width 8)))
+
+
+;;;; Lisp and scheme
+(setq inferior-lisp-program "sbcl --no-userinit")
+(setq scheme-program-name "csi -n")
+
+;; passing --eval in inferior-lisp-program is broken
+(add-hook 'inferior-lisp-mode-hook
+          (lambda ()
+            (lisp-eval-string "(require 'sb-aclrepl)")))
+
+;;;; Setup the mode-line
+;; configuring the mode-line is pretty ugly 🤮
+(add-hook
+ 'emacs-startup-hook
+ (lambda ()
+   (delete (nth 4 mode-line-modes) mode-line-modes)
+   (setq-default
+    mode-line-format
+    '("%e"
+      mode-line-front-space
+      mode-line-mule-info
+      mode-line-client
+      (:eval (if (buffer-modified-p)
+                 (format-mode-line 'mode-line-modified 'warning)
+               mode-line-modified))
+      mode-line-remote
+      mode-line-frame-identification
+      mode-line-buffer-identification
+      "   "
+      mode-line-position
+      (vc-mode vc-mode)
+      "  "
+      (:eval (when (boundp 'tracking-max-mode-line-entries)
+               tracking-mode-line-buffers))
+      (:eval (format-mode-line 'mode-line-modes 'font-lock-doc-face))
+      (:eval (format-mode-line '(" " display-time-string) 'bold))
+      "  "
+      (:eval (format-mode-line mode-line-misc-info
+                               'font-lock-comment-delimiter-face))
+      mode-line-end-spaces))
+
+   (display-time-mode +1)
+   (delq 'display-time-string global-mode-string)))
+
+;;;; Outline this file
+(add-to-list 'safe-local-variable-values
+             '(eval progn (outline-minor-mode 1) (hide-body)))
+(add-hook 'outline-minor-mode-hook
+          (lambda ()
+            (define-key
+              outline-minor-mode-map (kbd "H-s-SPC") 'outline-cycle)))
+;; Local Variables:
+;; outline-regexp: ";;; \\|;;;; "
+;; eval:(progn (outline-minor-mode 1) (hide-body))
+;; End:
+
+;;;; End initialisation
+(setq gc-cons-threshold 800000)
+(setq gc-cons-percentage 0.1)
+
+(provide 'init)
+;;; init.el ends here
