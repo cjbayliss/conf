@@ -402,6 +402,12 @@
                              (apply #'emms-player-simple-regexp
                                     emms-player-base-format-list))))
 
+;;;; Gnus
+;; FIXME: cleanup Gnus config.
+(setq gnus-directory (concat user-emacs-directory "news"))
+(setq gnus-startup-file (concat user-emacs-directory "newsrc"))
+(setq gnus-init-file (concat user-emacs-directory "gnus"))
+
 ;;;; Webpaste
 (ensure-pkg 'request "https://github.com/tkf/emacs-request")
 (ensure-pkg 'webpaste "https://github.com/etu/webpaste.el")

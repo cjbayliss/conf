@@ -13,10 +13,6 @@
 
 ;; email
 (setq
- gnus-directory (concat user-emacs-directory "news")
- gnus-startup-file (concat user-emacs-directory "newsrc")
- gnus-init-file (concat user-emacs-directory "gnus")
-
  gnus-select-method '(nnimap "email"
                              (nnimap-address "mail.gandi.net")
                              (nnimap-server-port 993)
