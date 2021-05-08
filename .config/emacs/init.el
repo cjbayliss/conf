@@ -101,16 +101,13 @@
   (server-start))
 
 ;;;; Keybindings
-(global-set-key (kbd "C-c /") 'vc-msg-show)
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
-(global-set-key (kbd "C-c e") 'ido-emoji)
 (global-set-key (kbd "C-c h") 'hl-line-mode)
 (global-set-key (kbd "C-c l") 'run-lisp)
 (global-set-key (kbd "C-c m") 'proced)
 (global-set-key (kbd "C-c n") 'display-line-numbers-mode)
 (global-set-key (kbd "C-c p") 'run-python)
 (global-set-key (kbd "C-c s") 'run-scheme)
-(global-set-key (kbd "C-c v") 'cterm)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;;;; Ido
@@ -150,6 +147,8 @@
   (insert
    (substring
     (ido-completing-read "Insert emoji: " (build-ido-emoji-list)) 0 1)))
+
+(global-set-key (kbd "C-c e") 'ido-emoji)
 
 ;;;; Circe
 (ensure-pkg 'circe "https://github.com/jorgenschaefer/circe")
@@ -301,14 +300,23 @@
       (switch-to-buffer "*ansi-term*")
     (ansi-term "/run/current-system/sw/bin/fish")))
 
+(global-set-key (kbd "C-c v") 'cterm)
+
 ;;;; Eshell
-(ensure-pkg 'fish-completion "https://gitlab.com/ambrevar/emacs-fish-completion")
+(setq eshell-hist-ignoredups t)
+(setq eshell-history-size 4096)
+(setq eshell-input-filter 'eshell-input-filter-initial-space)
 (setq eshell-ls-initial-args "-h")
+(setq eshell-scroll-to-bottom-on-input 'all)
 (add-hook 'eshell-mode-hook
           (lambda ()
             (setenv "PAGER" "cat")
-            (require 'fish-completion)
-            (global-fish-completion-mode)))
+            ;; stopping the world to process file operations is insane.
+            (fmakunbound 'eshell/cp)
+            (fmakunbound 'eshell/mv)
+            (fmakunbound 'eshell/rm)
+            ;; eshell/date is inferior to GNU Coreutils date(1)
+            (fmakunbound 'eshell/date)))
 
 ;;;; Eww
 (setq eww-download-directory (expand-file-name "~/downloads"))
@@ -472,6 +480,7 @@
 (ensure-pkg 'popup "https://github.com/auto-complete/popup-el")
 (ensure-pkg 'vc-msg "https://github.com/redguardtoo/vc-msg")
 (autoload 'vc-msg-show "vc-msg" nil t)
+(global-set-key (kbd "C-c /") 'vc-msg-show)
 
 ;;;; Programming modes
 ;; common config for all prog-modes
