@@ -276,7 +276,6 @@
 (add-hook 'term-mode-hook
           (lambda ()
             (goto-address-mode +1)
-            (setq comint-process-echoes t)
             (define-key term-raw-map (kbd "C-y") 'term-paste)
             ;; quoted paste
             (define-key term-raw-map (kbd "C-c C-y")
@@ -298,7 +297,7 @@
   (interactive)
   (if (get-buffer "*ansi-term*")
       (switch-to-buffer "*ansi-term*")
-    (ansi-term "/run/current-system/sw/bin/fish")))
+    (ansi-term "/run/current-system/sw/bin/bash")))
 
 (global-set-key (kbd "C-c v") 'cterm)
 
@@ -310,6 +309,7 @@
 (setq eshell-scroll-to-bottom-on-input 'all)
 (add-hook 'eshell-mode-hook
           (lambda ()
+            (goto-address-mode +1)
             (setenv "PAGER" "cat")
             ;; stopping the world to process file operations is insane.
             (fmakunbound 'eshell/cp)
