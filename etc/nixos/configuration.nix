@@ -28,7 +28,7 @@
     enableIPv6 = false;
     hostId = "163e24d6";
     hostName = "aster";
-    useDHCP = false;
+    useDHCP = true;
     interfaces.wls4.useDHCP = true;
     wireless.enable = true;  # wpa_supplicant.
 
@@ -85,6 +85,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    aria2
     aspell
     aspellDicts.en
     beets
@@ -97,12 +98,13 @@
     git
     git-filter-repo
     gnome3.adwaita-icon-theme
-    gnome3.gnome-characters
+    imagemagick
     kakoune
     mpv
     opusTools
     pass
     python3
+    python3Packages.pip
     redshift
     tealdeer
     unzip
@@ -238,12 +240,16 @@
   };
 
   gtk.iconCache.enable = true;
-  programs.fish = {
-    enable = true;
-    shellInit = "set fish_greeting";
+  programs.bash = {
+    shellInit = "export HISTFILE=/dev/null";
+    promptInit = ''
+      if [ "$UID" == 0 ]; then
+          PS1="\w # "
+      else
+          PS1="\w $ "
+      fi
+    '';
   };
-  users.users.root.shell = pkgs.fish;
-  users.users.cjb.shell = pkgs.fish;
 
   environment.variables = {
     EDITOR = "kak";
