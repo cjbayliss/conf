@@ -135,11 +135,9 @@
    #+begin_src emacs-lisp
      (global-set-key (kbd "C-c b") 'browse-url-at-point)
      (global-set-key (kbd "C-c h") 'hl-line-mode)
-     (global-set-key (kbd "C-c l") 'run-lisp)
      (global-set-key (kbd "C-c m") 'proced)
      (global-set-key (kbd "C-c n") 'display-line-numbers-mode)
      (global-set-key (kbd "C-c p") 'run-python)
-     (global-set-key (kbd "C-c s") 'run-scheme)
      (global-set-key (kbd "C-x C-b") 'ibuffer)
    #+end_src
 
@@ -320,7 +318,11 @@
 
      (setq elfeed-db-directory (concat user-emacs-directory "elfeed"))
      (setq elfeed-search-filter "+blog +unread")
+   #+end_src
 
+   Elfeed's feeds.
+
+   #+begin_src emacs-lisp
      (setq elfeed-feeds
            '(("https://0pointer.net/blog/index.rss20" blog)
              ("https://blog.alicef.me/feeds/all.atom.xml" blog)
@@ -650,6 +652,7 @@
 ** Lisp
    #+begin_src emacs-lisp
      (setq inferior-lisp-program "sbcl --no-userinit")
+     (global-set-key (kbd "C-c l") 'run-lisp)
    #+end_src
 
    Passing =--eval= in =inferior-lisp-program= is broken.
@@ -699,4 +702,5 @@
 ** Scheme
    #+begin_src emacs-lisp
      (setq scheme-program-name "csi -n")
+     (global-set-key (kbd "C-c s") 'run-scheme)
    #+end_src
