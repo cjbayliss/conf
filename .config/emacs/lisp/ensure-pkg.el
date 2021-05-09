@@ -33,7 +33,7 @@
 
 (defun ensure-pkg--byte-compile-package (package)
   "Byte compile a PACKAGE."
-  (byte-recompile-directory (concat ensure-pkg-lisp-dir "/" package) 0))
+  (byte-recompile-directory (concat ensure-pkg-lisp-dir "/" package) 0 t))
 
 (defun ensure-pkg--add-to-load-path (package &optional subdir)
   "Add PACKAGE to `load-path'.
