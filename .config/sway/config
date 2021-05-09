@@ -23,7 +23,7 @@ set $mod Mod4
 floating_modifier $mod
 
 # use the nixos pgtk emacs build
-bindsym $mod+s exec swaymsg [app_id=\"emacs\"] focus || emacs
+bindsym $mod+s exec swaymsg [app_id=\"emacs\"] focus || emacs --no-site-file --no-site-lisp
 bindsym $mod+f exec swaymsg [app_id=\"firefox\"] focus || firefox
 
 # lock the screen
