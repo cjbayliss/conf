@@ -370,6 +370,13 @@
         ("https://trofi.github.io/feed/rss.xml" blog)
         ("https://wingolog.org/feed/atom" blog guile)))
 
+;;;; GCMH
+(ensure-pkg 'gcmh "https://gitlab.com/koral/gcmh/")
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (require 'gcmh)
+            (gcmh-mode +1)))
+
 ;;;; GNU/Emms
 (ensure-pkg 'emms "https://git.savannah.gnu.org/git/emms.git")
 (autoload 'emms-browser "emms-browser" nil t)
