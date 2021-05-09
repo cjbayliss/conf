@@ -59,6 +59,9 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; UTF-8 by default
+(set-language-environment "UTF-8")
+
 ;; Disable/change startup messages
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
