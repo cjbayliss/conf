@@ -17,7 +17,7 @@
 (setq gc-cons-percentage 0.6)
 
 ;; load ensure-pkg
-(load (concat user-emacs-directory "lisp/ensure-pkg") nil nil)
+(load (concat user-emacs-directory "lisp/ensure-pkg") nil t)
 
 ;;;; Setup modus themes
 (ensure-pkg 'modus-themes "https://gitlab.com/protesilaos/modus-themes")
