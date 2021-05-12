@@ -325,14 +325,12 @@
    #+begin_src emacs-lisp
      (setq elfeed-feeds
            '(("https://0pointer.net/blog/index.rss20" blog)
-             ("https://blog.alicef.me/feeds/all.atom.xml" blog)
              ("https://blog.jeff.over.bz/rss.xml" blog)
              ("https://blog.mattcen.com/rss" blog)
              ("https://blogs.gentoo.org/mgorny/feed/" blog)
              ("https://blogs.igalia.com/apinheiro/feed/" blog)
              ("https://blogs.igalia.com/dpiliaiev/feed.xml" blog)
              ("https://christine.website/blog.rss" blog)
-             ("https://codingquark.com/feed.xml" blog)
              ("https://danluu.com/atom.xml" blog)
              ("https://deftly.net/rss.xml" blog)
              ("https://heronsperch.blogspot.com/feeds/posts/default?alt=rss" blog)
