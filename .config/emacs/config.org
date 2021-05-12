@@ -8,6 +8,15 @@
   This is my WIP attempt at using [[https://orgmode.org/worg/org-contrib/babel/][Org Babel]] to manage my initialisation
   file. 😊
 
+** Useful keybindings
+
+   =C-x v g= opens vc-annotate on the current file, this is similar to
+   =git blame=.
+
+   =C-x C-h= and =C-c C-h= provide a list of keybindings and
+   corresponding commands/functions, similar to =which-key= but not
+   automatic.
+
 * General
 ** Ensure packages
 
@@ -593,14 +602,6 @@
          (ansi-term "/run/current-system/sw/bin/bash")))
 
      (global-set-key (kbd "C-c v") 'cterm)
-   #+end_src
-
-** Version Control
-   #+begin_src emacs-lisp
-     (ensure-pkg 'popup "https://github.com/auto-complete/popup-el")
-     (ensure-pkg 'vc-msg "https://github.com/redguardtoo/vc-msg")
-     (autoload 'vc-msg-show "vc-msg" nil t)
-     (global-set-key (kbd "C-c /") 'vc-msg-show)
    #+end_src
 
 ** Webpaste
