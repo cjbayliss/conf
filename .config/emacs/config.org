@@ -23,7 +23,6 @@
    IMO, sane defaults.
 
    #+begin_src emacs-lisp
-     (setq browse-url-browser-function 'browse-url-firefox)
      (setq c-basic-offset 4)
      (setq column-number-mode t)
      (setq custom-file (concat user-emacs-directory "/custom.el"))
@@ -374,6 +373,8 @@
 
 ** Eww
    #+begin_src emacs-lisp
+     (setq browse-url-handlers '(("youtube" . browse-url-mpv)
+                                 ("." . eww-browse-url)))
      (setq eww-download-directory (expand-file-name "~/downloads"))
      (setq eww-header-line-format nil)
      (setq eww-search-prefix "https://duckduckgo.com/lite/?q=")
@@ -382,6 +383,25 @@
      (setq shr-max-image-proportion 0.6)
      (setq shr-use-colors nil)
      (setq shr-use-fonts nil)
+   #+end_src
+
+   Rename eww buffers after rendering.
+
+   #+begin_src emacs-lisp
+     (add-hook 'eww-after-render-hook
+               (lambda ()
+                 (unless (string-empty-p (plist-get eww-data :title))
+                   (rename-buffer (plist-get eww-data :title) t))))
+   #+end_src
+
+   Custom keybindings.
+
+   #+begin_src emacs-lisp
+     (add-hook 'eww-mode-hook
+               (lambda ()
+                 (define-key eww-link-keymap (kbd "RET") 'eww-open-in-new-buffer)
+                 (define-key eww-mode-map (kbd "q")
+                   (lambda () (interactive) (quit-window t)))))
    #+end_src
 
 ** GCMH
@@ -532,6 +552,15 @@
          (ido-completing-read "Insert emoji: " (build-ido-emoji-list)) 0 1)))
 
      (global-set-key (kbd "C-c e") 'ido-emoji)
+   #+end_src
+
+** MPV
+   #+begin_src emacs-lisp
+     (defun browse-url-mpv (url &optional _ignored)
+       "Pass the specified URL to the \"mpv\" command.
+     The optional argument IGNORED is not used."
+       (interactive (browse-url-interactive-arg "URL: "))
+       (call-process "mpv" nil 0 nil url))
    #+end_src
 
 ** Term/ansi-term
