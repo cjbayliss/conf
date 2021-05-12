@@ -618,18 +618,6 @@
      (global-set-key (kbd "C-c w r") 'webpaste-paste-region)
    #+end_src
 
-** Which-key
-
-   Why not have a teacher by your side all the time?!!
-
-   #+begin_src emacs-lisp
-     (ensure-pkg 'which-key "https://github.com/justbur/emacs-which-key")
-     (add-hook 'emacs-startup-hook
-               (lambda ()
-                 (require 'which-key)
-                 (which-key-mode)))
-   #+end_src
-
 * Modes
 ** Common
    #+begin_src emacs-lisp
