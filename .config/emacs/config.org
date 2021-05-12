@@ -290,7 +290,7 @@
    #+begin_src emacs-lisp
      (ensure-pkg 'diredfl "https://github.com/purcell/diredfl")
 
-     (setq dired-listing-switches "-ABlhF")
+     (setq dired-listing-switches "-ABlhFv")
 
      (add-hook 'dired-mode-hook
                (lambda ()
