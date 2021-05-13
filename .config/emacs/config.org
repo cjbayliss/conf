@@ -296,8 +296,6 @@
 
 ** Dired
    #+begin_src emacs-lisp
-     (ensure-pkg 'diredfl "https://github.com/purcell/diredfl")
-
      (setq dired-listing-switches "-ABlhFv")
 
      (add-hook 'dired-mode-hook
@@ -310,10 +308,7 @@
                    (lambda () (interactive) (find-alternate-file "..")))
                  ;; also, quit means quit, please!
                  (define-key dired-mode-map (kbd "q")
-                   (lambda () (interactive) (quit-window t)))
-                 ;; nice colouring in dired
-                 (require 'diredfl)
-                 (diredfl-mode)))
+                   (lambda () (interactive) (quit-window t)))))
    #+end_src
 
 ** Elfeed
