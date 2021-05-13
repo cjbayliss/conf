@@ -32,6 +32,7 @@
    IMO, sane defaults.
 
    #+begin_src emacs-lisp
+     (setq auth-source-save-behavior nil)
      (setq c-basic-offset 4)
      (setq column-number-mode t)
      (setq custom-file (concat user-emacs-directory "/custom.el"))
