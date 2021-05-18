@@ -29,37 +29,18 @@
     hostId = "163e24d6";
     hostName = "aster";
     useDHCP = true;
-    interfaces.wls4.useDHCP = true;
-    wireless.enable = true;  # wpa_supplicant.
-
-    nameservers = [ "127.0.0.1" "::1" ];
     resolvconf.enable = lib.mkDefault false;
     dhcpcd.extraConfig = "nohook resolv.conf";
   };
 
-  services.dnscrypt-proxy2 = {
+  services.resolved = {
     enable = true;
-    settings = {
-      ipv6_servers = false;
-      cache = true;
-      dnscrypt_servers = true;
-      doh_servers = true;
-      fallback_resolver = "1.1.1.1:53";
-      ignore_system_dns = true;
-      require_dnssec = true;
-      require_nofilter = true;
-      require_nolog = true;
-      server_names = [ "cloudflare" ];
-
-      sources.public-resolvers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
-        ];
-        cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      };
-    };
+    dnssec = "true";
+    extraConfig = ''
+      DNS=1.1.1.1
+      DNSOverTLS=yes
+'';
+    fallbackDns = [ "1.0.0.1" ];
   };
 
   time.timeZone = "Australia/Melbourne";
@@ -104,7 +85,6 @@
     opusTools
     pass
     python3
-    python3Packages.pip
     redshift
     tealdeer
     unzip
@@ -124,6 +104,8 @@
 
         export EMAIL="cjb@cjb.sh"
         export NAME="Christopher Bayliss"
+
+        export PASSWORD_STORE_DIR="$HOME/.local/share/pass"
 
         # set QT theme engine, requires qt5ct 😑
         export QT_QPA_PLATFORMTHEME="qt5ct"
@@ -255,8 +237,6 @@
     EDITOR = "kak";
     VISUAL = "kak";
   };
-
-  services.emacs.package = pkgs.emacsPgtk;
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
