@@ -78,7 +78,6 @@
     mpv
     opusTools
     pass
-    pulseaudio # pipewire doesn't have volume control?
     python3
     qutebrowser
     redshift
@@ -169,13 +168,7 @@
     ];
   };
 
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
+  sound.enable = true;
 
   programs.light.enable = true;
   programs.ssh.startAgent = true;
