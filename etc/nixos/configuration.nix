@@ -51,12 +51,6 @@
     keyMap = "us";
   };
 
-  sound.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    extraConfig = "unload-module module-suspend-on-idle";
-  };
-
   powerManagement.powertop.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
 
@@ -84,7 +78,9 @@
     mpv
     opusTools
     pass
+    pulseaudio # pipewire doesn't have volume control?
     python3
+    qutebrowser
     redshift
     tealdeer
     unzip
@@ -171,6 +167,14 @@
       swayidle
       swaylock
     ];
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   programs.light.enable = true;
