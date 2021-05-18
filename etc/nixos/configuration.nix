@@ -1,5 +1,11 @@
 { config, pkgs, lib, ... }:
 
+with pkgs;
+let
+  firefoxWithPassFFHost = (firefox-esr.override {
+    extraNativeMessagingHosts = [ passff-host ];
+  });
+in
 {
   nixpkgs.config.allowUnfree = true; # 😭
   imports =
@@ -69,7 +75,7 @@
     efibootmgr
     emacsPgtk
     ffmpeg
-    firefox-esr
+    firefoxWithPassFFHost
     git
     git-filter-repo
     gnome3.adwaita-icon-theme
@@ -78,8 +84,8 @@
     mpv
     opusTools
     pass
+    pinentry-qt
     python3
-    qutebrowser
     redshift
     tealdeer
     unzip
@@ -172,6 +178,11 @@
 
   programs.light.enable = true;
   programs.ssh.startAgent = true;
+
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "qt";
+  };
 
   fonts = {
     fonts = with pkgs; [
