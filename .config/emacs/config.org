@@ -33,11 +33,14 @@
 
    #+begin_src emacs-lisp
      (setq auth-source-save-behavior nil)
+     (setq browse-url-handlers '(("youtube" . browse-url-mpv)
+                                 ("." . browse-url-firefox)))
      (setq c-basic-offset 4)
      (setq column-number-mode t)
      (setq custom-file (concat user-emacs-directory "/custom.el"))
      (setq help-window-select t)
      (setq make-backup-files nil)
+     (setq org-cycle-include-plain-lists 'integrate)
      (setq package--init-file-ensured t)
      (setq require-final-newline t)
      (setq-default fill-column 72)
@@ -241,7 +244,9 @@
              lui-time-stamp-only-when-changed-p nil
              circe-default-part-message ""
              circe-default-quit-message ""
-             circe-fool-list '("{^_^}" "gnUser")
+             circe-fool-list '("{^_^}"
+                               "epony"
+                               "gnUser")
              circe-format-say "<{nick}> {body}"
              circe-format-action "[{nick} {body}]"
              circe-format-self-say circe-format-say
@@ -379,8 +384,6 @@
 
 ** Eww
    #+begin_src emacs-lisp
-     (setq browse-url-handlers '(("youtube" . browse-url-mpv)
-                                 ("." . eww-browse-url)))
      (setq eww-download-directory (expand-file-name "~/downloads"))
      (setq eww-header-line-format nil)
      (setq eww-search-prefix "https://duckduckgo.com/lite/?q=")
