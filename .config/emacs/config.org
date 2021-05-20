@@ -580,35 +580,35 @@
    Basic paste tool.
 
    #+begin_src emacs-lisp
-     (defun paste-rs--process-response (response)
-       "Process RESPONSE from https://paste.rs."
+     (defun ix-io--process-response (response)
+       "Process RESPONSE from ix.io"
        ;; FIXME: lmao, this is totally going to break someday
-       (let ((url (nth 11 (string-lines response))))
+       (let ((url (nth 9 (string-lines response))))
          (kill-new url)
          (message (concat url " copied to kill ring."))))
 
-     (defun paste-rs--post (data)
-       "Post DATA to https://paste.rs, and copy url response to
-     kill-ring."
+     (defun ix-io--post (data)
+       "Post DATA to ix.io, and copy url response to kill-ring."
        (let ((url-request-method "POST")
-             (url-request-data data))
-         (with-current-buffer (url-retrieve-synchronously "https://paste.rs/")
-           (paste-rs--process-response (buffer-string)))))
+             (url-request-data (concat "f:1="
+                                       (url-hexify-string data))))
+         (with-current-buffer (url-retrieve-synchronously "http://ix.io")
+           (ix-io--process-response (buffer-string)))))
 
-     (defun paste-rs-paste-buffer ()
-       "Paste buffer using https://paste.rs."
+     (defun ix-io-paste-buffer ()
+       "Paste buffer using ix.io"
        (interactive)
        (when (yes-or-no-p "Paste buffer? ")
-         (paste-rs--post (buffer-substring (point-min) (point-max)))))
+         (ix-io--post (buffer-substring (point-min) (point-max)))))
 
-     (defun paste-rs-paste-region (start end)
-       "Paste buffer using https://paste.rs."
+     (defun ix-io-paste-region (start end)
+       "Paste buffer using ix.io"
        (interactive "r")
        (when (yes-or-no-p "Paste region? ")
-         (paste-rs--post (buffer-substring start end))))
+         (ix-io--post (buffer-substring start end))))
 
-     (global-set-key (kbd "C-c w b") 'paste-rs-paste-buffer)
-     (global-set-key (kbd "C-c w r") 'paste-rs-paste-region)
+     (global-set-key (kbd "C-c w b") 'ix-io-paste-buffer)
+     (global-set-key (kbd "C-c w r") 'ix-io-paste-region)
    #+end_src
 
 ** Term/ansi-term
