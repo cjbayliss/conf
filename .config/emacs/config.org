@@ -34,6 +34,7 @@
    #+begin_src emacs-lisp
      (setq auth-source-save-behavior nil)
      (setq browse-url-handlers '(("youtube" . browse-url-mpv)
+                                 ("youtu.be" . browse-url-mpv)
                                  ("." . browse-url-firefox)))
      (setq c-basic-offset 4)
      (setq column-number-mode t)
