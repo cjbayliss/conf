@@ -268,20 +268,23 @@
                 :port "6667"
                 :nick "cjb"
                 :channels ("#cyber"))
-               ("Freenode"
+               ("Libera.Chat"
                 :tls t
-                :host "chat.au.freenode.net"
+                :port 6697
+                :host "irc.libera.chat"
                 :nick "cjb"
                 :sasl-strict t
                 :sasl-username "cjb"
                 :sasl-password my/return-password
                 :channels (:after-auth "#chicken"
+                                       "#emacs"
                                        "##lisp"
                                        "#python"
                                        "##rust"
                                        "#scheme"))))
+
        (circe "OFTC")
-       (circe "Freenode")
+       (circe "Libera.Chat")
 
        (custom-set-faces
         '(circe-my-message-face ((t (:foreground "gray60" :slant oblique))))
