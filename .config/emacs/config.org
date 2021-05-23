@@ -40,6 +40,7 @@
      (setq column-number-mode t)
      (setq custom-file (concat user-emacs-directory "/custom.el"))
      (setq help-window-select t)
+     (setq kill-read-only-ok t)
      (setq make-backup-files nil)
      (setq org-cycle-include-plain-lists 'integrate)
      (setq package--init-file-ensured t)
@@ -618,6 +619,7 @@
      (add-hook 'term-mode-hook
                (lambda ()
                  (goto-address-mode +1)
+                 (toggle-truncate-lines 1) ;; hack to for fish shell
                  (define-key term-raw-map (kbd "C-y") 'term-paste)
                  ;; quoted paste
                  (define-key term-raw-map (kbd "C-c C-y")
@@ -639,7 +641,7 @@
        (interactive)
        (if (get-buffer "*ansi-term*")
            (switch-to-buffer "*ansi-term*")
-         (ansi-term "/run/current-system/sw/bin/bash")))
+         (ansi-term "/run/current-system/sw/bin/fish")))
 
      (global-set-key (kbd "C-c v") 'cterm)
    #+end_src

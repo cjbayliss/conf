@@ -230,16 +230,12 @@ in
   };
 
   gtk.iconCache.enable = true;
-  programs.bash = {
-    shellInit = "export HISTFILE=/dev/null";
-    promptInit = ''
-      if [ "$UID" == 0 ]; then
-          PS1="\w # "
-      else
-          PS1="\w $ "
-      fi
-    '';
+
+  programs.fish = {
+    enable = true;
+    shellInit = "set fish_greeting";
   };
+  users.users.cjb.shell = pkgs.fish;
 
   environment.variables = {
     EDITOR = "kak";
