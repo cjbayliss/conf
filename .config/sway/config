@@ -10,6 +10,9 @@ font pango:monospace 0
 # this is annoying, so disable it
 focus_follows_mouse no
 
+# disable legacy stuff
+xwayland disable
+
 # background
 output '*' background '#000000' solid_color
 
