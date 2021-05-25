@@ -364,6 +364,8 @@
      (setq eshell-scroll-to-bottom-on-input 'all)
      (add-hook 'eshell-mode-hook
                (lambda ()
+                 (require 'fish-completion)
+                 (global-fish-completion-mode)
                  (goto-address-mode +1)
                  (setenv "PAGER" "cat")
                  ;; stopping the world to process file operations is insane.
