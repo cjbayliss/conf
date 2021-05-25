@@ -5,6 +5,21 @@ let
   firefoxWithPassFFHost = (firefox-esr.override {
     extraNativeMessagingHosts = [ passff-host ];
   });
+  emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages (
+    epkgs: [
+      epkgs.elpaPackages.emms
+      epkgs.elpaPackages.modus-themes
+      epkgs.melpaPackages.circe
+      epkgs.melpaPackages.elfeed
+      epkgs.melpaPackages.elpher
+      epkgs.melpaPackages.erc-hl-nicks
+      epkgs.melpaPackages.fish-completion
+      epkgs.melpaPackages.gcmh
+      epkgs.melpaPackages.highlight-numbers
+      epkgs.melpaPackages.nix-mode
+      epkgs.melpaPackages.php-mode
+      epkgs.melpaPackages.rust-mode
+    ]);
 in
 {
   imports =
@@ -72,7 +87,7 @@ in
     black
     cryptsetup
     efibootmgr
-    emacsPgtk
+    emacs
     ffmpeg
     firefoxWithPassFFHost
     git

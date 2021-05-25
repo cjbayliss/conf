@@ -18,15 +18,6 @@
    automatic.
 
 * General
-** Ensure packages
-
-   I wanted a simple "pull from git" package installer and updater, but
-   everything is overkill so I wrote =ensure-pkg=. It's probably bad. 🤣
-
-   #+begin_src emacs-lisp
-     (load (concat user-emacs-directory "lisp/ensure-pkg") nil t)
-   #+end_src
-
 ** Common options
 
    IMO, sane defaults.
@@ -71,7 +62,6 @@
    text editors now. 😭
 
    #+begin_src emacs-lisp
-     (ensure-pkg 'modus-themes "https://gitlab.com/protesilaos/modus-themes")
      (require 'modus-themes)
      (setq modus-themes-slanted-constructs t)
      (setq modus-themes-no-mixed-fonts t)
@@ -200,9 +190,6 @@
    FIXME: cleanup this horrible config sometime.
 
    #+begin_src emacs-lisp
-     (ensure-pkg 'circe "https://github.com/jorgenschaefer/circe")
-     (ensure-pkg 'erc-hl-nicks "https://github.com/leathekd/erc-hl-nicks")
-
      ;; see https://github.com/jorgenschaefer/circe/wiki/Configuration
      ;; this function is probably under the GPL3, at least that is what circe
      ;; is licensed as.
@@ -327,7 +314,6 @@
 
 ** Elfeed
    #+begin_src emacs-lisp
-     (ensure-pkg 'elfeed "https://github.com/skeeto/elfeed")
      (autoload 'elfeed "elfeed" nil t)
 
      (unless (file-directory-p (concat user-emacs-directory "elfeed"))
@@ -365,7 +351,6 @@
 
 ** Elpher
    #+begin_src emacs-lisp
-     (ensure-pkg 'elpher "git://thelambdalab.xyz/elpher.git")
      (autoload 'elpher "elpher" nil t)
      (setq elpher-ipv4-always t)
    #+end_src
@@ -422,7 +407,6 @@
 
 ** GCMH
    #+begin_src emacs-lisp
-     (ensure-pkg 'gcmh "https://gitlab.com/koral/gcmh/")
      (add-hook 'emacs-startup-hook
                (lambda ()
                  (require 'gcmh)
@@ -431,7 +415,6 @@
 
 ** GNU/Emms
    #+begin_src emacs-lisp
-     (ensure-pkg 'emms "https://git.savannah.gnu.org/git/emms.git")
      (autoload 'emms-browser "emms-browser" nil t)
 
      (unless (file-directory-p (concat user-emacs-directory "emms"))
@@ -659,8 +642,6 @@
                  (setq show-trailing-whitespace t)))
 
      ;; highlight numbers in all prog-modes
-     (ensure-pkg 'parent-mode "https://github.com/Fanael/parent-mode")
-     (ensure-pkg 'highlight-numbers "https://github.com/Fanael/highlight-numbers")
      (add-hook 'prog-mode-hook
                (lambda ()
                  (require 'highlight-numbers)
@@ -710,8 +691,6 @@
 
 ** Nix
    #+begin_src emacs-lisp
-     (ensure-pkg 'mmm-mode "https://github.com/purcell/mmm-mode")
-     (ensure-pkg 'nix-mode "https://github.com/NixOS/nix-mode")
      (add-to-list 'auto-mode-alist
                   '("\\.nix\\'" .
                     (lambda ()
@@ -721,7 +700,6 @@
 
 ** PHP
    #+begin_src emacs-lisp
-     (ensure-pkg 'php-mode "https://github.com/emacs-php/php-mode" "/lisp")
      (add-to-list 'auto-mode-alist
                   '("\\.php\\'" .
                     (lambda ()
@@ -734,8 +712,6 @@
 
 ** Rust
    #+begin_src emacs-lisp
-
-     (ensure-pkg 'rust-mode "https://github.com/rust-lang/rust-mode")
      (add-to-list 'auto-mode-alist
                   '("\\.rs\\|.rlib\\'" .
                     (lambda ()
