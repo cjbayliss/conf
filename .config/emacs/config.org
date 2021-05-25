@@ -198,7 +198,7 @@
 ** Circe
 
    FIXME: cleanup this horrible config sometime.
-   
+
    #+begin_src emacs-lisp
      (ensure-pkg 'circe "https://github.com/jorgenschaefer/circe")
      (ensure-pkg 'erc-hl-nicks "https://github.com/leathekd/erc-hl-nicks")
@@ -246,7 +246,7 @@
              lui-time-stamp-only-when-changed-p nil
              circe-default-part-message ""
              circe-default-quit-message ""
-             circe-fool-list '("{^_^}"
+             circe-fool-list '("{^-^}"
                                "epony"
                                "gnUser")
              circe-format-say "<{nick}> {body}"
@@ -280,10 +280,12 @@
                 :sasl-password my/return-password
                 :channels (:after-auth "#chicken"
                                        "#emacs"
-                                       "##lisp"
+                                       "#lisp"
+                                       "#commonlisp"
                                        "#python"
                                        "##rust"
-                                       "#scheme"))))
+                                       "#scheme"
+                                       "#xebian"))))
 
        (circe "OFTC")
        (circe "Libera.Chat")
