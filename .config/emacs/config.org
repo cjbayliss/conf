@@ -190,9 +190,10 @@
     #+begin_src emacs-lisp
       (with-eval-after-load 'circe
         (setq lui-fill-type nil)
-        (setq lui-time-stamp-position 'left)
+        (setq lui-logging-directory "~/stuff/irc-logs")
         (setq lui-time-stamp-format "%H:%M ")
         (setq lui-time-stamp-only-when-changed-p nil)
+        (setq lui-time-stamp-position 'left)
 
         (setq circe-default-part-message "")
         (setq circe-default-quit-message "")
@@ -214,7 +215,9 @@
         (defun my-lui-setup ()
           (setq fringes-outside-margins t
                 word-wrap t
-                wrap-prefix "      ")))
+                wrap-prefix "      "))
+        (require 'lui-logging)
+        (enable-lui-logging-globally))
     #+end_src
 
     Nick colours etc.
