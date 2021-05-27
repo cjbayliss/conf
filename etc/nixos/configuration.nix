@@ -2,7 +2,7 @@
 
 with pkgs;
 let
-  firefoxWithPassFFHost = (firefox-esr.override {
+  firefoxWithPassFFHost = (firefox.override {
     extraNativeMessagingHosts = [ passff-host ];
   });
   emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages (
@@ -85,6 +85,7 @@ in
     aspellDicts.en
     beets
     black
+    chicken
     cryptsetup
     efibootmgr
     emacs
@@ -101,6 +102,7 @@ in
     pinentry-qt
     python3
     redshift
+    sbcl
     tealdeer
     unzip
     wget
