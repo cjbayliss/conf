@@ -87,6 +87,7 @@ in
     black
     chicken
     cryptsetup
+    ed
     efibootmgr
     emacs
     ffmpeg
@@ -95,15 +96,14 @@ in
     git-filter-repo
     gnome3.adwaita-icon-theme
     imagemagick
-    kakoune
     mpv
     opusTools
     pass
     pinentry-qt
     python3
+    qt5ct
     redshift
     sbcl
-    tealdeer
     unzip
     wget
     youtube-dl
@@ -119,11 +119,6 @@ in
         export EDITOR="emacsclient";
         export VISUAL="emacsclient";
 
-        export EMAIL="cjb@cjb.sh"
-        export NAME="Christopher Bayliss"
-
-        export PASSWORD_STORE_DIR="$HOME/.local/share/pass"
-
         # set QT theme engine, requires qt5ct 😑
         export QT_QPA_PLATFORMTHEME="qt5ct"
 
@@ -135,31 +130,8 @@ in
         export XDG_CURRENT_DESKTOP=sway
         export XDG_SESSION_TYPE=wayland
 
-        # XDG_*_DIRs
-        export XDG_DESKTOP_DIR="$HOME/stuff/desktop"
-        export XDG_DOCUMENTS_DIR="$HOME/stuff"
-        export XDG_DOWNLOAD_DIR="$HOME/downloads"
-        export XDG_MUSIC_DIR="$HOME/music"
-        export XDG_PICTURES_DIR="$HOME/pictures"
-        export XDG_VIDEOS_DIR="$HOME/videos"
-
-        # more XDG_* stuff
-        export XDG_CONFIG_HOME="$HOME/.config"
-        # why store this? put it in /tmp
-        export XDG_CACHE_HOME="/tmp/cache"
-        export XDG_DATA_HOME="$HOME/.local/share"
-
-        # ensure $XDG_*_HOME exists
-        mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
-
         # use emacs-askpass
         export SSH_ASKPASS="emacs-askpass"
-
-        # imput method
-        export XMODIFIERS=@im=ibus
-        export CLUTTER_IM_MODULE=ibus
-        export GTK_IM_MODULE=ibus
-        export QT_IM_MODULE=ibus
 
         # set redshift to fix my screen's whitebalance
         redshift -m drm -x -O 4800
@@ -250,12 +222,31 @@ in
   programs.fish = {
     enable = true;
     shellInit = "set fish_greeting";
+    loginShellInit = ''
+      set -gx XDG_DESKTOP_DIR "$HOME/stuff/desktop"
+      set -gx XDG_DOCUMENTS_DIR "$HOME/stuff"
+      set -gx XDG_DOWNLOAD_DIR "$HOME/downloads"
+      set -gx XDG_MUSIC_DIR "$HOME/music"
+      set -gx XDG_PICTURES_DIR "$HOME/pictures"
+      set -gx XDG_VIDEOS_DIR "$HOME/videos"
+
+      set -gx XDG_CONFIG_HOME "$HOME/.config"
+      set -gx XDG_CACHE_HOME "/tmp/cache"
+      set -gx XDG_DATA_HOME "$HOME/.local/share"
+      mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
+
+      set -gx PYTHONSTARTUP "$XDG_CONFIG_HOME/python/startup.py"
+      set -gx PASSWORD_STORE_DIR "$XDG_CONFIG_HOME/pass"
+
+      set -gx EMAIL "cjb@cjb.sh"
+      set -gx NAME "Christopher Bayliss"
+    '';
   };
   users.users.cjb.shell = pkgs.fish;
 
   environment.variables = {
-    EDITOR = "kak";
-    VISUAL = "kak";
+    EDITOR = "ed";
+    VISUAL = "ed";
   };
 
   nixpkgs.overlays = [
