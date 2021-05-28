@@ -236,7 +236,7 @@ in
       mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 
       set -gx PYTHONSTARTUP "$XDG_CONFIG_HOME/python/startup.py"
-      set -gx PASSWORD_STORE_DIR "$XDG_CONFIG_HOME/pass"
+      set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME/pass"
 
       set -gx EMAIL "cjb@cjb.sh"
       set -gx NAME "Christopher Bayliss"
