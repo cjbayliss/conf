@@ -13,7 +13,6 @@ let
       epkgs.melpaPackages.elfeed
       epkgs.melpaPackages.elpher
       epkgs.melpaPackages.erc-hl-nicks
-      epkgs.melpaPackages.fish-completion
       epkgs.melpaPackages.gcmh
       epkgs.melpaPackages.highlight-numbers
       epkgs.melpaPackages.nix-mode
