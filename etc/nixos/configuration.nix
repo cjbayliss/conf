@@ -21,6 +21,11 @@ let
     ]);
 in
 {
+  # the bad
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "b43-firmware"
+  ];
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -42,12 +47,18 @@ in
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.requestEncryptionCredentials = true;
+  boot.tmpOnTmpfs = true;
 
   networking = {
-    enableIPv6 = false;
     hostId = "163e24d6";
     hostName = "aster";
-    useDHCP = true;
+
+    enableB43Firmware = true;
+    enableIPv6 = false;
+    interfaces.ens5.useDHCP = true;
+    interfaces.wlan0.useDHCP = true;
+    wireless.enable = true;
+
     resolvconf.enable = lib.mkDefault false;
     dhcpcd.extraConfig = "nohook resolv.conf";
   };
@@ -79,11 +90,12 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    aria2
     aspell
     aspellDicts.en
     beets
     black
+    breeze-qt5
+    breeze-icons
     chicken
     cryptsetup
     ed
@@ -250,7 +262,7 @@ in
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      url = https://github.com/nix-community/emacs-overlay/archive/8e63b4865f49636c9d990d5946d3d8db132536ec.tar.gz;
     }))
   ];
 
