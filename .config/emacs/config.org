@@ -304,43 +304,6 @@
                    (lambda () (interactive) (quit-window t)))))
    #+end_src
 
-** Elfeed
-   #+begin_src emacs-lisp
-     (autoload 'elfeed "elfeed" nil t)
-
-     (unless (file-directory-p (concat user-emacs-directory "elfeed"))
-       (make-directory (concat user-emacs-directory "elfeed") t))
-
-     (setq elfeed-db-directory (concat user-emacs-directory "elfeed"))
-     (setq elfeed-search-filter "+blog +unread")
-   #+end_src
-
-   Elfeed's feeds.
-
-   #+begin_src emacs-lisp
-     (setq elfeed-feeds
-           '(("https://0pointer.net/blog/index.rss20" blog)
-             ("https://blog.jeff.over.bz/rss.xml" blog)
-             ("https://blog.mattcen.com/rss" blog)
-             ("https://blogs.gentoo.org/mgorny/feed/" blog)
-             ("https://blogs.igalia.com/apinheiro/feed/" blog)
-             ("https://blogs.igalia.com/dpiliaiev/feed.xml" blog)
-             ("https://christine.website/blog.rss" blog)
-             ("https://danluu.com/atom.xml" blog)
-             ("https://deftly.net/rss.xml" blog)
-             ("https://heronsperch.blogspot.com/feeds/posts/default?alt=rss" blog)
-             ("https://jvns.ca/atom.xml" blog)
-             ("https://keithp.com/blogs/index.rss" blog)
-             ("https://melissawen.github.io/feed.xml" blog)
-             ("https://microkerneldude.wordpress.com/feed/" blog)
-             ("https://mjg59.dreamwidth.org/data/rss" blog)
-             ("https://nullprogram.com/feed/" blog)
-             ("https://rosenzweig.io/blog/feed.xml" blog)
-             ("https://sachachua.com/blog/category/emacs-news/feed" blog emacs)
-             ("https://trofi.github.io/feed/rss.xml" blog)
-             ("https://wingolog.org/feed/atom" blog guile)))
-   #+end_src
-
 ** Elpher
    #+begin_src emacs-lisp
      (autoload 'elpher "elpher" nil t)
@@ -452,57 +415,112 @@
    #+end_src
 
 ** Gnus
-   #+begin_src emacs-lisp
-     ;; FIXME: cleanup Gnus config.
-     (setq gnus-directory (concat user-emacs-directory "news"))
-     (setq gnus-startup-file (concat user-emacs-directory "newsrc"))
-     (setq gnus-init-file (concat user-emacs-directory "gnus"))
+*** General config
+**** Default directories
 
-     (setq
-      gnus-select-method '(nnimap "email"
-                                  (nnimap-address "mail.gandi.net")
-                                  (nnimap-server-port 993)
-                                  (nnimap-stream ssl))
+    #+begin_src emacs-lisp
+      (setq gnus-directory (concat user-emacs-directory "news"))
+      (setq gnus-startup-file (concat user-emacs-directory "newsrc"))
+      (setq gnus-init-file (concat user-emacs-directory "gnus"))
+      (setq message-directory (concat user-emacs-directory "mail"))
+      (setq nnfolder-directory (concat user-emacs-directory "mail/archive"))
+    #+end_src
 
-      ;; modified from: http://cyber.com.au/~twb/.emacs
-      gnus-sum-thread-tree-false-root "──○ "
-      gnus-sum-thread-tree-indent "  "
-      gnus-sum-thread-tree-leaf-with-other "├─● "
-      gnus-sum-thread-tree-root "■ "
-      gnus-sum-thread-tree-single-indent ""
-      gnus-sum-thread-tree-single-leaf "╰─● "
-      gnus-sum-thread-tree-vertical "│ "
-      gnus-user-date-format-alist '((t . "%b %e"))
-      gnus-summary-line-format "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n"
+**** Settings
+
+    #+begin_src emacs-lisp
+      (setq gnus-inhibit-startup-message t)
+      (setq gnus-treat-display-smileys nil)
+
+      (setq gnus-sum-thread-tree-false-root "○ ")
+      (setq gnus-sum-thread-tree-indent "  ")
+      (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
+      (setq gnus-sum-thread-tree-root "● ")
+      (setq gnus-sum-thread-tree-single-indent "◎ ")
+      (setq gnus-sum-thread-tree-single-leaf "╰─► ")
+      (setq gnus-sum-thread-tree-vertical "│ ")
+      (setq gnus-user-date-format-alist '((t . "%b %e")))
+      (setq gnus-summary-line-format
+            "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n")
+
+      (setq gnus-asynchronous t)
+      (setq gnus-use-cache 'passive)
+    #+end_src
+
+**** Hooks
+
+    #+begin_src emacs-lisp
+      (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
+      (add-hook 'gnus-group-mode-hook 'hl-line-mode)
+      (add-hook 'gnus-after-getting-new-news-hook
+                'display-time-event-handler)
+      (add-hook 'gnus-group-mode-hook 'display-time-event-handler)
+    #+end_src
+
+    setup this demon *after* gnus has loaded, otherwise it does not work
+
+    #+begin_src emacs-lisp
+      (with-eval-after-load "gnus"
+        (add-to-list 'gnus-secondary-select-methods
+                     '(nntp "news" (nntp-address "news.gwene.org")))
+
+        (setq gnus-demon-timestep 1)
+        (gnus-demon-add-handler 'gnus-demon-scan-news 60 t))
+    #+end_src
+
+*** Email
+
+    #+begin_src emacs-lisp
+      (setq gnus-select-method '(nnimap "email"
+                                        (nnimap-address "mail.gandi.net")
+                                        (nnimap-server-port 993)
+                                        (nnimap-stream ssl)))
 
       ;; use smtp to send email
-      send-mail-function 'smtpmail-send-it
-      smtpmail-smtp-server "mail.gandi.net"
-      smtpmail-smtp-service 587
+      (setq send-mail-function 'smtpmail-send-it)
+      (setq smtpmail-smtp-server "mail.gandi.net")
+      (setq smtpmail-smtp-service 587)
 
       ;; make subbed groups visible
-      gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"
-      gnus-permanently-visible-groups "INBOX\\|Sent\\|archive\\|cyber"
-      gnus-asynchronous t
-      gnus-use-cache 'passive
+      (setq gnus-ignored-newsgroups
+            "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+      (setq gnus-permanently-visible-groups
+            "INBOX\\|Sent\\|archive\\|cyber")
 
       ;; copy sent emails to Sent
-      gnus-message-archive-group "nnimap+email:Sent"
-      message-directory (concat user-emacs-directory "mail")
-      nnfolder-directory (concat user-emacs-directory "mail/archive")
-      gnus-gcc-mark-as-read t)
+      (setq gnus-message-archive-group "nnimap+email:Sent")
+      (setq gnus-gcc-mark-as-read t)
+    #+end_src
 
-     (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
-     (add-hook 'gnus-group-mode-hook 'hl-line-mode)
-     (add-hook 'gnus-after-getting-new-news-hook
-               'display-time-event-handler)
-     (add-hook 'gnus-group-mode-hook 'display-time-event-handler)
+*** News
 
-     ;; setup this demon *after* gnus has loaded, otherwise it does not work
-     (with-eval-after-load "gnus"
-       (setq gnus-demon-timestep 1)
-       (gnus-demon-add-handler 'gnus-demon-scan-news 60 t))
-   #+end_src
+    #+begin_src emacs-lisp
+      (defvar gnus-subscribe-groups-done nil
+        "Only subscribe groups once.  Or else Gnus will NOT restart.")
+      (add-hook 'gnus-group-mode-hook
+                (lambda ()
+                  (unless gnus-subscribe-groups-done
+                    (mapc (lambda (x)
+                            (gnus-subscribe-hierarchically x))
+                          '("nntp+news:gwene.ca.jvns"
+                            "nntp+news:gwene.com.blogspot.heronsperch"
+                            "nntp+news:gwene.com.danluu"
+                            "nntp+news:gwene.com.keithp.blog"
+                            "nntp+news:gwene.com.mattcen.blog"
+                            "nntp+news:gwene.com.nullprogram"
+                            "nntp+news:gwene.com.sachachua.emacs-news"
+                            "nntp+news:gwene.com.wordpress.microkerneldud"
+                            "nntp+news:gwene.de.0pointer.blog"
+                            "nntp+news:gwene.io.github.trofi"
+                            "nntp+news:gwene.io.rosenzweig.blog"
+                            "nntp+news:gwene.net.deftly"
+                            "nntp+news:gwene.org.dreamwidth.mjg59"
+                            "nntp+news:gwene.org.gentoo.blogs.mgorny"
+                            "nntp+news:gwene.org.wingolog"
+                            "nntp+news:gwene.website.christine.blog"))
+                    (setq gnus-subscribe-groups-done t))
+                  (message "Welcome to Gnus!")))
+    #+end_src
 
 ** Ido
 

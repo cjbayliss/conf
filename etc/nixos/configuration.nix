@@ -5,12 +5,11 @@ let
   firefoxWithPassFFHost = (firefox.override {
     extraNativeMessagingHosts = [ passff-host ];
   });
-  emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages (
+  emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtk).emacsWithPackages (
     epkgs: [
       epkgs.elpaPackages.emms
       epkgs.elpaPackages.modus-themes
       epkgs.melpaPackages.circe
-      epkgs.melpaPackages.elfeed
       epkgs.melpaPackages.elpher
       epkgs.melpaPackages.erc-hl-nicks
       epkgs.melpaPackages.gcmh
@@ -262,7 +261,7 @@ in
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/8e63b4865f49636c9d990d5946d3d8db132536ec.tar.gz;
+      url = https://github.com/nix-community/emacs-overlay/archive/efeb67809754347fc6d1cc817e774306b45a376f.tar.gz;
     }))
   ];
 
