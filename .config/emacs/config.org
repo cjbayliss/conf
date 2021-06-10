@@ -223,9 +223,8 @@
     #+begin_src emacs-lisp
       (with-eval-after-load 'circe
         (require 'circe-color-nicks)
-        (require 'erc-hl-nicks)
         (setf (symbol-function 'circe-nick-color-for-nick)
-              (symbol-function 'erc-hl-nicks-color-for-nick))
+              (symbol-function 'irc-nick-color))
         (enable-circe-color-nicks)
 
         (custom-set-faces
@@ -559,6 +558,16 @@
          (ido-completing-read "Insert emoji: " (build-ido-emoji-list)) 0 1)))
 
      (global-set-key (kbd "C-c e") 'ido-emoji)
+   #+end_src
+
+** IRC
+   #+begin_src emacs-lisp
+     (defun irc-nick-color (nick)
+       "Return a color for a given NICK."
+       (let* ((color (concat "#" (substring (md5 (downcase nick)) 0 12))))
+         (if (>= (modus-themes-contrast (face-attribute 'default :background) color) 7)
+             color
+           (color-complement-hex color))))
    #+end_src
 
 ** MPV

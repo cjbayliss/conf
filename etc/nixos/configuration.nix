@@ -10,7 +10,6 @@ let
       epkgs.elpaPackages.emms
       epkgs.melpaPackages.circe
       epkgs.melpaPackages.elpher
-      epkgs.melpaPackages.erc-hl-nicks
       epkgs.melpaPackages.gcmh
       epkgs.melpaPackages.highlight-numbers
       epkgs.melpaPackages.nix-mode
