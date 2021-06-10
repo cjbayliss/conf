@@ -415,55 +415,55 @@
 *** General config
 **** Default directories
 
-    #+begin_src emacs-lisp
-      (setq gnus-directory (concat user-emacs-directory "news"))
-      (setq gnus-startup-file (concat user-emacs-directory "newsrc"))
-      (setq gnus-init-file (concat user-emacs-directory "gnus"))
-      (setq message-directory (concat user-emacs-directory "mail"))
-      (setq nnfolder-directory (concat user-emacs-directory "mail/archive"))
-    #+end_src
+     #+begin_src emacs-lisp
+       (setq gnus-directory (concat user-emacs-directory "news"))
+       (setq gnus-startup-file (concat user-emacs-directory "newsrc"))
+       (setq gnus-init-file (concat user-emacs-directory "gnus"))
+       (setq message-directory (concat user-emacs-directory "mail"))
+       (setq nnfolder-directory (concat user-emacs-directory "mail/archive"))
+     #+end_src
 
 **** Settings
 
-    #+begin_src emacs-lisp
-      (setq gnus-inhibit-startup-message t)
-      (setq gnus-treat-display-smileys nil)
+     #+begin_src emacs-lisp
+       (setq gnus-inhibit-startup-message t)
+       (setq gnus-treat-display-smileys nil)
 
-      (setq gnus-sum-thread-tree-false-root "○ ")
-      (setq gnus-sum-thread-tree-indent "  ")
-      (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
-      (setq gnus-sum-thread-tree-root "● ")
-      (setq gnus-sum-thread-tree-single-indent "◎ ")
-      (setq gnus-sum-thread-tree-single-leaf "╰─► ")
-      (setq gnus-sum-thread-tree-vertical "│ ")
-      (setq gnus-user-date-format-alist '((t . "%b %e")))
-      (setq gnus-summary-line-format
-            "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n")
+       (setq gnus-sum-thread-tree-false-root "○ ")
+       (setq gnus-sum-thread-tree-indent "  ")
+       (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
+       (setq gnus-sum-thread-tree-root "● ")
+       (setq gnus-sum-thread-tree-single-indent "◎ ")
+       (setq gnus-sum-thread-tree-single-leaf "╰─► ")
+       (setq gnus-sum-thread-tree-vertical "│ ")
+       (setq gnus-user-date-format-alist '((t . "%b %e")))
+       (setq gnus-summary-line-format
+             "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n")
 
-      (setq gnus-asynchronous t)
-      (setq gnus-use-cache 'passive)
-    #+end_src
+       (setq gnus-asynchronous t)
+       (setq gnus-use-cache 'passive)
+     #+end_src
 
 **** Hooks
 
-    #+begin_src emacs-lisp
-      (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
-      (add-hook 'gnus-group-mode-hook 'hl-line-mode)
-      (add-hook 'gnus-after-getting-new-news-hook
-                'display-time-event-handler)
-      (add-hook 'gnus-group-mode-hook 'display-time-event-handler)
-    #+end_src
+     #+begin_src emacs-lisp
+       (add-hook 'gnus-summary-mode-hook 'hl-line-mode)
+       (add-hook 'gnus-group-mode-hook 'hl-line-mode)
+       (add-hook 'gnus-after-getting-new-news-hook
+                 'display-time-event-handler)
+       (add-hook 'gnus-group-mode-hook 'display-time-event-handler)
+     #+end_src
 
-    setup this demon *after* gnus has loaded, otherwise it does not work
+     setup this demon *after* gnus has loaded, otherwise it does not work
 
-    #+begin_src emacs-lisp
-      (with-eval-after-load "gnus"
-        (add-to-list 'gnus-secondary-select-methods
-                     '(nntp "news" (nntp-address "news.gwene.org")))
+     #+begin_src emacs-lisp
+       (with-eval-after-load "gnus"
+         (add-to-list 'gnus-secondary-select-methods
+                      '(nntp "news" (nntp-address "news.gwene.org")))
 
-        (setq gnus-demon-timestep 1)
-        (gnus-demon-add-handler 'gnus-demon-scan-news 60 t))
-    #+end_src
+         (setq gnus-demon-timestep 1)
+         (gnus-demon-add-handler 'gnus-demon-scan-news 60 t))
+     #+end_src
 
 *** Email
 
