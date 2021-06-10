@@ -56,6 +56,7 @@ in
     enableIPv6 = false;
     interfaces.ens5.useDHCP = true;
     interfaces.wlan0.useDHCP = true;
+    wireless.interfaces = [ "wlan0" ];
     wireless.enable = true;
 
     resolvconf.enable = lib.mkDefault false;
