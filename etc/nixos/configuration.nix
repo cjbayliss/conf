@@ -8,7 +8,6 @@ let
   emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtk).emacsWithPackages (
     epkgs: [
       epkgs.elpaPackages.emms
-      epkgs.elpaPackages.modus-themes
       epkgs.melpaPackages.circe
       epkgs.melpaPackages.elpher
       epkgs.melpaPackages.erc-hl-nicks
