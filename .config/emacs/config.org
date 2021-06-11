@@ -567,13 +567,17 @@
          (color-ensure-contrast-above-ratio color (face-attribute 'default :background) 7 5)))
 
      (defun color-ensure-contrast-above-ratio (color bg ratio steps)
-       "Ensure COLOR is above contrast RATIO for BG. STEPS is the
-          pecent to increase by each pass."
+       "Ensure COLOR is above contrast RATIO for BG. Before increasing
+     contrast, tries inverting the color. STEPS is the pecent to
+     increase by each pass."
        (if (< (modus-themes-contrast bg color) ratio)
-           (let* ((color (if (> (modus-themes-wcag-formula bg) 0.5)
-                             (color-darken-name color steps)
-                           (color-lighten-name color steps))))
-             (color-ensure-contrast-above-ratio color bg ratio steps))
+           (let* ((inverted (color-complement-hex color)))
+             (if (< (modus-themes-contrast bg inverted) ratio)
+                 (let* ((color (if (> (modus-themes-wcag-formula bg) 0.5)
+                                   (color-darken-name color steps)
+                                 (color-lighten-name color steps))))
+                   (color-ensure-contrast-above-ratio color bg ratio steps))
+               inverted))
          color))
    #+end_src
 
