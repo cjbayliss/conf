@@ -227,9 +227,8 @@
               (symbol-function 'irc-nick-color))
         (enable-circe-color-nicks)
 
-        (custom-set-faces
-         '(circe-my-message-face ((t (:foreground "gray60" :slant oblique))))
-         '(circe-originator-face ((t (:foreground "#f78fe7"))))))
+        (set-face-attribute 'circe-my-message-face nil :inherit font-lock-comment-face)
+        (set-face-attribute 'circe-originator-face nil :inherit font-lock-preprocessor-face))
     #+end_src
 
 *** Circe network options
@@ -565,9 +564,17 @@
      (defun irc-nick-color (nick)
        "Return a color for a given NICK."
        (let* ((color (concat "#" (substring (md5 (downcase nick)) 0 12))))
-         (if (>= (modus-themes-contrast (face-attribute 'default :background) color) 7)
-             color
-           (color-complement-hex color))))
+         (color-ensure-contrast-above-ratio color (face-attribute 'default :background) 7 5)))
+
+     (defun color-ensure-contrast-above-ratio (color bg ratio steps)
+       "Ensure COLOR is above contrast RATIO for BG. STEPS is the
+          pecent to increase by each pass."
+       (if (< (modus-themes-contrast bg color) ratio)
+           (let* ((color (if (> (modus-themes-wcag-formula bg) 0.5)
+                             (color-darken-name color steps)
+                           (color-lighten-name color steps))))
+             (color-ensure-contrast-above-ratio color bg ratio steps))
+         color))
    #+end_src
 
 ** MPV
