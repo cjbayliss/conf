@@ -300,12 +300,6 @@
                    (lambda () (interactive) (quit-window t)))))
    #+end_src
 
-** Elpher
-   #+begin_src emacs-lisp
-     (autoload 'elpher "elpher" nil t)
-     (setq elpher-ipv4-always t)
-   #+end_src
-
 ** Eshell
    #+begin_src emacs-lisp
      (setq eshell-hist-ignoredups t)
@@ -356,12 +350,11 @@
                    (lambda () (interactive) (quit-window t)))))
    #+end_src
 
-** GCMH
+** GC on idle
    #+begin_src emacs-lisp
      (add-hook 'emacs-startup-hook
                (lambda ()
-                 (require 'gcmh)
-                 (gcmh-mode +1)))
+                 (run-with-idle-timer 15 t 'garbage-collect)))
    #+end_src
 
 ** GNU/Emms
@@ -630,19 +623,15 @@
 
 * Modes
 ** Common
+
+   common config for all prog-modes
+
    #+begin_src emacs-lisp
-     ;; common config for all prog-modes
      (add-hook 'prog-mode-hook
                (lambda ()
                  (hl-line-mode +1)
                  (display-line-numbers-mode +1)
                  (setq show-trailing-whitespace t)))
-
-     ;; highlight numbers in all prog-modes
-     (add-hook 'prog-mode-hook
-               (lambda ()
-                 (require 'highlight-numbers)
-                 (highlight-numbers-mode +1)))
    #+end_src
 
 ** C
@@ -653,6 +642,16 @@
                  (setq c-default-style "linux")
                  (setq indent-tabs-mode t)
                  (setq tab-width 8)))
+   #+end_src
+
+** Highlight Numbers
+   #+begin_src emacs-lisp
+     (add-hook 'prog-mode-hook
+               (lambda ()
+                 (font-lock-add-keywords
+                  nil
+                  '(("\\([0-9]+\\)"
+                     1 font-lock-constant-face)))))
    #+end_src
 
 ** Highlight TODOs
@@ -725,8 +724,8 @@
 
 * Functions
 ** BMI
-  Function to calculate body mass index (BMI). For problems/flaws, see:
-  https://en.wikipedia.org/wiki/Body_mass_index
+   Function to calculate body mass index (BMI). For problems/flaws, see:
+   https://en.wikipedia.org/wiki/Body_mass_index
 
    #+begin_src emacs-lisp
      (defun bmi (weight height)

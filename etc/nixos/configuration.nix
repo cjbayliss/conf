@@ -9,9 +9,6 @@ let
     epkgs: [
       epkgs.elpaPackages.emms
       epkgs.melpaPackages.circe
-      epkgs.melpaPackages.elpher
-      epkgs.melpaPackages.gcmh
-      epkgs.melpaPackages.highlight-numbers
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
       epkgs.melpaPackages.rust-mode
