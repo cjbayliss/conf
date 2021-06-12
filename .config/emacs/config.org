@@ -350,13 +350,6 @@
                    (lambda () (interactive) (quit-window t)))))
    #+end_src
 
-** GC on idle
-   #+begin_src emacs-lisp
-     (add-hook 'emacs-startup-hook
-               (lambda ()
-                 (run-with-idle-timer 15 t 'garbage-collect)))
-   #+end_src
-
 ** GNU/Emms
    #+begin_src emacs-lisp
      (autoload 'emms-browser "emms-browser" nil t)
