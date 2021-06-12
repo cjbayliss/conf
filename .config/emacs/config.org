@@ -559,37 +559,6 @@
      (global-set-key (kbd "C-c e") 'ido-emoji)
    #+end_src
 
-** IRC
-   #+begin_src emacs-lisp
-     (defun irc-nick-color (nick)
-       "Return a color for a given NICK."
-       (let* ((color (concat "#" (substring (md5 (downcase nick)) 0 12))))
-         (color-ensure-contrast-above-ratio color (face-attribute 'default :background) 7 5)))
-
-     (defun color-ensure-contrast-above-ratio (color bg ratio steps)
-       "Ensure COLOR is above contrast RATIO for BG. Before increasing
-     contrast, tries inverting the color. STEPS is the pecent to
-     increase by each pass."
-       (if (< (modus-themes-contrast bg color) ratio)
-           (let* ((inverted (color-complement-hex color)))
-             (if (< (modus-themes-contrast bg inverted) ratio)
-                 (let* ((color (if (> (modus-themes-wcag-formula bg) 0.5)
-                                   (color-darken-name color steps)
-                                 (color-lighten-name color steps))))
-                   (color-ensure-contrast-above-ratio color bg ratio steps))
-               inverted))
-         color))
-   #+end_src
-
-** MPV
-   #+begin_src emacs-lisp
-     (defun browse-url-mpv (url &optional _ignored)
-       "Pass the specified URL to the \"mpv\" command.
-     The optional argument IGNORED is not used."
-       (interactive (browse-url-interactive-arg "URL: "))
-       (call-process "mpv" nil 0 nil url))
-   #+end_src
-
 ** Paste
 
    Basic paste tool.
@@ -752,4 +721,60 @@
    #+begin_src emacs-lisp
      (setq scheme-program-name "csi -n")
      (global-set-key (kbd "C-c s") 'run-scheme)
+   #+end_src
+
+* Functions
+** BMI
+  Function to calculate body mass index (BMI). For problems/flaws, see:
+  https://en.wikipedia.org/wiki/Body_mass_index
+
+   #+begin_src emacs-lisp
+     (defun bmi (weight height)
+       "Return BMI for WEIGHT at HEIGHT."
+       (let* ((height (if (< height 3)
+                          height
+                        (/ height 100.0))))
+         (string-to-number (format "%.2f" (/ weight (* height height))))))
+   #+end_src
+
+** IRC nick color
+   Nick color generator for IRC.
+
+   #+begin_src emacs-lisp
+     (defun irc-nick-color (nick)
+       "Return a color for a given NICK."
+       (let* ((color (concat "#" (substring (md5 (downcase nick)) 0 12))))
+         (color-ensure-contrast-above-ratio color (face-attribute 'default :background) 7 5)))
+   #+end_src
+
+** Color contrast
+   Color function to ensure contrast is above a given ratio. Requres
+   modus themes. If using stock emacs >= 28, you can't require the
+   built-in modus themes without using =load-theme= first. If you don't
+   like modus themes, you could =(load-theme 'modus-vivendi)= then
+   =(disable-theme 'modus-vivendi)=.
+
+   #+begin_src emacs-lisp
+     (defun color-ensure-contrast-above-ratio (color bg ratio steps)
+       "Ensure COLOR is above contrast RATIO for BG. Before increasing
+     contrast, tries inverting the color. STEPS is the pecent to
+     increase by each pass."
+       (if (< (modus-themes-contrast bg color) ratio)
+           (let* ((inverted (color-complement-hex color)))
+             (if (< (modus-themes-contrast bg inverted) ratio)
+                 (let* ((color (if (> (modus-themes-wcag-formula bg) 0.5)
+                                   (color-darken-name color steps)
+                                 (color-lighten-name color steps))))
+                   (color-ensure-contrast-above-ratio color bg ratio steps))
+               inverted))
+         color))
+   #+end_src
+
+** Browse URL in mpv
+   #+begin_src emacs-lisp
+     (defun browse-url-mpv (url &optional _ignored)
+       "Pass the specified URL to the \"mpv\" command.
+     The optional argument IGNORED is not used."
+       (interactive (browse-url-interactive-arg "URL: "))
+       (call-process "mpv" nil 0 nil url))
    #+end_src
