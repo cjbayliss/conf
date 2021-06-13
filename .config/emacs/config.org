@@ -315,6 +315,7 @@
                  (goto-address-mode +1)
                  (setenv "PAGER" "cat")
                  ;; these in term
+                 (add-to-list 'eshell-visual-commands "mpv")
                  (add-to-list 'eshell-visual-commands "nix-shell")
                  (add-to-list 'eshell-visual-commands "ssh")
                  ;; stopping the world to process file operations is insane.
@@ -323,17 +324,6 @@
                  (fmakunbound 'eshell/rm)
                  ;; eshell/date is inferior to GNU Coreutils date(1)
                  (fmakunbound 'eshell/date)))
-   #+end_src
-
-   custom eshell functions
-
-   #+begin_src emacs-lisp
-     (defun eshell/mpv (&rest args)
-       "mpv's output is problematic in eshell, so run as
-     async-shell-command. ARGS passed to mpv."
-       (if args
-           (async-shell-command (concat "mpv " (string-join args " ")))
-         (shell-command-to-string "mpv --help")))
    #+end_src
 
 ** Eww
@@ -600,11 +590,15 @@
 
 ** Term/ansi-term
    #+begin_src emacs-lisp
-     ;; please let me cut and paste, and other normal things
+     ;; show URLs, hack for fish shell
      (add-hook 'term-mode-hook
                (lambda ()
                  (goto-address-mode +1)
-                 (toggle-truncate-lines 1) ;; hack to for fish shell
+                 (toggle-truncate-lines 1)))
+
+     ;; please let me cut and paste, and other normal things
+     (add-hook 'term-load-hook
+               (lambda ()
                  (define-key term-raw-map (kbd "C-y") 'term-paste)
                  ;; quoted paste
                  (define-key term-raw-map (kbd "C-c C-y")
