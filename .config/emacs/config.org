@@ -313,6 +313,9 @@
                        eshell-output-filter-functions)
                  (goto-address-mode +1)
                  (setenv "PAGER" "cat")
+                 ;; these in term
+                 (add-to-list 'eshell-visual-commands "nix-shell")
+                 (add-to-list 'eshell-visual-commands "ssh")
                  ;; stopping the world to process file operations is insane.
                  (fmakunbound 'eshell/cp)
                  (fmakunbound 'eshell/mv)
