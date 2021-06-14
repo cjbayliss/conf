@@ -70,6 +70,8 @@ in
     fallbackDns = [ "1.0.0.1" ];
   };
 
+  environment.etc."issue".enable = false;
+
   time.timeZone = "Australia/Melbourne";
 
   i18n.defaultLocale = "en_AU.UTF-8";
@@ -91,8 +93,6 @@ in
     aspellDicts.en
     beets
     black
-    breeze-qt5
-    breeze-icons
     chicken
     cryptsetup
     ed
@@ -109,11 +109,10 @@ in
     pass
     pinentry-qt
     python3
-    qt5ct
-    redshift
     sbcl
     unzip
     wget
+    wlsunset
     youtube-dl
 
     # create executables I want
@@ -127,9 +126,6 @@ in
         export EDITOR="emacsclient";
         export VISUAL="emacsclient";
 
-        # set QT theme engine, requires qt5ct 😑
-        export QT_QPA_PLATFORMTHEME="qt5ct"
-
         # wayland stuff
         export GDK_BACKEND=wayland
         export QT_QPA_PLATFORM=wayland
@@ -140,9 +136,6 @@ in
 
         # use emacs-askpass
         export SSH_ASKPASS="emacs-askpass"
-
-        # set redshift to fix my screen's whitebalance
-        redshift -m drm -x -O 4800
 
         # start wayland compositor
         systemctl --user import-environment
