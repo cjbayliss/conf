@@ -12,7 +12,8 @@ let
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
       epkgs.melpaPackages.rust-mode
-    ]);
+    ]
+  );
 in
 {
   # the bad
@@ -21,7 +22,8 @@ in
   ];
 
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -64,7 +66,7 @@ in
     extraConfig = ''
       DNS=1.1.1.1
       DNSOverTLS=yes
-'';
+    '';
     fallbackDns = [ "1.0.0.1" ];
   };
 
@@ -145,7 +147,8 @@ in
         # start wayland compositor
         systemctl --user import-environment
         ${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway
-      '';})
+      '';
+    })
 
     (pkgs.writeTextFile {
       name = "emacs-askpass";
@@ -154,7 +157,8 @@ in
       text = ''
         #! ${pkgs.bash}/bin/bash
         emacsclient -e '(read-passwd "Password: ")' | xargs
-      '';})
+      '';
+    })
   ];
 
   programs.sway = {

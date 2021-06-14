@@ -2,7 +2,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ata_piix" "ahci" "firewire_ohci" "usb_storage" "usbhid" "sd_mod" ];
@@ -15,17 +16,20 @@
   ];
 
   fileSystems."/" =
-    { device = "rpool/root";
+    {
+      device = "rpool/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "rpool/home";
+    {
+      device = "rpool/home";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/41E4-F990";
+    {
+      device = "/dev/disk/by-uuid/41E4-F990";
       fsType = "vfat";
     };
 
