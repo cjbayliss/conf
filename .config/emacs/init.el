@@ -256,10 +256,19 @@
 (setq eshell-ls-initial-args "-h")
 (setq eshell-scroll-to-bottom-on-input 'all)
 
+;; FIXME: test if still broken after next rebuild of emacs!!
+;;
+;; eshell-watch-for-password-prompt appears broken, maybe because I'm on
+;; NixOS? or maybe because I built emacs from master? Either way, eshell
+;; *and* tramp fail with eshell-watch-for-password-prompt
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (require 'em-unix)
+            (delq 'eshell-watch-for-password-prompt
+                  eshell-output-filter-functions)))
+
 (add-hook 'eshell-mode-hook
           (lambda ()
-            (delq 'eshell-watch-for-password-prompt
-                  eshell-output-filter-functions)
             (goto-address-mode +1)
             (setenv "PAGER" "cat")
             ;; these in term
