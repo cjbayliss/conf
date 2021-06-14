@@ -544,23 +544,21 @@
             (display-line-numbers-mode +1)
             (setq show-trailing-whitespace t)))
 
-;;;; C
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (setq c-basic-offset 8)
-            (setq c-default-style "linux")
-            (setq indent-tabs-mode t)
-            (setq tab-width 8)))
-
-;;;; highlight numbers (FIXME: *only* highlight numbers)
+;;;; hl-nums, hl-bool, hl-todo
 (add-hook 'prog-mode-hook
           (lambda ()
             (font-lock-add-keywords
              nil
-             '(("\\(\\(\+\\|-\\|[0-9]+\.\\)?[0-9]+\\)"
+             '(("[^a-zA-Z]\\(\\(\+\\|-\\|[0-9]+\.\\)?[0-9]+\\)[^a-zA-Z]"
                 1 font-lock-constant-face)))))
 
-;;;; instead of loading hl-todo
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (font-lock-add-keywords
+             nil
+             '(("[^a-zA-Z]\\(t\\|nil\\)[^a-zA-Z]"
+                1 font-lock-constant-face)))))
+
 (defface highlight-todo-face
   '((t :inherit font-lock-warning-face
        :weight bold
@@ -575,6 +573,14 @@
              nil
              '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\):"
                 1 highlight-todo-face t)))))
+
+;;;; C
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (setq c-basic-offset 8)
+            (setq c-default-style "linux")
+            (setq indent-tabs-mode t)
+            (setq tab-width 8)))
 
 ;;;; lisp
 (setq inferior-lisp-program "sbcl --no-userinit")
