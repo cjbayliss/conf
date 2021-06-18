@@ -285,7 +285,7 @@
 ;;;; eww
 (setq eww-download-directory (expand-file-name "~/downloads"))
 (setq eww-header-line-format nil)
-(setq eww-search-prefix "https://duckduckgo.com/lite/?q=")
+(setq eww-search-prefix "https://duckduckgo.com/lite/?k1=-1&q=")
 (setq shr-cookie-policy nil)
 (setq shr-discard-aria-hidden t)
 (setq shr-max-image-proportion 0.6)
@@ -441,13 +441,14 @@
 ;; buffer only, flex matching ido-mode
 (setq ido-enable-flex-matching t)
 (setq ido-ignore-buffers '("\\` " "^\*"))
+(setq ido-max-window-height 1)
 (ido-mode 'buffers)
 
 ;;;;; emoji picker using ido
 ;; list of emoji I'm likely to use
 (defvar ido-emoji-list
-  '("🙂" "🤷" "🤦" "🥳" "🤣" "🤨" "😜" "😬" "👋" "👍" "👌" "😱"
-    "🤮" "😭" "😑" "💃"))
+  '("😊" "🤷" "🤦" "🥳" "😂" "😕" "😜" "😬" "👋" "👍" "👌" "😱"
+    "🤮" "😭" "🥰" "🤤" "💃" "🍕" "☕"))
 
 (defun build-ido-emoji-list ()
   "Return a list of emoji with their Unicode names built from the
