@@ -157,7 +157,8 @@
   (setq circe-fool-list '("{^-^}"
                           "Hash"
                           "epony"
-                          "gnUser"))
+                          "gnUser"
+                          "teknikal_domain"))
   (setq circe-format-say "<{nick}> {body}")
   (setq circe-format-action "[{nick} {body}]")
   (setq circe-format-self-say circe-format-say)
