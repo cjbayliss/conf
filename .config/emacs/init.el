@@ -24,7 +24,6 @@
 (setq column-number-mode t)
 (setq custom-file (concat user-emacs-directory "/custom.el"))
 (setq help-window-select t)
-(setq kill-read-only-ok t)
 (setq make-backup-files nil)
 (setq org-cycle-include-plain-lists 'integrate)
 (setq package--init-file-ensured t)
@@ -507,12 +506,15 @@
 ;; show URLs, hack for fish shell
 (add-hook 'term-mode-hook
           (lambda ()
+            (setq-local kill-read-only-ok t)
             (goto-address-mode +1)
             (toggle-truncate-lines 1)))
 
 ;; please let me cut and paste, and other normal things
 (add-hook 'term-load-hook
           (lambda ()
+            (define-key term-raw-map (kbd "M-:") 'eval-expression)
+            (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
             (define-key term-raw-map (kbd "C-y") 'term-paste)
             ;; quoted paste
             (define-key term-raw-map (kbd "C-c C-y")
@@ -668,7 +670,7 @@ The optional argument IGNORED is not used."
 (setq outline-minor-mode-highlight 'override)
 
 (defun outline-cycle-maybe ()
-  "Run 'outline-cycle' if not on an outline heading."
+  "Run 'outline-cycle' if on an outline heading."
   (interactive)
   (if (outline-on-heading-p)
       (outline-cycle)
