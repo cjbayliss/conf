@@ -108,6 +108,9 @@
 (global-set-key (kbd "C-c p") 'run-python)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; 🤬
+(global-unset-key (kbd "C-z"))
+
 ;;;; configuring the mode-line is pretty ugly 🤮
 (add-hook
  'emacs-startup-hook
@@ -212,13 +215,17 @@
       :sasl-password (lambda (x)
                        (auth-source-pass-get 'secret "irc.libera.chat"))
       :channels (:after-auth "#chicken"
-                             "#emacs"
-                             "#lisp"
                              "#commonlisp"
+                             "#emacs"
+                             "#haskell"
+                             "#lisp"
+                             "##math"
+                             "#nixos"
                              "#python"
                              "##rust"
                              "#scheme"
-                             "#xebian")))))
+                             "#xebian"
+                             "#xmonad")))))
 
 ;;;;; circe functions
 (defun irc ()
