@@ -312,50 +312,6 @@
             (define-key eww-mode-map (kbd "q")
               (lambda () (interactive) (quit-window t)))))
 
-;;;; GNU/Emms
-(autoload 'emms-browser "emms-browser" nil t)
-
-(unless (file-directory-p (concat user-emacs-directory "emms"))
-  (make-directory (concat user-emacs-directory "emms") t))
-
-;; play/pause music, or start playing at random if nothing is playing
-(defun emms-play/pause-handler ()
-  "determine best course of action when pressing play/pause button"
-  (interactive)
-  (unless (featurep 'emms)
-    (emms-browser))
-  (defun emms-random-play-all ()
-    "hacky solution to play all songs in random mode."
-    (emms-browse-by-performer)
-    (emms-browser-add-tracks)
-    (emms-shuffle)
-    (emms-start))
-  (if (or (not emms-player-playing-p)
-          emms-player-stopped-p)
-      (emms-random-play-all)
-    (emms-pause)))
-
-;; emms config
-;; for i in ~/music/* { convert -resize 60x60 $i/cover.jpg $i/cover_small.png }
-;; for i in ~/music/* { convert -resize 120x120 $i/cover.jpg $i/cover_medium.png }
-(add-hook 'emms-browser-mode-hook
-          (lambda ()
-            (require 'emms-setup)
-            (require 'emms-info)
-            (emms-all)
-            (emms-default-players)
-            (setq emms-player-list (list emms-player-mpv)
-                  emms-info-functions '(emms-info-opusinfo)
-                  emms-mode-line-format "%s"
-                  emms-playing-time-display-format " [%s] "
-                  emms-source-file-default-directory "~/music/"
-                  emms-mode-line-mode-line-function
-                  'emms-mode-line-playlist-current)
-            (add-to-list 'emms-player-base-format-list "opus")
-            (emms-player-set emms-player-mpv 'regex
-                             (apply #'emms-player-simple-regexp
-                                    emms-player-base-format-list))))
-
 ;;;; Gnus
 (setq gnus-directory (concat user-emacs-directory "news"))
 (setq gnus-startup-file (concat user-emacs-directory "newsrc"))
