@@ -5,10 +5,13 @@ let
   firefoxWithPassFFHost = (firefox.override {
     extraNativeMessagingHosts = [ passff-host ];
   });
+  mpvWithMpris = (mpv-with-scripts.override {
+    scripts = [ mpvScripts.mpris ];
+  });
   emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtk).emacsWithPackages (
     epkgs: [
-      epkgs.elpaPackages.emms
       epkgs.melpaPackages.circe
+      epkgs.melpaPackages.haskell-mode
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
       epkgs.melpaPackages.rust-mode
@@ -23,8 +26,10 @@ in
 
   imports =
     [
-      # Include the results of the hardware scan.
+      # hardware
       ./hardware-configuration.nix
+      # display server config
+      ./display-server.nix
     ];
 
   boot.loader = {
@@ -98,72 +103,26 @@ in
     ed
     efibootmgr
     emacs
+    feh
     ffmpeg
     firefoxWithPassFFHost
     git
     git-filter-repo
     gnome3.adwaita-icon-theme
     imagemagick
-    mpv
+    mpvWithMpris
     opusTools
     pass
     pinentry-qt
+    playerctl
     python3
+    rofi
+    sakura
     sbcl
     unzip
     wget
-    wlsunset
     youtube-dl
-
-    # create executables I want
-    (pkgs.writeTextFile {
-      name = "startw";
-      destination = "/bin/startw";
-      executable = true;
-      text = ''
-        #! ${pkgs.bash}/bin/bash
-
-        export EDITOR="emacsclient";
-        export VISUAL="emacsclient";
-
-        # wayland stuff
-        export GDK_BACKEND=wayland
-        export QT_QPA_PLATFORM=wayland
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-        export SDL_VIDEODRIVER=wayland
-        export XDG_CURRENT_DESKTOP=sway
-        export XDG_SESSION_TYPE=wayland
-
-        # use emacs-askpass
-        export SSH_ASKPASS="emacs-askpass"
-
-        # start wayland compositor
-        systemctl --user import-environment
-        ${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway
-      '';
-    })
-
-    (pkgs.writeTextFile {
-      name = "emacs-askpass";
-      destination = "/bin/emacs-askpass";
-      executable = true;
-      text = ''
-        #! ${pkgs.bash}/bin/bash
-        emacsclient -e '(read-passwd "Password: ")' | xargs
-      '';
-    })
   ];
-
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      grim
-      slurp
-      swayidle
-      swaylock
-    ];
-  };
 
   sound.enable = true;
 
@@ -225,31 +184,35 @@ in
   programs.fish = {
     enable = true;
     shellInit = "set fish_greeting";
-    loginShellInit = ''
-      set -gx XDG_DESKTOP_DIR "$HOME/stuff/desktop"
-      set -gx XDG_DOCUMENTS_DIR "$HOME/stuff"
-      set -gx XDG_DOWNLOAD_DIR "$HOME/downloads"
-      set -gx XDG_MUSIC_DIR "$HOME/music"
-      set -gx XDG_PICTURES_DIR "$HOME/pictures"
-      set -gx XDG_VIDEOS_DIR "$HOME/videos"
-
-      set -gx XDG_CONFIG_HOME "$HOME/.config"
-      set -gx XDG_CACHE_HOME "/tmp/cache"
-      set -gx XDG_DATA_HOME "$HOME/.local/share"
-      mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
-
-      set -gx PYTHONSTARTUP "$XDG_CONFIG_HOME/python/startup.py"
-      set -gx PASSWORD_STORE_DIR "$XDG_DATA_HOME/pass"
-
-      set -gx EMAIL "cjb@cjb.sh"
-      set -gx NAME "Christopher Bayliss"
-    '';
   };
   users.users.cjb.shell = pkgs.fish;
 
+  # system wide
   environment.variables = {
     EDITOR = "ed";
     VISUAL = "ed";
+  };
+
+  # variables set by PAM on login
+  environment.sessionVariables = {
+    XDG_DESKTOP_DIR = "$HOME/stuff/desktop";
+    XDG_DOCUMENTS_DIR = "$HOME/stuff";
+    XDG_DOWNLOAD_DIR = "$HOME/downloads";
+    XDG_MUSIC_DIR = "$HOME/music";
+    XDG_PICTURES_DIR = "$HOME/pictures";
+    XDG_VIDEOS_DIR = "$HOME/videos";
+
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_CACHE_HOME = "/tmp/cache";
+    XDG_DATA_HOME = "$HOME/.local/share";
+
+    PYTHONSTARTUP = "$XDG_CONFIG_HOME/python/startup.py";
+    PASSWORD_STORE_DIR = "$XDG_DATA_HOME/pass";
+    MOZ_USE_XINPUT2 = "1";
+
+    # FIXME: make this *only* get set for 'cjb'
+    EMAIL = "cjb@cjb.sh";
+    NAME = "Christopher Bayliss";
   };
 
   nixpkgs.overlays = [
