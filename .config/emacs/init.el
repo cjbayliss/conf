@@ -17,9 +17,9 @@
 ;;; General:
 ;;;; sane defaults
 (setq auth-source-save-behavior nil)
-(setq browse-url-handlers '(("youtube" . browse-url-mpv)
-                            ("youtu.be" . browse-url-mpv)
-                            ("." . browse-url-firefox)))
+(setq browse-url-handlers '(("youtube." . browse-url-mpv)
+                            ("youtu.be/" . browse-url-mpv)
+                            ("." . browse-url-chromium)))
 (setq c-basic-offset 4)
 (setq column-number-mode t)
 (setq custom-file (concat user-emacs-directory "/custom.el"))
@@ -29,6 +29,7 @@
 (setq package--init-file-ensured t)
 (setq require-final-newline t)
 (setq shell-file-name "sh")
+(setq split-width-threshold 0)
 (setq-default fill-column 72)
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace nil)
