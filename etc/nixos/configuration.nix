@@ -2,8 +2,8 @@
 
 with pkgs;
 let
-  firefoxWithPassFFHost = (firefox.override {
-    extraNativeMessagingHosts = [ passff-host ];
+  chromium = (ungoogled-chromium.override {
+    commandLineArgs = ''$([ $(date "+%k") -ge 17 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
   });
   mpvWithMpris = (mpv-with-scripts.override {
     scripts = [ mpvScripts.mpris ];
@@ -98,14 +98,15 @@ in
     aspellDicts.en
     beets
     black
+    browserpass
     chicken
+    chromium
     cryptsetup
     ed
     efibootmgr
     emacs
     feh
     ffmpeg
-    firefoxWithPassFFHost
     git
     git-filter-repo
     gnome3.adwaita-icon-theme
@@ -123,6 +124,11 @@ in
     wget
     youtube-dl
   ];
+
+  environment.etc = {
+    "chromium/native-messaging-hosts/com.github.browserpass.native.json".source =
+      "${pkgs.browserpass}/lib/browserpass/hosts/chromium/com.github.browserpass.native.json";
+  };
 
   sound.enable = true;
 
