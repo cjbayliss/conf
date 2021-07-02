@@ -29,7 +29,7 @@
 (setq package--init-file-ensured t)
 (setq require-final-newline t)
 (setq shell-file-name "sh")
-(setq split-width-threshold 0)
+(setq split-width-threshold 100)
 (setq-default fill-column 72)
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace nil)
@@ -539,7 +539,7 @@
           (lambda ()
             (font-lock-add-keywords
              nil
-             '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\):"
+             '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\|IMPORTANT\\):"
                 1 highlight-todo-face t)))))
 
 ;;;; C
@@ -567,10 +567,28 @@
                  (nix-mode))))
 
 ;;;; php
+;; IMPORTANT: DO NOT CHANGE THE ORDER THIS IS WRITEN IN.
 (add-to-list 'auto-mode-alist
              '("\\.php\\'" .
                (lambda ()
                  (require 'php-mode)
+                 ;; highlight function calls
+                 (set-face-attribute 'php-function-call nil :inherit font-lock-function-name-face)
+                 ;; what ever this is
+                 (set-face-attribute 'php-paamayim-nekudotayim nil :slant 'oblique)
+                 ;; variables don't need to be highlighted
+                 (set-face-attribute 'php-variable-name nil :inherit nil)
+                 ;; operators
+                 (mapc (lambda (x)
+                         (set-face-attribute x nil :inherit font-lock-variable-name-face))
+                       '(php-arithmetic-op
+                         php-assignment-op
+                         php-inc-dec-op
+                         php-logical-op
+                         php-object-op
+                         php-operator
+                         php-string-op))
+                 ;; *now* load php-mode
                  (php-mode)
                  (setq c-basic-offset 4)
                  (setq indent-tabs-mode nil)
