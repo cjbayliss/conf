@@ -4,7 +4,7 @@
   services.xserver = {
     enable = true;
     layout = "us";
-
+    exportConfiguration = true;
     videoDrivers = [ "intel" ];
 
     deviceSection = ''

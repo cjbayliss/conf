@@ -8,9 +8,11 @@ let
   mpvWithMpris = (mpv-with-scripts.override {
     scripts = [ mpvScripts.mpris ];
   });
-  emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtk).emacsWithPackages (
+  emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
     epkgs: [
       epkgs.melpaPackages.circe
+      # FIXME: remove this once nix-mode properly pulls in 'f
+      epkgs.melpaPackages.f
       epkgs.melpaPackages.haskell-mode
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
@@ -94,35 +96,46 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    # libs
     aspell
     aspellDicts.en
+    browserpass
+    git-filter-repo
+    gnome3.adwaita-icon-theme
+    opusTools
+    pinentry-qt
+
+    # langs
+    chicken
+    ghc
+    php73
+    python3
+    sbcl
+
+    # tools
     beets
     black
-    browserpass
-    chicken
-    chromium
     cryptsetup
     ed
     efibootmgr
-    emacs
     feh
     ffmpeg
     git
-    git-filter-repo
-    gnome3.adwaita-icon-theme
+    hlint
+    htop
     imagemagick
-    mpvWithMpris
-    opusTools
     pass
-    pinentry-qt
     playerctl
-    python3
-    rofi
-    sakura
-    sbcl
     unzip
     wget
     youtube-dl
+
+    # gui
+    chromium
+    emacs
+    mpvWithMpris
+    rofi
+    sakura
   ];
 
   environment.etc = {
@@ -223,7 +236,7 @@ in
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/efeb67809754347fc6d1cc817e774306b45a376f.tar.gz;
+      url = https://github.com/nix-community/emacs-overlay/archive/68b98553f7e6cc2a0c3a727450ca8901d854a987.tar.gz;
     }))
   ];
 
