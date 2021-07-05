@@ -373,13 +373,11 @@
 (global-set-key (kbd "C-c w r") 'ix-io-paste-region)
 
 ;;;; rcirc
-;; ugly hack to only load the better rcirc.el once
-(defvar rcirc-loaded-p nil)
+;; TODO: remove after feature/rcirc-update is merged
+(setq-default load-prefer-newer t)
+(setq-default load-path (nconc `(,(concat user-emacs-directory "lisp/")) load-path))
+
 (with-eval-after-load 'rcirc
-  ;; TODO: remove after feature/rcirc-update is merged
-  (unless rcirc-loaded-p
-    (setq rcirc-loaded-p t)
-    (load-file (concat user-emacs-directory "lisp/rcirc.el")))
 
 ;;;;; rcirc functions
   ;; BEGIN GPL2+ CODE FROM:
