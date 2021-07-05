@@ -132,9 +132,11 @@
       "   "
       mode-line-position
       (vc-mode vc-mode)
-      "  "
-      (:eval (when (boundp 'tracking-max-mode-line-entries)
-               tracking-mode-line-buffers))
+      " "
+      (:eval (when (boundp 'rcirc-track-minor-mode)
+               (when rcirc-activity
+                 rcirc-activity-string)))
+      " "
       (:eval (format-mode-line 'mode-line-modes 'font-lock-doc-face))
       (:eval (format-mode-line '(" " display-time-string) 'bold))
       "  "
@@ -146,102 +148,6 @@
    (delq 'display-time-string global-mode-string)))
 
 ;;; Tools
-;;;; Circe
-;;;;; Circe options
-(with-eval-after-load 'circe
-  (setq lui-fill-type nil)
-  (setq lui-logging-directory "~/stuff/irc-logs")
-  (setq lui-time-stamp-format "%H:%M ")
-  (setq lui-time-stamp-only-when-changed-p nil)
-  (setq lui-time-stamp-position 'left)
-
-  (setq circe-default-part-message "")
-  (setq circe-default-quit-message "")
-  (setq circe-fool-list '("{^-^}"
-                          "Hash"
-                          "epony"
-                          "gnUser"
-                          "teknikal_domain"))
-  (setq circe-format-say "<{nick}> {body}")
-  (setq circe-format-action "[{nick} {body}]")
-  (setq circe-format-self-say circe-format-say)
-  (setq circe-format-self-action circe-format-action)
-  (setq circe-reduce-lurker-spam t)
-  (setq circe-color-nicks-everywhere t)
-  (setq lui-flyspell-p t)
-  (setq circe-default-nick "cjbayliss")
-  (setq circe-default-realname "Christopher Bayliss")
-
-  (add-hook 'lui-mode-hook 'my-lui-setup)
-  (defun my-lui-setup ()
-    (setq fringes-outside-margins t
-          word-wrap t
-          wrap-prefix "      "))
-  (require 'lui-logging)
-  (enable-lui-logging-globally))
-
-;;;;; nick colours etc
-(with-eval-after-load 'circe
-  (require 'circe-color-nicks)
-  (setf (symbol-function 'circe-nick-color-for-nick)
-        (symbol-function 'irc-nick-color))
-  (enable-circe-color-nicks)
-
-  (set-face-attribute 'circe-my-message-face nil :inherit font-lock-comment-face)
-  (set-face-attribute 'circe-originator-face nil :inherit font-lock-preprocessor-face))
-
-;;;;; circe network options
-(with-eval-after-load 'circe
-  (setq
-   circe-network-options
-   '(("OFTC"
-      :tls t
-      :host "irc.oftc.net"
-      :nick "cjbayliss"
-      :nickserv-password (lambda (x)
-                           (auth-source-pass-get 'secret "irc.oftc.net"))
-      :channels (:after-auth "#llvm"))
-     ("Cyber"
-      :host "127.0.0.1"
-      :port "6667"
-      :nick "cjb"
-      :channels ("#cyber"))
-     ("Libera.Chat"
-      :tls t
-      :port 6697
-      :host "irc.libera.chat"
-      :nick "cjb"
-      :sasl-strict t
-      :sasl-username "cjb"
-      :sasl-password (lambda (x)
-                       (auth-source-pass-get 'secret "irc.libera.chat"))
-      :channels (:after-auth "#chicken"
-                             "#commonlisp"
-                             "#emacs"
-                             "#haskell"
-                             "#lisp"
-                             "##math"
-                             "#nixos"
-                             "#python"
-                             "##rust"
-                             "#scheme"
-                             "#xebian"
-                             "#xmonad")))))
-
-;;;;; circe functions
-(defun irc ()
-  "Connect to IRC."
-  (interactive)
-  (require 'circe)
-  (circe "OFTC")
-  (circe "Libera.Chat"))
-
-(defun irc-cyber ()
-  (interactive)
-  (if (featurep 'circe)
-      (circe "Cyber")
-    (error "circe not setup, try M-x irc RET first")))
-
 ;;;; dired
 (setq dired-listing-switches "-ABlhFv")
 
@@ -465,6 +371,115 @@
 
 (global-set-key (kbd "C-c w b") 'ix-io-paste-buffer)
 (global-set-key (kbd "C-c w r") 'ix-io-paste-region)
+
+;;;; rcirc
+;; ugly hack to only load the better rcirc.el once
+(defvar rcirc-loaded-p nil)
+(with-eval-after-load 'rcirc
+  ;; TODO: remove after feature/rcirc-update is merged
+  (unless rcirc-loaded-p
+    (setq rcirc-loaded-p t)
+    (load-file (concat user-emacs-directory "lisp/rcirc.el")))
+
+;;;;; rcirc functions
+  ;; BEGIN GPL2+ CODE FROM:
+  ;; https://github.com/emacsmirror/rcirc-color/blob/7d9655e/rcirc-color.el
+  (defvar rcirc-color-mapping (make-hash-table :test 'equal))
+
+  (defvar rcirc-color-other-attributes nil
+    "Other attributes to use for nicks.
+Example: (setq rcirc-color-other-attributes '(:weight bold))")
+
+  (advice-add 'rcirc-facify :around #'rcirc-color--facify)
+  (defun rcirc-color--facify (orig-fun string face &rest args)
+    "Add colors to other nicks based on `rcirc-colors'."
+    (when (and (eq face 'rcirc-other-nick)
+               (> (length string) 0))
+      (let ((cell (or (gethash string rcirc-color-mapping)
+                      (puthash (substring-no-properties string)
+                               `(:foreground
+			         ,(irc-nick-color string)
+			         ,@rcirc-color-other-attributes)
+                               rcirc-color-mapping))))
+        (setq face (list cell))))
+    (apply orig-fun string face args))
+
+  (defun rcirc-markup-nick-colors (_sender _response)
+    "Add a face to all known nicks in `rcirc-color-mapping'.
+This ignores SENDER and RESPONSE."
+    (with-syntax-table rcirc-nick-syntax-table
+      (while (re-search-forward "\\w+" nil t)
+        (let ((face (gethash (match-string-no-properties 0) rcirc-color-mapping)))
+	  (when face
+	    (rcirc-add-face (match-beginning 0) (match-end 0) face))))))
+
+  (add-hook 'rcirc-markup-text-functions #'rcirc-markup-nick-colors)
+  ;; END GPL2+ CODE ;;
+
+  ;; if /QUERY is missing, create it
+  (when (and (not (fboundp 'rcirc-cmd-query))
+             (fboundp 'rcirc-define-command))
+    (rcirc-define-command query (nick)
+      "Open a private chat buffer to NICK."
+      (interactive (list (completing-read "Query nick: "
+                                          (with-rcirc-server-buffer rcirc-nick-table))))
+      (let ((existing-buffer (rcirc-get-buffer process nick)))
+        (switch-to-buffer (or existing-buffer
+			      (rcirc-get-buffer-create process nick)))
+        (when (not existing-buffer)
+          (rcirc-cmd-whois nick)))))
+
+;;;;; rcirc hooks
+  (add-hook 'rcirc-mode-hook (lambda ()
+                               (rcirc-omit-mode +1)
+                               (rcirc-track-minor-mode  +1)
+                               (flyspell-mode +1)
+                               (set (make-local-variable 'scroll-conservatively) 8192)))
+  (add-hook 'rcirc-track-minor-mode-hook (lambda ()
+                                           (delq 'rcirc-activity-string global-mode-string)))
+
+;;;;; rcirc config
+  (setq rcirc-default-full-name "Christopher Bayliss (they/them)")
+  (setq rcirc-default-nick "cjbayliss")
+  (setq rcirc-default-user-name "cjbayliss")
+  (setq rcirc-fill-column 'frame-width)
+  (setq rcirc-buffer-maximum-lines 2048)
+  (setq rcirc-log-flag t)
+  (setq rcirc-log-directory "~/stuff/rcirc-log")
+  ;; (setq rcirc-debug-flag t)
+  (setq rcirc-server-alist '(("irc.au.libera.chat"
+                              :port 6697
+                              :encryption tls
+                              :nick "cjb"
+                              :user-name "cjb"
+                              :server-alias "libera"
+                              :channels ("#chicken"
+                                         "#commonlisp"
+                                         "#emacs"
+                                         "#haskell"
+                                         "#lisp"
+                                         "##math"
+                                         "#nixos"
+                                         "#python"
+                                         "##rust"
+                                         "#scheme"
+                                         "#xebian"
+                                         "#xmonad"))
+                             ("irc.oftc.net"
+                              :port 6697
+                              :encryption tls
+                              :nick "cjbayliss"
+                              :user-name "cjbayliss"
+                              :server-alias "oftc"
+                              :channels ("#llvm"))))
+
+  (setq rcirc-authinfo
+        `(("libera" sasl "cjb" ,(auth-source-pass-get 'secret "irc.libera.chat"))
+          ("oftc" nickserv "cjbayliss" ,(auth-source-pass-get 'secret "irc.oftc.net")))))
+
+(defun irc-cyber ()
+  (interactive)
+  (rcirc-connect "127.0.0.1" 6667 "cjb" nil "Christopher Bayliss (they/them)" '("#cyber") "cyber"))
 
 ;;;; term/ansi-term
 ;; show URLs, hack for fish shell
