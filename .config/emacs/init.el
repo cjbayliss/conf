@@ -219,6 +219,30 @@
             (define-key eww-mode-map (kbd "q")
               (lambda () (interactive) (quit-window t)))))
 
+;;;; etags
+(defun etags-scan-dir (directory &optional extension)
+  "Scan a DIRECTORY with etags, matching files with EXTENSION."
+  (delete-file (format "%sTAGS" directory))
+  (if extension
+      (call-process-shell-command
+       (format "find %s -name \"*.%s\" -print | xargs etags -a -o %sTAGS"
+               directory extension directory))
+    (call-process-shell-command
+     (format "find %s -print | xargs etags -a -l auto -o %sTAGS"
+             directory directory))))
+
+(defun vc-generate-etags ()
+  "Generate a TAGS file in the vc-root-dir."
+  (interactive)
+  (let ((root (vc-root-dir)))
+    (or (when root
+          (message (format "Generating TAGS file for %s ..." root))
+          (etags-scan-dir root)
+          (message (format "Generating TAGS file for %s ... Done." root)))
+        (message "Can't find the version control root directory."))))
+
+(define-key global-map (kbd "C-x v t") 'vc-generate-etags)
+
 ;;;; Gnus
 (setq gnus-directory (concat user-emacs-directory "news"))
 (setq gnus-startup-file (concat user-emacs-directory "newsrc"))
