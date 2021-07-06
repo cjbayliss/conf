@@ -102,6 +102,7 @@ in
     gnome3.adwaita-icon-theme
     opusTools
     pinentry-qt
+    universal-ctags
 
     # langs
     chicken

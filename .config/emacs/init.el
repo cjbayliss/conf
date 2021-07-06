@@ -220,16 +220,10 @@
               (lambda () (interactive) (quit-window t)))))
 
 ;;;; etags
-(defun etags-scan-dir (directory &optional extension)
-  "Scan a DIRECTORY with etags, matching files with EXTENSION."
-  (delete-file (format "%sTAGS" directory))
-  (if extension
-      (call-process-shell-command
-       (format "find %s -name \"*.%s\" -print | xargs etags -a -o %sTAGS"
-               directory extension directory))
-    (call-process-shell-command
-     (format "find %s -print | xargs etags -a -l auto -o %sTAGS"
-             directory directory))))
+(defun ctags-scan-dir (directory)
+  "Generate a TAGS file in DIRECTORY using universal-ctags."
+  (call-process-shell-command
+   (format "ctags -f %sTAGS -e -R %s" directory directory)))
 
 (defun vc-generate-etags ()
   "Generate a TAGS file in the vc-root-dir."
@@ -237,7 +231,7 @@
   (let ((root (vc-root-dir)))
     (or (when root
           (message (format "Generating TAGS file for %s ..." root))
-          (etags-scan-dir root)
+          (ctags-scan-dir root)
           (message (format "Generating TAGS file for %s ... Done." root)))
         (message "Can't find the version control root directory."))))
 
