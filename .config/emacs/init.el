@@ -384,6 +384,9 @@
   ;; https://github.com/emacsmirror/rcirc-color/blob/7d9655e/rcirc-color.el
   (defvar rcirc-color-mapping (make-hash-table :test 'equal))
 
+  (defun rcirc-clear-color-mapping ()
+    (setq rcirc-color-mapping (make-hash-table :test 'equal)))
+
   (advice-add 'rcirc-facify :around #'rcirc-color--facify)
   (defun rcirc-color--facify (orig-fun string face &rest args)
     "Add colors to other nicks based on `rcirc-colors'."
@@ -427,7 +430,10 @@ This ignores SENDER and RESPONSE."
                                (rcirc-omit-mode +1)
                                (rcirc-track-minor-mode  +1)
                                (flyspell-mode +1)
+                               (set-face-attribute 'rcirc-nick-in-message-full-line nil :foreground nil :weight 'normal)
+                               (set-face-attribute 'rcirc-my-nick nil :foreground nil :weight 'normal :inherit 'rcirc-nick-in-message)
                                (set (make-local-variable 'scroll-conservatively) 8192)))
+
   (add-hook 'rcirc-track-minor-mode-hook (lambda ()
                                            (delq 'rcirc-activity-string global-mode-string)))
 
@@ -437,6 +443,8 @@ This ignores SENDER and RESPONSE."
   (setq rcirc-default-user-name "cjbayliss")
   (setq rcirc-fill-column 'frame-width)
   (setq rcirc-buffer-maximum-lines 2048)
+  (setq rcirc-ignore-list '("{^-^}"
+                            "Hash"))
   (setq rcirc-log-flag t)
   (setq rcirc-log-directory "~/stuff/rcirc-log")
   ;; (setq rcirc-debug-flag t)
