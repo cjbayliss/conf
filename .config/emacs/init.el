@@ -462,7 +462,6 @@ This ignores SENDER and RESPONSE."
                                          "##math"
                                          "#nixos"
                                          "#python"
-                                         "##rust"
                                          "#scheme"
                                          "#xebian"
                                          "#xmonad"))
@@ -609,14 +608,6 @@ This ignores SENDER and RESPONSE."
                  (setq c-basic-offset 4)
                  (setq indent-tabs-mode nil)
                  (php-enable-psr2-coding-style))))
-
-;;;; rust
-(add-to-list 'auto-mode-alist
-             '("\\.rs\\|.rlib\\'" .
-               (lambda ()
-                 (require 'rust-mode)
-                 (rust-mode)
-                 (setq rust-format-on-save t))))
 
 ;;;; scheme
 (setq scheme-program-name "csi -n")

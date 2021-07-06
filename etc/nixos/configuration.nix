@@ -10,13 +10,11 @@ let
   });
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
     epkgs: [
-      epkgs.melpaPackages.circe
       # FIXME: remove this once nix-mode properly pulls in 'f
       epkgs.melpaPackages.f
       epkgs.melpaPackages.haskell-mode
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
-      epkgs.melpaPackages.rust-mode
     ]
   );
 in
