@@ -384,10 +384,6 @@
   ;; https://github.com/emacsmirror/rcirc-color/blob/7d9655e/rcirc-color.el
   (defvar rcirc-color-mapping (make-hash-table :test 'equal))
 
-  (defvar rcirc-color-other-attributes nil
-    "Other attributes to use for nicks.
-Example: (setq rcirc-color-other-attributes '(:weight bold))")
-
   (advice-add 'rcirc-facify :around #'rcirc-color--facify)
   (defun rcirc-color--facify (orig-fun string face &rest args)
     "Add colors to other nicks based on `rcirc-colors'."
@@ -396,8 +392,7 @@ Example: (setq rcirc-color-other-attributes '(:weight bold))")
       (let ((cell (or (gethash string rcirc-color-mapping)
                       (puthash (substring-no-properties string)
                                `(:foreground
-			         ,(irc-nick-color string)
-			         ,@rcirc-color-other-attributes)
+			         ,(irc-nick-color string))
                                rcirc-color-mapping))))
         (setq face (list cell))))
     (apply orig-fun string face args))
