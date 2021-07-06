@@ -430,24 +430,12 @@ This ignores SENDER and RESPONSE."
   (add-hook 'rcirc-markup-text-functions #'rcirc-markup-nick-colors)
   ;; END GPL2+ CODE ;;
 
-  ;; if /QUERY is missing, create it
-  (when (and (not (fboundp 'rcirc-cmd-query))
-             (fboundp 'rcirc-define-command))
-    (rcirc-define-command query (nick)
-      "Open a private chat buffer to NICK."
-      (interactive (list (completing-read "Query nick: "
-                                          (with-rcirc-server-buffer rcirc-nick-table))))
-      (let ((existing-buffer (rcirc-get-buffer process nick)))
-        (switch-to-buffer (or existing-buffer
-			      (rcirc-get-buffer-create process nick)))
-        (when (not existing-buffer)
-          (rcirc-cmd-whois nick)))))
-
 ;;;;; rcirc hooks
   (add-hook 'rcirc-mode-hook (lambda ()
                                (rcirc-omit-mode +1)
                                (rcirc-track-minor-mode  +1)
                                (flyspell-mode +1)
+                               (setq-local fill-column (frame-width))
                                (set-face-attribute 'rcirc-nick-in-message-full-line nil :foreground nil :weight 'normal)
                                (set-face-attribute 'rcirc-my-nick nil :foreground nil :weight 'normal :inherit 'rcirc-nick-in-message)
                                (set (make-local-variable 'scroll-conservatively) 8192)))
@@ -480,6 +468,7 @@ This ignores SENDER and RESPONSE."
                                          "##math"
                                          "#nixos"
                                          "#python"
+                                         "#rcirc"
                                          "#scheme"
                                          "#xebian"
                                          "#xmonad"))
