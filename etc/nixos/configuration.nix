@@ -211,6 +211,11 @@ in
   programs.fish = {
     enable = true;
     shellInit = "set fish_greeting";
+    loginShellInit = ''
+      if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]
+          exec startx
+      end
+    '';
   };
   users.users.cjb.shell = pkgs.fish;
 
