@@ -23,14 +23,7 @@
       config = ./xmonad.hs;
     };
 
-    displayManager = {
-      defaultSession = "none+xmonad";
-      lightdm.enable = true;
-      lightdm.greeters.mini = {
-        enable = true;
-        user = "cjb";
-      };
-    };
+    displayManager.startx.enable = true;
   };
 
   services.redshift = {
@@ -43,5 +36,8 @@
     latitude = -38.0;
     longitude = 145.0;
   };
+
+  environment.etc."X11/xinit/xinitrc".source = ./xinitrc;
+  environment.etc."X11/xinit/xresources".source = ./xresources;
 
 }

@@ -133,6 +133,17 @@ in
     mpvWithMpris
     rofi
     sakura
+
+    # extras
+    (pkgs.writeTextFile {
+       name = "startx";
+       destination = "/bin/startx";
+       executable = true;
+       text = ''
+         #!${pkgs.bash}/bin/bash
+         xinit /etc/X11/xinit/xinitrc -- vt$(tty | tail -c2)
+       '';
+     })
   ];
 
   environment.etc = {
