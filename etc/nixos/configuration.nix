@@ -10,8 +10,6 @@ let
   });
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
     epkgs: [
-      # FIXME: remove this once nix-mode properly pulls in 'f
-      epkgs.melpaPackages.f
       epkgs.melpaPackages.haskell-mode
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
@@ -235,7 +233,7 @@ in
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/68b98553f7e6cc2a0c3a727450ca8901d854a987.tar.gz;
+      url = https://github.com/nix-community/emacs-overlay/archive/d32822d54963d1d610176f4a0b0a747aee0adcc2.tar.gz;
     }))
   ];
 
