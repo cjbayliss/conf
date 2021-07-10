@@ -314,39 +314,11 @@
               (setq gnus-subscribe-groups-done t))
             (message "Welcome to Gnus!")))
 
-;;;; ido
-;; buffer only, flex matching ido-mode
-(setq ido-enable-flex-matching t)
-(setq ido-ignore-buffers '("\\` " "^\*"))
-(setq ido-max-window-height 1)
-(ido-mode 'buffers)
-
-;;;;; emoji picker using ido
-;; list of emoji I'm likely to use
-(defvar ido-emoji-list
-  '("😊" "🤷" "🤦" "🥳" "😂" "😕" "😜" "😬" "👋" "👍" "👌" "😱"
-    "🤮" "😭" "🥰" "🤤" "💃" "🍕" "☕"))
-
-(defun build-ido-emoji-list ()
-  "Return a list of emoji with their Unicode names built from the
-     `ido-emoji-list'."
-  (let (emoji-list)
-    (dolist (emoji ido-emoji-list)
-      (push (format "%s %s"
-                    emoji
-                    (get-char-code-property (string-to-char emoji)
-                                            'name))
-            emoji-list))
-    (nreverse emoji-list)))
-
-(defun ido-emoji ()
-  "An emoji picker!"
-  (interactive)
-  (insert
-   (substring
-    (ido-completing-read "Insert emoji: " (build-ido-emoji-list)) 0 1)))
-
-(global-set-key (kbd "C-c e") 'ido-emoji)
+;;;; fido
+(icomplete-vertical-mode +1)
+(fido-mode +1)
+;; *almost* like the default find-file
+(define-key icomplete-fido-mode-map (kbd "TAB") 'icomplete-fido-ret)
 
 ;;;; ix.io paste tool
 (defun ix-io--process-response (response)
