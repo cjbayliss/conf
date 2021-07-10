@@ -478,14 +478,12 @@ This ignores SENDER and RESPONSE."
 ;; always kill-buffer after exit
 (advice-add 'term-handle-exit :filter-return #'kill-buffer)
 
-;; cterm, my first initial + term, yeah, so creative right?!! 🤦
-(defun cterm ()
-  (interactive)
-  (if (get-buffer "*ansi-term*")
-      (switch-to-buffer "*ansi-term*")
-    (ansi-term "/run/current-system/sw/bin/fish")))
-
-(global-set-key (kbd "C-c v") 'cterm)
+(global-set-key (kbd "C-c v")
+                (lambda ()
+                  (interactive)
+                  (if (get-buffer "*ansi-term*")
+                      (switch-to-buffer "*ansi-term*")
+                    (ansi-term "/run/current-system/sw/bin/fish"))))
 
 ;;; Modes
 ;;;; common config for all prog-modes
