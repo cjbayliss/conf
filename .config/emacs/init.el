@@ -317,7 +317,12 @@
 ;;;; fido
 (icomplete-vertical-mode +1)
 (fido-mode +1)
+
 ;; *almost* like the default find-file
+(advice-add 'icomplete--fido-mode-setup
+            :after
+            (lambda ()
+              (setq-local completion-styles '(flex partial-completion))))
 (define-key icomplete-fido-mode-map (kbd "TAB") 'icomplete-fido-ret)
 
 ;;;; ix.io paste tool
