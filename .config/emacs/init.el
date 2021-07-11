@@ -148,6 +148,31 @@
    (delq 'display-time-string global-mode-string)))
 
 ;;; Tools
+;;;; dabbrev
+(defun dabbrev-completing-read ()
+  "dabbrev completions using completing-read."
+  (interactive)
+  (require 'dabbrev)
+  (dabbrev--reset-global-variables)
+  (let* ((abbrev (dabbrev--abbrev-at-point))
+         (abbrev-list
+          (let ((dabbrev-check-all-buffers t))
+            (dabbrev--find-all-expansions abbrev nil))))
+    (when abbrev-list
+      (insert
+       (string-trim
+        (completing-read "Completions: " abbrev-list) abbrev)))))
+
+(defun indent-or-complete ()
+  "DWIM indent or complete function."
+  (interactive)
+  (if (or (looking-at "$")
+          (looking-at "\\>"))
+      (dabbrev-completing-read)
+    (indent-for-tab-command)))
+
+(global-set-key (kbd "TAB") 'indent-or-complete)
+
 ;;;; dired
 (setq dired-listing-switches "-ABlhFv")
 
@@ -576,6 +601,8 @@ This ignores SENDER and RESPONSE."
                          php-string-op))
                  ;; *now* load php-mode
                  (php-mode)
+                 ;; FFS.
+                 (define-key php-mode-map (kbd "<tab>") 'indent-or-complete)
                  (setq c-basic-offset 4)
                  (setq indent-tabs-mode nil)
                  (php-enable-psr2-coding-style))))
@@ -634,7 +661,7 @@ The optional argument IGNORED is not used."
   (interactive)
   (if (outline-on-heading-p)
       (outline-cycle)
-    (indent-for-tab-command)))
+    (indent-or-complete)))
 
 (add-to-list 'safe-local-variable-values
              '(eval progn (outline-minor-mode 1) (hide-sublevels 1)))
