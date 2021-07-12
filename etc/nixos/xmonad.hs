@@ -11,16 +11,16 @@ import XMonad.Layout.Spiral
 import XMonad.Util.EZConfig (additionalKeysP)
 import qualified XMonad.StackSet as W
 
-myLayoutsHook = spacingRaw False (Border 0 3 3 3) False (Border 3 3 3 3) True $
-                onWorkspace "9" Full $
+myLayoutsHook = spacingRaw False (Border 0 2 2 2) True (Border 2 2 2 2) True $
                 lessBorders OnlyScreenFloat $
+                onWorkspace "9" layoutFull $
                 layoutTall ||| layoutSpiral ||| layoutGrid ||| layoutMirror ||| layoutFull
   where
     layoutTall = Tall 1 (3/100) (1/2)
     layoutSpiral = spiral (125 % 146)
     layoutGrid = Grid
     layoutMirror = Mirror (Tall 1 (3/100) (3/5))
-    layoutFull = Full
+    layoutFull = withBorder 0 Full
 
 myManageHook = composeAll
                [ className =? "mpv" --> doF (W.view "9") <+> doShift "9"
