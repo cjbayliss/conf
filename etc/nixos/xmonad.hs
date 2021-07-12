@@ -21,7 +21,7 @@ myLayoutsHook = spacingRaw False (Border 0 2 2 2) True (Border 2 2 2 2) True $
     layoutFull = withBorder 0 Full
 
 myManageHook = composeAll
-               [ className =? "mpv" --> doF (W.view "9") <+> doShift "9"
+               [ className =? "mpv" --> doF (W.view "9") <+> doShift "9" <+> doFullFloat
                , isDialog --> doCenterFloat
                , isFullscreen --> doFullFloat ]
 
