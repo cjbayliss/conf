@@ -7,19 +7,17 @@ import XMonad.Layout.Grid
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Spacing
-import XMonad.Layout.Spiral
+import XMonad.Layout.ThreeColumns
 import XMonad.Util.EZConfig (additionalKeysP)
 import qualified XMonad.StackSet as W
 
 myLayoutsHook = spacingRaw False (Border 0 2 2 2) True (Border 2 2 2 2) True $
                 lessBorders OnlyScreenFloat $
                 onWorkspace "9" layoutFull $
-                layoutTall ||| layoutSpiral ||| layoutGrid ||| layoutMirror ||| layoutFull
+                layoutTCol ||| layoutGrid ||| layoutFull
   where
-    layoutTall = Tall 1 (3/100) (1/2)
-    layoutSpiral = spiral (125 % 146)
+    layoutTCol = ThreeCol 1 (3/100) (1/3)
     layoutGrid = Grid
-    layoutMirror = Mirror (Tall 1 (3/100) (3/5))
     layoutFull = withBorder 0 Full
 
 myManageHook = composeAll
