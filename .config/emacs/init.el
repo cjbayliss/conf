@@ -55,6 +55,7 @@
 ;; these modes are slow to load, add them to this hook instead
 (add-hook 'emacs-startup-hook
           (lambda ()
+            (pinentry-start)
             (marginalia-mode +1)
             (delete-selection-mode +1)
             (savehist-mode +1)

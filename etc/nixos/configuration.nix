@@ -11,6 +11,7 @@ let
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
     epkgs: [
       epkgs.elpaPackages.marginalia
+      epkgs.elpaPackages.pinentry
       epkgs.melpaPackages.haskell-mode
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
@@ -100,7 +101,6 @@ in
     git-filter-repo
     gnome3.adwaita-icon-theme
     opusTools
-    pinentry-qt
     universal-ctags
 
     # langs
@@ -137,15 +137,27 @@ in
 
     # extras
     (pkgs.writeTextFile {
-       name = "startx";
-       destination = "/bin/startx";
-       executable = true;
-       text = ''
+      name = "startx";
+      destination = "/bin/startx";
+      executable = true;
+      text = ''
          #!${pkgs.bash}/bin/bash
          xinit /etc/X11/xinit/xinitrc -- vt$(tty | tail -c2)
        '';
-     })
+    })
+
+    (pkgs.writeTextFile {
+      name = "emacs-askpass";
+      destination = "/bin/emacs-askpass";
+      executable = true;
+      text = ''
+        #! ${pkgs.bash}/bin/bash
+        emacsclient -e '(read-passwd "Password: ")' | xargs
+      '';
+    })
   ];
+
+  programs.ssh.askPassword = "emacs-askpass";
 
   environment.etc = {
     "chromium/native-messaging-hosts/com.github.browserpass.native.json".source =
@@ -159,7 +171,7 @@ in
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "qt";
+    pinentryFlavor = "emacs";
   };
 
   fonts = {
