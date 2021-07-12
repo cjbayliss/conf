@@ -164,15 +164,7 @@
        (string-trim
         (completing-read "Completions: " abbrev-list) abbrev)))))
 
-(defun indent-or-complete ()
-  "DWIM indent or complete function."
-  (interactive)
-  (if (or (looking-at "$")
-          (looking-at "\\>"))
-      (dabbrev-completing-read)
-    (indent-for-tab-command)))
-
-(global-set-key (kbd "TAB") 'indent-or-complete)
+(global-set-key (kbd "C-M-/") 'dabbrev-completing-read)
 
 ;;;; dired
 (setq dired-listing-switches "-ABlhFv")
@@ -602,8 +594,6 @@ This ignores SENDER and RESPONSE."
                          php-string-op))
                  ;; *now* load php-mode
                  (php-mode)
-                 ;; FFS.
-                 (define-key php-mode-map (kbd "<tab>") 'indent-or-complete)
                  (setq c-basic-offset 4)
                  (setq indent-tabs-mode nil)
                  (php-enable-psr2-coding-style))))
@@ -662,7 +652,7 @@ The optional argument IGNORED is not used."
   (interactive)
   (if (outline-on-heading-p)
       (outline-cycle)
-    (indent-or-complete)))
+    (indent-for-tab-command)))
 
 (add-to-list 'safe-local-variable-values
              '(eval progn (outline-minor-mode 1) (hide-sublevels 1)))
