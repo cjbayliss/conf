@@ -30,6 +30,8 @@ in
       ./hardware-configuration.nix
       # display server config
       ./display-server.nix
+      # hardening config
+      ./harden.nix
     ];
 
   boot.loader = {
