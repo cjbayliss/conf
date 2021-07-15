@@ -135,7 +135,7 @@ in
     emacs
     mpvWithMpris
     rofi
-    sakura
+    xfce.terminal
 
     # extras
     (pkgs.writeTextFile {

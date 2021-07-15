@@ -1,0 +1,13 @@
+[Configuration]
+MiscCursorBlinks=TRUE
+MiscCursorShape=TERMINAL_CURSOR_SHAPE_UNDERLINE
+MiscMenubarDefault=FALSE
+MiscMouseAutohide=TRUE
+FontName=Monospace 11.5
+ColorCursor=#c0c0cacaf5f5
+ColorForeground=#c0c0cacaf5f5
+ColorBackground=#1a1a1b1b2626
+ColorPalette=#151516161e1e;#f7f776768e8e;#9e9ecece6a6a;#e0e0afaf6868;#7a7aa2a2f7f7;#bbbb9a9af7f7;#7d7dcfcfffff;#a9a9b1b1d6d6;#414148486868;#f7f776768e8e;#9e9ecece6a6a;#e0e0afaf6868;#7a7aa2a2f7f7;#bbbb9a9af7f7;#7d7dcfcfffff;#c0c0cacaf5f5
+ScrollingUnlimited=TRUE
+ScrollingBar=TERMINAL_SCROLLBAR_NONE
+

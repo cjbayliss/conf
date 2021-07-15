@@ -29,7 +29,7 @@ main = do
   xmonad $ ewmh def
     { borderWidth = 1
     , modMask = mod4Mask
-    , terminal = "sakura"
+    , terminal = "xfce4-terminal"
     , normalBorderColor = "#251f2e"
     , focusedBorderColor = "#3e334d"
     , handleEventHook = ewmhDesktopsEventHook <+> fullscreenEventHook
