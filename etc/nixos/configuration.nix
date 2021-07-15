@@ -223,16 +223,36 @@ in
 
   gtk.iconCache.enable = true;
 
-  programs.fish = {
+  programs.zsh = {
     enable = true;
-    shellInit = "set fish_greeting";
-    loginShellInit = ''
-      if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]
-          exec startx
-      end
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    histSize = 20000;
+    histFile = "$XDG_DATA_HOME/zsh/history";
+    ohMyZsh.enable = true;
+    ohMyZsh.theme = "afowler";
+    shellInit = ''
+      mkdir -p $XDG_DATA_HOME/zsh/
+      export ZDOTDIR="$XDG_DATA_HOME/zsh/"
+
+      set -o inc_append_history
+      set -o hist_ignore_all_dups
+      set -o hist_ignore_space
+
+      # yeah yeah, this is bad, etc etc, nod nod.
+      zle_highlight+=(paste:none)
+
+      zsh-newuser-install() { :; }
     '';
+    loginShellInit = ''
+      if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] ;
+        then exec startx;
+      fi
+    '';
+    promptInit = "";
   };
-  users.users.cjb.shell = pkgs.fish;
+
+  users.users.cjb.shell = pkgs.zsh;
 
   # system wide
   environment.variables = {

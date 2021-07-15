@@ -476,12 +476,11 @@ This ignores SENDER and RESPONSE."
   (rcirc-connect "127.0.0.1" 6667 "cjb" nil "Christopher Bayliss (they/them)" '("#cyber") "cyber"))
 
 ;;;; term/ansi-term
-;; show URLs, hack for fish shell
+;; show URLs
 (add-hook 'term-mode-hook
           (lambda ()
             (setq-local kill-read-only-ok t)
-            (goto-address-mode +1)
-            (toggle-truncate-lines 1)))
+            (goto-address-mode +1)))
 
 ;; please let me cut and paste, and other normal things
 (add-hook 'term-load-hook
@@ -489,12 +488,6 @@ This ignores SENDER and RESPONSE."
             (define-key term-raw-map (kbd "M-:") 'eval-expression)
             (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
             (define-key term-raw-map (kbd "C-y") 'term-paste)
-            ;; quoted paste
-            (define-key term-raw-map (kbd "C-c C-y")
-              (lambda ()
-                (interactive)
-                (term-send-raw-string
-                 (format "\"%s\"" (current-kill 0)))))
             (define-key term-raw-map (kbd "C-k")
               (lambda ()
                 (interactive)
@@ -509,7 +502,7 @@ This ignores SENDER and RESPONSE."
                   (interactive)
                   (if (get-buffer "*ansi-term*")
                       (switch-to-buffer "*ansi-term*")
-                    (ansi-term "/run/current-system/sw/bin/fish"))))
+                    (ansi-term "/run/current-system/sw/bin/zsh"))))
 
 ;;; Modes
 ;;;; common config for all prog-modes
