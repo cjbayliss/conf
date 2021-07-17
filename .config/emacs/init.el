@@ -574,8 +574,7 @@ This ignores SENDER and RESPONSE."
                  (require 'php-mode)
                  ;; highlight function calls
                  (set-face-attribute 'php-function-call nil :inherit font-lock-function-name-face)
-                 ;; what ever this is
-                 (set-face-attribute 'php-paamayim-nekudotayim nil :slant 'oblique)
+                 (set-face-attribute 'php-variable-sigil nil :inherit font-lock-keyword-face)
                  ;; variables don't need to be highlighted
                  (set-face-attribute 'php-variable-name nil :inherit nil)
                  ;; operators
