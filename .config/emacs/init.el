@@ -343,7 +343,7 @@
 (advice-add 'icomplete--fido-mode-setup
             :after
             (lambda ()
-              (setq-local completion-styles '(flex partial-completion))))
+              (setq-local completion-styles '(substring partial-completion))))
 (define-key icomplete-fido-mode-map (kbd "TAB") 'icomplete-fido-ret)
 
 ;;;; ix.io paste tool
