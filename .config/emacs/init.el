@@ -30,6 +30,8 @@
 (setq require-final-newline t)
 (setq shell-file-name "sh")
 (setq split-width-threshold 100)
+(setq tab-always-indent 'complete)
+(setq tramp-allow-unsafe-temporary-files t)
 (setq-default fill-column 72)
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace nil)
@@ -59,6 +61,10 @@
               (pinentry-start))
             (when (fboundp 'marginalia-mode)
               (marginalia-mode +1))
+            (when (fboundp 'vertico-mode)
+              (vertico-mode +1))
+            (when (fboundp 'corfu-global-mode)
+              (corfu-global-mode +1))
             (delete-selection-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)))
@@ -152,23 +158,6 @@
    (delq 'display-time-string global-mode-string)))
 
 ;;; Tools
-;;;; dabbrev
-(defun dabbrev-completing-read ()
-  "dabbrev completions using completing-read."
-  (interactive)
-  (require 'dabbrev)
-  (dabbrev--reset-global-variables)
-  (let* ((abbrev (dabbrev--abbrev-at-point))
-         (abbrev-list
-          (let ((dabbrev-check-all-buffers t))
-            (dabbrev--find-all-expansions abbrev nil))))
-    (when abbrev-list
-      (insert
-       (string-trim
-        (completing-read "Completions: " abbrev-list) abbrev)))))
-
-(global-set-key (kbd "C-M-/") 'dabbrev-completing-read)
-
 ;;;; dired
 (setq dired-listing-switches "-ABlhFv")
 
@@ -334,17 +323,6 @@
                       "nntp+news:gwene.website.christine.blog"))
               (setq gnus-subscribe-groups-done t))
             (message "Welcome to Gnus!")))
-
-;;;; fido
-(icomplete-vertical-mode +1)
-(fido-mode +1)
-
-;; *almost* like the default find-file
-(advice-add 'icomplete--fido-mode-setup
-            :after
-            (lambda ()
-              (setq-local completion-styles '(partial-completion))))
-(define-key icomplete-fido-mode-map (kbd "TAB") 'icomplete-fido-ret)
 
 ;;;; ix.io paste tool
 (defun ix-io--process-response (response)

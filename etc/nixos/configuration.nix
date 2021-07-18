@@ -2,6 +2,7 @@
 
 with pkgs;
 let
+  unstable = import <unstable> {};
   chromium = (ungoogled-chromium.override {
     commandLineArgs = ''$([ $(date "+%k") -ge 17 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
   });
@@ -10,8 +11,10 @@ let
   });
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
     epkgs: [
+      epkgs.elpaPackages.corfu
       epkgs.elpaPackages.marginalia
       epkgs.elpaPackages.pinentry
+      epkgs.elpaPackages.vertico
       epkgs.melpaPackages.haskell-mode
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
@@ -120,12 +123,14 @@ in
     efibootmgr
     feh
     ffmpeg
+    gcc
     git
     hlint
     htop
     imagemagick
     pass
     playerctl
+    unstable.neovim
     unzip
     wget
     youtube-dl
@@ -179,9 +184,10 @@ in
   fonts = {
     fonts = with pkgs; [
       baekmuk-ttf
+      iosevka-bin
       ipafont
       liberation_ttf
-      iosevka-bin
+      (nerdfonts.override { fonts = [ "Iosevka" ]; })
       noto-fonts-emoji
     ];
     fontconfig = {
@@ -284,7 +290,7 @@ in
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/d32822d54963d1d610176f4a0b0a747aee0adcc2.tar.gz;
+      url = https://github.com/nix-community/emacs-overlay/archive/458d30ef17167e390d0280d0f954ca8ee61ef701.tar.gz;
     }))
   ];
 
