@@ -11,10 +11,8 @@ let
   });
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
     epkgs: [
-      epkgs.elpaPackages.corfu
       epkgs.elpaPackages.marginalia
       epkgs.elpaPackages.pinentry
-      epkgs.elpaPackages.vertico
       epkgs.melpaPackages.haskell-mode
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode

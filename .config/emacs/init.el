@@ -61,12 +61,6 @@
               (pinentry-start))
             (when (fboundp 'marginalia-mode)
               (marginalia-mode +1))
-            (when (fboundp 'vertico-mode)
-              (vertico-mode +1)
-              (setq completion-ignore-case t)
-              (setq read-buffer-completion-ignore-case t))
-            (when (fboundp 'corfu-global-mode)
-              (corfu-global-mode +1))
             (delete-selection-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)))
@@ -325,6 +319,23 @@
                       "nntp+news:gwene.website.christine.blog"))
               (setq gnus-subscribe-groups-done t))
             (message "Welcome to Gnus!")))
+
+;;;; icomplete
+(icomplete-vertical-mode +1)
+
+(setq completion-ignore-case t)
+(setq icomplete-compute-delay 0)
+(setq icomplete-show-matches-on-no-input t)
+(setq read-buffer-completion-ignore-case t)
+
+;; use icomplete for completion in region
+(setq completion-in-region-function
+      #'completing-read-completion--in-region)
+
+(define-key icomplete-minibuffer-map (kbd "RET") 'icomplete-force-complete-and-exit)
+(define-key icomplete-minibuffer-map (kbd "TAB") 'icomplete-force-complete)
+
+(icomplete-mode +1)
 
 ;;;; ix.io paste tool
 (defun ix-io--process-response (response)
@@ -618,6 +629,34 @@ the pecent to increase by each pass."
 The optional argument IGNORED is not used."
   (interactive (browse-url-interactive-arg "URL: "))
   (call-process "mpv" nil 0 nil url))
+
+;;;; completion-in-region-function
+(defun completing-read-completion--in-region (start end coll &optional pred)
+  "Use 'completing-read' to select a completion in region.
+
+START and END are the position in the buffer of the string to be
+completed.  COLL is the collection of possible completions, and
+PRED limits the possible completions to a subset of COLL.
+
+The following are tried in order:
+
+ - in a minibuffer, run the 'completion--in-region' function
+
+ - if there is only one possible completion, insert it
+
+ - run 'completing-read' with a list of possible completions, and
+   insert that."
+  (let ((init (buffer-substring-no-properties start end)))
+    (cond ((minibufferp)
+           (completion--in-region start end coll pred))
+          ((let ((comp (all-completions init coll pred)))
+             (when (= (safe-length comp) 1)
+               (completion--replace start end (nth 0 comp))
+               t)))
+          ((let ((sel (completing-read "Completions: " coll pred nil init)))
+             (when sel
+               (delete-region start end)
+               (insert sel)))))))
 
 ;;; outline this file
 (setq outline-minor-mode-highlight 'override)
