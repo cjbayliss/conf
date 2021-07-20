@@ -641,17 +641,20 @@ The following are tried in order:
 
  - run 'completing-read' with a list of possible completions, and
    insert that."
-  (let ((init (buffer-substring-no-properties start end)))
-    (cond ((minibufferp)
-           (completion--in-region start end coll pred))
-          ((let ((comp (all-completions init coll pred)))
-             (when (= (safe-length comp) 1)
-               (completion--replace start end (nth 0 comp))
-               t)))
-          ((let ((sel (completing-read "Completions: " coll pred nil init)))
-             (when sel
-               (delete-region start end)
-               (insert sel)))))))
+  (if (minibufferp)
+      (completion--in-region start end coll pred)
+    (let* ((init (buffer-substring-no-properties start end))
+           (comp (all-completions init coll pred)))
+      (cond ((= (safe-length comp) 1)
+             ;; !@#$%^&
+             (let ((minibuffer-completion-table coll)
+                   (minibuffer-completion-predicate pred))
+               (completion--in-region-1 start end)))
+            ((>= (safe-length comp) 2)
+             (let ((sel (completing-read "Completions: " coll pred nil init)))
+               (when sel
+                 (delete-region start end)
+                 (insert sel))))))))
 
 ;;; outline this file
 (setq outline-minor-mode-highlight 'override)
