@@ -156,16 +156,11 @@
 ;;; Tools
 ;;;; dired
 (setq dired-listing-switches "-ABlhFv")
+(setq dired-kill-when-opening-new-dired-buffer t)
 
 (add-hook 'dired-mode-hook
           (lambda ()
-            ;; first up, don't create lots of dired buffers
-            (put 'dired-find-alternate-file 'disabled nil)
-            (define-key
-              dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-            (define-key dired-mode-map (kbd "^")
-              (lambda () (interactive) (find-alternate-file "..")))
-            ;; also, quit means quit, please!
+            ;; quit means quit, please!
             (define-key dired-mode-map (kbd "q")
               (lambda () (interactive) (quit-window t)))))
 
