@@ -644,17 +644,24 @@ The following are tried in order:
   (if (minibufferp)
       (completion--in-region start end coll pred)
     (let* ((init (buffer-substring-no-properties start end))
-           (comp (all-completions init coll pred)))
-      (cond ((= (safe-length comp) 1)
-             ;; !@#$%^&
-             (let ((minibuffer-completion-table coll)
-                   (minibuffer-completion-predicate pred))
-               (completion--in-region-1 start end)))
-            ((>= (safe-length comp) 2)
-             (let ((sel (completing-read "Completions: " coll pred nil init)))
-               (when sel
-                 (delete-region start end)
-                 (insert sel))))))))
+           (comp (all-completions init coll pred))
+           (meta (completion-metadata-get
+                  (completion-metadata init coll pred) 'category)))
+      (pcase (safe-length comp)
+        (`0)
+        (`1 (let ((minibuffer-completion-table coll)
+                  (minibuffer-completion-predicate pred))
+              (completion--in-region-1 start end)))
+        ( _ (let ((sel
+                   (if (eq meta 'file)
+                       (replace-regexp-in-string
+                        " " "\\\\ "
+                        (read-file-name "Completions: "
+                                        (file-name-directory init) init t
+                                        (file-name-nondirectory init) pred))
+                     (completing-read "Completions: " coll pred nil init))))
+              (when sel
+                (completion--replace start end sel))))))))
 
 ;;; outline this file
 (setq outline-minor-mode-highlight 'override)
