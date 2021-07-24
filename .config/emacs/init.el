@@ -364,10 +364,6 @@
 (global-set-key (kbd "C-c w r") 'ix-io-paste-region)
 
 ;;;; rcirc
-;; TODO: remove after feature/rcirc-update is merged
-(setq-default load-prefer-newer t)
-(setq-default load-path (nconc `(,(concat user-emacs-directory "lisp/")) load-path))
-
 (with-eval-after-load 'rcirc
 
 ;;;;; rcirc functions
