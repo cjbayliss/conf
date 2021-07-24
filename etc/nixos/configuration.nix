@@ -227,36 +227,65 @@ in
 
   gtk.iconCache.enable = true;
 
-  programs.zsh = {
-    enable = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-    histSize = 20000;
-    histFile = "$XDG_DATA_HOME/zsh/history";
-    ohMyZsh.enable = true;
-    ohMyZsh.theme = "afowler";
+  programs.bash = {
     shellInit = ''
-      mkdir -p $XDG_DATA_HOME/zsh/
-      export ZDOTDIR="$XDG_DATA_HOME/zsh/"
+      # better history
+      shopt -s histappend
+      HISTCONTROL=ignoreboth
+      HISTSIZE=-1
+      HISTFILESIZE=-1
+      HISTFILE="$XDG_DATA_HOME/bash-history"
+    '';
+    interactiveShellInit = ''
+      # check the window size after each command and, if necessary, update
+      # the values of LINES and COLUMNS.
+      shopt -s checkwinsize
 
-      set -o inc_append_history
-      set -o hist_ignore_all_dups
-      set -o hist_ignore_space
+      # better completion (imo)
+      bind "set menu-complete-display-prefix on"
+      bind "set show-all-if-ambiguous on"
+      bind "set completion-query-items 0"
+      bind "TAB:menu-complete"
+      bind "\"\e[Z\": menu-complete-backward"
+    '';
+    promptInit = ''
+      __exit_status() {
+          EXIT_STATUS=''${?}
+          if [ $EXIT_STATUS -gt 0 ]; then
+              printf "%s " "$EXIT_STATUS"
+          fi
+      }
 
-      # yeah yeah, this is bad, etc etc, nod nod.
-      zle_highlight+=(paste:none)
+      __short_cwd() {
+          CWD=
+          [ "$(basename $PWD)" != "/" ] && CWD="$(basename $PWD)"
+          SHORT_PWD_NO_CWD="$(echo $PWD | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/' -e 's/'$CWD'$//')"
+          COLLAPSED_PWD="$(echo $SHORT_PWD_NO_CWD | sed -r 's|/(.)[^/]*|/\1|g')"
+          [ "$SHORT_PWD_NO_CWD" == "~" ] && \
+              SHORT_CWD="$SHORT_PWD_NO_CWD" || \
+                  SHORT_CWD="$COLLAPSED_PWD$CWD"
+          printf "%s" "$SHORT_CWD"
+      }
 
-      zsh-newuser-install() { :; }
+      __git_branch() {
+          BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
+          printf "%s" "$BRANCH"
+      }
+
+      __git_prompt() {
+          [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] && \
+              STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /')" || STATUS=" [NOSTAT]"
+          printf "%s" "$STATUS"
+      }
+
+      PS1="\[\e[1;31m\]\$(__exit_status)\[\e[0m\]\h \[\e[1;34m\]::\[\e[0m\] \[\e[32m\]\$(__short_cwd)\[\e[0m\]\[\e[33m\]\$(__git_branch)\[\e[0m\]\$(__git_prompt)\[\e[0m\] \[\e[1;34m\]»\[\e[0m\] "
     '';
     loginShellInit = ''
       if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] ;
         then exec startx;
       fi
     '';
-    promptInit = "";
   };
-
-  users.users.cjb.shell = pkgs.zsh;
 
   # system wide
   environment.variables = {

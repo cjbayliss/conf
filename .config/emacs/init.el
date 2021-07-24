@@ -484,7 +484,7 @@ This ignores SENDER and RESPONSE."
                   (interactive)
                   (if (get-buffer "*ansi-term*")
                       (switch-to-buffer "*ansi-term*")
-                    (ansi-term "/run/current-system/sw/bin/zsh"))))
+                    (ansi-term "/run/current-system/sw/bin/bash"))))
 
 ;;; Modes
 ;;;; common config for all prog-modes
