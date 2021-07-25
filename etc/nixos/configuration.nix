@@ -257,9 +257,8 @@ in
       }
 
       __short_cwd() {
-          CWD=
-          [ "$(basename $PWD)" != "/" ] && CWD="$(basename $PWD)"
-          SHORT_PWD_NO_CWD="$(echo $PWD | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/' -e 's/'$CWD'$//')"
+          CWD="$(basename $PWD)"
+          SHORT_PWD_NO_CWD="$(echo $PWD | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/' -e 's|'$CWD'$||')"
           COLLAPSED_PWD="$(echo $SHORT_PWD_NO_CWD | sed -r 's|/(.)[^/]*|/\1|g')"
           [ "$SHORT_PWD_NO_CWD" == "~" ] && \
               SHORT_CWD="$SHORT_PWD_NO_CWD" || \
