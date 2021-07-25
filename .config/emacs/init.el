@@ -651,10 +651,12 @@ The following are tried in order:
         ( _ (let ((sel
                    (if (eq meta 'file)
                        (replace-regexp-in-string
-                        " " "\\\\ "
-                        (read-file-name "Completions: "
-                                        (file-name-directory init) init t
-                                        (file-name-nondirectory init) pred))
+                        "\\\\ $" " "
+                        (replace-regexp-in-string
+                         " " "\\\\ "
+                         (read-file-name "Completions: "
+                                         (file-name-directory init) init nil
+                                         (file-name-nondirectory init) pred)))
                      (completing-read "Completions: " coll pred nil init))))
               (when sel
                 (completion--replace start end sel))))))))
