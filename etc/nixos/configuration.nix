@@ -4,7 +4,7 @@ with pkgs;
 let
   unstable = import <unstable> {};
   chromium = (ungoogled-chromium.override {
-    commandLineArgs = ''$([ $(date "+%k") -ge 17 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
+    commandLineArgs = ''$([ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
   });
   mpvWithMpris = (mpv-with-scripts.override {
     scripts = [ mpvScripts.mpris ];
