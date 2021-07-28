@@ -550,30 +550,59 @@ This ignores SENDER and RESPONSE."
 
 ;;;; php
 ;; IMPORTANT: DO NOT CHANGE THE ORDER THIS IS WRITEN IN.
-(add-to-list 'auto-mode-alist
-             '("\\.php\\'" .
-               (lambda ()
-                 (require 'php-mode)
-                 ;; highlight function calls
-                 (set-face-attribute 'php-function-call nil :inherit font-lock-function-name-face)
-                 (set-face-attribute 'php-variable-sigil nil :inherit font-lock-keyword-face)
-                 ;; variables don't need to be highlighted
-                 (set-face-attribute 'php-variable-name nil :inherit nil)
-                 ;; operators
-                 (mapc (lambda (x)
-                         (set-face-attribute x nil :inherit font-lock-variable-name-face))
-                       '(php-arithmetic-op
-                         php-assignment-op
-                         php-inc-dec-op
-                         php-logical-op
-                         php-object-op
-                         php-operator
-                         php-string-op))
-                 ;; *now* load php-mode
-                 (php-mode)
-                 (setq c-basic-offset 4)
-                 (setq indent-tabs-mode nil)
-                 (php-enable-psr2-coding-style))))
+(add-to-list
+ 'auto-mode-alist
+ '("\\.php\\'" .
+   (lambda ()
+     (defun podman-build-allocPSA ()
+       "Build an allocPSA pod."
+       (interactive)
+       (async-shell-command
+        (format "podman build -f $HOME/stuff/podman/alloc-containerfile %s -t alloc"
+                (expand-file-name (vc-root-dir)))
+        "Podman: Building allocPSA"))
+
+     (defun podman-run-allocPSA ()
+       "Run an allocPSA pod."
+       (interactive)
+       (async-shell-command
+        (format "podman run --name alloc --volume %s:/var/www/html -p 4000:80 alloc"
+                (expand-file-name (vc-root-dir)))
+        "Podman: Running allocPSA"))
+
+     (defun podman-stop-allocPSA ()
+       "Stop the running allocPSA pod."
+       (interactive)
+       (message "Podman: Stopping allocPSA ...")
+       (call-process-shell-command "podman stop alloc")
+       (message "Podman: Stopping allocPSA ... Done.")
+       ;; cleanup the mess
+       (call-process-shell-command "podman system prune -f"))
+
+     (require 'php-mode)
+     ;; highlight function calls
+     (set-face-attribute 'php-function-call nil :inherit font-lock-function-name-face)
+     (set-face-attribute 'php-variable-sigil nil :inherit font-lock-keyword-face)
+     ;; variables don't need to be highlighted
+     (set-face-attribute 'php-variable-name nil :inherit nil)
+     ;; operators
+     (mapc (lambda (x)
+             (set-face-attribute x nil :inherit font-lock-variable-name-face))
+           '(php-arithmetic-op
+             php-assignment-op
+             php-inc-dec-op
+             php-logical-op
+             php-object-op
+             php-operator
+             php-string-op))
+     ;; *now* load php-mode
+     (php-mode)
+     (define-key php-mode-map (kbd "C-c a b") 'podman-build-allocPSA)
+     (define-key php-mode-map (kbd "C-c a r") 'podman-run-allocPSA)
+     (define-key php-mode-map (kbd "C-c a s") 'podman-stop-allocPSA)
+     (setq c-basic-offset 4)
+     (setq indent-tabs-mode nil)
+     (php-enable-psr2-coding-style))))
 
 ;;;; scheme
 (setq scheme-program-name "csi -n")
