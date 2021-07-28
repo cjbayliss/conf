@@ -136,6 +136,7 @@ in
     # gui
     chromium
     emacs
+    firefox
     mpvWithMpris
     rofi
     xfce.terminal
@@ -178,6 +179,8 @@ in
     enable = true;
     pinentryFlavor = "emacs";
   };
+
+  virtualisation.podman.enable = true;
 
   fonts = {
     fonts = with pkgs; [
