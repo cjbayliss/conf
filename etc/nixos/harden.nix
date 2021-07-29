@@ -7,6 +7,9 @@
     <nixpkgs/nixos/modules/profiles/hardened.nix>
   ];
 
+  # restore memoryAllocator to default or many programs crash:
+  environment.memoryAllocator.provider = lib.mkForce "libc";
+
   # TODO: finish the job cjb!
   # harden systemd services. See: systemd-analyze security start by
   # disabling any service and deps that we don't need:
