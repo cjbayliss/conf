@@ -12,6 +12,7 @@
       Option "TearFree" "true"
     '';
 
+    wacom.enable = true;
     libinput = {
       enable = true;
       touchpad.naturalScrolling = true;
