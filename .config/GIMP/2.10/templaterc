@@ -1,0 +1,96 @@
+# -*- mode: scheme -*-
+
+# Local Variables:
+# comment-start: "#"
+# End:
+
+(GimpTemplate "Default"
+              (width 2400)
+              (height 1800)
+              (unit pixels)
+              (xresolution 300)
+              (yresolution 300)
+              (resolution-unit inches)
+              (image-type rgb)
+              (precision u16-linear)
+              (color-managed yes)
+              (color-profile NULL)
+              (fill-type background))
+
+(GimpTemplate "A4 (300 ppi)"
+              (width 2480)
+              (height 3508)
+              (unit millimeters)
+              (xresolution 300)
+              (yresolution 300)
+              (resolution-unit inches)
+              (image-type rgb)
+              (precision u16-linear)
+              (color-managed yes)
+              (color-profile NULL)
+              (fill-type background))
+
+(GimpTemplate "A6 (300 ppi)"
+              (width 1240)
+              (height 1748)
+              (unit millimeters)
+              (xresolution 300)
+              (yresolution 300)
+              (resolution-unit inches)
+              (image-type rgb)
+              (precision u16-linear)
+              (color-managed yes)
+              (color-profile NULL)
+              (fill-type background))
+
+(GimpTemplate "B5 (300 ppi)"
+              (width 2079)
+              (height 2953)
+              (unit millimeters)
+              (xresolution 300)
+              (yresolution 300)
+              (resolution-unit inches)
+              (image-type rgb)
+              (precision u16-linear)
+              (color-managed yes)
+              (color-profile NULL)
+              (fill-type background))
+
+(GimpTemplate "B5-Japan (300 ppi)"
+              (width 2150)
+              (height 3035)
+              (unit millimeters)
+              (xresolution 300)
+              (yresolution 300)
+              (resolution-unit inches)
+              (image-type rgb)
+              (precision u16-linear)
+              (color-managed yes)
+              (color-profile NULL)
+              (fill-type background))
+
+(GimpTemplate "US Letter (300 ppi)"
+              (width 2550)
+              (height 3300)
+              (unit inches)
+              (xresolution 300)
+              (yresolution 300)
+              (resolution-unit inches)
+              (image-type rgb)
+              (precision u16-linear)
+              (color-managed yes)
+              (color-profile NULL)
+              (fill-type background))
+
+(GimpTemplate "US Legal (300 ppi)"
+              (width 2550)
+              (height 4200)
+              (unit inches)
+              (xresolution 300)
+              (yresolution 300)
+              (resolution-unit inches)
+              (image-type rgb)
+              (precision u16-linear)
+              (color-managed yes)
+              (color-profile NULL)
+              (fill-type background))

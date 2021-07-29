@@ -1,0 +1,8 @@
+# -*- mode: scheme -*-
+
+# Local Variables:
+# comment-start: "#"
+# End:
+
+(foreground (color-rgb 0.1600 0.1700 0.2400))
+(background (color-rgb 0.9000 0.8800 0.8200))

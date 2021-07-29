@@ -1,0 +1,67 @@
+# -*- mode: scheme -*-
+
+# Local Variables:
+# comment-start: "#"
+# End:
+
+(session-info "toplevel"
+              (factory-entry "gimp-empty-image-window")
+              (position 200 100)
+              (size 640 480))
+(session-info "toplevel"
+              (factory-entry "gimp-single-image-window")
+              (position 4 2)
+              (size 1270 792)
+              (open-on-exit)
+              (aux-info
+               (left-docks-width "44")
+               (right-docks-width "205")
+               (maximized "no"))
+              (gimp-toolbox
+               (side left))
+              (gimp-dock
+               (side right)
+               (book
+                (current-page 0)
+                (dockable "gimp-tool-options"
+                          (tab-style automatic)
+                          (aux-info
+                           (show-button-bar "true")))
+                (dockable "gimp-device-status"
+                          (tab-style automatic)
+                          (aux-info
+                           (show-button-bar "true")))
+                (dockable "gimp-undo-history"
+                          (tab-style automatic)
+                          (aux-info
+                           (show-button-bar "true"))))
+               (book
+                (position 442)
+                (current-page 0)
+                (dockable "gimp-color-editor"
+                          (tab-style automatic)
+                          (aux-info
+                           (current-page "ColorselWheel")))
+                (dockable "gimp-layer-list"
+                          (tab-style automatic)
+                          (preview-size 32)
+                          (aux-info
+                           (show-button-bar "true")))
+                (dockable "gimp-channel-list"
+                          (tab-style automatic)
+                          (preview-size 32)
+                          (aux-info
+                           (show-button-bar "true")))
+                (dockable "gimp-vectors-list"
+                          (tab-style automatic)
+                          (preview-size 32)
+                          (aux-info
+                           (show-button-bar "true"))))))
+(session-info "toplevel"
+              (factory-entry "gimp-preferences-dialog")
+              (size 800 600))
+
+(hide-docks no)
+(single-window-mode yes)
+(show-tabs no)
+(tabs-position 0)

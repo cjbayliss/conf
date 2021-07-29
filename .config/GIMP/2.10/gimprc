@@ -1,0 +1,23 @@
+# -*- mode: scheme -*-
+
+# Local Variables:
+# comment-start: "#"
+# End:
+
+(default-view
+  (padding-mode custom)
+  (padding-color (color-rgb 0.80 0.80 0.80))
+  (show-statusbar no)
+  (show-rulers no)
+  (show-scrollbars no))
+
+(default-fullscreen-view
+  (padding-mode custom)
+  (padding-color (color-rgb 0.80 0.80 0.80))
+  (show-statusbar no)
+  (show-rulers no)
+  (show-scrollbars no))
+
+(theme "Light")
+(icon-theme "Symbolic-Inverted")
+(icon-size small)

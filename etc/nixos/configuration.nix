@@ -137,6 +137,7 @@ in
     chromium
     emacs
     firefox
+    gimp
     mpvWithMpris
     rofi
     xfce.terminal
