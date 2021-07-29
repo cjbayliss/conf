@@ -9,6 +9,9 @@ let
   mpvWithMpris = (mpv-with-scripts.override {
     scripts = [ mpvScripts.mpris ];
   });
+  gimp = (gimp-with-plugins.override {
+    plugins = [ gimpPlugins.gmic ];
+  });
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
     epkgs: [
       epkgs.elpaPackages.marginalia
