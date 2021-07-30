@@ -18,6 +18,7 @@
   (show-rulers no)
   (show-scrollbars no))
 
+(toolbox-color-area no)
 (theme "Light")
 (icon-theme "Symbolic-Inverted")
 (icon-size small)
