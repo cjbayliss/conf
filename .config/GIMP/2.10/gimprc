@@ -4,6 +4,19 @@
 # comment-start: "#"
 # End:
 
+(default-image
+  (width 2400)
+  (height 1800)
+  (unit pixels)
+  (xresolution 300)
+  (yresolution 300)
+  (resolution-unit inches)
+  (image-type rgb)
+  (precision u16-linear)
+  (color-managed yes)
+  (color-profile NULL)
+  (fill-type background))
+
 (default-view
   (padding-mode custom)
   (padding-color (color-rgb 0.80 0.80 0.80))
