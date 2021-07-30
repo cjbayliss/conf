@@ -23,11 +23,12 @@
                (side right)
                (book
                 (current-page 0)
-                (dockable "gimp-tool-options"
+                (dockable "gimp-layer-list"
                           (tab-style automatic)
+                          (preview-size 32)
                           (aux-info
                            (show-button-bar "true")))
-                (dockable "gimp-device-status"
+                (dockable "gimp-tool-options"
                           (tab-style automatic)
                           (aux-info
                            (show-button-bar "true")))
@@ -36,17 +37,12 @@
                           (aux-info
                            (show-button-bar "true"))))
                (book
-                (position 442)
+                (position 471)
                 (current-page 0)
                 (dockable "gimp-color-editor"
                           (tab-style automatic)
                           (aux-info
-                           (current-page "ColorselWheel")))
-                (dockable "gimp-layer-list"
-                          (tab-style automatic)
-                          (preview-size 32)
-                          (aux-info
-                           (show-button-bar "true")))
+                           (current-page "GimpColorSelect")))
                 (dockable "gimp-channel-list"
                           (tab-style automatic)
                           (preview-size 32)
