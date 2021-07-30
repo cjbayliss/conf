@@ -8,7 +8,7 @@
 
   boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ata_piix" "ahci" "firewire_ohci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "wacom" ];
   boot.blacklistedKernelModules = [ "isight_firmware" ];
   boot.kernelParams = [
     "acpi_mask_gpe=0x17"
