@@ -12,6 +12,9 @@ let
   gimp = (gimp-with-plugins.override {
     plugins = [ gimpPlugins.gmic ];
   });
+  python = python3.withPackages (pp: with pp; [
+    notify2
+  ]);
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
     epkgs: [
       epkgs.elpaPackages.marginalia
@@ -104,8 +107,10 @@ in
     aspell
     aspellDicts.en
     browserpass
+    dunst
     git-filter-repo
     gnome3.adwaita-icon-theme
+    libnotify
     opusTools
     universal-ctags
 
@@ -113,7 +118,7 @@ in
     chicken
     ghc
     php73
-    python3
+    python
     sbcl
 
     # tools
@@ -146,6 +151,7 @@ in
     xfce.terminal
 
     # extras
+    (pkgs.writeScriptBin "volctl" (builtins.readFile ./bin/volctl))
     (pkgs.writeTextFile {
       name = "startx";
       destination = "/bin/startx";

@@ -17,9 +17,7 @@
 ;;; General:
 ;;;; sane defaults
 (setq auth-source-save-behavior nil)
-(setq browse-url-handlers '(("youtube." . browse-url-mpv)
-                            ("youtu.be/" . browse-url-mpv)
-                            ("." . browse-url-chromium)))
+(setq browse-url-handlers '(("." . browse-url-chromium)))
 (setq c-basic-offset 4)
 (setq column-number-mode t)
 (setq custom-file (concat user-emacs-directory "/custom.el"))
@@ -399,6 +397,19 @@ This ignores SENDER and RESPONSE."
   (add-hook 'rcirc-markup-text-functions #'rcirc-markup-nick-colors)
   ;; END GPL2+ CODE ;;
 
+  ;; NOTE: on my system 'low' is 'normal' and visa versa. This is
+  ;; because everything is shit and abuses notifications.
+  (require 'notifications)
+  (defun rcirc-notifications (process sender response target text)
+    (when (or (and (string= response "PRIVMSG")
+                   (not (string= sender (rcirc-nick process)))
+                   (not (rcirc-channel-p target)))
+              (and (string-match (rcirc-nick process) text)
+                   (rcirc-channel-p target)
+                   (not (string= (rcirc-nick process) sender))
+                   (not (string= (rcirc-server-name process) sender))))
+      (notifications-notify :app-icon nil :title sender :body text :urgency 'low)))
+
 ;;;;; rcirc hooks
   (add-hook 'rcirc-mode-hook (lambda ()
                                (rcirc-omit-mode +1)
@@ -411,6 +422,8 @@ This ignores SENDER and RESPONSE."
 
   (add-hook 'rcirc-track-minor-mode-hook (lambda ()
                                            (delq 'rcirc-activity-string global-mode-string)))
+
+  (add-hook 'rcirc-print-hooks 'rcirc-notifications)
 
 ;;;;; rcirc config
   (setq rcirc-default-full-name "Christopher Bayliss (they/them)")
