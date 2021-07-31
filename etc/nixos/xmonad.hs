@@ -22,6 +22,8 @@ myLayoutsHook = spacingRaw False (Border 0 2 2 2) True (Border 2 2 2 2) True $
 
 myManageHook = composeAll
                [ className =? "mpv" --> doF (W.view "9") <+> doShift "9" <+> doFullFloat
+               , className =? "gmic_qt" --> doCenterFloat
+               , className =? "gmic" --> doFloat
                , isDialog --> doCenterFloat
                , isFullscreen --> doFullFloat ]
 
