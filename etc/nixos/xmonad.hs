@@ -11,7 +11,7 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Util.EZConfig (additionalKeysP)
 import qualified XMonad.StackSet as W
 
-myLayoutsHook = spacingRaw False (Border 0 2 2 2) True (Border 2 2 2 2) True $
+myLayoutsHook = spacingRaw False (Border 1 1 1 1) True (Border 1 1 1 1) True $
                 lessBorders OnlyScreenFloat $
                 onWorkspace "9" layoutFull $
                 layoutTCol ||| layoutGrid ||| layoutFull
