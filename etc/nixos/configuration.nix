@@ -99,7 +99,7 @@ in
 
   users.users.cjb = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" ];
+    extraGroups = [ "audio" "wheel" "video" ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -112,6 +112,7 @@ in
     gnome3.adwaita-icon-theme
     libnotify
     opusTools
+    pciutils
     universal-ctags
 
     # langs
@@ -161,6 +162,19 @@ in
          xinit /etc/X11/xinit/xinitrc -- vt$(tty | tail -c2)
        '';
     })
+    (pkgs.writeTextFile {
+      name = "set-audio-latency";
+      destination = "/bin/set-audio-latency";
+      executable = true;
+      text = ''
+        #! ${pkgs.bash}/bin/bash
+
+        echo 2048 > /sys/class/rtc/rtc0/max_user_freq
+        echo 2048 > /proc/sys/dev/hpet/max-user-freq
+        ${pkgs.pciutils}/bin/setpci -v -d *:* latency_timer=b0
+        ${pkgs.pciutils}/bin/setpci -v -s 00:1b.0 latency_timer=ff
+      '';
+    })
 
     (pkgs.writeTextFile {
       name = "emacs-askpass";
@@ -181,6 +195,33 @@ in
   };
 
   sound.enable = true;
+  # for some reason linux tries to use a swap even if you don't have
+  # one, causing audio to skip/crackle really badly.
+  boot.kernel.sysctl."vm.swappiness" = 0;
+
+  # while the above fixes the worst of the audio skipping I've
+  # experianced under NixOS, the following it an attempt to reduce audio
+  # skipping when the system has high load. See:
+  # https://nixos.wiki/wiki/JACK
+  systemd.services.setup-audio-latency = {
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "/run/current-system/sw/bin/set-audio-latency";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+  security.pam.loginLimits = [
+    { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
+    { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
+    { domain = "@audio"; item = "nofile"; type = "soft"; value = "99999"; }
+    { domain = "@audio"; item = "nofile"; type = "hard"; value = "99999"; }
+  ];
+  services.udev = {
+    extraRules = ''
+      KERNEL=="rtc0", GROUP="audio"
+      KERNEL=="hpet", GROUP="audio"
+    '';
+  };
 
   programs.light.enable = true;
   programs.ssh.startAgent = true;
@@ -241,15 +282,14 @@ in
   gtk.iconCache.enable = true;
 
   programs.bash = {
-    shellInit = ''
+    interactiveShellInit = ''
       # better history
       shopt -s histappend
       HISTCONTROL=ignoreboth
       HISTSIZE=-1
       HISTFILESIZE=-1
       HISTFILE="$XDG_DATA_HOME/bash-history"
-    '';
-    interactiveShellInit = ''
+
       # check the window size after each command and, if necessary, update
       # the values of LINES and COLUMNS.
       shopt -s checkwinsize
