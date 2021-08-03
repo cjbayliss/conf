@@ -24,6 +24,7 @@ myManageHook = composeAll
                [ className =? "mpv" --> doF (W.view "9") <+> doShift "9" <+> doFullFloat
                , className =? "gmic_qt" --> doCenterFloat
                , className =? "gmic" --> doFloat
+               , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_UTILITY" --> doFloat
                , isDialog --> doCenterFloat
                , isFullscreen --> doFullFloat ]
 
