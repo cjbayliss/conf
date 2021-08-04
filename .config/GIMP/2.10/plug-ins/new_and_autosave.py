@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 from gimpfu import *
-import gtk
-import os
-import time
 import datetime
 import hashlib
+import os
+import time
 
 
 def new_and_autosave():
