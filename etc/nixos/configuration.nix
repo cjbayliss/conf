@@ -339,12 +339,6 @@ in
     '';
   };
 
-  # system wide
-  environment.variables = {
-    EDITOR = "ed";
-    VISUAL = "ed";
-  };
-
   # variables set by PAM on login
   environment.sessionVariables = {
     XDG_DESKTOP_DIR = "$HOME/stuff/desktop";
