@@ -12,8 +12,4 @@
 (GimpDeviceInfo "Wacom Intuos PT S Pen stylus"
                 (icon-name "gimp-tool-paintbrush")
                 (name "Wacom Intuos PT S Pen stylus")
-                (mode screen)
-                (pressure-curve
-                 (curve-type smooth)
-                 (points 4 0 0 0.5 1)
-                 (point-types 2 smooth smooth)))
+                (mode screen))

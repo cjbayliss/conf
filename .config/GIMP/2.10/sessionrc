@@ -62,6 +62,23 @@
               (factory-entry "gimp-preferences-dialog")
               (size 800 600))
 
+(session-info "toplevel"
+              (factory-entry "gimp-dock-window")
+              (position 6 544)
+              (size 200 248)
+              (open-on-exit)
+              (aux-info
+               (show-image-menu "false")
+               (follow-active-image "true"))
+              (gimp-dock
+               (book
+                (current-page 1)
+                (dockable "gimp-mypaint-brush-grid"
+                          (tab-style automatic)
+                          (aux-info
+                           (show-button-bar "false")
+                           (tag-filter "classic, "))))))
+
 (hide-docks no)
 (single-window-mode yes)
 (show-tabs no)

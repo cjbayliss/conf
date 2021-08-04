@@ -1,0 +1,3 @@
+;; -*- scheme -*-
+
+(gtk_accel_path "<Actions>/plug-in/python-fu-new-and-autosave" "<Alt>n")
