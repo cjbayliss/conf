@@ -4,6 +4,8 @@
 # comment-start: "#"
 # End:
 
+(tool-preset-path "${gimp_dir}/tool-presets")
+
 (default-image
   (width 2400)
   (height 1800)
