@@ -6,11 +6,8 @@ let
   chromium = (ungoogled-chromium.override {
     commandLineArgs = ''$([ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
   });
-  mpvWithMpris = (mpv-with-scripts.override {
+  mpv = (mpv-with-scripts.override {
     scripts = [ mpvScripts.mpris ];
-  });
-  gimp = (gimp-with-plugins.override {
-    plugins = [ gimpPlugins.gmic ];
   });
   python = python3.withPackages (pp: with pp; [
     notify2
@@ -147,7 +144,7 @@ in
     emacs
     firefox
     gimp
-    mpvWithMpris
+    mpv
     rofi
     xfce.terminal
 
