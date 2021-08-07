@@ -360,7 +360,7 @@ in
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/dd54cb4be116d3ca13f6e90a5bfb0e792b5133b5.tar.gz;
+      url = https://github.com/nix-community/emacs-overlay/archive/70d863e2dc58b70ce0b1ff428e4967f7aef45042.tar.gz;
     }))
   ];
 
