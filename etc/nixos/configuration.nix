@@ -19,6 +19,8 @@ let
       epkgs.melpaPackages.haskell-mode
       epkgs.melpaPackages.nix-mode
       epkgs.melpaPackages.php-mode
+      epkgs.melpaPackages.tree-sitter
+      epkgs.melpaPackages.tree-sitter-langs
     ]
   );
 in
@@ -360,7 +362,7 @@ in
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/70d863e2dc58b70ce0b1ff428e4967f7aef45042.tar.gz;
+      url = https://github.com/nix-community/emacs-overlay/archive/29829efa3367108398a024db927263d95a55bba2.tar.gz;
     }))
   ];
 

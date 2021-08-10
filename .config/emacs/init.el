@@ -420,6 +420,7 @@ This ignores SENDER and RESPONSE."
                                (rcirc-track-minor-mode  +1)
                                (flyspell-mode +1)
                                (setq-local fill-column (frame-width))
+                               (setq-local completion-in-region-function #'completion--in-region)
                                (set-face-attribute 'rcirc-nick-in-message-full-line nil :foreground nil :weight 'normal)
                                (set-face-attribute 'rcirc-my-nick nil :foreground nil :weight 'normal :inherit 'rcirc-nick-in-message)
                                (set (make-local-variable 'scroll-conservatively) 8192)))
@@ -541,6 +542,23 @@ This ignores SENDER and RESPONSE."
              '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\|IMPORTANT\\):"
                 1 highlight-todo-face t)))))
 
+;;;; tree-sitter
+;; set the default dir to ~/.config/emacs/tree-sitter
+(setq tree-sitter-langs-grammar-dir
+      (expand-file-name "tree-sitter/" user-emacs-directory))
+(setq tsc-dyn-dir tree-sitter-langs-grammar-dir)
+(make-directory tree-sitter-langs-grammar-dir t)
+
+;; auto-install grammar files
+(tree-sitter-langs-install-grammars t)
+
+;; IMPORTANT: the grammar alist doesn't get update unless you forcably require this
+(require 'tree-sitter-langs)
+
+;; now enable tree-sitter
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+
 ;;;; C
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -566,7 +584,6 @@ This ignores SENDER and RESPONSE."
                  (nix-mode))))
 
 ;;;; php
-;; IMPORTANT: DO NOT CHANGE THE ORDER THIS IS WRITEN IN.
 (add-to-list
  'auto-mode-alist
  '("\\.php\\'" .
@@ -597,22 +614,6 @@ This ignores SENDER and RESPONSE."
        (call-process-shell-command "podman system prune -f"))
 
      (require 'php-mode)
-     ;; highlight function calls
-     (set-face-attribute 'php-function-call nil :inherit font-lock-function-name-face)
-     (set-face-attribute 'php-variable-sigil nil :inherit font-lock-keyword-face)
-     ;; variables don't need to be highlighted
-     (set-face-attribute 'php-variable-name nil :inherit nil)
-     ;; operators
-     (mapc (lambda (x)
-             (set-face-attribute x nil :inherit font-lock-variable-name-face))
-           '(php-arithmetic-op
-             php-assignment-op
-             php-inc-dec-op
-             php-logical-op
-             php-object-op
-             php-operator
-             php-string-op))
-     ;; *now* load php-mode
      (php-mode)
      (define-key php-mode-map (kbd "C-c a b") 'podman-build-allocPSA)
      (define-key php-mode-map (kbd "C-c a r") 'podman-run-allocPSA)
