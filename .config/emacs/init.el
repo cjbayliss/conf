@@ -38,6 +38,9 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (prefer-coding-system 'utf-8)
 
+;; upcase-region & downcase-region are disabled, but not this. WTF??
+(fmakunbound 'overwrite-mode)
+
 ;; don't popup the async-shell-command buffer
 (add-to-list 'display-buffer-alist
              (cons "\\*Async Shell Command\\*.*"
@@ -318,10 +321,11 @@
 
 (setq completion-ignore-case t)
 (setq icomplete-compute-delay 0)
+(setq icomplete-scroll t)
 (setq icomplete-show-matches-on-no-input t)
 (setq read-buffer-completion-ignore-case t)
 
-;; use icomplete for completion in region
+;; use completing-read for completion in region
 (setq completion-in-region-function
       #'completing-read-completion--in-region)
 
