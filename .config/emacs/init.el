@@ -324,18 +324,19 @@
 (setq completion-in-region-function
       #'completing-read-completion--in-region)
 
-;; icompelete-vertical is buggy, prefer vertico if installed.
-(cond ((fboundp 'vertico-mode)
-       (vertico-mode +1))
-      ((setq icomplete-compute-delay 0)
-       (setq icomplete-scroll t)
-       (setq icomplete-show-matches-on-no-input t)
+(setq icomplete-compute-delay 0)
+(setq icomplete-scroll t)
+(setq icomplete-show-matches-on-no-input t)
 
-       (icomplete-vertical-mode +1)
-       (icomplete-mode +1)
+(icomplete-vertical-mode +1)
+(icomplete-mode +1)
 
-       (define-key icomplete-minibuffer-map (kbd "RET") 'icomplete-force-complete-and-exit)
-       (define-key icomplete-minibuffer-map (kbd "TAB") 'icomplete-force-complete)))
+;; without truncate-lines, icomplete-vertical spews a mess
+(add-hook 'icomplete-minibuffer-setup-hook
+          (lambda () (setq-local truncate-lines t)))
+
+(define-key icomplete-minibuffer-map (kbd "RET") 'icomplete-force-complete-and-exit)
+(define-key icomplete-minibuffer-map (kbd "TAB") 'icomplete-force-complete)
 
 ;;;; ix.io paste tool
 (defun ix-io--process-response (response)

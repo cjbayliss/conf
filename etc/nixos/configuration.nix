@@ -23,7 +23,6 @@ let
       pinentry
       tree-sitter
       tree-sitter-langs
-      vertico
     ]
   );
 in
