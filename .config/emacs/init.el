@@ -546,21 +546,27 @@ This ignores SENDER and RESPONSE."
                 1 highlight-todo-face t)))))
 
 ;;;; tree-sitter
-;; set the default dir to ~/.config/emacs/tree-sitter
-(setq tree-sitter-langs-grammar-dir
-      (expand-file-name "tree-sitter/" user-emacs-directory))
-(setq tsc-dyn-dir tree-sitter-langs-grammar-dir)
-(make-directory tree-sitter-langs-grammar-dir t)
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   ;; prevent emacs from flickering at startup
+   (let ((inhibit-message t))
+     ;; set the default dir to ~/.config/emacs/tree-sitter
+     (setq tree-sitter-langs-grammar-dir
+           (expand-file-name "tree-sitter/" user-emacs-directory))
+     (setq tsc-dyn-dir tree-sitter-langs-grammar-dir)
+     (make-directory tree-sitter-langs-grammar-dir t)
 
-;; auto-install grammar files
-(tree-sitter-langs-install-grammars t)
+     ;; auto-install grammar files
+     (tree-sitter-langs-install-grammars t)
 
-;; IMPORTANT: the grammar alist doesn't get update unless you forcably require this
-(require 'tree-sitter-langs)
+     ;; IMPORTANT: the grammar alist isn't generated unless you require
+     ;; this first
+     (require 'tree-sitter-langs)
 
-;; now enable tree-sitter
-(global-tree-sitter-mode)
-(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+     ;; now enable tree-sitter
+     (global-tree-sitter-mode)
+     (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))))
 
 ;;;; C
 (add-hook 'c-mode-common-hook
