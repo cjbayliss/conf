@@ -140,9 +140,8 @@
       mode-line-position
       (vc-mode vc-mode)
       " "
-      (:eval (when (boundp 'rcirc-track-minor-mode)
-               (when rcirc-activity
-                 rcirc-activity-string)))
+      (:eval (when (boundp 'rcirc-activity)
+               rcirc-activity-string))
       " "
       (:eval (format-mode-line 'mode-line-modes 'font-lock-doc-face))
       (:eval (format-mode-line '(" " display-time-string) 'bold))
@@ -317,22 +316,26 @@
             (message "Welcome to Gnus!")))
 
 ;;;; icomplete
-(icomplete-vertical-mode +1)
-
 (setq completion-ignore-case t)
-(setq icomplete-compute-delay 0)
-(setq icomplete-scroll t)
-(setq icomplete-show-matches-on-no-input t)
 (setq read-buffer-completion-ignore-case t)
+(setq read-file-name-completion-ignore-case t)
 
 ;; use completing-read for completion in region
 (setq completion-in-region-function
       #'completing-read-completion--in-region)
 
-(define-key icomplete-minibuffer-map (kbd "RET") 'icomplete-force-complete-and-exit)
-(define-key icomplete-minibuffer-map (kbd "TAB") 'icomplete-force-complete)
+;; icompelete-vertical is buggy, prefer vertico if installed.
+(cond ((fboundp 'vertico-mode)
+       (vertico-mode +1))
+      ((setq icomplete-compute-delay 0)
+       (setq icomplete-scroll t)
+       (setq icomplete-show-matches-on-no-input t)
 
-(icomplete-mode +1)
+       (icomplete-vertical-mode +1)
+       (icomplete-mode +1)
+
+       (define-key icomplete-minibuffer-map (kbd "RET") 'icomplete-force-complete-and-exit)
+       (define-key icomplete-minibuffer-map (kbd "TAB") 'icomplete-force-complete)))
 
 ;;;; ix.io paste tool
 (defun ix-io--process-response (response)
@@ -568,13 +571,9 @@ This ignores SENDER and RESPONSE."
             (setq tab-width 8)))
 
 ;;;; lisp
-(setq inferior-lisp-program "sbcl --no-userinit")
+(setq inferior-lisp-program
+      "sbcl --no-userinit --eval \"(require 'sb-aclrepl)\"")
 (global-set-key (kbd "C-c l") 'run-lisp)
-
-;; passing --eval in inferior-lisp-program is broken
-(add-hook 'inferior-lisp-mode-hook
-          (lambda ()
-            (lisp-eval-string "(require 'sb-aclrepl)")))
 
 ;;;; nix
 (add-to-list 'auto-mode-alist
@@ -623,7 +622,7 @@ This ignores SENDER and RESPONSE."
      (php-enable-psr2-coding-style))))
 
 ;;;; scheme
-(setq scheme-program-name "csi -n")
+(setq scheme-program-name "csi")
 (global-set-key (kbd "C-c s") 'run-scheme)
 
 ;;; Functions
