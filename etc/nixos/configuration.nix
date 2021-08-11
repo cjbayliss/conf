@@ -10,17 +10,20 @@ let
     scripts = [ mpvScripts.mpris ];
   });
   python = python3.withPackages (pp: with pp; [
+    flake8
     notify2
+    pylint
   ]);
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
-    epkgs: [
-      epkgs.elpaPackages.marginalia
-      epkgs.elpaPackages.pinentry
-      epkgs.melpaPackages.haskell-mode
-      epkgs.melpaPackages.nix-mode
-      epkgs.melpaPackages.php-mode
-      epkgs.melpaPackages.tree-sitter
-      epkgs.melpaPackages.tree-sitter-langs
+    epkgs: with epkgs; [
+      haskell-mode
+      marginalia
+      nix-mode
+      php-mode
+      pinentry
+      tree-sitter
+      tree-sitter-langs
+      vertico
     ]
   );
 in
@@ -120,18 +123,25 @@ in
     php73
     python
     sbcl
+    gcc
+    clang
+
+    # langs-extras
+    black
+    hlint
+    nix-linter
+    nixfmt
+    proselint
+    shellcheck
 
     # tools
     beets
-    black
     cryptsetup
     ed
     efibootmgr
     feh
     ffmpeg
-    gcc
     git
-    hlint
     htop
     imagemagick
     pass
@@ -363,6 +373,7 @@ in
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/emacs-overlay/archive/29829efa3367108398a024db927263d95a55bba2.tar.gz;
+      sha256 = "1vbsrisdwh1jmg2j2zbpyzky31cqy4wgl7y9ysvmhz7q635vvjjd";
     }))
   ];
 
