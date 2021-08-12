@@ -404,8 +404,6 @@ This ignores SENDER and RESPONSE."
   (add-hook 'rcirc-markup-text-functions #'rcirc-markup-nick-colors)
   ;; END GPL2+ CODE ;;
 
-  ;; NOTE: on my system 'low' is 'normal' and visa versa. This is
-  ;; because everything is shit and abuses notifications.
   (require 'notifications)
   (defun rcirc-notifications (process sender response target text)
     (when (or (and (string= response "PRIVMSG")
@@ -415,7 +413,7 @@ This ignores SENDER and RESPONSE."
                    (rcirc-channel-p target)
                    (not (string= (rcirc-nick process) sender))
                    (not (string= (rcirc-server-name process) sender))))
-      (notifications-notify :app-icon nil :title sender :body text :urgency 'low)))
+      (notifications-notify :app-icon nil :title sender :body text)))
 
 ;;;;; rcirc hooks
   (add-hook 'rcirc-mode-hook (lambda ()

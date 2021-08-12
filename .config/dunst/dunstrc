@@ -39,20 +39,18 @@
 [experimental]
     per_monitor_dpi = false
 
-# since *everything* uses urgency_normal, I've switched them around so
-# that pointless shit doesn't show up in blue.
 [urgency_low]
-    background = "#285577"
-    foreground = "#ffffff"
-    frame_color = "#336d99"
-    timeout = 10
-
-[urgency_normal]
     background = "#251f2e"
     foreground = "#a295b7"
     highlight = "#a295b7"
     frame_color = "#3e334d"
     timeout = 5
+
+[urgency_normal]
+    background = "#285577"
+    foreground = "#ffffff"
+    frame_color = "#336d99"
+    timeout = 10
 
 [urgency_critical]
     background = "#900000"
