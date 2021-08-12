@@ -629,6 +629,14 @@ This ignores SENDER and RESPONSE."
 (setq scheme-program-name "csi")
 (global-set-key (kbd "C-c s") 'run-scheme)
 
+;; in eshell comments aren't highlighted. In run-scheme CHICKEN Scheme's
+;; prompt gets incorrectly highlighted as a comment *after* the face to
+;; highlight it as a prompt is set. This ensures run-scheme's prompt
+;; uses `comint-highlight-prompt'.
+(add-hook 'inferior-scheme-mode-hook
+          (lambda ()
+            (setq-local font-lock-comment-face nil)))
+
 ;;; Functions
 ;;;; BMI
 ;; Function to calculate body mass index (BMI). For problems/flaws, see:
