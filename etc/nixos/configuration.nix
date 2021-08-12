@@ -154,7 +154,6 @@ in
     rofi
 
     # extras
-    (pkgs.writeScriptBin "volctl" (builtins.readFile ./bin/volctl))
     (pkgs.writeTextFile {
       name = "startx";
       destination = "/bin/startx";
