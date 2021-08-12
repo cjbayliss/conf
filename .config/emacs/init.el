@@ -27,7 +27,6 @@
 (setq package--init-file-ensured t)
 (setq require-final-newline t)
 (setq shell-file-name "sh")
-(setq split-width-threshold 100)
 (setq tab-always-indent 'complete)
 (setq tramp-allow-unsafe-temporary-files t)
 (setq-default fill-column 72)
