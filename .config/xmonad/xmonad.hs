@@ -11,8 +11,8 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Util.EZConfig (additionalKeysP)
 import qualified XMonad.StackSet as W
 
-myLayoutsHook = spacingRaw False (Border 1 1 1 1) True (Border 1 1 1 1) True $
-                lessBorders OnlyScreenFloat $
+myLayoutsHook = spacingRaw True (Border 1 1 1 1) True (Border 1 1 1 1) True $
+                smartBorders $
                 onWorkspace "9" layoutFull $
                 layoutTCol ||| layoutGrid ||| layoutFull
   where
@@ -32,7 +32,6 @@ main = do
   xmonad $ ewmh def
     { borderWidth = 1
     , modMask = mod4Mask
-    , terminal = "xfce4-terminal"
     , normalBorderColor = "#251f2e"
     , focusedBorderColor = "#3e334d"
     , handleEventHook = ewmhDesktopsEventHook <+> fullscreenEventHook
