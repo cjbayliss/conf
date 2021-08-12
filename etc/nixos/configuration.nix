@@ -2,7 +2,6 @@
 
 with pkgs;
 let
-  unstable = import <unstable> {};
   chromium = (ungoogled-chromium.override {
     commandLineArgs = ''$([ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
   });
@@ -135,17 +134,13 @@ in
 
     # tools
     beets
-    cryptsetup
-    ed
     efibootmgr
     feh
     ffmpeg
     git
-    htop
     imagemagick
     pass
     playerctl
-    unstable.neovim
     unzip
     wget
     youtube-dl
@@ -157,7 +152,6 @@ in
     gimp
     mpv
     rofi
-    xfce.terminal
 
     # extras
     (pkgs.writeScriptBin "volctl" (builtins.readFile ./bin/volctl))
