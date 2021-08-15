@@ -140,7 +140,8 @@
       (vc-mode vc-mode)
       " "
       (:eval (when (boundp 'rcirc-activity)
-               rcirc-activity-string))
+               (when rcirc-activity
+                 rcirc-activity-string)))
       " "
       (:eval (format-mode-line 'mode-line-modes 'font-lock-doc-face))
       (:eval (format-mode-line '(" " display-time-string) 'bold))
