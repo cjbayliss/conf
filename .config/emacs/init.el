@@ -711,10 +711,9 @@ The following are tried in order:
                    (if (eq meta 'file)
                        (replace-regexp-in-string
                         "^\\\\~/" "~/"
-                        (shell-quote-argument
-                         ;; for some reason read-file-name will add a
-                         ;; tailing space if you do a force complete
-                         (url-eat-trailing-space
+                        (replace-regexp-in-string
+                         "\\\\ $" " "
+                         (shell-quote-argument
                           (read-file-name "Completions: "
                                           (file-name-directory init) init nil
                                           (file-name-nondirectory init) pred))))
