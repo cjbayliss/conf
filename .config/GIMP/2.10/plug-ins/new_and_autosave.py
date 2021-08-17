@@ -8,8 +8,8 @@ import time
 
 
 def new_and_autosave():
-    width = 2400
-    height = 1800
+    width = 4800
+    height = 3200
 
     img = pdb.gimp_image_new(width, height, RGB)
     bg = pdb.gimp_layer_new(

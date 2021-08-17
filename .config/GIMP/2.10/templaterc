@@ -5,8 +5,8 @@
 # End:
 
 (GimpTemplate "Default"
-              (width 2400)
-              (height 1800)
+              (width 4800)
+              (height 3200)
               (unit pixels)
               (xresolution 300)
               (yresolution 300)
