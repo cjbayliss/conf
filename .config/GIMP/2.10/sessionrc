@@ -24,44 +24,39 @@
                (book
                 (current-page 0)
                 (dockable "gimp-layer-list"
+                          (locked)
                           (tab-style automatic)
                           (preview-size 32)
                           (aux-info
                            (show-button-bar "true")))
                 (dockable "gimp-tool-options"
+                          (locked)
                           (tab-style automatic)
                           (aux-info
                            (show-button-bar "true")))
+                (dockable "gimp-dynamics-editor"
+                          (locked)
+                          (tab-style automatic)
+                          (aux-info
+                           (edit-active "true")
+                           (current-data "Pressure Size & Direction")))
                 (dockable "gimp-undo-history"
+                          (locked)
                           (tab-style automatic)
-                          (aux-info
-                           (show-button-bar "true")))
-                (dockable "gimp-channel-list"
-                          (tab-style automatic)
-                          (preview-size 32)
-                          (aux-info
-                           (show-button-bar "true")))
-                (dockable "gimp-vectors-list"
-                          (tab-style automatic)
-                          (preview-size 32)
                           (aux-info
                            (show-button-bar "true"))))
                (book
                 (position 473)
                 (current-page 0)
                 (dockable "gimp-color-editor"
-                          (tab-style automatic)
+                          (tab-style icon)
                           (aux-info
                            (current-page "GimpColorSelect")))
                 (dockable "gimp-tool-preset-grid"
-                          (tab-style automatic)
+                          (tab-style icon)
                           (preview-size 48)
                           (aux-info
-                           (show-button-bar "false")))
-                (dockable "gimp-palette-list"
-                          (tab-style automatic)
-                          (aux-info
-                           (show-button-bar "true"))))))
+                           (show-button-bar "false"))))))
 
 (session-info "toplevel"
               (factory-entry "gimp-preferences-dialog")
