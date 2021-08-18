@@ -20,20 +20,18 @@
   (fill-type background))
 
 (default-view
-  (padding-mode custom)
-  (padding-color (color-rgb 0.80 0.80 0.80))
+  (padding-mode light-check)
   (show-statusbar no)
   (show-rulers no)
   (show-scrollbars no))
 
 (default-fullscreen-view
-  (padding-mode custom)
-  (padding-color (color-rgb 0.80 0.80 0.80))
+  (padding-mode light-check)
   (show-statusbar no)
   (show-rulers no)
   (show-scrollbars no))
 
 (toolbox-color-area no)
-(theme "Light")
-(icon-theme "Symbolic-Inverted")
+(theme "System")
+(icon-theme "Symbolic-Inverted-High-Contrast")
 (icon-size small)

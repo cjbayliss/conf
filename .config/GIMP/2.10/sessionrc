@@ -10,8 +10,8 @@
               (size 640 480))
 (session-info "toplevel"
               (factory-entry "gimp-single-image-window")
-              (position 2 2)
-              (size 1274 794)
+              (position 0 0)
+              (size 1280 800)
               (open-on-exit)
               (aux-info
                (left-docks-width "28")
@@ -46,12 +46,12 @@
                           (aux-info
                            (show-button-bar "true"))))
                (book
-                (position 473)
+                (position 476)
                 (current-page 0)
                 (dockable "gimp-color-editor"
                           (tab-style icon)
                           (aux-info
-                           (current-page "GimpColorSelect")))
+                           (current-page "GimpColorScales")))
                 (dockable "gimp-tool-preset-grid"
                           (tab-style icon)
                           (preview-size 48)
@@ -60,6 +60,7 @@
 
 (session-info "toplevel"
               (factory-entry "gimp-preferences-dialog")
+              (position 240 100)
               (size 800 600))
 
 (hide-docks no)
