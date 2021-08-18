@@ -2,6 +2,7 @@
 
 with pkgs;
 let
+  unstable = import <unstable> {};
   chromium = (ungoogled-chromium.override {
     commandLineArgs = ''$([ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
   });
@@ -149,7 +150,7 @@ in
     chromium
     emacs
     firefox
-    gimp
+    krita
     mpv
     rofi
 
