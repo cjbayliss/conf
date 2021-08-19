@@ -1,7 +1,5 @@
 #!/bin/sh
 xrdb -load /etc/X11/xinit/xresources
-systemctl --user restart redshift
-systemctl --user restart dunst
 
 if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
     eval $(dbus-launch --exit-with-session --sh-syntax)
@@ -13,4 +11,6 @@ if command -v dbus-update-activation-environment >/dev/null 2>&1; then
     dbus-update-activation-environment DISPLAY XAUTHORITY
 fi
 
-xmonad
+export DESKTOP_SESSION=plasma
+# X11 for now, switch to wayland as soon as steam games and krita run fine
+exec startplasma-x11
