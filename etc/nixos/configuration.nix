@@ -20,6 +20,7 @@ let
       marginalia
       nix-mode
       php-mode
+      pinentry
       tree-sitter
       tree-sitter-langs
     ]
@@ -106,14 +107,14 @@ in
     # libs
     aspell
     aspellDicts.en
+    browserpass
+    dunst
     git-filter-repo
     gnome3.adwaita-icon-theme
     libnotify
     opusTools
     pciutils
     universal-ctags
-    kde-gtk-config
-    pinentry-qt
 
     # langs
     chicken
@@ -135,10 +136,12 @@ in
     # tools
     beets
     efibootmgr
+    feh
     ffmpeg
     git
     imagemagick
     pass
+    playerctl
     unzip
     wget
     youtube-dl
@@ -150,7 +153,6 @@ in
     krita
     mpv
     rofi
-    neochat
 
     # extras
     (pkgs.writeTextFile {
@@ -176,7 +178,23 @@ in
       '';
     })
 
+    (pkgs.writeTextFile {
+      name = "emacs-askpass";
+      destination = "/bin/emacs-askpass";
+      executable = true;
+      text = ''
+        #! ${pkgs.bash}/bin/bash
+        emacsclient -e '(read-passwd "Password: ")' | xargs
+      '';
+    })
   ];
+
+  programs.ssh.askPassword = "emacs-askpass";
+
+  environment.etc = {
+    "chromium/native-messaging-hosts/com.github.browserpass.native.json".source =
+      "${pkgs.browserpass}/lib/browserpass/hosts/chromium/com.github.browserpass.native.json";
+  };
 
   sound.enable = true;
   # for some reason linux tries to use a swap even if you don't have
@@ -207,12 +225,12 @@ in
     '';
   };
 
-  # programs.ssh.startAgent = true;
+  programs.light.enable = true;
+  programs.ssh.startAgent = true;
 
   programs.gnupg.agent = {
     enable = true;
-    enableSSHSupport = true;
-    pinentryFlavor = "qt";
+    pinentryFlavor = "emacs";
   };
 
   virtualisation.podman.enable = true;
