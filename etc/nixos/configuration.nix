@@ -142,6 +142,7 @@ in
     imagemagick
     pass
     playerctl
+    unstable.neovim
     unzip
     wget
     youtube-dl
@@ -153,6 +154,7 @@ in
     krita
     mpv
     rofi
+    xfce.terminal
 
     # extras
     (pkgs.writeTextFile {
