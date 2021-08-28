@@ -13,6 +13,7 @@ end
 
 -- general config
 vim.o.cursorline = true
+vim.o.guicursor = ''
 vim.o.number = true
 vim.o.termguicolors = true
 
