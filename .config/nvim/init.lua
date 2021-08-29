@@ -39,39 +39,21 @@ require('packer').startup(function()
     use 'wbthomason/packer.nvim'
 
     use {
-        'ishan9299/modus-theme-vim',
-        config = function() vim.cmd('colorscheme modus-vivendi') end
+        'Mofiqul/vscode.nvim',
+        config = function()
+            vim.g.vscode_style = "dark"
+            vim.cmd('colorscheme vscode')
+        end
     }
 
     use {
         'hoob3rt/lualine.nvim',
         config = function()
-            -- I swear I only intended to make a few changes!!
-            local custom_vivendi = require('lualine.themes.modus_vivendi')
-            custom_vivendi.command.a.bg = "#2f2f2f"
-            custom_vivendi.command.a.fg = "#E0CC00"
-            custom_vivendi.command.b.bg = "#2f2f2f"
-            custom_vivendi.command.b.fg = "#E0CC00"
-            custom_vivendi.inactive.b.bg = "#2f2f2f"
-            custom_vivendi.insert.a.bg = "#2f2f2f"
-            custom_vivendi.insert.a.fg = "#6AE4B9"
-            custom_vivendi.insert.b.bg = "#2f2f2f"
-            custom_vivendi.insert.b.fg = "#6AE4B9"
-            custom_vivendi.normal.a.bg = "#2f2f2f"
-            custom_vivendi.normal.a.fg = "#79A8FF"
-            custom_vivendi.normal.a.fg = "#FFFFFF"
-            custom_vivendi.normal.b.bg = "#2f2f2f"
-            custom_vivendi.normal.b.fg = "#FFFFFF"
-            custom_vivendi.replace.b.bg = "#2f2f2f"
-            custom_vivendi.visual.a.bg = "#2f2f2f"
-            custom_vivendi.visual.a.fg = "#FEACD0"
-            custom_vivendi.visual.b.bg = "#2f2f2f"
-            custom_vivendi.visual.b.fg = "#FEACD0"
             require('lualine').setup {
                 options = {
                     component_separators = {'•', '•'},
                     section_separators = {'', ''},
-                    theme = custom_vivendi
+                    theme = 'vscode'
                 },
                 sections = {
                     lualine_x = {{'o:encoding', upper = true}, {'filetype'}}
