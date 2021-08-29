@@ -142,6 +142,7 @@ in
     imagemagick
     pass
     playerctl
+    tmux
     unstable.neovim
     unzip
     wget
