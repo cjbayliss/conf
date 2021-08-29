@@ -23,14 +23,15 @@ vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.tabstop = 4
 
-vim.api.nvim_set_keymap('i', '<C-x><Left>', "<cmd>bprev<CR>",
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('i', '<C-x><Right>', "<cmd>bnext<CR>",
-                        {noremap = true, silent = true})
--- unbind C-c NOTE: nvim_del_keymap DOES NOT WORK HERE.
-vim.api.nvim_set_keymap('i', '<C-c>', '', {})
-vim.api.nvim_set_keymap('i', '<C-x><C-c>', "<cmd>qall<CR>",
-                        {noremap = true, silent = true})
+-- set/unset keybinds
+function nvSetKey(modes, key, command)
+    for k, v in ipairs(modes) do
+        vim.api.nvim_set_keymap(v, key, command, {noremap = true})
+    end
+end
+
+local keys = {'<up>', '<down>', '<pageup>', '<pagedown>', '<left>', '<right>'}
+for k, v in ipairs(keys) do nvSetKey({'', 'i'}, v, '') end
 
 -- manage packages with packer, the use-package of neovim
 require('packer').startup(function()
@@ -39,10 +40,7 @@ require('packer').startup(function()
 
     use {
         'ishan9299/modus-theme-vim',
-        config = function()
-            vim.g.modus_moody_enable = true
-            vim.cmd('colorscheme modus-vivendi')
-        end
+        config = function() vim.cmd('colorscheme modus-vivendi') end
     }
 
     use {
@@ -121,15 +119,6 @@ require('packer').startup(function()
                     additional_vim_regex_highlighting = false
                 }
             }
-        end
-    }
-
-    use {
-        'andrep/vimacs',
-        config = function()
-            vim.g.VM_Enabled = 1
-            vim.g.VM_UnixConsoleMetaSendsEsc = 0
-            vim.o.insertmode = true
         end
     }
 
