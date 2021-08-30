@@ -14,6 +14,7 @@ end
 -- general config
 vim.o.cursorline = true
 vim.o.guicursor = ''
+vim.o.hidden = true
 vim.o.number = true
 vim.o.termguicolors = true
 
