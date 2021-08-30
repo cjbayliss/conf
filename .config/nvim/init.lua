@@ -21,7 +21,6 @@ vim.o.termguicolors = true
 vim.o.expandtab = true
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
-vim.o.tabstop = 4
 
 -- set/unset keybinds
 function nvSetKey(modes, key, command)
@@ -46,7 +45,8 @@ require('packer').startup(function()
             vim.g.vscode_style = "dark"
             vim.cmd('colorscheme vscode')
             vim.api.nvim_command('highlight CursorLine guibg=#1f1f1f')
-            vim.api.nvim_command('highlight CursorLineNr guifg=#ffaf00 guibg=#1f1f1f')
+            vim.api.nvim_command(
+                'highlight CursorLineNr guifg=#ffaf00 guibg=#1f1f1f')
             vim.api.nvim_command('highlight EndOfBuffer guifg=#D4D4D4')
             vim.api.nvim_command('highlight LineNr guibg=#151515')
             vim.api.nvim_command('highlight ModeMsg guibg=none')
