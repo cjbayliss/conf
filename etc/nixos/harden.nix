@@ -8,7 +8,9 @@
   ];
 
   # restore memoryAllocator to default or many programs crash:
-  environment.memoryAllocator.provider = lib.mkForce "libc";
+  environment.memoryAllocator.provider = "libc";
+  # IMPORTANT: don't block modules from being loaded
+  security.lockKernelModules = false;
 
   # TODO: finish the job cjb!
   # harden systemd services. See: systemd-analyze security start by
