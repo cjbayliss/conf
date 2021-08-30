@@ -33,6 +33,8 @@ end
 local keys = {'<up>', '<down>', '<pageup>', '<pagedown>', '<left>', '<right>'}
 for k, v in ipairs(keys) do nvSetKey({'', 'i'}, v, '') end
 
+nvSetKey({''}, '<Leader><Leader>', ':b ')
+
 -- manage packages with packer, the use-package of neovim
 require('packer').startup(function()
 
@@ -43,6 +45,16 @@ require('packer').startup(function()
         config = function()
             vim.g.vscode_style = "dark"
             vim.cmd('colorscheme vscode')
+            vim.api.nvim_command('highlight CursorLine guibg=#1f1f1f')
+            vim.api.nvim_command('highlight CursorLineNr guifg=#ffaf00 guibg=#1f1f1f')
+            vim.api.nvim_command('highlight EndOfBuffer guifg=#D4D4D4')
+            vim.api.nvim_command('highlight LineNr guibg=#151515')
+            vim.api.nvim_command('highlight ModeMsg guibg=none')
+            vim.api.nvim_command('highlight Normal guibg=#0f0f0f')
+            vim.api.nvim_command('highlight SignColumn guibg=none')
+            vim.api.nvim_command('highlight StatusLine guibg=#151515')
+            vim.api.nvim_command('highlight StatusLineNC guibg=none')
+            vim.api.nvim_command('highlight VertSplit guibg=none')
         end
     }
 
