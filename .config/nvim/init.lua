@@ -46,37 +46,6 @@ require('packer').startup(function()
         end
     }
 
-    use {
-        'hoob3rt/lualine.nvim',
-        config = function()
-            require('lualine').setup {
-                options = {
-                    component_separators = {'•', '•'},
-                    section_separators = {'', ''},
-                    theme = 'vscode'
-                },
-                sections = {
-                    lualine_x = {{'o:encoding', upper = true}, {'filetype'}}
-                }
-            }
-        end
-    }
-
-    use {
-        'akinsho/nvim-bufferline.lua',
-        config = function()
-            require("bufferline").setup {
-                options = {always_show_bufferline = false}
-            }
-        end
-    }
-
-    use {
-        'TimUntersberger/neogit',
-        requires = 'nvim-lua/plenary.nvim',
-        config = function() require('neogit').setup() end
-    }
-
     use {'nacro90/numb.nvim', config = function() require('numb').setup() end}
     use {
         'ethanholz/nvim-lastplace',
