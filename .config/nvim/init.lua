@@ -59,7 +59,6 @@ require('packer').startup(function()
         end
     }
 
-    use {'nacro90/numb.nvim', config = function() require('numb').setup() end}
     use {
         'ethanholz/nvim-lastplace',
         config = function() require('nvim-lastplace').setup() end
