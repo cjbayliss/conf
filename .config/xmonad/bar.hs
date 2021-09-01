@@ -10,7 +10,9 @@ Config
       [ Run
           ComX
           "sh"
-          ["-c", "tail -n1 /proc/net/arp | cut -d\" \" -f1"]
+          [ "-c"
+          , "awk 'FNR==2 { e=1; print $1 }; END { exit !e }' /proc/net/arp"
+          ]
           "DOWN"
           "arp"
           10
