@@ -1,7 +1,8 @@
-import Data.Ratio -- this makes the '%' operator available (optional)
 import XMonad
 import XMonad.Config.Desktop
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Grid
 import XMonad.Layout.NoBorders
@@ -9,12 +10,13 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Spacing
 import XMonad.Layout.ThreeColumns
 import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Util.Run
 import qualified XMonad.StackSet as W
 
 myLayoutsHook = spacingRaw False (Border 1 1 1 1) True (Border 1 1 1 1) True $
                 lessBorders OnlyScreenFloat $
                 onWorkspace "9" layoutFull $
-                layoutTCol ||| layoutGrid ||| layoutFull
+                avoidStruts (layoutTCol ||| layoutGrid ||| layoutFull)
   where
     layoutTCol = ThreeCol 1 (3/100) (1/3)
     layoutGrid = Grid
@@ -29,18 +31,23 @@ myManageHook = composeAll
                , isFullscreen --> doFullFloat ]
 
 main = do
-  xmonad $ ewmh def
+  xmproc <- spawnPipe "xmobar ~/.config/xmonad/bar.hs"
+  xmonad $ docks $ ewmh def
     { borderWidth = 1
     , modMask = mod4Mask
     , terminal = "xfce4-terminal"
-    , normalBorderColor = "#251f2e"
-    , focusedBorderColor = "#3e334d"
+    , normalBorderColor = "#808080"
+    , focusedBorderColor = "#F44747"
     , handleEventHook = ewmhDesktopsEventHook <+> fullscreenEventHook
     , startupHook = do
         spawn "feh --no-fehbg --bg-fill --randomize ~/stuff/wallpapers/"
         spawn "xsetroot -cursor_name left_ptr"
     , manageHook = myManageHook
     , layoutHook = myLayoutsHook
+    , logHook = dynamicLogWithPP xmobarPP
+              { ppOutput = hPutStrLn xmproc
+              , ppLayout = const ""
+              , ppTitle = xmobarColor "#4EC9B0" "" . shorten 80 } >> ewmhDesktopsLogHook
     }
     `additionalKeysP`
     -- Despite the syntax, "M-<somekey>" doesn't do what you expect. At

@@ -115,6 +115,7 @@ in
     opusTools
     pciutils
     universal-ctags
+    xmobar
 
     # langs
     chicken
@@ -360,6 +361,9 @@ in
     PYTHONSTARTUP = "$XDG_CONFIG_HOME/python/startup.py";
     PASSWORD_STORE_DIR = "$XDG_DATA_HOME/pass";
     MOZ_USE_XINPUT2 = "1";
+
+    EDITOR = "nvim";
+    VISUAL = "nvim";
 
     # FIXME: make this *only* get set for 'cjb'
     EMAIL = "cjb@cjb.sh";
