@@ -16,7 +16,6 @@ import XMonad.Util.Run
 myLayoutsHook =
   spacingRaw False (Border 1 1 1 1) True (Border 1 1 1 1) True $
   lessBorders OnlyScreenFloat $
-  onWorkspace "9" layoutFull $
   avoidStruts (layoutTCol ||| layoutGrid ||| layoutFull)
   where
     layoutTCol = ThreeCol 1 (3 / 100) (1 / 3)
@@ -25,7 +24,7 @@ myLayoutsHook =
 
 myManageHook =
   composeAll
-    [ className =? "mpv" --> doF (W.view "9") <+> doShift "9" <+> doFullFloat
+    [ className =? "mpv" --> doF (W.view "9") <+> doShift "9"
     , className =? "gmic_qt" --> doCenterFloat
     , className =? "gmic" --> doFloat
     , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_UTILITY" -->
