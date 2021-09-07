@@ -67,7 +67,23 @@ require('packer').startup(function()
     use {
         'lewis6991/gitsigns.nvim',
         requires = {'nvim-lua/plenary.nvim'},
-        config = function() require('gitsigns').setup() end
+        config = function()
+            require('gitsigns').setup({
+                current_line_blame = true,
+                current_line_blame_opts = {delay = 500}
+            })
+        end
+    }
+
+    -- remove trailing whitespace automatically
+    use {
+        'lewis6991/spaceless.nvim',
+        config = function() require('spaceless').setup() end
+    }
+
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function() require('colorizer').setup() end
     }
 
     -- the whole reason to use neovim
