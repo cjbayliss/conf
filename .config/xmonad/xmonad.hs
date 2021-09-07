@@ -38,8 +38,7 @@ main = do
         , terminal = "xfce4-terminal"
         , normalBorderColor = "#808080"
         , focusedBorderColor = "#F44747"
-        , startupHook =
-            do spawn "xsetroot -solid gray10 -cursor_name left_ptr"
+        , startupHook = do spawn "xsetroot -solid gray10 -cursor_name left_ptr"
         , manageHook = myManageHook
         , layoutHook = myLayoutsHook
         , logHook =
@@ -62,9 +61,11 @@ main = do
     , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 2%+ unmute")
     , ("<XF86AudioLowerVolume>", spawn "amixer set Master 2%- unmute")
     , ("<XF86AudioMute>", spawn "amixer set Master toggle")
-      -- control emms
+      -- control multimedia
     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("<XF86AudioNext>", spawn "playerctl next")
     , ("<XF86AudioPrev>", spawn "playerctl previous")
-    , ("M-d", spawn "rofi -combi-modi drun,window -show combi -modi combi")
+    , ( "M-p"
+      , spawn
+          "dmenu_run -fn 'Iosevka-10.5:semibold' -nb '#0f0f0f' -nf '#d4d4d4' -sb '#0f0f0f' -sf '#4EC9B0'")
     ]

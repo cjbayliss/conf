@@ -151,11 +151,11 @@ in
 
     # gui
     chromium
+    dmenu
     emacs
     firefox
     krita
     mpv
-    rofi
     xfce.terminal
 
     # extras
