@@ -11,6 +11,8 @@
   environment.memoryAllocator.provider = "libc";
   # IMPORTANT: don't block modules from being loaded
   security.lockKernelModules = false;
+  # don't use the 'hardened' kernel
+  boot.kernelPackages = pkgs.linuxPackages;
 
   # TODO: finish the job cjb!
   # harden systemd services. See: systemd-analyze security start by
