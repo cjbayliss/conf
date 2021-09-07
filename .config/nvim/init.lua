@@ -30,7 +30,7 @@ function nvSetKey(modes, key, command)
     end
 end
 
-local keys = {'<up>', '<down>', '<pageup>', '<pagedown>', '<left>', '<right>'}
+local keys = {'<up>', '<down>', '<left>', '<right>'}
 for k, v in ipairs(keys) do nvSetKey({'', 'i'}, v, '') end
 
 nvSetKey({''}, '<Leader><Leader>', ':b ')
