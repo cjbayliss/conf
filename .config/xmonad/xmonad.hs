@@ -15,12 +15,7 @@ import XMonad.Util.Run
 
 myLayoutsHook =
   spacingRaw False (Border 1 1 1 1) True (Border 1 1 1 1) True $
-  lessBorders OnlyScreenFloat $
-  avoidStruts (layoutTCol ||| layoutGrid ||| layoutFull)
-  where
-    layoutTCol = ThreeCol 1 (3 / 100) (1 / 3)
-    layoutGrid = Grid
-    layoutFull = withBorder 0 Full
+  avoidStruts (ThreeCol 1 (3 / 100) (1 / 3) ||| Grid ||| Full)
 
 myManageHook =
   composeAll
@@ -30,7 +25,6 @@ myManageHook =
     , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_UTILITY" -->
       doFloat
     , isDialog --> doCenterFloat
-    , isFullscreen --> doFullFloat
     ]
 
 main = do
@@ -44,10 +38,8 @@ main = do
         , terminal = "xfce4-terminal"
         , normalBorderColor = "#808080"
         , focusedBorderColor = "#F44747"
-        , handleEventHook = ewmhDesktopsEventHook <+> fullscreenEventHook
         , startupHook =
-            do spawn "feh --no-fehbg --bg-fill --randomize ~/stuff/wallpapers/"
-               spawn "xsetroot -cursor_name left_ptr"
+            do spawn "xsetroot -solid gray10 -cursor_name left_ptr"
         , manageHook = myManageHook
         , layoutHook = myLayoutsHook
         , logHook =
