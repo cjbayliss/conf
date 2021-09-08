@@ -119,13 +119,13 @@ in {
     feh
     ffmpeg
     git
+    glirc
     imagemagick
     neomutt
     pass
     playerctl
     tmux
     unstable.neovim
-    unstable.weechat
     unzip
     wget
     youtube-dl
