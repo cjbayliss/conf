@@ -15,9 +15,21 @@
 (setq gc-cons-threshold most-positive-fixnum)
 
 ;;; General:
+;;;; ensure-pkg
+;; IMPORTANT: this MUST be defined before it's called later in the init
+;; file. (where you define an elisp function doesn't normally matter,
+;; but does in this case. WHY??)
+(defun ensure-pkg (pkg)
+  "Ensure PKG is installed."
+  (require 'package)
+  (unless (package-installed-p pkg)
+    (package-initialize)
+    (package-refresh-contents)
+    (package-install pkg)))
+
 ;;;; sane defaults
 (setq auth-source-save-behavior nil)
-(setq browse-url-handlers '(("." . browse-url-chromium)))
+(setq browse-url-handlers '(("." . browse-url-firefox)))
 (setq c-basic-offset 4)
 (setq column-number-mode t)
 (setq custom-file (concat user-emacs-directory "/custom.el"))
@@ -47,9 +59,10 @@
                    (cons #'display-buffer-no-window nil)))
 
 ;;;; modus themes
+(ensure-pkg 'modus-themes)
 (setq modus-themes-slanted-constructs t)
 (setq modus-themes-no-mixed-fonts t)
-(load-theme 'modus-vivendi)
+(load-theme 'modus-vivendi t)
 
 ;;;; disable/enable various global modes
 (menu-bar-mode -1)
@@ -58,10 +71,8 @@
 ;; these modes are slow to load, add them to this hook instead
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (when (fboundp 'pinentry-start)
-              (pinentry-start))
-            (when (fboundp 'marginalia-mode)
-              (marginalia-mode +1))
+            (ensure-pkg 'marginalia)
+            (marginalia-mode +1)
             (delete-selection-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)))
@@ -228,95 +239,7 @@
 
 (define-key global-map (kbd "C-x v t") 'vc-generate-etags)
 
-;;;; Gnus
-(setq gnus-directory (concat user-emacs-directory "news"))
-(setq gnus-startup-file (concat user-emacs-directory "newsrc"))
-(setq gnus-init-file (concat user-emacs-directory "gnus"))
-(setq message-directory (concat user-emacs-directory "mail"))
-(setq nnfolder-directory (concat user-emacs-directory "mail/archive"))
-
-;; Gnus config
-(setq gnus-inhibit-startup-message t)
-(setq gnus-treat-display-smileys nil)
-
-(setq gnus-sum-thread-tree-false-root "○ ")
-(setq gnus-sum-thread-tree-indent "  ")
-(setq gnus-sum-thread-tree-leaf-with-other "├─► ")
-(setq gnus-sum-thread-tree-root "● ")
-(setq gnus-sum-thread-tree-single-indent "◎ ")
-(setq gnus-sum-thread-tree-single-leaf "╰─► ")
-(setq gnus-sum-thread-tree-vertical "│ ")
-(setq gnus-user-date-format-alist '((t . "%b %e")))
-(setq gnus-summary-line-format
-      "%4N %U%R%z %&user-date; %-14,14n (%4k) %B%s\n")
-
-(setq gnus-asynchronous t)
-(setq gnus-use-cache 'passive)
-
-;; Gnus hooks
-(add-hook 'gnus-summary-mode-hook 'hl-line-mode)
-(add-hook 'gnus-group-mode-hook 'hl-line-mode)
-(add-hook 'gnus-after-getting-new-news-hook
-          'display-time-event-handler)
-(add-hook 'gnus-group-mode-hook 'display-time-event-handler)
-
-;; setup this demon *after* gnus has loaded, otherwise it does not work
-(with-eval-after-load "gnus"
-  (add-to-list 'gnus-secondary-select-methods
-               '(nntp "news" (nntp-address "news.gwene.org")))
-
-  (setq gnus-demon-timestep 1)
-  (gnus-demon-add-handler 'gnus-demon-scan-news 60 t))
-
-;; email
-(setq gnus-select-method '(nnimap "email"
-                                  (nnimap-address "mail.gandi.net")
-                                  (nnimap-server-port 993)
-                                  (nnimap-stream ssl)))
-
-;; use smtp to send email
-(setq send-mail-function 'smtpmail-send-it)
-(setq smtpmail-smtp-server "mail.gandi.net")
-(setq smtpmail-smtp-service 587)
-
-;; make subbed groups visible
-(setq gnus-ignored-newsgroups
-      "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
-(setq gnus-permanently-visible-groups
-      "INBOX\\|Sent\\|archive\\|cyber")
-
-;; copy sent emails to Sent
-(setq gnus-message-archive-group "nnimap+email:Sent")
-(setq gnus-gcc-mark-as-read t)
-
-;; news
-(defvar-local gnus-subscribe-groups-done nil
-  "Only subscribe groups once.  Or else Gnus will NOT restart.")
-(add-hook 'gnus-group-mode-hook
-          (lambda ()
-            (unless gnus-subscribe-groups-done
-              (mapc (lambda (x)
-                      (gnus-subscribe-hierarchically x))
-                    '("nntp+news:gwene.ca.jvns"
-                      "nntp+news:gwene.com.blogspot.heronsperch"
-                      "nntp+news:gwene.com.danluu"
-                      "nntp+news:gwene.com.keithp.blog"
-                      "nntp+news:gwene.com.mattcen.blog"
-                      "nntp+news:gwene.com.nullprogram"
-                      "nntp+news:gwene.com.sachachua.emacs-news"
-                      "nntp+news:gwene.com.wordpress.microkerneldud"
-                      "nntp+news:gwene.de.0pointer.blog"
-                      "nntp+news:gwene.io.github.trofi"
-                      "nntp+news:gwene.io.rosenzweig.blog"
-                      "nntp+news:gwene.net.deftly"
-                      "nntp+news:gwene.org.dreamwidth.mjg59"
-                      "nntp+news:gwene.org.gentoo.blogs.mgorny"
-                      "nntp+news:gwene.org.wingolog"
-                      "nntp+news:gwene.website.christine.blog"))
-              (setq gnus-subscribe-groups-done t))
-            (message "Welcome to Gnus!")))
-
-;;;; icomplete
+;;;; vertico
 (setq completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
@@ -325,19 +248,8 @@
 (setq completion-in-region-function
       #'completing-read-completion--in-region)
 
-(setq icomplete-compute-delay 0)
-(setq icomplete-scroll t)
-(setq icomplete-show-matches-on-no-input t)
-
-(icomplete-vertical-mode +1)
-(icomplete-mode +1)
-
-;; without truncate-lines, icomplete-vertical spews a mess
-(add-hook 'icomplete-minibuffer-setup-hook
-          (lambda () (setq-local truncate-lines t)))
-
-(define-key icomplete-minibuffer-map (kbd "RET") 'icomplete-force-complete-and-exit)
-(define-key icomplete-minibuffer-map (kbd "TAB") 'icomplete-force-complete)
+(ensure-pkg 'vertico)
+(vertico-mode +1)
 
 ;;;; ix.io paste tool
 (defun ix-io--process-response (response)
@@ -369,114 +281,6 @@
 
 (global-set-key (kbd "C-c w b") 'ix-io-paste-buffer)
 (global-set-key (kbd "C-c w r") 'ix-io-paste-region)
-
-;;;; rcirc
-(with-eval-after-load 'rcirc
-
-;;;;; rcirc functions
-  ;; BEGIN GPL2+ CODE FROM:
-  ;; https://github.com/emacsmirror/rcirc-color/blob/7d9655e/rcirc-color.el
-  (defvar rcirc-color-mapping (make-hash-table :test 'equal))
-
-  (defun rcirc-clear-color-mapping ()
-    (setq rcirc-color-mapping (make-hash-table :test 'equal)))
-
-  (advice-add 'rcirc-facify :around #'rcirc-color--facify)
-  (defun rcirc-color--facify (orig-fun string face &rest args)
-    "Add colors to other nicks based on `rcirc-colors'."
-    (when (and (eq face 'rcirc-other-nick)
-               (> (length string) 0))
-      (let ((cell (or (gethash string rcirc-color-mapping)
-                      (puthash (substring-no-properties string)
-                               `(:foreground
-			         ,(irc-nick-color string))
-                               rcirc-color-mapping))))
-        (setq face (list cell))))
-    (apply orig-fun string face args))
-
-  (defun rcirc-markup-nick-colors (_sender _response)
-    "Add a face to all known nicks in `rcirc-color-mapping'.
-This ignores SENDER and RESPONSE."
-    (with-syntax-table rcirc-nick-syntax-table
-      (while (re-search-forward "\\w+" nil t)
-        (let ((face (gethash (match-string-no-properties 0) rcirc-color-mapping)))
-	  (when face
-	    (rcirc-add-face (match-beginning 0) (match-end 0) face))))))
-
-  (add-hook 'rcirc-markup-text-functions #'rcirc-markup-nick-colors)
-  ;; END GPL2+ CODE ;;
-
-  (require 'notifications)
-  (defun rcirc-notifications (process sender response target text)
-    (when (or (and (string= response "PRIVMSG")
-                   (not (string= sender (rcirc-nick process)))
-                   (not (rcirc-channel-p target)))
-              (and (string-match (rcirc-nick process) text)
-                   (rcirc-channel-p target)
-                   (not (string= (rcirc-nick process) sender))
-                   (not (string= (rcirc-server-name process) sender))))
-      (notifications-notify :app-icon nil :title sender :body text)))
-
-;;;;; rcirc hooks
-  (add-hook 'rcirc-mode-hook (lambda ()
-                               (rcirc-omit-mode +1)
-                               (rcirc-track-minor-mode  +1)
-                               (flyspell-mode +1)
-                               (setq-local fill-column (frame-width))
-                               (setq-local completion-in-region-function #'completion--in-region)
-                               (set-face-attribute 'rcirc-nick-in-message-full-line nil :foreground nil :weight 'normal)
-                               (set-face-attribute 'rcirc-my-nick nil :foreground nil :weight 'normal :inherit 'rcirc-nick-in-message)
-                               (set (make-local-variable 'scroll-conservatively) 8192)))
-
-  (add-hook 'rcirc-track-minor-mode-hook (lambda ()
-                                           (delq 'rcirc-activity-string global-mode-string)))
-
-  (add-hook 'rcirc-print-hooks 'rcirc-notifications)
-
-;;;;; rcirc config
-  (setq rcirc-default-full-name "Christopher Bayliss (they/them)")
-  (setq rcirc-default-nick "cjbayliss")
-  (setq rcirc-default-user-name "cjbayliss")
-  (setq rcirc-fill-column 'frame-width)
-  (setq rcirc-buffer-maximum-lines 2048)
-  (setq rcirc-ignore-list '("{^-^}"
-                            "Hash"))
-  (setq rcirc-log-flag t)
-  (setq rcirc-log-directory "~/stuff/rcirc-log")
-  ;; (setq rcirc-debug-flag t)
-  (setq rcirc-server-alist '(("irc.au.libera.chat"
-                              :port 6697
-                              :encryption tls
-                              :nick "cjb"
-                              :user-name "cjb"
-                              :server-alias "libera"
-                              :channels ("#chicken"
-                                         "#commonlisp"
-                                         "#emacs"
-                                         "#haskell"
-                                         "#lisp"
-                                         "##math"
-                                         "#nixos"
-                                         "#python"
-                                         "#rcirc"
-                                         "#scheme"
-                                         "#xebian"
-                                         "#xmonad"))
-                             ("irc.oftc.net"
-                              :port 6697
-                              :encryption tls
-                              :nick "cjbayliss"
-                              :user-name "cjbayliss"
-                              :server-alias "oftc"
-                              :channels ("#llvm"))))
-
-  (setq rcirc-authinfo
-        `(("libera" sasl "cjb" ,(auth-source-pass-get 'secret "irc.libera.chat"))
-          ("oftc" nickserv "cjbayliss" ,(auth-source-pass-get 'secret "irc.oftc.net")))))
-
-(defun irc-cyber ()
-  (interactive)
-  (rcirc-connect "127.0.0.1" 6667 "cjb" nil "Christopher Bayliss (they/them)" '("#cyber") "cyber"))
 
 ;;;; term/ansi-term
 ;; show URLs
@@ -545,29 +349,6 @@ This ignores SENDER and RESPONSE."
              '(("\\<\\(FIXME\\|TODO\\|BUG\\|NOTE\\|IMPORTANT\\):"
                 1 highlight-todo-face t)))))
 
-;;;; tree-sitter
-(add-hook
- 'after-init-hook
- (lambda ()
-   ;; prevent emacs from flickering at startup
-   (let ((inhibit-message t))
-     ;; set the default dir to ~/.config/emacs/tree-sitter
-     (setq tree-sitter-langs-grammar-dir
-           (expand-file-name "tree-sitter/" user-emacs-directory))
-     (setq tsc-dyn-dir tree-sitter-langs-grammar-dir)
-     (make-directory tree-sitter-langs-grammar-dir t)
-
-     ;; auto-install grammar files
-     (tree-sitter-langs-install-grammars t)
-
-     ;; IMPORTANT: the grammar alist isn't generated unless you require
-     ;; this first
-     (require 'tree-sitter-langs)
-
-     ;; now enable tree-sitter
-     (global-tree-sitter-mode)
-     (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))))
-
 ;;;; C
 (add-hook 'c-mode-common-hook
           (lambda ()
@@ -580,52 +361,6 @@ This ignores SENDER and RESPONSE."
 (setq inferior-lisp-program
       "sbcl --no-userinit --eval \"(require 'sb-aclrepl)\"")
 (global-set-key (kbd "C-c l") 'run-lisp)
-
-;;;; nix
-(add-to-list 'auto-mode-alist
-             '("\\.nix\\'" .
-               (lambda ()
-                 (require 'nix-mode)
-                 (nix-mode))))
-
-;;;; php
-(add-to-list
- 'auto-mode-alist
- '("\\.php\\'" .
-   (lambda ()
-     (defun podman-build-allocPSA ()
-       "Build an allocPSA pod."
-       (interactive)
-       (async-shell-command
-        (format "podman build -f $HOME/stuff/podman/alloc-containerfile %s -t alloc"
-                (expand-file-name (vc-root-dir)))
-        "Podman: Building allocPSA"))
-
-     (defun podman-run-allocPSA ()
-       "Run an allocPSA pod."
-       (interactive)
-       (async-shell-command
-        (format "podman run --name alloc --volume %s:/var/www/html -p 4000:80 alloc"
-                (expand-file-name (vc-root-dir)))
-        "Podman: Running allocPSA"))
-
-     (defun podman-stop-allocPSA ()
-       "Stop the running allocPSA pod."
-       (interactive)
-       (message "Podman: Stopping allocPSA ...")
-       (call-process-shell-command "podman stop alloc")
-       (message "Podman: Stopping allocPSA ... Done.")
-       ;; cleanup the mess
-       (call-process-shell-command "podman system prune -f"))
-
-     (require 'php-mode)
-     (php-mode)
-     (define-key php-mode-map (kbd "C-c a b") 'podman-build-allocPSA)
-     (define-key php-mode-map (kbd "C-c a r") 'podman-run-allocPSA)
-     (define-key php-mode-map (kbd "C-c a s") 'podman-stop-allocPSA)
-     (setq c-basic-offset 4)
-     (setq indent-tabs-mode nil)
-     (php-enable-psr2-coding-style))))
 
 ;;;; scheme
 (setq scheme-program-name "csi")
@@ -649,37 +384,6 @@ This ignores SENDER and RESPONSE."
                      height
                    (/ height 100.0))))
     (string-to-number (format "%.2f" (/ weight (* height height))))))
-
-;;;; nick color generator for IRC
-(defun irc-nick-color (nick)
-  "Return a color for a given NICK."
-  (let* ((color (concat "#" (substring (md5 (downcase nick)) 0 12))))
-    (color-ensure-contrast-above-ratio color (face-attribute 'default :background) 7 5)))
-
-;; if using stock emacs >= 28, if you don't like modus themes, you could
-;; (load-theme 'modus-vivendi) then (disable-theme 'modus-vivendi)
-(defun color-ensure-contrast-above-ratio (color bg ratio steps)
-  "Ensure COLOR is above contrast RATIO for BG.
-
-Before increasing contrast, tries inverting the color.  STEPS is
-the pecent to increase by each pass."
-  (if (< (modus-themes-contrast bg color) ratio)
-      (let* ((inverted (color-complement-hex color)))
-        (if (< (modus-themes-contrast bg inverted) ratio)
-            (let* ((color (if (> (modus-themes-wcag-formula bg) 0.5)
-                              (color-darken-name color steps)
-                            (color-lighten-name color steps))))
-              (color-ensure-contrast-above-ratio color bg ratio steps))
-          inverted))
-    color))
-
-;;;; browse URL in mpv
-(defun browse-url-mpv (url &optional _ignored)
-  "Pass the specified URL to the \"mpv\" command.
-
-The optional argument IGNORED is not used."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (call-process "mpv" nil 0 nil url))
 
 ;;;; completion-in-region-function
 (defun completing-read-completion--in-region (start end coll &optional pred)
@@ -721,28 +425,6 @@ The following are tried in order:
                      (completing-read "Completions: " coll pred nil init))))
               (when sel
                 (completion--replace start end sel))))))))
-
-;;; outline this file
-(setq outline-minor-mode-highlight 'override)
-
-(defun outline-cycle-maybe ()
-  "Run 'outline-cycle' if on an outline heading."
-  (interactive)
-  (if (outline-on-heading-p)
-      (outline-cycle)
-    (indent-for-tab-command)))
-
-(add-to-list 'safe-local-variable-values
-             '(eval progn (outline-minor-mode 1) (hide-sublevels 1)))
-(add-hook 'outline-minor-mode-hook
-          (lambda ()
-            (define-key
-              outline-minor-mode-map (kbd "<tab>") 'outline-cycle-maybe)))
-
-;; Local Variables:
-;; outline-regexp: ";;; \\|;;;; \\|;;;;;"
-;; eval:(progn (outline-minor-mode 1) (hide-sublevels 1))
-;; End:
 
 ;;; end initialisation
 (add-hook 'emacs-startup-hook

@@ -2,50 +2,29 @@
 
 with pkgs;
 let
-  unstable = import <unstable> {};
+  unstable = import <unstable> { };
   chromium = (ungoogled-chromium.override {
-    commandLineArgs = ''$([ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
+    commandLineArgs = ''
+      $([ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
   });
-  mpv = (mpv-with-scripts.override {
-    scripts = [ mpvScripts.mpris ];
-  });
-  python = python3.withPackages (pp: with pp; [
-    flake8
-    notify2
-    pylint
-  ]);
-  emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (
-    epkgs: with epkgs; [
-      haskell-mode
-      marginalia
-      nix-mode
-      php-mode
-      pinentry
-      tree-sitter
-      tree-sitter-langs
-    ]
-  );
-in
-{
+  mpv = (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; });
+  python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
+in {
   # the bad
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "b43-firmware"
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "b43-firmware" ];
+
+  imports = [
+    # hardware
+    ./hardware-configuration.nix
+    # display server config
+    ./display-server.nix
+    # hardening config
+    ./harden.nix
   ];
 
-  imports =
-    [
-      # hardware
-      ./hardware-configuration.nix
-      # display server config
-      ./display-server.nix
-      # hardening config
-      ./harden.nix
-    ];
-
   boot.loader = {
-    efi = {
-      canTouchEfiVariables = false;
-    };
+    efi = { canTouchEfiVariables = false; };
     grub = {
       device = "nodev";
       efiInstallAsRemovable = true;
@@ -141,10 +120,12 @@ in
     ffmpeg
     git
     imagemagick
+    neomutt
     pass
     playerctl
     tmux
     unstable.neovim
+    unstable.weechat
     unzip
     wget
     youtube-dl
@@ -164,10 +145,11 @@ in
       destination = "/bin/startx";
       executable = true;
       text = ''
-         #!${pkgs.bash}/bin/bash
-         xinit /etc/X11/xinit/xinitrc -- vt$(tty | tail -c2)
-       '';
+        #!${pkgs.bash}/bin/bash
+        xinit /etc/X11/xinit/xinitrc -- vt$(tty | tail -c2)
+      '';
     })
+
     (pkgs.writeTextFile {
       name = "set-audio-latency";
       destination = "/bin/set-audio-latency";
@@ -181,52 +163,15 @@ in
         ${pkgs.pciutils}/bin/setpci -v -s 00:1b.0 latency_timer=ff
       '';
     })
-
-    (pkgs.writeTextFile {
-      name = "emacs-askpass";
-      destination = "/bin/emacs-askpass";
-      executable = true;
-      text = ''
-        #! ${pkgs.bash}/bin/bash
-        emacsclient -e '(read-passwd "Password: ")' | xargs
-      '';
-    })
   ];
-
-  programs.ssh.askPassword = "emacs-askpass";
-
-  environment.etc = {
-    "chromium/native-messaging-hosts/com.github.browserpass.native.json".source =
-      "${pkgs.browserpass}/lib/browserpass/hosts/chromium/com.github.browserpass.native.json";
-  };
 
   sound.enable = true;
-  # for some reason linux tries to use a swap even if you don't have
-  # one, causing audio to skip/crackle really badly.
-  boot.kernel.sysctl."vm.swappiness" = 0;
-
-  # while the above fixes the worst of the audio skipping I've
-  # experianced under NixOS, the following it an attempt to reduce audio
-  # skipping when the system has high load. See:
-  # https://nixos.wiki/wiki/JACK
-  systemd.services.setup-audio-latency = {
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "/run/current-system/sw/bin/set-audio-latency";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
-  security.pam.loginLimits = [
-    { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
-    { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
-    { domain = "@audio"; item = "nofile"; type = "soft"; value = "99999"; }
-    { domain = "@audio"; item = "nofile"; type = "hard"; value = "99999"; }
-  ];
-  services.udev = {
-    extraRules = ''
-      KERNEL=="rtc0", GROUP="audio"
-      KERNEL=="hpet", GROUP="audio"
-    '';
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
 
   programs.light.enable = true;
@@ -234,25 +179,28 @@ in
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "emacs";
+    pinentryFlavor = "qt";
   };
 
   virtualisation.podman.enable = true;
 
   fonts = {
     fonts = with pkgs; [
+      (nerdfonts.override { fonts = [ "Iosevka" ]; })
       baekmuk-ttf
       iosevka-bin
       ipafont
       liberation_ttf
-      (nerdfonts.override { fonts = [ "Iosevka" ]; })
       noto-fonts-emoji
     ];
     fontconfig = {
       defaultFonts.emoji = [ "Noto Color Emoji" ];
-      defaultFonts.monospace = [ "Iosevka Fixed" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
-      defaultFonts.sansSerif = [ "Liberation Sans" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
-      defaultFonts.serif = [ "Liberation Serif" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
+      defaultFonts.monospace =
+        [ "Iosevka Fixed" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
+      defaultFonts.sansSerif =
+        [ "Liberation Sans" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
+      defaultFonts.serif =
+        [ "Liberation Serif" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
       useEmbeddedBitmaps = true;
 
       localConf = ''
@@ -369,13 +317,6 @@ in
     EMAIL = "cjb@cjb.sh";
     NAME = "Christopher Bayliss";
   };
-
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/29829efa3367108398a024db927263d95a55bba2.tar.gz;
-      sha256 = "1vbsrisdwh1jmg2j2zbpyzky31cqy4wgl7y9ysvmhz7q635vvjjd";
-    }))
-  ];
 
   system.stateVersion = "20.09";
 }
