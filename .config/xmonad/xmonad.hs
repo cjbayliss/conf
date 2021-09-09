@@ -38,7 +38,9 @@ main = do
         , terminal = "xfce4-terminal"
         , normalBorderColor = "#808080"
         , focusedBorderColor = "#F44747"
-        , startupHook = do spawn "xsetroot -solid gray10 -cursor_name left_ptr"
+        , startupHook =
+            do spawn "hsetroot -solid gray10"
+               spawn "xsetroot -cursor_name left_ptr"
         , manageHook = myManageHook
         , layoutHook = myLayoutsHook
         , logHook =
@@ -57,7 +59,7 @@ main = do
       -- adjust screen brightness
     , ("<XF86MonBrightnessDown>", spawn "light -U 5")
     , ("<XF86MonBrightnessUp>", spawn "light -A 5")
-      -- alsa only systems
+      -- using pactl with pipewire
     , ( "<XF86AudioRaiseVolume>"
       , spawn "pactl set-sink-volume @DEFAULT_SINK@ +2%")
     , ( "<XF86AudioLowerVolume>"

@@ -96,6 +96,7 @@ in {
     pulseaudio # for pactl
     universal-ctags
     xmobar
+    hsetroot
 
     # langs
     chicken
