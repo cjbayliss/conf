@@ -93,6 +93,7 @@ in {
     libnotify
     opusTools
     pciutils
+    pulseaudio # for pactl
     universal-ctags
     xmobar
 
@@ -147,20 +148,6 @@ in {
       text = ''
         #!${pkgs.bash}/bin/bash
         xinit /etc/X11/xinit/xinitrc -- vt$(tty | tail -c2)
-      '';
-    })
-
-    (pkgs.writeTextFile {
-      name = "set-audio-latency";
-      destination = "/bin/set-audio-latency";
-      executable = true;
-      text = ''
-        #! ${pkgs.bash}/bin/bash
-
-        echo 2048 > /sys/class/rtc/rtc0/max_user_freq
-        echo 2048 > /proc/sys/dev/hpet/max-user-freq
-        ${pkgs.pciutils}/bin/setpci -v -d *:* latency_timer=b0
-        ${pkgs.pciutils}/bin/setpci -v -s 00:1b.0 latency_timer=ff
       '';
     })
   ];

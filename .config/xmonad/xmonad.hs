@@ -58,9 +58,11 @@ main = do
     , ("<XF86MonBrightnessDown>", spawn "light -U 5")
     , ("<XF86MonBrightnessUp>", spawn "light -A 5")
       -- alsa only systems
-    , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 2%+ unmute")
-    , ("<XF86AudioLowerVolume>", spawn "amixer set Master 2%- unmute")
-    , ("<XF86AudioMute>", spawn "amixer set Master toggle")
+    , ( "<XF86AudioRaiseVolume>"
+      , spawn "pactl set-sink-volume @DEFAULT_SINK@ +2%")
+    , ( "<XF86AudioLowerVolume>"
+      , spawn "pactl set-sink-volume @DEFAULT_SINK@ -2%")
+    , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
       -- control multimedia
     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("<XF86AudioNext>", spawn "playerctl next")

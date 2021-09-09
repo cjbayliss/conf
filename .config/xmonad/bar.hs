@@ -17,19 +17,19 @@ Config
           "arp"
           10
       , Run
-          Alsa
-          "default"
-          "Master"
-          [ "-t"
-          , "<status>VOL: <volume>%"
-          , "--"
-          , "-O"
-          , ""
-          , "-o"
-          , "AUDIO OFF "
-          , "-c"
-          , "#F44747"
+          Com
+          "sh"
+          ["-c", "pactl list sinks | awk '/^[[:space:]]Volume:/ {print $5}'"]
+          "volume"
+          10
+      , Run
+          Com
+          "sh"
+          [ "-c"
+          , "pactl list sinks | awk '/Mute:/ {print $2}' | sed -e 's/yes/AUDIO OFF /' -e 's/no//'"
           ]
+          "audioStatus"
+          10
       , Run Memory ["-t", "<used>M/<total>M (<usedratio>%)"] 10
       , Run Com "head" ["-c4", "/proc/loadavg"] "loadavg" 10
       , Run Date "%0e %^a %H:%M" "date" 10
@@ -38,5 +38,5 @@ Config
   , sepChar = "%"
   , alignSep = "}{"
   , template =
-      " %StdinReader% }{ <fc=#569CD6>%alsa:default:Master%</fc> <fc=#333333>│</fc> <fc=#608B4E>%memory%</fc> <fc=#333333>│</fc> <fc=#C678DD>%arp%</fc> <fc=#333333>│</fc> %loadavg% <fc=#333333>│</fc> <fn=1><fc=#DCDCAA>%date%</fc></fn> "
+      " %StdinReader% }{ <fc=#F44747>%audioStatus%</fc><fc=#569CD6>%volume%</fc> <fc=#333333>│</fc> <fc=#608B4E>%memory%</fc> <fc=#333333>│</fc> <fc=#C678DD>%arp%</fc> <fc=#333333>│</fc> %loadavg% <fc=#333333>│</fc> <fn=1><fc=#DCDCAA>%date%</fc></fn> "
   }
