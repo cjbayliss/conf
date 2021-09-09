@@ -122,6 +122,7 @@ in {
     git
     glirc
     imagemagick
+    ix
     neomutt
     pass
     playerctl
