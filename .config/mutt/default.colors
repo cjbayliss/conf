@@ -1,0 +1,32 @@
+# -*- mode: muttrc -*-
+
+color normal      default     default
+color hdrdefault  color196    default
+
+color quoted      color245    default
+color quoted1     color111    default
+color quoted2     color77     default
+color quoted3     color180    default
+color quoted4     color198    default
+color quoted5     color147    default
+
+color attachment  color198    default
+color error       color196    default
+color indicator   color208    color235
+color markers     color198    default
+color message     default     default
+color search      default     color11
+color signature   color245    default
+color status      black       color250
+color tilde       color208    default
+color tree        color208    default
+
+color header      color208    default "^(Date|Message-ID):"
+color header      color111    default "^(To:|From:)"
+color header      color77     default "^Subject:"
+color header      color245    default "^User-Agent:"
+
+color body        underline   cyan     default "[[:alpha:]]+://[^[:space:]]+"    # point out URLs
+color body        underline   color198 default "[[:alnum:]_.-]+@[[:alnum:]_.-]+" # e-mail addresses
+
+mono  quoted      bold

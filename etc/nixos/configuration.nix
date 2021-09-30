@@ -125,11 +125,13 @@ in {
     imagemagick
     ix
     neomutt
+    pandoc
     pass
     playerctl
     tmux
     unstable.neovim
     unzip
+    w3m
     wget
     youtube-dl
 

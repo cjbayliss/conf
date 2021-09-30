@@ -1,0 +1,43 @@
+# general config
+source $XDG_CONFIG_HOME/mutt/default.colors
+set send_charset="utf-8"
+set smart_wrap=yes
+set editor="nvim -c 'set syntax=mail ft=mail enc=utf-8'"
+set sort = threads
+set strict_threads=yes
+set mail_check_stats
+
+# header
+ignore *
+unhdr_order *
+unignore subject from to cc bcc date message-id x-mailer x-url user-agent
+hdr_order subject from to cc bcc date message-id x-mailer x-url user-agent
+
+# store stuff locally to speed things up.
+set message_cachedir = "$XDG_DATA_HOME/mutt"
+
+# allow mutt to open new imap connection automatically.
+unset imap_passive
+set imap_check_subscribed = yes
+
+# keep IMAP connection alive by polling intermittently
+set imap_keepalive = 300
+set mail_check = 90
+set timeout=15
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
+set realname = "Christopher Bayliss"
+set from = ""
+
+# email account config
+set imap_user = ""
+set imap_pass = ""
+
+set folder = "imaps://mail.gandi.net:993/"
+set spoolfile = $folder
+set record = "=Sent"
+
+set smtp_url = "smtp://$imap_user:$imap_pass@mail.gandi.net:587/"
+set use_from = yes
+set ssl_starttls = yes
