@@ -2,7 +2,6 @@
 
 with pkgs;
 let
-  unstable = import <unstable> { };
   chromium = (ungoogled-chromium.override {
     commandLineArgs = ''
       $([ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
@@ -101,7 +100,7 @@ in {
     # langs
     chicken
     ghc
-    php73
+    php74
     python
     sbcl
     gcc
@@ -129,7 +128,7 @@ in {
     pass
     playerctl
     tmux
-    unstable.neovim
+    neovim
     unzip
     w3m
     wget
