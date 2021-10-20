@@ -44,6 +44,7 @@ else
                 vim.api.nvim_command('highlight LineNr guibg=#151515')
                 vim.api.nvim_command('highlight ModeMsg guibg=none')
                 vim.api.nvim_command('highlight Normal guibg=#0f0f0f')
+                vim.api.nvim_command('highlight NormalFloat guibg=#0f0f0f')
                 vim.api.nvim_command('highlight SignColumn guibg=none')
                 vim.api.nvim_command('highlight StatusLine guibg=#151515')
                 vim.api.nvim_command('highlight StatusLineNC guibg=none')
@@ -76,6 +77,16 @@ else
         use {
             'norcalli/nvim-colorizer.lua',
             config = function() require('colorizer').setup() end
+        }
+
+        -- fennel
+        use {'Olical/conjure', ft = 'fennel'}
+        use {
+            'Olical/aniseed',
+            requires = {'Olical/conjure'},
+            config = function()
+                vim.api.nvim_command('packadd packer.nvim')
+            end
         }
 
         -- the whole reason to use neovim

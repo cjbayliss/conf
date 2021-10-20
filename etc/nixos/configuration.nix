@@ -99,15 +99,16 @@ in {
 
     # langs
     chicken
+    fennel
+    gcc
     ghc
     php74
     python
     sbcl
-    gcc
-    clang
 
     # langs-extras
     black
+    fnlfmt
     hlint
     nix-linter
     nixfmt
