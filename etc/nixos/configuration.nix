@@ -86,11 +86,9 @@ in {
     aspell
     aspellDicts.en
     browserpass
-    dunst
     git-filter-repo
     gnome3.adwaita-icon-theme
     hsetroot
-    libnotify
     opusTools
     pciutils
     pulseaudio # for pactl
