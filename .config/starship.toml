@@ -18,6 +18,9 @@ truncation_length = 1
 format = "[$branch]($style) "
 style = "yellow"
 
+[git_commit]
+format = "\\($hash$tag\\) "
+
 [git_status]
 format = "$all_status$ahead_behind "
 conflicted = "!!"
