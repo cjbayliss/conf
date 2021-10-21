@@ -139,7 +139,6 @@ in {
     # gui
     chromium
     dmenu
-    emacs
     firefox
     krita
     mpv
