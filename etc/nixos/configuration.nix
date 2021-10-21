@@ -89,13 +89,14 @@ in {
     dunst
     git-filter-repo
     gnome3.adwaita-icon-theme
+    hsetroot
     libnotify
     opusTools
     pciutils
     pulseaudio # for pactl
+    starship
     universal-ctags
     xmobar
-    hsetroot
 
     # langs
     chicken
@@ -226,63 +227,53 @@ in {
 
   gtk.iconCache.enable = true;
 
-  programs.bash = {
-    interactiveShellInit = ''
-      # better history
-      shopt -s histappend
-      HISTCONTROL=ignoreboth
-      HISTSIZE=-1
-      HISTFILESIZE=-1
-      HISTFILE="$XDG_DATA_HOME/bash-history"
+  programs.fish = {
+    enable = true;
+    shellInit = ''
+      set fish_greeting
 
-      # check the window size after each command and, if necessary, update
-      # the values of LINES and COLUMNS.
-      shopt -s checkwinsize
+      # allow urls with ? in them
+      set -U fish_features qmark-noglob
 
-      # better completion (imo)
-      bind "set menu-complete-display-prefix on"
-      bind "set show-all-if-ambiguous on"
-      bind "set completion-query-items 0"
-      bind "TAB:menu-complete"
-      bind "\"\e[Z\": menu-complete-backward"
-    '';
-    promptInit = ''
-      __exit_status() {
-          EXIT_STATUS=''${?}
-          if [ $EXIT_STATUS -gt 0 ]; then
-              printf "%s " "$EXIT_STATUS"
-          fi
-      }
+      # colors
+      set -U fish_color_autosuggestion      brblack
+      set -U fish_color_cancel              -r
+      set -U fish_color_command             'white' '--bold'
+      set -U fish_color_comment             green
+      set -U fish_color_cwd                 green
+      set -U fish_color_cwd_root            red
+      set -U fish_color_end                 brmagenta
+      set -U fish_color_error               brred
+      set -U fish_color_escape              brcyan
+      set -U fish_color_history_current     --bold
+      set -U fish_color_host                normal
+      set -U fish_color_match               --background=brblue
+      set -U fish_color_normal              normal
+      set -U fish_color_operator            normal
+      set -U fish_color_param               normal
+      set -U fish_color_quote               yellow
+      set -U fish_color_redirection         bryellow
+      set -U fish_color_search_match        'bryellow' '--background=brblack'
+      set -U fish_color_selection           'white' '--bold' '--background=brblack'
+      set -U fish_color_status              red
+      set -U fish_color_user                brgreen
+      set -U fish_color_valid_path          --underline
+      set -U fish_pager_color_completion    normal
+      set -U fish_pager_color_description   yellow
+      set -U fish_pager_color_prefix        'white' '--bold' '--underline'
+      set -U fish_pager_color_progress      '-r' 'brblack'
 
-      __short_cwd() {
-          CWD="$(basename $PWD)"
-          SHORT_PWD_NO_CWD="$(echo $PWD | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/' -e 's|'$CWD'$||')"
-          COLLAPSED_PWD="$(echo $SHORT_PWD_NO_CWD | sed -r 's|/(.)[^/]*|/\1|g')"
-          [ "$SHORT_PWD_NO_CWD" == "~" ] && \
-              SHORT_CWD="$SHORT_PWD_NO_CWD" || \
-                  SHORT_CWD="$COLLAPSED_PWD$CWD"
-          printf "%s" "$SHORT_CWD"
-      }
-
-      __git_branch() {
-          BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
-          printf "%s" "$BRANCH"
-      }
-
-      __git_prompt() {
-          [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] && \
-              STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /')" || STATUS=" [NOSTAT]"
-          printf "%s" "$STATUS"
-      }
-
-      PS1="\[\e[1;31m\]\$(__exit_status)\[\e[0m\]\h \[\e[1;34m\]::\[\e[0m\] \[\e[32m\]\$(__short_cwd)\[\e[0m\]\[\e[33m\]\$(__git_branch)\[\e[0m\]\$(__git_prompt)\[\e[0m\] \[\e[1;34m\]»\[\e[0m\] "
+      # prompt
+      starship init fish | source
     '';
     loginShellInit = ''
-      if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] ;
-        then exec startx;
-      fi
+      if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]
+          exec startx
+      end
     '';
   };
+
+  users.users.cjb.shell = pkgs.fish;
 
   # variables set by PAM on login
   environment.sessionVariables = {

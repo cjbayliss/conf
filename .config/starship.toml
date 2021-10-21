@@ -1,0 +1,34 @@
+add_newline = false
+
+[character]
+format = "[»](blue bold) "
+
+[directory]
+fish_style_pwd_dir_length = 1
+format = "[$path]($style) "
+style = "green"
+truncate_to_repo = false
+truncation_length = 1
+
+[git_branch]
+format = "[$branch]($style) "
+style = "yellow"
+
+[git_status]
+format = "$all_status$ahead_behind "
+conflicted = "!!"
+deleted = "D"
+modified = "M"
+renamed = "R"
+staged = "M"
+
+[hostname]
+format = "$hostname [::](blue bold) "
+ssh_only = false
+
+[line_break]
+disabled = true
+
+[status]
+disabled = false
+format = "[$status]($style) "
