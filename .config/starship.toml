@@ -4,8 +4,7 @@ add_newline = false
 format = "[»](blue bold) "
 
 [cmd_duration]
-format = "$duration "
-show_milliseconds = true
+disabled = true
 
 [directory]
 fish_style_pwd_dir_length = 1
