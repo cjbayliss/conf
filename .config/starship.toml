@@ -3,6 +3,10 @@ add_newline = false
 [character]
 format = "[»](blue bold) "
 
+[cmd_duration]
+format = "$duration "
+show_milliseconds = true
+
 [directory]
 fish_style_pwd_dir_length = 1
 format = "[$path]($style) "
