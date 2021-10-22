@@ -16,7 +16,12 @@ servers:
       password: "passwordGoesHere"
     log-dir:       "~/stuff/irc-logs"
     connect-cmds:
-      * "join #chicken,#commonlisp,#haskell,#lisp,##math,#neovim,#nixos,#python,#scheme,#xebian,#xmonad"
+      * "join #commonlisp,#fennel,#haskell,#lisp,#neovim,#nixos,#scheme,#xebian"
+  * name: "cyber"
+    hostname:      "127.0.0.1"
+    nick:          "cjb"
+    connect-cmds:
+      * "join #cyber"
 
 activity-bar:      yes
 hide-metadata:     yes
