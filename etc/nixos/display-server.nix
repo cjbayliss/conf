@@ -38,8 +38,4 @@
     longitude = 145.0;
   };
 
-  environment.etc."X11/xinit/xinitrc".source = ./xinitrc;
-  environment.etc."X11/xinit/xserverrc".source = lib.mkForce ./xserverrc;
-  environment.etc."X11/xinit/xresources".source = ./xresources;
-
 }

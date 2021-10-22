@@ -93,6 +93,7 @@ in {
     pciutils
     pulseaudio # for pactl
     starship
+    sx
     universal-ctags
     xmobar
 
@@ -141,17 +142,6 @@ in {
     krita
     mpv
     xfce.terminal
-
-    # extras
-    (pkgs.writeTextFile {
-      name = "startx";
-      destination = "/bin/startx";
-      executable = true;
-      text = ''
-        #!${pkgs.bash}/bin/bash
-        xinit /etc/X11/xinit/xinitrc -- vt$(tty | tail -c2)
-      '';
-    })
   ];
 
   sound.enable = true;
@@ -265,7 +255,7 @@ in {
     '';
     loginShellInit = ''
       if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]
-          exec startx
+          exec sx
       end
     '';
   };
