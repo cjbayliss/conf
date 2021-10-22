@@ -17,3 +17,4 @@ ScrollingBar=TERMINAL_SCROLLBAR_NONE
 ScrollingLines=0
 ScrollingOnOutput=FALSE
 ScrollingUnlimited=FALSE
+TitleMode=TERMINAL_TITLE_HIDE
