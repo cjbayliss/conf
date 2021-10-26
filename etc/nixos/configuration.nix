@@ -125,15 +125,15 @@ in {
     imagemagick
     ix
     neomutt
+    neovim
     pandoc
     pass
     playerctl
     tmux
-    neovim
     unzip
     w3m
     wget
-    youtube-dl
+    yt-dlp
 
     # gui
     chromium
@@ -249,6 +249,8 @@ in {
       set -U fish_pager_color_description   yellow
       set -U fish_pager_color_prefix        'white' '--bold' '--underline'
       set -U fish_pager_color_progress      '-r' 'brblack'
+
+      alias youtube-dl yt-dlp
 
       # prompt
       function __git_branch
