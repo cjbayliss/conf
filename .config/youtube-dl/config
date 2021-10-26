@@ -1,0 +1,7 @@
+# this means 'keep downloading the rest of the playlist even is one item on the
+# list fails'
+--ignore-errors
+
+# use aria2c for faster downloads
+--external-downloader aria2c
+--external-downloader-args '-c -j 16 -x 16 -s 16 -k 1M --summary-interval=0 --console-log-level=warn'
