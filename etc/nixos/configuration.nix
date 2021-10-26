@@ -92,7 +92,6 @@ in {
     opusTools
     pciutils
     pulseaudio # for pactl
-    starship
     sx
     universal-ctags
     xmobar
@@ -116,6 +115,7 @@ in {
     shellcheck
 
     # tools
+    aria
     beets
     efibootmgr
     feh
@@ -251,7 +251,52 @@ in {
       set -U fish_pager_color_progress      '-r' 'brblack'
 
       # prompt
-      starship init fish | source
+      function __git_branch
+          git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+      end
+
+      function __git_status
+          if [ (git ls-files 2>/dev/null | wc -l) -lt 2000 ]
+              git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /'
+          else
+              printf " [NOSTAT]"
+          end
+      end
+
+      function fish_right_prompt
+          set -l last_status $status
+          if [ $last_status -ne 0 ]
+              set_color --bold $fish_color_error
+              printf '%s ' $last_status
+              set_color normal
+          end
+      end
+
+      function fish_prompt
+          # host
+          printf '%s ' (prompt_hostname)
+          set_color --bold blue
+          echo -n '::'
+          set_color normal
+          echo -n ' '
+
+          # pwd
+          set_color $fish_color_cwd
+          echo -n (prompt_pwd)
+          set_color normal
+
+          # git stuff
+          set_color yellow
+          printf '%s' (__git_branch)
+          set_color normal
+          printf '%s ' (__git_status)
+
+          # prompt delimiter
+          set_color --bold blue
+          echo -n '»'
+          set_color normal
+          echo -n ' '
+      end
     '';
     loginShellInit = ''
       if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]
