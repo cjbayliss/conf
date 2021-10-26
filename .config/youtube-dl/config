@@ -5,3 +5,6 @@
 # use aria2c for faster downloads
 --external-downloader aria2c
 --external-downloader-args '-c -j 16 -x 16 -s 16 -k 1M --summary-interval=0 --console-log-level=warn'
+
+# select the optimal format for my laptop
+-f [format_id*=adaptive_hls-audio-jaJP][height<=?720][fps!=60]/bestvideo[ext=webm][height<=?720][fps!=60]+bestaudio[ext=webm]/best
