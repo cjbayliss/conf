@@ -91,16 +91,49 @@ packer.startup(function()
     -- the whole reason to use neovim
     use {
         'nvim-treesitter/nvim-treesitter',
+        requires = {'nvim-treesitter/nvim-treesitter-refactor'},
         run = ':TSUpdate',
         config = function()
+            vim.o.updatetime = 50
             require('nvim-treesitter.configs').setup({
                 ensure_installed = 'all',
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false
+                },
+                refactor = {
+                    highlight_definitions = {enable = true},
+                    smart_rename = {enable = true},
+                    navigation = {enable = true}
                 }
             })
+
+            function jump_to_def()
+                local ts_utils = require('nvim-treesitter.ts_utils')
+                local locals = require('nvim-treesitter.locals')
+                local buf = vim.api.nvim_get_current_buf()
+                local point = ts_utils.get_node_at_cursor()
+
+                if not point then return end
+
+                local _, _, kind = locals.find_definition(point, buf)
+                local def = locals.find_definition(point, buf)
+
+                if tostring(kind) == 'nil' then
+                    local name = ts_utils.get_node_text(point, nil)[1]
+                    vim.cmd(string.format('tag %s', name))
+                else
+                    ts_utils.goto_node(def)
+                end
+            end
+
+            vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua jump_to_def()<CR>',
+                                    {noremap = true})
         end
     }
+
+    -- treesitter deals with the *current* file, use tags for other files
+    use 'ludovicchabant/vim-gutentags'
+
     if firstRun then packer.sync() end
 end)
