@@ -77,7 +77,9 @@ packer.startup(function()
 
     use {
         'norcalli/nvim-colorizer.lua',
-        config = function() require('colorizer').setup() end
+        config = function()
+            require('colorizer').setup({'*', '!rst', '!vimwiki'})
+        end
     }
 
     -- fennel
@@ -134,6 +136,16 @@ packer.startup(function()
 
     -- treesitter deals with the *current* file, use tags for other files
     use 'ludovicchabant/vim-gutentags'
+
+    -- vimwiki using MediaWiki syntax
+    use {
+        'vimwiki/vimwiki',
+        config = function()
+            vim.g.vimwiki_list = {
+                {auto_export = 1, path_html = '~/wiki', path = '~/wiki'}
+            }
+        end
+    }
 
     if firstRun then packer.sync() end
 end)
