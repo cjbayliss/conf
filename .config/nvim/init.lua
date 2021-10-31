@@ -31,7 +31,16 @@ if not (status) then
 end
 
 packer.startup(function()
-    use 'wbthomason/packer.nvim'
+    use {
+        'wbthomason/packer.nvim',
+        config = function()
+            vim.api.nvim_exec([[
+              augroup Packer
+                autocmd!
+                autocmd BufWritePost init.lua PackerCompile
+              augroup end]], false)
+        end
+    }
 
     use {
         'Mofiqul/vscode.nvim',
