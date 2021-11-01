@@ -40,6 +40,7 @@ main = do
         , focusedBorderColor = "#F44747"
         , startupHook =
             do spawn "hsetroot -solid gray10"
+               spawn "feh --no-fehbg --bg-fill ~/stuff/wallpapers/default"
                spawn "xsetroot -cursor_name left_ptr"
         , manageHook = myManageHook
         , layoutHook = myLayoutsHook
