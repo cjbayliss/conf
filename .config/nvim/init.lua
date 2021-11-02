@@ -143,9 +143,6 @@ packer.startup(function()
         end
     }
 
-    -- treesitter deals with the *current* file, use tags for other files
-    use 'ludovicchabant/vim-gutentags'
-
     -- vimwiki using MediaWiki syntax
     use {
         'vimwiki/vimwiki',

@@ -91,6 +91,7 @@ in {
     hsetroot
     opusTools
     pciutils
+    ptags
     pulseaudio # for pactl
     sx
     universal-ctags
@@ -142,6 +143,26 @@ in {
     krita
     mpv
     xfce.terminal
+
+
+    (pkgs.writeTextFile {
+      name = "ur";
+      destination = "/bin/ur";
+      executable = true;
+      text = ''
+        #!/bin/sh
+
+        for i in $HOME/dev/repos/*
+        do
+            cd "$i"
+            printf "$i:\n  Running git pull... "
+            git pull >/dev/null 2>&1
+            printf "done.\n  Regenerating tags... "
+            ptags
+            printf "done.\n"
+        done
+      '';
+    })
   ];
 
   sound.enable = true;
