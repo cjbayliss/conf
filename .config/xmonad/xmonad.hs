@@ -36,8 +36,8 @@ main = do
         { borderWidth = 1
         , modMask = mod4Mask
         , terminal = "xfce4-terminal"
-        , normalBorderColor = "#808080"
-        , focusedBorderColor = "#F44747"
+        , normalBorderColor = "#99A4BC"
+        , focusedBorderColor = "#FF3600"
         , startupHook =
             do spawn "hsetroot -solid gray10"
                spawn "feh --no-fehbg --bg-fill ~/stuff/wallpapers/default"
@@ -49,7 +49,8 @@ main = do
               xmobarPP
                 { ppOutput = hPutStrLn xmproc
                 , ppLayout = const ""
-                , ppTitle = xmobarColor "#4EC9B0" "" . shorten 80
+                , ppTitle = xmobarColor "#99A4BC" "" . shorten 80
+                , ppCurrent = xmobarColor "#FF761A" "" . wrap "[" "]"
                 } >>
             ewmhDesktopsLogHook
         } `additionalKeysP`
@@ -72,5 +73,5 @@ main = do
     , ("<XF86AudioPrev>", spawn "playerctl previous")
     , ( "M-p"
       , spawn
-          "dmenu_run -fn 'Iosevka-10.5:semibold' -nb '#0f0f0f' -nf '#d4d4d4' -sb '#0f0f0f' -sf '#4EC9B0'")
+          "dmenu_run -fn 'Iosevka-10.5:semibold' -nb '#000006' -nf '#DCDCE2' -sb '#000006' -sf '#FFB07B'")
     ]

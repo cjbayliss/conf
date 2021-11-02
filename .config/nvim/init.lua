@@ -43,23 +43,8 @@ packer.startup(function()
     }
 
     use {
-        'Mofiqul/vscode.nvim',
-        config = function()
-            vim.g.vscode_style = 'dark'
-            vim.cmd('colorscheme vscode')
-            vim.api.nvim_command('highlight CursorLine guibg=#1f1f1f')
-            vim.api.nvim_command(
-                'highlight CursorLineNr guifg=#ffaf00 guibg=#1f1f1f')
-            vim.api.nvim_command('highlight EndOfBuffer guifg=#D4D4D4')
-            vim.api.nvim_command('highlight LineNr guibg=#151515')
-            vim.api.nvim_command('highlight ModeMsg guibg=none')
-            vim.api.nvim_command('highlight Normal guibg=#0f0f0f')
-            vim.api.nvim_command('highlight NormalFloat guibg=#0f0f0f')
-            vim.api.nvim_command('highlight SignColumn guibg=none')
-            vim.api.nvim_command('highlight StatusLine guibg=#151515')
-            vim.api.nvim_command('highlight StatusLineNC guibg=none')
-            vim.api.nvim_command('highlight VertSplit guibg=none')
-        end
+        'fenetikm/falcon',
+        config = function() vim.cmd('colorscheme falcon') end
     }
 
     use {
@@ -71,6 +56,7 @@ packer.startup(function()
         'lewis6991/gitsigns.nvim',
         requires = {'nvim-lua/plenary.nvim'},
         config = function()
+            vim.api.nvim_command('hi link GitSignsCurrentLineBlame Comment')
             require('gitsigns').setup({
                 current_line_blame = true,
                 current_line_blame_opts = {delay = 500}

@@ -3,8 +3,8 @@ Config
   , additionalFonts = ["xft:Iosevka-10.5:bold"]
     -- , borderColor = "#608B4E"
     -- , border = BottomB
-  , bgColor = "#0f0f0f"
-  , fgColor = "#d4d4d4"
+  , bgColor = "#000006"
+  , fgColor = "#DCDCE2"
   , position = TopW L 100
   , commands =
       [ Run
@@ -38,5 +38,5 @@ Config
   , sepChar = "%"
   , alignSep = "}{"
   , template =
-      " %StdinReader% }{ <fc=#F44747>%audioStatus%</fc><fc=#569CD6>%volume%</fc> <fc=#333333>│</fc> <fc=#608B4E>%memory%</fc> <fc=#333333>│</fc> <fc=#C678DD>%arp%</fc> <fc=#333333>│</fc> %loadavg% <fc=#333333>│</fc> <fn=1><fc=#DCDCAA>%date%</fc></fn> "
+      " %StdinReader% }{ <fc=#FF3600>%audioStatus%</fc>%volume% <fc=#36363a><</fc> <fc=#99A4BC>%memory%</fc> <fc=#36363a><</fc> <fc=#85CCBF>%arp%</fc> <fc=#36363a><</fc> %loadavg% <fc=#36363a><</fc> <fn=1><fc=#FFD392>%date%</fc></fn> "
   }

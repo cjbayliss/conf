@@ -7,3 +7,11 @@
 	name = Christopher Bayliss
 [pull]
 	ff = only
+[color "status"]
+	untracked = brightblue
+	changed = brightyellow
+	added = brightcyan
+[color "diff"]
+	old = brightyellow
+	new = brightcyan
+	frag = brightblue

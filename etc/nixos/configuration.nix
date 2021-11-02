@@ -244,11 +244,11 @@ in {
       set -U fish_features qmark-noglob
 
       # colors
-      set -U fish_color_autosuggestion      brblack
+      set -U fish_color_autosuggestion      brblue
       set -U fish_color_cancel              -r
       set -U fish_color_command             'white' '--bold'
-      set -U fish_color_comment             green
-      set -U fish_color_cwd                 green
+      set -U fish_color_comment             brblue
+      set -U fish_color_cwd                 magenta
       set -U fish_color_cwd_root            red
       set -U fish_color_end                 brmagenta
       set -U fish_color_error               brred
@@ -269,7 +269,7 @@ in {
       set -U fish_pager_color_completion    normal
       set -U fish_pager_color_description   yellow
       set -U fish_pager_color_prefix        'white' '--bold' '--underline'
-      set -U fish_pager_color_progress      '-r' 'brblack'
+      set -U fish_pager_color_progress      '-r' 'white'
 
       alias youtube-dl yt-dlp
 
@@ -295,31 +295,25 @@ in {
           end
       end
 
-      function fish_prompt
-          # host
-          printf '%s ' (prompt_hostname)
-          set_color --bold blue
-          echo -n '::'
-          set_color normal
-          echo -n ' '
+    function fish_prompt
+        # host
+        printf '%s ' (prompt_hostname)
 
-          # pwd
-          set_color $fish_color_cwd
-          echo -n (prompt_pwd)
-          set_color normal
+        # pwd
+        set_color $fish_color_cwd
+        echo -n (prompt_pwd)
+        set_color normal
 
-          # git stuff
-          set_color yellow
-          printf '%s' (__git_branch)
-          set_color normal
-          printf '%s ' (__git_status)
+        # git stuff
+        set_color yellow
+        printf '%s' (__git_branch)
+        set_color brcyan
+        printf '%s ' (__git_status)
+        set_color normal
 
-          # prompt delimiter
-          set_color --bold blue
-          echo -n '»'
-          set_color normal
-          echo -n ' '
-      end
+        # prompt delimiter
+        echo -n '» '
+    end
     '';
     loginShellInit = ''
       if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]
