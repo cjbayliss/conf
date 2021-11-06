@@ -23,8 +23,7 @@
       enableContribAndExtras = true;
     };
 
-    displayManager.startx.enable = true;
-    desktopManager.xterm.enable = false;
+    displayManager.sx.enable = true;
   };
 
   services.redshift = {

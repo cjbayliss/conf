@@ -36,7 +36,7 @@ in {
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.requestEncryptionCredentials = true;
-  boot.tmpOnTmpfs = true;
+  boot.cleanTmpDir = true;
 
   networking = {
     hostId = "163e24d6";
