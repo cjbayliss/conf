@@ -14,6 +14,7 @@
     "acpi_mask_gpe=0x17"
     "video=SVIDEO-1:d"
     "systemd.restore_state=0"
+    "threadirqs"
     "quiet"
   ];
 

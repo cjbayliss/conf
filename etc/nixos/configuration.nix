@@ -11,7 +11,7 @@ let
 in {
   # the bad
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "b43-firmware" ];
+    builtins.elem (lib.getName pkg) [ "b43-firmware" "bitwig-studio" "VCV-Rack" ];
 
   imports = [
     # hardware
@@ -74,7 +74,7 @@ in {
   };
 
   powerManagement.powertop.enable = true;
-  powerManagement.cpuFreqGovernor = "schedutil";
+  powerManagement.cpuFreqGovernor = "performance";
 
   users.users.cjb = {
     isNormalUser = true;
@@ -136,14 +136,27 @@ in {
     wget
     yt-dlp
 
+    # plugins/synths/drums
+    distrho
+    helm
+    lsp-plugins
+    noise-repellent
+    surge
+    tunefish
+    zyn-fusion
+
     # gui
+    ardour
+    bespokesynth
+    bitwig-studio
+    carla
     chromium
     dmenu
     firefox
     krita
     mpv
+    vcv-rack
     xfce.terminal
-
 
     (pkgs.writeTextFile {
       name = "ur";
@@ -171,8 +184,47 @@ in {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
+    jack.enable = true;
     pulse.enable = true;
   };
+  security.pam.loginLimits = [
+    {
+      domain = "@audio";
+      item = "memlock";
+      type = "-";
+      value = "unlimited";
+    }
+    {
+      domain = "@audio";
+      item = "rtprio";
+      type = "-";
+      value = "99";
+    }
+    {
+      domain = "@audio";
+      item = "nofile";
+      type = "soft";
+      value = "99999";
+    }
+    {
+      domain = "@audio";
+      item = "nofile";
+      type = "hard";
+      value = "99999";
+    }
+  ];
+
+  services.udev.extraRules = ''
+    KERNEL=="rtc0", GROUP="audio"
+    KERNEL=="hpet", GROUP="audio"
+  '';
+
+  boot.postBootCommands = ''
+    echo 2048 > /sys/class/rtc/rtc0/max_user_freq
+    echo 2048 > /proc/sys/dev/hpet/max-user-freq
+    ${pkgs.pciutils}/bin/setpci -v -d *:* latency_timer=b0
+    ${pkgs.pciutils}/bin/setpci -v -s 00:1b.0 latency_timer=ff
+  '';
 
   programs.light.enable = true;
   programs.ssh.startAgent = true;
@@ -345,6 +397,18 @@ in {
     EDITOR = "nvim";
     VISUAL = "nvim";
     MANPAGER = "nvim +Man!";
+
+    # IMPORTANT: without these, audio plugins installed via nix are not found
+    DSSI_PATH =
+      "/run/current-system/sw/lib/dssi:~/.nix-profile/lib/dssi:~/.dssi";
+    LADSPA_PATH =
+      "/run/current-system/sw/lib/ladspa:~/.nix-profile/lib/ladspa:~/.ladspa";
+    LV2_PATH = "/run/current-system/sw/lib/lv2:~/.nix-profile/lib/lv2:~/.lv2";
+    LXVST_PATH =
+      "/run/current-system/sw/lib/lxvst:~/.nix-profile/lib/lxvst:~/.lxvst";
+    VST_PATH = "/run/current-system/sw/lib/vst:~/.nix-profile/lib/vst:~/.vst";
+    VST3_PATH =
+      "/run/current-system/sw/lib/vst3:~/.nix-profile/lib/vst3:~/.vst3";
 
     # FIXME: make this *only* get set for 'cjb'
     EMAIL = "cjb@cjb.sh";
