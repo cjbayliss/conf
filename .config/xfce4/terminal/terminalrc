@@ -1,7 +1,7 @@
 [Configuration]
 ColorBackground=#000000000606
 ColorForeground=#dcdcdcdce2e2
-ColorPalette=rgb(0,0,4);rgb(255,54,0);rgb(133,153,51);rgb(255,197,82);rgb(99,81,150);rgb(255,118,26);rgb(52,191,164);rgb(220,220,226);rgb(2,2,33);rgb(255,142,120);rgb(178,188,85);rgb(255,211,146);rgb(153,164,188);rgb(255,176,123);rgb(133,204,191);rgb(248,248,255)
+ColorPalette=rgb(0,0,4);rgb(255,54,0);rgb(133,153,51);rgb(255,197,82);rgb(99,81,150);rgb(255,118,26);rgb(52,191,164);rgb(220,220,226);rgb(115,115,148);rgb(255,142,120);rgb(178,188,85);rgb(255,211,146);rgb(153,164,188);rgb(255,176,123);rgb(133,204,191);rgb(248,248,255)
 ColorSelection=#36363a
 ColorSelectionBackground=#ddcfbf
 ColorSelectionUseDefault=FALSE
