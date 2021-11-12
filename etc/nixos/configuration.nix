@@ -91,7 +91,6 @@ in {
     aspellDicts.en
     browserpass
     git-filter-repo
-    gnome3.adwaita-icon-theme
     hsetroot
     opusTools
     pciutils
@@ -100,6 +99,7 @@ in {
     sx
     universal-ctags
     xmobar
+    yaru-theme
 
     # langs
     chicken
