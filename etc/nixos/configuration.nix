@@ -122,6 +122,7 @@ in {
     # tools
     aria
     beets
+    crudini
     efibootmgr
     feh
     ffmpeg
@@ -180,7 +181,23 @@ in {
         done
       '';
     })
+
+    (pkgs.writeTextFile {
+      name = "set-gtk-theme";
+      destination = "/bin/set-gtk-theme";
+      executable = true;
+      text = ''
+        #!/bin/sh
+
+        [ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && \
+          crudini --set $HOME/.config/gtk-3.0/settings.ini Settings gtk-application-prefer-dark-theme true || \
+          crudini --set $HOME/.config/gtk-3.0/settings.ini Settings gtk-application-prefer-dark-theme false
+      '';
+    })
   ];
+
+  # FIXME: learn how to use systemd timers
+  services.cron.enable = true;
 
   sound.enable = true;
   security.rtkit.enable = true;
