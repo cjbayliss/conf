@@ -1,0 +1,2 @@
+@reboot set-gtk-theme
+*/15 * * * * set-gtk-theme
