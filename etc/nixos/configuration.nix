@@ -261,19 +261,31 @@ in {
     fonts = with pkgs; [
       (nerdfonts.override { fonts = [ "Iosevka" ]; })
       baekmuk-ttf
+      inter
       iosevka-bin
       ipafont
       liberation_ttf
       noto-fonts-emoji
+      tenderness
     ];
     fontconfig = {
       defaultFonts.emoji = [ "Noto Color Emoji" ];
       defaultFonts.monospace =
         [ "Iosevka Fixed" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
-      defaultFonts.sansSerif =
-        [ "Liberation Sans" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
-      defaultFonts.serif =
-        [ "Liberation Serif" "IPAGothic" "Baekmuk Gulim" "Noto Color Emoji" ];
+      defaultFonts.sansSerif = [
+        "Inter"
+        "Liberation Sans"
+        "IPAGothic"
+        "Baekmuk Gulim"
+        "Noto Color Emoji"
+      ];
+      defaultFonts.serif = [
+        "Tenderness"
+        "Liberation Serif"
+        "IPAGothic"
+        "Baekmuk Gulim"
+        "Noto Color Emoji"
+      ];
       useEmbeddedBitmaps = true;
 
       localConf = ''
