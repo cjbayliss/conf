@@ -18,3 +18,10 @@ Xft.antialias:  1
 *.background:   #000000
 *.cursorColor:  #ffffff
 *.cursorBlink: true
+
+! emacs
+emacs.background: black
+emacs.fullscreen: fullboth
+emacs.menuBar: off
+emacs.toolBar: -1
+emacs.verticalScrollBars: off

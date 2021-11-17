@@ -8,13 +8,23 @@ let
   });
   mpv = (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; });
   python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
+  emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (epkgs:
+    with epkgs; [
+      haskell-mode
+      marginalia
+      nix-mode
+      php-mode
+      pinentry
+      tree-sitter
+      tree-sitter-langs
+    ]);
 in {
   # the bad
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
+      "VCV-Rack"
       "b43-firmware"
       "bitwig-studio"
-      "VCV-Rack"
     ];
 
   imports = [
@@ -91,14 +101,11 @@ in {
     aspellDicts.en
     browserpass
     git-filter-repo
-    hsetroot
     opusTools
     pciutils
-    ptags
     pulseaudio # for pactl
     sx
     universal-ctags
-    xmobar
     yaru-theme
 
     # langs
@@ -120,22 +127,16 @@ in {
     shellcheck
 
     # tools
-    aria
     beets
     crudini
     efibootmgr
     feh
     ffmpeg
     git
-    glirc
     imagemagick
-    ix
-    neomutt
-    neovim
     pandoc
     pass
     playerctl
-    tmux
     unzip
     w3m
     wget
@@ -152,35 +153,15 @@ in {
 
     # gui
     ardour
-    bespokesynth
     bitwig-studio
     carla
     chromium
     dmenu
+    emacs
     firefox
     krita
     mpv
     vcv-rack
-    xfce.terminal
-
-    (pkgs.writeTextFile {
-      name = "ur";
-      destination = "/bin/ur";
-      executable = true;
-      text = ''
-        #!/bin/sh
-
-        for i in $HOME/dev/repos/*
-        do
-            cd "$i"
-            printf "$i:\n  Running git pull... "
-            git pull >/dev/null 2>&1
-            printf "done.\n  Regenerating tags... "
-            ptags
-            printf "done.\n"
-        done
-      '';
-    })
 
     (pkgs.writeTextFile {
       name = "set-gtk-theme";
@@ -194,10 +175,21 @@ in {
           crudini --set $HOME/.config/gtk-3.0/settings.ini Settings gtk-application-prefer-dark-theme false
       '';
     })
+
+    (pkgs.writeTextFile {
+      name = "emacs-askpass";
+      destination = "/bin/emacs-askpass";
+      executable = true;
+      text = ''
+        #! ${pkgs.bash}/bin/bash
+        emacsclient -e '(read-passwd "Password: ")' | xargs
+      '';
+    })
   ];
 
   # FIXME: learn how to use systemd timers
   services.cron.enable = true;
+  programs.ssh.askPassword = "emacs-askpass";
 
   sound.enable = true;
   security.rtkit.enable = true;
@@ -252,7 +244,7 @@ in {
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "qt";
+    pinentryFlavor = "emacs";
   };
 
   virtualisation.podman.enable = true;
@@ -320,94 +312,13 @@ in {
 
   gtk.iconCache.enable = true;
 
-  programs.fish = {
-    enable = true;
-    shellInit = ''
-        set fish_greeting
-
-        # allow urls with ? in them
-        set -U fish_features qmark-noglob
-
-        # colors
-        set -U fish_color_autosuggestion      brblue
-        set -U fish_color_cancel              -r
-        set -U fish_color_command             'white' '--bold'
-        set -U fish_color_comment             brblue
-        set -U fish_color_cwd                 magenta
-        set -U fish_color_cwd_root            red
-        set -U fish_color_end                 brmagenta
-        set -U fish_color_error               brred
-        set -U fish_color_escape              brcyan
-        set -U fish_color_history_current     --bold
-        set -U fish_color_host                normal
-        set -U fish_color_match               --background=brblue
-        set -U fish_color_normal              normal
-        set -U fish_color_operator            normal
-        set -U fish_color_param               normal
-        set -U fish_color_quote               yellow
-        set -U fish_color_redirection         bryellow
-        set -U fish_color_search_match        'bryellow' '--background=brblack'
-        set -U fish_color_selection           'white' '--bold' '--background=brblack'
-        set -U fish_color_status              red
-        set -U fish_color_user                brgreen
-        set -U fish_color_valid_path          --underline
-        set -U fish_pager_color_completion    normal
-        set -U fish_pager_color_description   yellow
-        set -U fish_pager_color_prefix        'white' '--bold' '--underline'
-        set -U fish_pager_color_progress      '-r' 'white'
-
-        alias youtube-dl yt-dlp
-
-        # prompt
-        function __git_branch
-            git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
-        end
-
-        function __git_status
-            if [ (git ls-files 2>/dev/null | wc -l) -lt 2000 ]
-                git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /'
-            else
-                printf " [NOSTAT]"
-            end
-        end
-
-        function fish_right_prompt
-            set -l last_status $status
-            if [ $last_status -ne 0 ]
-                set_color --bold $fish_color_error
-                printf '%s ' $last_status
-                set_color normal
-            end
-        end
-
-      function fish_prompt
-          # host
-          printf '%s ' (prompt_hostname)
-
-          # pwd
-          set_color $fish_color_cwd
-          echo -n (prompt_pwd)
-          set_color normal
-
-          # git stuff
-          set_color yellow
-          printf '%s' (__git_branch)
-          set_color brcyan
-          printf '%s ' (__git_status)
-          set_color normal
-
-          # prompt delimiter
-          echo -n '» '
-      end
-    '';
+  programs.bash = {
     loginShellInit = ''
-      if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]
-          exec sx
-      end
+      if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ] ;
+        then exec sx;
+      fi
     '';
   };
-
-  users.users.cjb.shell = pkgs.fish;
 
   # variables set by PAM on login
   environment.sessionVariables = {
@@ -425,11 +336,9 @@ in {
     PYTHONSTARTUP = "$XDG_CONFIG_HOME/python/startup.py";
     PASSWORD_STORE_DIR = "$XDG_DATA_HOME/pass";
     MOZ_USE_XINPUT2 = "1";
-    MANWIDTH = "72";
 
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    MANPAGER = "nvim +Man!";
+    EDITOR = "emacsclient";
+    VISUAL = "emacsclient";
 
     # IMPORTANT: without these, audio plugins installed via nix are not found
     DSSI_PATH =
@@ -447,6 +356,14 @@ in {
     EMAIL = "cjb@cjb.sh";
     NAME = "Christopher Bayliss";
   };
+
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url =
+        "https://github.com/nix-community/emacs-overlay/archive/4a9220bf1477ff8356f7cd503a61d89e869ffa42.tar.gz";
+      sha256 = "12fqv7i7f6b491lq5nyghmv04jpp5y4aifkd400v7qpbpnpm6226";
+    }))
+  ];
 
   system.stateVersion = "20.09";
 }
