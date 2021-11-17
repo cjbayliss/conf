@@ -11,6 +11,7 @@ let
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (epkgs:
     with epkgs; [
       elfeed
+      emms
       haskell-mode
       marginalia
       nix-mode

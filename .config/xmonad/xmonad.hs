@@ -67,9 +67,13 @@ main = do
       , spawn "pactl set-sink-volume @DEFAULT_SINK@ -2%")
     , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
       -- control multimedia
-    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("<XF86AudioNext>", spawn "playerctl next")
+    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("<XF86AudioPrev>", spawn "playerctl previous")
+      -- emms
+    , ("M-<XF86AudioNext>", spawn "emacsclient -e '(emms-next)'")
+    , ("M-<XF86AudioPlay>", spawn "emacsclient -e '(emms-play/pause-handler)'")
+    , ("M-<XF86AudioPrev>", spawn "emacsclient -e '(emms-previous)'")
     , ( "M-p"
       , spawn
           "dmenu_run -fn 'Iosevka-10.5:semibold' -nb '#000' -nf '#fff' -sb '#000' -sf '#b6a0ff'")
