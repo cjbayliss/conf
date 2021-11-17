@@ -102,11 +102,13 @@ in {
     aspellDicts.en
     browserpass
     git-filter-repo
+    hsetroot
     opusTools
     pciutils
     pulseaudio # for pactl
     sx
     universal-ctags
+    xmobar
     yaru-theme
 
     # langs

@@ -15,7 +15,6 @@ import XMonad.Util.Run
 
 myLayoutsHook =
   spacingRaw False (Border 1 1 1 1) True (Border 1 1 1 1) True $
-  smartBorders $
   avoidStruts (ThreeCol 1 (3 / 100) (1 / 3) ||| Grid ||| Full)
 
 myManageHook =
@@ -29,6 +28,7 @@ myManageHook =
     ]
 
 main = do
+  xmproc <- spawnPipe "xmobar ~/.config/xmonad/bar.hs"
   xmonad $
     docks $
     ewmh
@@ -37,9 +37,21 @@ main = do
         , modMask = mod4Mask
         , normalBorderColor = "#444444"
         , focusedBorderColor = "#b6a0ff"
-        , startupHook = do spawn "xsetroot -cursor_name left_ptr"
+        , startupHook =
+            do spawn "hsetroot -solid gray10"
+               spawn "feh --no-fehbg --bg-fill ~/stuff/wallpapers/default"
+               spawn "xsetroot -cursor_name left_ptr"
         , manageHook = myManageHook
         , layoutHook = myLayoutsHook
+        , logHook =
+            dynamicLogWithPP
+              xmobarPP
+                { ppOutput = hPutStrLn xmproc
+                , ppLayout = const ""
+                , ppTitle = xmobarColor "#b0d6f5" "" . shorten 80
+                , ppCurrent = xmobarColor "#b6a0ff" "" . wrap "[" "]"
+                } >>
+            ewmhDesktopsLogHook
         } `additionalKeysP`
     -- Despite the syntax, "M-<somekey>" doesn't do what you expect. At
     -- least if you're coming from Emacs. "M" is *not* meta, it's
@@ -58,5 +70,7 @@ main = do
     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("<XF86AudioNext>", spawn "playerctl next")
     , ("<XF86AudioPrev>", spawn "playerctl previous")
-    , ( "M-p", spawn "dmenu_run -fn 'Iosevka-10.5:semibold' -nb '#000' -nf '#fff' -sb '#000' -sf '#b6a0ff'")
+    , ( "M-p"
+      , spawn
+          "dmenu_run -fn 'Iosevka-10.5:semibold' -nb '#000' -nf '#fff' -sb '#000' -sf '#b6a0ff'")
     ]
