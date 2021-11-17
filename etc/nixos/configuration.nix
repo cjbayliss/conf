@@ -10,6 +10,7 @@ let
   python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
   emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (epkgs:
     with epkgs; [
+      elfeed
       haskell-mode
       marginalia
       nix-mode

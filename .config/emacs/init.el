@@ -17,7 +17,9 @@
 ;;; General:
 ;;;; sane defaults
 (setq auth-source-save-behavior nil)
-(setq browse-url-handlers '(("." . browse-url-firefox)))
+(setq browse-url-handlers
+      `((,(rx "youtu" (? "." ) "be" (* anything) "watch") . browse-url-mpv)
+        ("." . browse-url-firefox)))
 (setq c-basic-offset 4)
 (setq column-number-mode t)
 (setq custom-file (concat user-emacs-directory "/custom.el"))
@@ -165,6 +167,74 @@
             (define-key dired-mode-map (kbd "q")
               (lambda () (interactive) (quit-window t)))))
 
+;;;; elfeed
+(unless (file-directory-p (concat user-emacs-directory "elfeed"))
+  (make-directory (concat user-emacs-directory "elfeed") t))
+
+(setq elfeed-db-directory (concat user-emacs-directory "elfeed"))
+(setq elfeed-search-filter "+unread")
+
+(setq elfeed-feeds
+      '(("https://0pointer.net/blog/index.rss20" blog)
+        ("https://blog.jeff.over.bz/rss.xml" blog)
+        ("https://blog.mattcen.com/rss" blog)
+        ("https://blogs.gentoo.org/mgorny/feed/" blog)
+        ("https://blogs.igalia.com/apinheiro/feed/" blog)
+        ("https://blogs.igalia.com/dpiliaiev/feed.xml" blog)
+        ("https://christine.website/blog.rss" blog)
+        ("https://danluu.com/atom.xml" blog)
+        ("https://deftly.net/rss.xml" blog)
+        ("https://heronsperch.blogspot.com/feeds/posts/default?alt=rss" blog)
+        ("https://jvns.ca/atom.xml" blog)
+        ("https://keithp.com/blogs/index.rss" blog)
+        ("https://melissawen.github.io/feed.xml" blog)
+        ("https://microkerneldude.wordpress.com/feed/" blog)
+        ("https://mjg59.dreamwidth.org/data/rss" blog)
+        ("https://nullprogram.com/feed/" blog)
+        ("https://rosenzweig.io/blog/feed.xml" blog)
+        ("https://sachachua.com/blog/category/emacs-news/feed" blog emacs)
+        ("https://trofi.github.io/feed/rss.xml" blog)
+        ("https://wingolog.org/feed/atom" blog guile)
+
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC-RA5BzE_BnZhf5iVdNF1hA" youtube video) ; loopop
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2QjlMMSdO2aITpYlwdqZQw" youtube video) ; Wirtual Clips
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC5jnkxwILkgNePRe1FacHzw" youtube video) ; 山崎まさよし
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCD6v_eY0IDEGittgHsmd8aQ" youtube video) ; e r g o j o s h
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCFvfgkNeSgNXQWcxBIOhSPw" youtube video) ; Marshall Fox
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCG44gzf6Iumy18XEZXT2odA" youtube video) ; Red Means Recording Ambient
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCHDes_67fEXHzUnV6CxiDkA" youtube video) ; GranaDy
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJflT7i52L1ZFkdvKyFCHtQ" youtube video) ; Hefest
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJwM0fiKe2rq7z2p8HPTyMA" youtube video) ; Zepla HQ
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCNMn4Nhl-E3iaSMab0Y_b4A" youtube video) ; wacci OFFICIAL YouTube CHANNEL
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCPNq-cWaMPccZydtyhMXGGQ" youtube video) ; Michael Klements
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCQVhrypJhw1HxuRV4gX6hoQ" youtube video) ; あいみょん
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCQhvDZeUrxPq9p3SkbTngkA" youtube video) ; TÂCHES TEACHES
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCRIgIJQWuBJ0Cv_VlU3USNA" youtube video) ; ヨルシカ / n-buna Official
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVN95kHPHk--fSwvTCRJmdw" youtube video) ; Jakub Ciupinski
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCXCXxhRVYvBOX45_gxr0iHA" youtube video) ; Christian Henson Music
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCafxR2HWJRmMfSdyZXvZMTw" youtube video) ; LOOK MUM NO COMPUTER
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCcUcK64JLSZAPUfG07s-Wew" youtube video) ; 宮本浩次
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCcXBraaImQrLrBuXTk6L2cQ" youtube video) ; 岡ちゃんnel
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdcemy56JtVTrsFIOoqvV8g" youtube video) ; ANDREW HUANG
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCf-vV5woXPFpkvZKwooWoyw" youtube video) ; WirtualTV
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCfhW84xfA6gEc4hDK90rR1Q" youtube video) ; Thomas Heaton
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkB8HnJSDSJ2hkLQFUc-YrQ" youtube video) ; King Gnu
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkjbN2BlTwm7XknNjLOj7Hg" youtube video) ; subtractem
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCld4DwWufxVee57cIrf9ERg" youtube video) ; Craig Loewen
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCmaec75I8GbMci0_IFDq7ig" youtube video) ; リュックと添い寝ごはん
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCn8KRTJhyH8AatY10-BbxNg" youtube video) ; Nervyr
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCogpH3RuCIvNlCXz9ocMK9Q" youtube video) ; Mocha
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoycwm1Mc9FMtzi0hynKlNA" youtube video) ; 折坂悠太
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCpjl7axNrHYPh53gezouYxA" youtube video) ; Shane Mendonsa
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCshObcm-nLhbu8MY50EZ5Ng" youtube video) ; Benn Jordan
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsnGwSIHyoYN0kiINAGUKxg" youtube video) ; Wolfgang's Channel
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCt-HTfaCUz8QIoknqyXKYiw" youtube video) ; Wirtual
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCuWKHSHTHMV_nVSeNH4gYAg" youtube video) ; Omri Cohen
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCx6GR83AbXiSX2gesCxSPPw" youtube video) ; Empyriangaming
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCyDZai57BfE_N0SaBkKQyXg" youtube video) ; Rob Scallon
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCzpaOq5_NbX5KnkIEByiggA" youtube video) ; GranaDy & Friends
+        ))
+
 ;;;; eshell
 (setq eshell-hist-ignoredups t)
 (setq eshell-history-size 4096)
@@ -288,33 +358,6 @@
 ;; copy sent emails to Sent
 (setq gnus-message-archive-group "nnimap+email:Sent")
 (setq gnus-gcc-mark-as-read t)
-
-;; news
-(defvar-local gnus-subscribe-groups-done nil
-  "Only subscribe groups once.  Or else Gnus will NOT restart.")
-(add-hook 'gnus-group-mode-hook
-          (lambda ()
-            (unless gnus-subscribe-groups-done
-              (mapc (lambda (x)
-                      (gnus-subscribe-hierarchically x))
-                    '("nntp+news:gwene.ca.jvns"
-                      "nntp+news:gwene.com.blogspot.heronsperch"
-                      "nntp+news:gwene.com.danluu"
-                      "nntp+news:gwene.com.keithp.blog"
-                      "nntp+news:gwene.com.mattcen.blog"
-                      "nntp+news:gwene.com.nullprogram"
-                      "nntp+news:gwene.com.sachachua.emacs-news"
-                      "nntp+news:gwene.com.wordpress.microkerneldud"
-                      "nntp+news:gwene.de.0pointer.blog"
-                      "nntp+news:gwene.io.github.trofi"
-                      "nntp+news:gwene.io.rosenzweig.blog"
-                      "nntp+news:gwene.net.deftly"
-                      "nntp+news:gwene.org.dreamwidth.mjg59"
-                      "nntp+news:gwene.org.gentoo.blogs.mgorny"
-                      "nntp+news:gwene.org.wingolog"
-                      "nntp+news:gwene.website.christine.blog"))
-              (setq gnus-subscribe-groups-done t))
-            (message "Welcome to Gnus!")))
 
 ;;;; icomplete
 (setq completion-ignore-case t)
