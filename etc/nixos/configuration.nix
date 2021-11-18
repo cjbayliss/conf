@@ -102,6 +102,7 @@ in {
     aspell
     aspellDicts.en
     browserpass
+    dunst
     git-filter-repo
     hsetroot
     opusTools
