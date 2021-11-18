@@ -10,7 +10,7 @@
   # IMPORTANT: don't block modules from being loaded
   security.lockKernelModules = false;
   # don't use the 'hardened' kernel
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   # TODO: finish the job cjb!
   # harden systemd services. See: systemd-analyze security start by
