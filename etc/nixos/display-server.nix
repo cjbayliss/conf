@@ -5,12 +5,6 @@
     enable = true;
     layout = "us";
     exportConfiguration = true;
-    videoDrivers = [ "intel" ];
-
-    deviceSection = ''
-      Option "DRI" "2"
-      Option "TearFree" "true"
-    '';
 
     wacom.enable = true;
     libinput = {

@@ -86,19 +86,19 @@
 (when (display-graphic-p)
   ;; default font
   (when (member "Iosevka Fixed" (font-family-list))
-    (set-frame-font "Iosevka Fixed-11" 'keep-size t))
+    (set-frame-font "Iosevka Fixed-10" 'keep-size t))
   ;; 😜
   (when (member "Noto Color Emoji" (font-family-list))
     (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend))
   ;; 한국어/조선말
   (when (member "Baekmuk Gulim" (font-family-list))
-    (set-fontset-font t 'unicode "Baekmuk Gulim-11" nil 'prepend))
+    (set-fontset-font t 'unicode "Baekmuk Gulim-10" nil 'prepend))
   ;; 日本語
   (when (member "IPAGothic" (font-family-list))
-    (set-fontset-font t 'unicode "IPAGothic-11" nil 'prepend))
+    (set-fontset-font t 'unicode "IPAGothic-10" nil 'prepend))
   ;; Latin/Cyrillic
   (when (member "Iosevka Fixed" (font-family-list))
-    (set-fontset-font t 'unicode "Iosevka Fixed-11" nil 'prepend)))
+    (set-fontset-font t 'unicode "Iosevka Fixed-10" nil 'prepend)))
 
 ;;;; setup GUI only stuff
 (when (display-graphic-p)

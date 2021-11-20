@@ -14,7 +14,7 @@ import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Run
 
 myLayoutsHook =
-  spacingRaw False (Border 1 1 1 1) True (Border 1 1 1 1) True $
+  spacingRaw False (Border 2 2 2 2) True (Border 2 2 2 2) True $
   avoidStruts (ThreeCol 1 (3 / 100) (1 / 3) ||| Grid ||| Full)
 
 myManageHook =
@@ -24,6 +24,8 @@ myManageHook =
     , className =? "gmic" --> doFloat
     , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_UTILITY" -->
       doFloat
+    , stringProperty "WM_WINDOW_ROLE" =? "GtkFileChooserDialog" -->
+      doRectFloat (W.RationalRect 0.05 0.05 0.9 0.9)
     , isDialog --> doCenterFloat
     ]
 
@@ -74,6 +76,7 @@ main = do
     , ("M-<XF86AudioNext>", spawn "emacsclient -e '(emms-next)'")
     , ("M-<XF86AudioPlay>", spawn "emacsclient -e '(emms-play/pause-handler)'")
     , ("M-<XF86AudioPrev>", spawn "emacsclient -e '(emms-previous)'")
+    , ("<Print>", spawn "scrot")
     , ( "M-p"
       , spawn
           "dmenu_run -fn 'Iosevka-10.5:semibold' -nb '#000' -nf '#fff' -sb '#000' -sf '#b6a0ff'")

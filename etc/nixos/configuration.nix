@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 with pkgs;
 let
@@ -21,53 +21,20 @@ let
       tree-sitter-langs
     ]);
 in {
-  # the bad
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "VCV-Rack"
-      "b43-firmware"
-      "bitwig-studio"
-    ];
 
   imports = [
     # hardware
     ./hardware-configuration.nix
+    ./machine/default.nix
     # display server config
     ./display-server.nix
     # hardening config
     ./harden.nix
   ];
 
-  boot.loader = {
-    efi = { canTouchEfiVariables = false; };
-    grub = {
-      device = "nodev";
-      efiInstallAsRemovable = true;
-      efiSupport = true;
-      font = null;
-      forcei686 = false;
-      splashImage = null;
-    };
-  };
-
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.requestEncryptionCredentials = true;
   boot.cleanTmpDir = true;
-
-  networking = {
-    hostId = "163e24d6";
-    hostName = "aster";
-
-    enableB43Firmware = true;
-    enableIPv6 = false;
-    interfaces.ens5.useDHCP = true;
-    interfaces.wlan0.useDHCP = true;
-    wireless.interfaces = [ "wlan0" ];
-    wireless.enable = true;
-
-    resolvconf.enable = lib.mkDefault false;
-    dhcpcd.extraConfig = "nohook resolv.conf";
-  };
 
   services.resolved = {
     enable = true;
@@ -142,6 +109,7 @@ in {
     pandoc
     pass
     playerctl
+    scrot
     unzip
     w3m
     wget
@@ -235,13 +203,6 @@ in {
   services.udev.extraRules = ''
     KERNEL=="rtc0", GROUP="audio"
     KERNEL=="hpet", GROUP="audio"
-  '';
-
-  boot.postBootCommands = ''
-    echo 2048 > /sys/class/rtc/rtc0/max_user_freq
-    echo 2048 > /proc/sys/dev/hpet/max-user-freq
-    ${pkgs.pciutils}/bin/setpci -v -d *:* latency_timer=b0
-    ${pkgs.pciutils}/bin/setpci -v -s 00:1b.0 latency_timer=ff
   '';
 
   programs.light.enable = true;
@@ -370,5 +331,4 @@ in {
     }))
   ];
 
-  system.stateVersion = "20.09";
 }

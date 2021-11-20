@@ -3,4 +3,4 @@
 --ignore-errors
 
 # select the optimal format for my laptop
--f [format_id*=adaptive_hls-audio-jaJP][height<=?720][fps!=60]/bestvideo[ext=webm][height<=?720][fps!=60]+bestaudio[ext=webm]/best
+-f [format_id*=adaptive_hls-audio-jaJP][height<=?1080]/bestvideo[ext=webm][height<=?1080]+bestaudio[ext=webm]/best

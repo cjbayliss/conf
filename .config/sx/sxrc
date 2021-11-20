@@ -1,6 +1,7 @@
 #!/bin/sh
 xrdb -load "$XDG_CONFIG_HOME/sx/xresources"
 systemctl --user restart redshift
+systemctl --user restart picom
 systemctl --user import-environment
 
 dbus-launch --sh-syntax --exit-with-session xmonad

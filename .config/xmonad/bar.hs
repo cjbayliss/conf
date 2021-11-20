@@ -1,6 +1,6 @@
 Config
   { font =
-      "xft:Iosevka-10.5:semibold,IPAGothic:size=10.5:style=Regular,Baekmuk Gulim:size=10.5:style=Regular,Noto Color Emoji:size=10:style=Regular"
+      "xft:Iosevka-10,IPAGothic:size=10:style=Regular,Baekmuk Gulim:size=10:style=Regular,Noto Color Emoji:size=9:style=Regular"
   , bgColor = "#000000"
   , fgColor = "#ffffff"
   , position = TopW L 100
