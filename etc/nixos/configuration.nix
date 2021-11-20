@@ -57,7 +57,7 @@ in {
   };
 
   powerManagement.powertop.enable = true;
-  powerManagement.cpuFreqGovernor = "performance";
+  powerManagement.cpuFreqGovernor = "ondemand";
 
   users.users.cjb = {
     isNormalUser = true;
