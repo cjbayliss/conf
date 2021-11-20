@@ -14,7 +14,7 @@ import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Run
 
 myLayoutsHook =
-  spacingRaw False (Border 2 2 2 2) True (Border 2 2 2 2) True $
+  spacingRaw False (Border 1 1 1 1) True (Border 1 1 1 1) True $
   avoidStruts (ThreeCol 1 (3 / 100) (1 / 3) ||| Grid ||| Full)
 
 myManageHook =
