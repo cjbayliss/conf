@@ -9,18 +9,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelModules = [ "wacom" ];
-  boot.kernelParams = [
-    "threadirqs"
-    "quiet"
-  ];
+  boot.kernelModules = [ "wacom" "acpi-call" ];
+  boot.kernelParams = [ "threadirqs" "quiet" ];
 
   # for low latency audio
   boot.postBootCommands = ''
     echo 2048 > /sys/class/rtc/rtc0/max_user_freq
     echo 2048 > /proc/sys/dev/hpet/max-user-freq
-    ${pkgs.pciutils}/bin/setpci -v -d *:* latency_timer=b0
-    ${pkgs.pciutils}/bin/setpci -v -s 04:00.6 latency_timer=ff
+    ${pkgs.pciutils}/bin/setpci -v -d *:* latency_timer=b0 >/dev/null
+    ${pkgs.pciutils}/bin/setpci -v -s 04:00.6 latency_timer=ff >/dev/null
   '';
 
   nixpkgs.config.allowUnfreePredicate = pkg:
@@ -57,11 +54,17 @@
 
   hardware.nvidia.powerManagement.enable = true;
   hardware.nvidia.powerManagement.finegrained = true;
+  hardware.enableRedistributableFirmware = true;
 
   services.picom.enable = true;
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+  };
+
+  services.tlp.settings = {
+    CPU_BOOST_ON_AC = 0;
+    CPU_BOOST_ON_BAT = 0;
   };
 
   system.stateVersion = "21.11";
