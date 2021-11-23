@@ -118,16 +118,11 @@ in {
     # plugins/synths/drums
     distrho
     helm
-    lsp-plugins
-    noise-repellent
     surge
-    tunefish
     zyn-fusion
 
     # gui
-    ardour
     bitwig-studio
-    carla
     chromium
     dmenu
     emacs
