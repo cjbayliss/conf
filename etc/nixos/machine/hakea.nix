@@ -67,6 +67,11 @@
     CPU_BOOST_ON_BAT = 0;
   };
 
+  environment.sessionVariables = {
+    QT_AUTO_SCREEN_SCALE_FACTOR = "0";
+    QT_FONT_DPI = "144";
+  };
+
   system.stateVersion = "21.11";
 
 }
