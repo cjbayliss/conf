@@ -24,8 +24,11 @@
     builtins.elem (lib.getName pkg) [
       "VCV-Rack"
       "bitwig-studio"
-      "nvidia-x11"
       "nvidia-settings"
+      "nvidia-x11"
+      "steam"
+      "steam-original"
+      "steam-runtime"
     ];
 
   networking = {
@@ -52,6 +55,7 @@
     '';
   };
 
+  hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.powerManagement.enable = true;
   hardware.nvidia.powerManagement.finegrained = true;
   hardware.enableRedistributableFirmware = true;
@@ -61,6 +65,8 @@
     enable = true;
     extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
   };
+
+  programs.steam.enable = true;
 
   services.tlp.settings = {
     CPU_BOOST_ON_AC = 0;
