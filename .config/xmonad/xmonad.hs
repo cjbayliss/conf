@@ -79,5 +79,5 @@ main = do
     , ("<Print>", spawn "scrot")
     , ( "M-p"
       , spawn
-          "dmenu_run -fn 'Iosevka-10.5:semibold' -nb '#000' -nf '#fff' -sb '#000' -sf '#b6a0ff'")
+          "j4-dmenu-desktop --dmenu=\"dmenu -i -fn 'Iosevka-10.5:semibold' -nb '#000' -nf '#fff' -sb '#000' -sf '#b6a0ff'\" --term=\"xterm\"")
     ]

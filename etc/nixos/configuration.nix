@@ -69,9 +69,11 @@ in {
     aspell
     aspellDicts.en
     browserpass
+    dmenu
     dunst
     git-filter-repo
     hsetroot
+    mangohud
     opusTools
     pciutils
     pulseaudio # for pactl
@@ -124,9 +126,9 @@ in {
     # gui
     bitwig-studio
     chromium
-    dmenu
     emacs
     firefox
+    j4-dmenu-desktop
     krita
     mpv
     vcv-rack
