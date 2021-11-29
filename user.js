@@ -21,6 +21,7 @@ user_pref("extensions.htmlaboutaddons.discover.enabled", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 user_pref("extensions.pocket.enabled", false);
 user_pref("extensions.webextensions.restrictedDomains", "");
+user_pref("fission.autostart", true);
 user_pref("font.minimum-size.ar", 13);
 user_pref("font.minimum-size.el", 13);
 user_pref("font.minimum-size.he", 13);
