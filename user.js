@@ -61,6 +61,7 @@ user_pref("javascript.options.asmjs", false);
 user_pref("javascript.options.wasm", false);
 user_pref("marionette.prefs.recommended", false);
 user_pref("media.peerconnection.enabled", false);
+user_pref("mousewheel.default.delta_multiplier_y", 80);
 user_pref("network.IDN_show_punycode", true);
 user_pref("network.captive-portal-service.enabled", false);
 user_pref("network.dns.disableIPv6", true);
