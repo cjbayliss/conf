@@ -126,6 +126,7 @@ in {
     # gui
     bitwig-studio
     chromium
+    discord
     emacs
     firefox
     j4-dmenu-desktop

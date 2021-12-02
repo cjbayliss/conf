@@ -24,6 +24,7 @@
     builtins.elem (lib.getName pkg) [
       "VCV-Rack"
       "bitwig-studio"
+      "discord"
       "nvidia-settings"
       "nvidia-x11"
       "steam"
@@ -55,10 +56,11 @@
     '';
   };
 
+  hardware.enableRedistributableFirmware = true;
+
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.powerManagement.enable = true;
   hardware.nvidia.powerManagement.finegrained = true;
-  hardware.enableRedistributableFirmware = true;
 
   services.picom.enable = true;
   hardware.opengl = {
