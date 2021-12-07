@@ -108,6 +108,7 @@
   (fringe-mode 0)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
+  (set-face-attribute 'mode-line nil :inherit 'default)
   (server-start))
 
 ;;;; keybindings
@@ -537,7 +538,6 @@ This ignores SENDER and RESPONSE."
                               :server-alias "libera"
                               :channels ("#chicken"
                                          "#commonlisp"
-                                         "#emacs"
                                          "#fennel"
                                          "#haskell"
                                          "#lisp"
@@ -546,8 +546,7 @@ This ignores SENDER and RESPONSE."
                                          "#python"
                                          "#rcirc"
                                          "#scheme"
-                                         "#xebian"
-                                         "#xmonad"))
+                                         "#xebian"))
                              ("irc.oftc.net"
                               :port 6697
                               :encryption tls
