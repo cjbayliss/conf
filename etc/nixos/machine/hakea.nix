@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ...}:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -59,10 +59,10 @@
   hardware.enableRedistributableFirmware = true;
 
   hardware.nvidia.modesetting.enable = true;
+  powerManagement.powertop.enable = true;
   hardware.nvidia.powerManagement.enable = true;
   hardware.nvidia.powerManagement.finegrained = true;
 
-  services.picom.enable = true;
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];

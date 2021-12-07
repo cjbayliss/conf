@@ -1,6 +1,6 @@
 ! Set the curser size
 Xcursor.size:  36
-Xcursor.theme: Yaru
+Xcursor.theme: breeze_cursors
 
 ! Set the dpi, and other font stuff
 Xft.dpi:        144
@@ -21,7 +21,6 @@ Xft.antialias:  1
 
 ! emacs
 emacs.background: black
-emacs.fullscreen: fullboth
 emacs.menuBar: off
 emacs.toolBar: -1
 emacs.verticalScrollBars: off

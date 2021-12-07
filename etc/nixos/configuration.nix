@@ -20,7 +20,8 @@ let
       tree-sitter
       tree-sitter-langs
     ]);
-in {
+in
+{
 
   imports = [
     # hardware
@@ -56,7 +57,6 @@ in {
     keyMap = "us";
   };
 
-  powerManagement.powertop.enable = true;
   powerManagement.cpuFreqGovernor = "ondemand";
 
   users.users.cjb = {
@@ -69,18 +69,14 @@ in {
     aspell
     aspellDicts.en
     browserpass
-    dmenu
-    dunst
     git-filter-repo
-    hsetroot
     mangohud
     opusTools
     pciutils
     pulseaudio # for pactl
     sx
     universal-ctags
-    xmobar
-    yaru-theme
+    wpa_supplicant_gui
 
     # langs
     chicken
@@ -96,21 +92,18 @@ in {
     fnlfmt
     hlint
     nix-linter
-    nixfmt
+    nixpkgs-fmt
     proselint
     shellcheck
 
     # tools
-    beets
     crudini
     efibootmgr
-    feh
     ffmpeg
     git
     imagemagick
     pandoc
     pass
-    playerctl
     scrot
     unzip
     w3m
@@ -129,7 +122,6 @@ in {
     discord
     emacs
     firefox
-    j4-dmenu-desktop
     krita
     mpv
     vcv-rack
@@ -147,20 +139,10 @@ in {
       '';
     })
 
-    (pkgs.writeTextFile {
-      name = "emacs-askpass";
-      destination = "/bin/emacs-askpass";
-      executable = true;
-      text = ''
-        #! ${pkgs.bash}/bin/bash
-        emacsclient -e '(read-passwd "Password: ")' | xargs
-      '';
-    })
   ];
 
   # FIXME: learn how to use systemd timers
   services.cron.enable = true;
-  programs.ssh.askPassword = "emacs-askpass";
 
   sound.enable = true;
   security.rtkit.enable = true;
@@ -208,7 +190,7 @@ in {
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "emacs";
+    pinentryFlavor = "qt";
   };
 
   virtualisation.podman.enable = true;
@@ -323,9 +305,7 @@ in {
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url =
-        "https://github.com/nix-community/emacs-overlay/archive/4a9220bf1477ff8356f7cd503a61d89e869ffa42.tar.gz";
-      sha256 = "12fqv7i7f6b491lq5nyghmv04jpp5y4aifkd400v7qpbpnpm6226";
+      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
     }))
   ];
 

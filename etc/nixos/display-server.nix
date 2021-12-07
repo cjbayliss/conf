@@ -12,12 +12,8 @@
       touchpad.naturalScrolling = true;
     };
 
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-    };
-
     displayManager.sx.enable = true;
+    desktopManager.plasma5.enable = true;
   };
 
   services.redshift = {
@@ -30,5 +26,4 @@
     latitude = -38.0;
     longitude = 145.0;
   };
-
 }
