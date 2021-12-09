@@ -65,7 +65,6 @@
   hardware.nvidia.powerManagement.enable = true;
   hardware.nvidia.prime.offload.enable = false;
 
-  services.picom.enable = true;
   programs.steam.enable = true;
 
   system.stateVersion = "21.05";
