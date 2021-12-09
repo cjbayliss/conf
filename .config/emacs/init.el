@@ -108,8 +108,7 @@
   (fringe-mode 0)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
-  (set-face-attribute 'mode-line nil :inherit 'default)
-  (server-start))
+  (set-face-attribute 'mode-line nil :inherit 'default))
 
 ;;;; keybindings
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
@@ -501,7 +500,7 @@ This ignores SENDER and RESPONSE."
                    (rcirc-channel-p target)
                    (not (string= (rcirc-nick process) sender))
                    (not (string= (rcirc-server-name process) sender))))
-      (notifications-notify :app-icon nil :title sender :body text)))
+      (notifications-notify :app-name "rcirc" :app-icon nil :title sender :body text)))
 
 ;;;;; rcirc hooks
   (add-hook 'rcirc-mode-hook (lambda ()
