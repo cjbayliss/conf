@@ -35,7 +35,6 @@ in
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.requestEncryptionCredentials = true;
-  boot.cleanTmpDir = true;
 
   services.resolved = {
     enable = true;
@@ -76,7 +75,6 @@ in
     pulseaudio # for pactl
     sx
     universal-ctags
-    wpa_supplicant_gui
 
     # langs
     chicken
@@ -104,10 +102,13 @@ in
     imagemagick
     pandoc
     pass
+    protonup
     scrot
     unzip
     w3m
     wget
+    winePackages.stagingFull
+    winetricks
     yt-dlp
 
     # plugins/synths/drums
