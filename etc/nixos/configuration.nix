@@ -68,13 +68,18 @@ in
     aspell
     aspellDicts.en
     browserpass
+    dmenu
+    dunst
     git-filter-repo
+    hsetroot
     mangohud
     opusTools
     pciutils
     pulseaudio # for pactl
     sx
     universal-ctags
+    xmobar
+    yaru-theme
 
     # langs
     chicken
@@ -95,13 +100,16 @@ in
     shellcheck
 
     # tools
+    beets
     crudini
     efibootmgr
+    feh
     ffmpeg
     git
     imagemagick
     pandoc
     pass
+    playerctl
     protonup
     scrot
     unzip
@@ -123,6 +131,7 @@ in
     discord
     emacs
     firefox
+    j4-dmenu-desktop
     krita
     mpv
     vcv-rack
@@ -140,10 +149,20 @@ in
       '';
     })
 
+    (pkgs.writeTextFile {
+      name = "emacs-askpass";
+      destination = "/bin/emacs-askpass";
+      executable = true;
+      text = ''
+        #! ${pkgs.bash}/bin/bash
+        emacsclient -e '(read-passwd "Password: ")' | xargs
+      '';
+    })
   ];
 
   # FIXME: learn how to use systemd timers
   services.cron.enable = true;
+  programs.ssh.askPassword = "emacs-askpass";
 
   sound.enable = true;
   security.rtkit.enable = true;
@@ -191,7 +210,7 @@ in
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "qt";
+    pinentryFlavor = "emacs";
   };
 
   virtualisation.podman.enable = true;

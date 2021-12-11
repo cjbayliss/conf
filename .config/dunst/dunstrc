@@ -1,0 +1,29 @@
+# -*- mode: conf-unix -*-
+
+[global]
+    alignment = right
+    ellipsize = end
+    follow = mouse
+    font = Monospace 10
+    format = "<b>%s:</b> %b"
+    frame_width = 0
+    height = 24
+    history_length = 1
+    horizontal_padding = 4
+    idle_threshold = 120
+    ignore_newline = true
+    line_height = 0
+    markup = strip
+    notification_limit = 1
+    offset = 0x0
+    padding = 0
+    show_age_threshold = 60
+    skip_display = true
+    width = 600
+
+[emacs]
+    appname =  Emacs
+    skip_display = false
+    background = "#000000"
+    foreground = "#f8dec0"
+    timeout = 10

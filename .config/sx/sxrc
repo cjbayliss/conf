@@ -1,6 +1,12 @@
 #!/bin/sh
+xrdb -load "$XDG_CONFIG_HOME/sx/xresources"
+
+if [ "$(hostname)" == "hakea" ]; then
+    setxkbmap -option altwin:swap_alt_win
+fi
 
 systemctl --user restart redshift
-
+systemctl --user restart picom
 systemctl --user import-environment
-dbus-launch --sh-syntax --exit-with-session startplasma-x11
+
+dbus-launch --sh-syntax --exit-with-session xmonad

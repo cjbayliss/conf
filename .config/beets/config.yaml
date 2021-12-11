@@ -1,0 +1,26 @@
+plugins: chroma fetchart embedart acousticbrainz random duplicates scrub lastgenre convert
+
+directory: ~/music
+
+paths:
+    default: $album/$track - $title
+
+import:
+    move: yes
+
+chroma:
+    auto: yes
+
+acousticbrainz:
+    force: yes
+
+fetchart:
+    cautious: true
+    cover_names: front back cover
+    sources: itunes *
+
+convert:
+    auto: yes
+    no_convert: path::\.(opus|ogg|mp3)$
+    command: ffmpeg -i $source -acodec libopus -b:a 256000 -vbr off $dest
+    extension: opus
