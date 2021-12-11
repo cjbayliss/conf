@@ -108,7 +108,8 @@
   (fringe-mode 0)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
-  (set-face-attribute 'mode-line nil :inherit 'default))
+  (set-face-attribute 'mode-line nil :inherit 'default)
+  (server-start))
 
 ;;;; keybindings
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
@@ -165,7 +166,7 @@
           (lambda ()
             ;; quit means quit, please!
             (define-key dired-mode-map (kbd "q")
-              (lambda () (interactive) (quit-window t)))))
+                        (lambda () (interactive) (quit-window t)))))
 
 ;;;; elfeed
 (unless (file-directory-p (concat user-emacs-directory "elfeed"))
@@ -278,7 +279,7 @@
           (lambda ()
             (define-key eww-link-keymap (kbd "RET") 'eww-open-in-new-buffer)
             (define-key eww-mode-map (kbd "q")
-              (lambda () (interactive) (quit-window t)))))
+                        (lambda () (interactive) (quit-window t)))))
 
 ;;;; etags
 (defun ctags-scan-dir (directory)
@@ -576,10 +577,10 @@ This ignores SENDER and RESPONSE."
             (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
             (define-key term-raw-map (kbd "C-y") 'term-paste)
             (define-key term-raw-map (kbd "C-k")
-              (lambda ()
-                (interactive)
-                (term-send-raw-string "\C-k")
-                (kill-line)))))
+                        (lambda ()
+                          (interactive)
+                          (term-send-raw-string "\C-k")
+                          (kill-line)))))
 
 ;; always kill-buffer after exit
 (advice-add 'term-handle-exit :filter-return #'kill-buffer)
@@ -821,7 +822,7 @@ The following are tried in order:
 (add-hook 'outline-minor-mode-hook
           (lambda ()
             (define-key
-              outline-minor-mode-map (kbd "<tab>") 'outline-cycle-maybe)))
+             outline-minor-mode-map (kbd "<tab>") 'outline-cycle-maybe)))
 
 ;; Local Variables:
 ;; outline-regexp: ";;; \\|;;;; \\|;;;;;"
