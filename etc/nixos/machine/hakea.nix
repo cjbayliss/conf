@@ -2,16 +2,17 @@
 
 {
   imports = [
-    # asus g14
-    <nixos-hardware/asus/zephyrus/ga401>
+    <nixos-hardware/common/cpu/amd>
+    <nixos-hardware/common/pc/laptop>
+    <nixos-hardware/common/pc/ssd>
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelModules = [ "wacom" "acpi-call" ];
+  boot.kernelModules = [ "wacom" ];
   boot.kernelParams = [ "threadirqs" "quiet" ];
-
+  boot.blacklistedKernelModules = [ "nouveau" "nvidia" ];
   boot.cleanTmpDir = true;
 
   # for low latency audio
@@ -27,8 +28,6 @@
       "VCV-Rack"
       "bitwig-studio"
       "discord"
-      "nvidia-settings"
-      "nvidia-x11"
       "steam"
       "steam-original"
       "steam-runtime"
@@ -48,23 +47,33 @@
   };
 
   services.xserver = {
-    videoDrivers = [ "amdgpu" "nvidia" ];
+    videoDrivers = [ "amdgpu" ];
 
     screenSection = ''
-      Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-      Option         "AllowIndirectGLXProtocol" "off"
       Option         "TripleBuffer" "on"
       Option         "TearFree" "true"
     '';
   };
 
-  hardware.enableRedistributableFirmware = true;
+  # fixes mic mute button
+  services.udev.extraHwdb = ''
+    evdev:name:*:dmi:bvn*:bvr*:bd*:svnASUS*:pn*:*
+     KEYBOARD_KEY_ff31007c=f20
+  '';
 
-  hardware.nvidia.modesetting.enable = true;
+  # https://blog.nil.im/?7b
+  systemd.tmpfiles.rules = [
+    # disable nvidia GPU
+    "w /sys/bus/pci/devices/0000:01:00.0/remove - - - - 1"
+    "w /sys/bus/pci/devices/0000:01:00.1/remove - - - - 1"
+    # set fan profile to silent
+    "w /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy - - - - 2"
+    # only charge battery to 60%
+    "w /sys/class/power_supply/BAT0/charge_control_end_threshold - - - - 60"
+  ];
+
   powerManagement.powertop.enable = true;
-  hardware.nvidia.powerManagement.enable = true;
-  hardware.nvidia.powerManagement.finegrained = true;
-
+  hardware.enableRedistributableFirmware = true;
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
