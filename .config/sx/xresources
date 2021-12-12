@@ -1,6 +1,6 @@
 ! Set the curser size
 Xcursor.size:  36
-Xcursor.theme: Yaru
+Xcursor.theme: Adwaita
 
 ! Set the dpi, and other font stuff
 Xft.dpi:        144
