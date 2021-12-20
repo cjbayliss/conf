@@ -8,7 +8,7 @@ let
   });
   mpv = (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; });
   python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
-  emacs = (pkgs.emacsPackagesGen pkgs.emacsGit).emacsWithPackages (epkgs:
+  emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtk).emacsWithPackages (epkgs:
     with epkgs; [
       elfeed
       emms
