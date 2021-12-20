@@ -133,6 +133,7 @@ in
     firefox
     j4-dmenu-desktop
     krita
+    milkytracker
     mpv
     vcv-rack
 
