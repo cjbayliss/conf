@@ -11,27 +11,7 @@
   security.lockKernelModules = false;
 
   # don't use the 'hardened' kernel
-  boot.kernelPackages = let
-    linux_5_14_pkg = { fetchurl, buildLinux, callPackage, ... } @ args:
-
-      buildLinux (args // rec {
-        patches = callPackage <nixpkgs/pkgs/os-specific/linux/kernel/patches.nix> { };
-        version = "5.14.21";
-        modDirVersion = version;
-
-        src = fetchurl {
-          url = "mirror://kernel/linux/kernel/v5.x/linux-${version}.tar.xz";
-          sha256 = "1cr381c179nfdrq95l4j56c4ygw09sxv493553ix4b80naf2a6pl";
-        };
-        kernelPatches = [
-          patches.bridge_stp_helper
-          patches.request_key_helper
-        ];
-
-      } // (args.argsOverride or {}));
-    linux_5_14 = pkgs.callPackage linux_5_14_pkg{};
-  in
-    pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor linux_5_14);
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
 
   # don't disable multi-threading (yeah, ik multi-threading has risks)
   security.allowSimultaneousMultithreading = true;
