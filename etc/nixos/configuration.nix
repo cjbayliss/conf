@@ -29,8 +29,6 @@ in
     ./machine/default.nix
     # display server config
     ./display-server.nix
-    # hardening config
-    ./harden.nix
   ];
 
   boot.supportedFilesystems = [ "zfs" ];

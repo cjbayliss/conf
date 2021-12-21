@@ -5,6 +5,8 @@
     <nixos-hardware/common/cpu/amd>
     <nixos-hardware/common/pc/laptop>
     <nixos-hardware/common/pc/ssd>
+    # hardening config
+    ../harden.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
