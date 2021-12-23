@@ -39,6 +39,7 @@ main = do
         , modMask = mod4Mask
         , normalBorderColor = "#444444"
         , focusedBorderColor = "#b6a0ff"
+        , terminal = "alacritty"
         , startupHook =
             do spawn "hsetroot -solid gray10"
                spawn "feh --no-fehbg --bg-fill ~/stuff/wallpapers/default"

@@ -124,6 +124,7 @@ in
     zyn-fusion
 
     # gui
+    alacritty
     bitwig-studio
     chromium
     discord

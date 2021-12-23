@@ -1,0 +1,32 @@
+font:
+  size: 10.0
+
+cursor:
+  style:
+    shape: Underline
+    blinking: Always
+  blink_interval: 500
+
+# https://gitlab.com/protesilaos/dotfiles/-/raw/487affab/emacs/.emacs.d/prot-lisp/modus-themes-exporter.el
+colors:
+  primary:
+    background: '#000000'
+    foreground: '#ffffff'
+  normal:
+    black:   '#000000'
+    red:     '#ff8059'
+    green:   '#44bc44'
+    yellow:  '#d0bc00'
+    blue:    '#2fafff'
+    magenta: '#feacd0'
+    cyan:    '#00d3d0'
+    white:   '#bfbfbf'
+  bright:
+    black:   '#595959'
+    red:     '#ef8b50'
+    green:   '#70b900'
+    yellow:  '#c0c530'
+    blue:    '#79a8ff'
+    magenta: '#b6a0ff'
+    cyan:    '#6ae4b9'
+    white:   '#ffffff'
