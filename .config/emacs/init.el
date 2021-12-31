@@ -36,6 +36,10 @@
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace nil)
 
+;; see thread starting here: https://lists.gnu.org/r/emacs-devel/2021-12/msg02944.html
+(setq display-comint-buffer-action '(display-buffer-same-window
+                                     (inhibit-same-window . nil)))
+
 ;;;; misc options/changes
 (defalias 'yes-or-no-p 'y-or-n-p)
 (prefer-coding-system 'utf-8)
