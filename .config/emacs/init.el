@@ -375,9 +375,6 @@
 
 ;; setup this demon *after* gnus has loaded, otherwise it does not work
 (with-eval-after-load "gnus"
-  (add-to-list 'gnus-secondary-select-methods
-               '(nntp "news" (nntp-address "news.gwene.org")))
-
   (setq gnus-demon-timestep 1)
   (gnus-demon-add-handler 'gnus-demon-scan-news 60 t))
 
