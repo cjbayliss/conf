@@ -208,8 +208,10 @@
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCFvfgkNeSgNXQWcxBIOhSPw" youtube video) ; Marshall Fox
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCG44gzf6Iumy18XEZXT2odA" youtube video) ; Red Means Recording Ambient
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCHDes_67fEXHzUnV6CxiDkA" youtube video) ; GranaDy
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJ-pmSC_n8ynDBNdQFfcI1Q" youtube video) ; Looji
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJflT7i52L1ZFkdvKyFCHtQ" youtube video) ; Hefest
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJwM0fiKe2rq7z2p8HPTyMA" youtube video) ; Zepla HQ
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCK8aWc1IQ_XJhNJ4O-OGvnQ" youtube video) ; GranaDy
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCNMn4Nhl-E3iaSMab0Y_b4A" youtube video) ; wacci OFFICIAL YouTube CHANNEL
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCPNq-cWaMPccZydtyhMXGGQ" youtube video) ; Michael Klements
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCQVhrypJhw1HxuRV4gX6hoQ" youtube video) ; あいみょん
@@ -223,9 +225,11 @@
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdcemy56JtVTrsFIOoqvV8g" youtube video) ; ANDREW HUANG
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCf-vV5woXPFpkvZKwooWoyw" youtube video) ; WirtualTV
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCfhW84xfA6gEc4hDK90rR1Q" youtube video) ; Thomas Heaton
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCk0LtHycs4deT5bkRqrPw2A" youtube video) ; Anton somewhere
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkB8HnJSDSJ2hkLQFUc-YrQ" youtube video) ; King Gnu
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkjbN2BlTwm7XknNjLOj7Hg" youtube video) ; subtractem
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCld4DwWufxVee57cIrf9ERg" youtube video) ; Craig Loewen
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCmSdEAbFY7pgw6X6W11jnVQ" youtube video) ; Freed Creative
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCmaec75I8GbMci0_IFDq7ig" youtube video) ; リュックと添い寝ごはん
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCn8KRTJhyH8AatY10-BbxNg" youtube video) ; Nervyr
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCogpH3RuCIvNlCXz9ocMK9Q" youtube video) ; Mocha
@@ -837,3 +841,4 @@ The following are tried in order:
 
 (provide 'init)
 ;;; init.el ends here
+(put 'upcase-region 'disabled nil)
