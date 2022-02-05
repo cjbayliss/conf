@@ -134,6 +134,7 @@ in
     krita
     milkytracker
     mpv
+    signal-desktop
     vcv-rack
 
     (pkgs.writeTextFile {
