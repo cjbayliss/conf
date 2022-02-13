@@ -19,7 +19,7 @@
 (setq auth-source-save-behavior nil)
 (setq browse-url-handlers
       `((,(rx "youtu" (? "." ) "be" (* anything) "watch") . browse-url-mpv)
-        ("." . browse-url-firefox)))
+        ("." . browse-url-chromium)))
 (setq c-basic-offset 4)
 (setq column-number-mode t)
 (setq custom-file (concat user-emacs-directory "/custom.el"))
@@ -515,8 +515,6 @@ This ignores SENDER and RESPONSE."
                                (flyspell-mode +1)
                                (setq-local fill-column (frame-width))
                                (setq-local completion-in-region-function #'completion--in-region)
-                               (set-face-attribute 'rcirc-nick-in-message-full-line nil :foreground nil :weight 'normal)
-                               (set-face-attribute 'rcirc-my-nick nil :foreground nil :weight 'normal :inherit 'rcirc-nick-in-message)
                                (set (make-local-variable 'scroll-conservatively) 8192)))
 
   (add-hook 'rcirc-track-minor-mode-hook (lambda ()
