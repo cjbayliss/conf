@@ -22,6 +22,7 @@ myManageHook =
     [ className =? "mpv" --> doF (W.view "9") <+> doShift "9"
     , className =? "gmic_qt" --> doCenterFloat
     , className =? "gmic" --> doFloat
+    , className =? "awakened-poe-trade" --> doFloat
     , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_UTILITY" -->
       doFloat
     , stringProperty "WM_WINDOW_ROLE" =? "GtkFileChooserDialog" -->

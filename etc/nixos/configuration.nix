@@ -98,6 +98,7 @@ in
     shellcheck
 
     # tools
+    appimage-run
     beets
     crudini
     efibootmgr
@@ -132,6 +133,7 @@ in
     firefox
     j4-dmenu-desktop
     krita
+    lutris
     milkytracker
     mpv
     signal-desktop

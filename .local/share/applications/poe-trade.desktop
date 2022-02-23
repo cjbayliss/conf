@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Awakened PoE Trade
+Comment=trading
+Exec=appimage-run ~/stuff/Awakened-PoE-Trade.AppImage
+Terminal=false
+Type=Application
+Categories=Game;
