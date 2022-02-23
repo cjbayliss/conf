@@ -64,13 +64,14 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
+    prime.offload.enable = true;
     prime.nvidiaBusId = "PCI:1:0:0";
     prime.amdgpuBusId = "PCI:4:0:0";
   };
 
   hardware.opengl = {
     enable = true;
-    extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
+    driSupport32Bit = true;
   };
 
   # fixes mic mute button
@@ -81,10 +82,6 @@
 
   # https://blog.nil.im/?7b
   systemd.tmpfiles.rules = [
-    # # disable nvidia GPU
-    # "w /sys/bus/pci/devices/0000:01:00.0/remove - - - - 1"
-    # "w /sys/bus/pci/devices/0000:01:00.1/remove - - - - 1"
-
     # only charge battery to 60%
     "w /sys/class/power_supply/BAT0/charge_control_end_threshold - - - - 60"
   ];
