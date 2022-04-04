@@ -19,6 +19,7 @@ let
       tree-sitter
       tree-sitter-langs
     ]);
+  vcv-rack = callPackage ./pkgs/vcv-rack { };
 in
 {
   imports = [
