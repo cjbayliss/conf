@@ -60,6 +60,8 @@
       Option         "TripleBuffer" "on"
       Option         "TearFree" "true"
     '';
+    libinput.mouse.accelSpeed = "1";
+    libinput.mouse.accelProfile = "flat";
   };
 
   hardware.nvidia = {
@@ -67,11 +69,16 @@
     prime.offload.enable = true;
     prime.nvidiaBusId = "PCI:1:0:0";
     prime.amdgpuBusId = "PCI:4:0:0";
+
+    # the 510 driver is significantly better for vulkan
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   hardware.opengl = {
     enable = true;
     driSupport32Bit = true;
+    extraPackages = with pkgs; [ libglvnd ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [ libglvnd ];
   };
 
   # fixes mic mute button
