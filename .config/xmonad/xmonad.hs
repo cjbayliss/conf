@@ -1,7 +1,6 @@
 import XMonad
 import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Grid
@@ -11,6 +10,7 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.ThreeColumns
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig (additionalKeysP)
+import qualified XMonad.Util.Hacks as Hacks
 import XMonad.Util.Run
 
 myLayoutsHook =
@@ -34,29 +34,28 @@ main = do
   xmproc <- spawnPipe "xmobar ~/.config/xmonad/bar.hs"
   xmonad $
     docks $
-    ewmh
-      def
-        { borderWidth = 1
-        , modMask = mod4Mask
-        , normalBorderColor = "#444444"
-        , focusedBorderColor = "#b6a0ff"
-        , terminal = "alacritty"
-        , startupHook =
-            do spawn "hsetroot -solid gray10"
-               spawn "feh --no-fehbg --bg-fill ~/stuff/wallpapers/default"
-               spawn "xsetroot -cursor_name left_ptr"
-        , manageHook = myManageHook
-        , layoutHook = myLayoutsHook
-        , logHook =
-            dynamicLogWithPP
-              xmobarPP
-                { ppOutput = hPutStrLn xmproc
-                , ppLayout = const ""
-                , ppTitle = xmobarColor "#b0d6f5" "" . shorten 80
-                , ppCurrent = xmobarColor "#b6a0ff" "" . wrap "[" "]"
-                } >>
-            ewmhDesktopsLogHook
-        } `additionalKeysP`
+    def
+      { borderWidth = 1
+      , modMask = mod4Mask
+      , normalBorderColor = "#444444"
+      , focusedBorderColor = "#b6a0ff"
+      , terminal = "alacritty"
+      , startupHook =
+          do spawn "hsetroot -solid gray10"
+             spawn "xsetroot -cursor_name left_ptr"
+      , manageHook = myManageHook
+      , layoutHook = myLayoutsHook
+      , handleEventHook =
+          handleEventHook def <+> Hacks.windowedFullscreenFixEventHook
+      , logHook =
+          dynamicLogWithPP
+            xmobarPP
+              { ppOutput = hPutStrLn xmproc
+              , ppLayout = const ""
+              , ppTitle = xmobarColor "#b0d6f5" "" . shorten 80
+              , ppCurrent = xmobarColor "#b6a0ff" "" . wrap "[" "]"
+              }
+      } `additionalKeysP`
     -- Despite the syntax, "M-<somekey>" doesn't do what you expect. At
     -- least if you're coming from Emacs. "M" is *not* meta, it's
     -- 'modMask', in my case the "Command/Super" key.
@@ -78,7 +77,8 @@ main = do
     , ("M-<XF86AudioNext>", spawn "emacsclient -e '(emms-next)'")
     , ("M-<XF86AudioPlay>", spawn "emacsclient -e '(emms-play/pause-handler)'")
     , ("M-<XF86AudioPrev>", spawn "emacsclient -e '(emms-previous)'")
-    , ("<Print>", spawn "scrot")
+    , ( "<Print>"
+      , spawn "scrot -s ~/pictures/screenshots/%Y-%m-%d-%H%M%S-screenshot.png")
     , ( "M-p"
       , spawn
           "j4-dmenu-desktop --dmenu=\"dmenu -i -fn 'Iosevka-10.5:semibold' -nb '#000' -nf '#fff' -sb '#000' -sf '#b6a0ff'\" --term=\"xterm\"")
