@@ -3,12 +3,11 @@
 with pkgs;
 let
   chromium = (ungoogled-chromium.override {
-    commandLineArgs = ''
-      $([ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && echo "--force-dark-mode --enable-features=WebUIDarkMode")'';
+    commandLineArgs = '' --force-dark-mode --enable-features=WebUIDarkMode '';
   });
   mpv = (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; });
   python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
-  emacs = (pkgs.emacsPackagesGen pkgs.emacsPgtk).emacsWithPackages (epkgs:
+  emacs = (pkgs.emacsPackagesFor pkgs.emacsPgtk).emacsWithPackages (epkgs:
     with epkgs; [
       elfeed
       emms
@@ -22,7 +21,6 @@ let
     ]);
 in
 {
-
   imports = [
     # hardware
     ./hardware-configuration.nix
@@ -31,6 +29,8 @@ in
     ./display-server.nix
   ];
 
+  nix.autoOptimiseStore = true;
+
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.requestEncryptionCredentials = true;
 
@@ -38,10 +38,10 @@ in
     enable = true;
     dnssec = "true";
     extraConfig = ''
-      DNS=1.1.1.1
+      DNS=9.9.9.9
       DNSOverTLS=yes
     '';
-    fallbackDns = [ "1.0.0.1" ];
+    fallbackDns = [ "149.112.112.112" ];
   };
 
   environment.etc."issue".enable = false;
@@ -65,9 +65,7 @@ in
     # libs
     aspell
     aspellDicts.en
-    browserpass
     dmenu
-    dunst
     git-filter-repo
     hsetroot
     mangohud
@@ -100,12 +98,10 @@ in
     # tools
     appimage-run
     beets
-    crudini
     efibootmgr
     feh
     ffmpeg
     git
-    imagemagick
     pandoc
     pass
     playerctl
@@ -133,24 +129,9 @@ in
     firefox
     j4-dmenu-desktop
     krita
-    lutris
-    milkytracker
     mpv
     signal-desktop
     vcv-rack
-
-    (pkgs.writeTextFile {
-      name = "set-gtk-theme";
-      destination = "/bin/set-gtk-theme";
-      executable = true;
-      text = ''
-        #!/bin/sh
-
-        [ $(date "+%k") -ge 17 ] || [ $(date "+%k") -le 5 ] && \
-          crudini --set $HOME/.config/gtk-3.0/settings.ini Settings gtk-application-prefer-dark-theme true || \
-          crudini --set $HOME/.config/gtk-3.0/settings.ini Settings gtk-application-prefer-dark-theme false
-      '';
-    })
 
     (pkgs.writeTextFile {
       name = "emacs-askpass";
@@ -167,6 +148,11 @@ in
   services.cron.enable = true;
   programs.ssh.askPassword = "emacs-askpass";
 
+  # flatpak for Path of Building (lutris keeps breaking for me 🧐)
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ xdg-desktop-portal-gtk ];
+
   sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -176,6 +162,7 @@ in
     jack.enable = true;
     pulse.enable = true;
   };
+
   security.pam.loginLimits = [
     {
       domain = "@audio";
@@ -189,6 +176,7 @@ in
       type = "-";
       value = "99";
     }
+
     {
       domain = "@audio";
       item = "nofile";
@@ -331,6 +319,16 @@ in
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
     }))
+
+    (self: super: {
+      haskellPackages = super.haskellPackages.override {
+        overrides = h: super: {
+          xmonad = h.xmonad_0_17_0;
+          xmonad-contrib = h.xmonad-contrib_0_17_0;
+          xmonad-extras = h.xmonad-extras_0_17_0;
+        };
+      };
+    })
   ];
 
 }
