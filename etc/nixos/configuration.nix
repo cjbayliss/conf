@@ -3,7 +3,7 @@
 with pkgs;
 let
   chromium = (ungoogled-chromium.override {
-    commandLineArgs = '' --force-dark-mode --enable-features=WebUIDarkMode '';
+    commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode ";
   });
   mpv = (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; });
   python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
@@ -20,8 +20,7 @@ let
       tree-sitter-langs
     ]);
   vcv-rack = callPackage ./pkgs/vcv-rack { };
-in
-{
+in {
   imports = [
     # hardware
     ./hardware-configuration.nix
@@ -318,18 +317,9 @@ in
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+      url =
+        "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
     }))
-
-    (self: super: {
-      haskellPackages = super.haskellPackages.override {
-        overrides = h: super: {
-          xmonad = h.xmonad_0_17_0;
-          xmonad-contrib = h.xmonad-contrib_0_17_0;
-          xmonad-extras = h.xmonad-extras_0_17_0;
-        };
-      };
-    })
   ];
 
 }
