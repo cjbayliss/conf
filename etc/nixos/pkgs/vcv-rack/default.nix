@@ -1,30 +1,7 @@
-{ gcc11Stdenv
-, lib
-, makeWrapper
-, fetchzip
-, fetchFromGitHub
-, fetchFromBitbucket
-, pkg-config
-, alsa-lib
-, curl
-, ghc_filesystem
-, glew
-, glfw
-, gtk3-x11
-, jansson
-, jq
-, libarchive
-, libjack2
-, libpulseaudio
-, libXext
-, libXi
-, rtaudio
-, rtmidi
-, speex
-, libsamplerate
-, zstd
-, wrapGAppsHook
-}:
+{ gcc11Stdenv, lib, makeWrapper, fetchzip, fetchFromGitHub, fetchFromBitbucket
+, pkg-config, alsa-lib, curl, ghc_filesystem, glew, glfw, gtk3-x11, jansson, jq
+, libarchive, libjack2, libpulseaudio, libXext, libXi, rtaudio, rtmidi, speex
+, libsamplerate, zstd, wrapGAppsHook }:
 
 let
   # The package repo vendors some of the package dependencies as submodules.
@@ -73,12 +50,12 @@ let
     rev = "533397cdcad5c6401ebd3937d6c1663de2473627"; # tip of branch v2
     sha256 = "QnwOgrYxiCa/7t/u6F63Ks8C9E8k6T+hia4JZFhp1LI=";
   };
-in
-# gcc11 is necessary because many vcv plugins are already built with it
+  # gcc11 is necessary because many vcv plugins are already built with it
   # If using an older gcc for Rack, you get
   # undefined symbol: _ZSt28__throw_bad_array_new_lengthv
   # for those plugins which were built with v11
-with lib; gcc11Stdenv.mkDerivation rec {
+in with lib;
+gcc11Stdenv.mkDerivation rec {
   pname = "VCV-Rack";
   version = "2.0.2";
 
@@ -89,9 +66,7 @@ with lib; gcc11Stdenv.mkDerivation rec {
     sha256 = "cK4dZgTx3Gq/UKfnCycLp7Y8fbrgRTHI9Ef19nNWd0o=";
   };
 
-  patches = [
-    ./rack-minimize-vendoring.patch
-  ];
+  patches = [ ./rack-minimize-vendoring.patch ];
 
   prePatch = ''
     # As we can't use `make dep` to set up the dependencies (as explained
@@ -121,7 +96,24 @@ with lib; gcc11Stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   nativeBuildInputs = [ makeWrapper pkg-config wrapGAppsHook ];
-  buildInputs = [ alsa-lib curl ghc_filesystem glew glfw gtk3-x11 jansson jq libarchive libjack2 libpulseaudio libsamplerate rtaudio rtmidi speex zstd ];
+  buildInputs = [
+    alsa-lib
+    curl
+    ghc_filesystem
+    glew
+    glfw
+    gtk3-x11
+    jansson
+    jq
+    libarchive
+    libjack2
+    libpulseaudio
+    libsamplerate
+    rtaudio
+    rtmidi
+    speex
+    zstd
+  ];
 
   makeFlags = [ "all" "plugins" ];
 
