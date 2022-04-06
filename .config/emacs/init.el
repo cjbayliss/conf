@@ -201,7 +201,6 @@
         ("https://wingolog.org/feed/atom" blog guile)
 
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC-RA5BzE_BnZhf5iVdNF1hA" youtube video) ; loopop
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2QjlMMSdO2aITpYlwdqZQw" youtube video) ; Wirtual Clips
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC5jnkxwILkgNePRe1FacHzw" youtube video) ; 山崎まさよし
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCD6v_eY0IDEGittgHsmd8aQ" youtube video) ; e r g o j o s h
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCFvfgkNeSgNXQWcxBIOhSPw" youtube video) ; Marshall Fox
@@ -222,7 +221,6 @@
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCcUcK64JLSZAPUfG07s-Wew" youtube video) ; 宮本浩次
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCcXBraaImQrLrBuXTk6L2cQ" youtube video) ; 岡ちゃんnel
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdcemy56JtVTrsFIOoqvV8g" youtube video) ; ANDREW HUANG
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCf-vV5woXPFpkvZKwooWoyw" youtube video) ; WirtualTV
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCfhW84xfA6gEc4hDK90rR1Q" youtube video) ; Thomas Heaton
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCk0LtHycs4deT5bkRqrPw2A" youtube video) ; Anton somewhere
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkB8HnJSDSJ2hkLQFUc-YrQ" youtube video) ; King Gnu
@@ -236,7 +234,6 @@
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCpjl7axNrHYPh53gezouYxA" youtube video) ; Shane Mendonsa
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCshObcm-nLhbu8MY50EZ5Ng" youtube video) ; Benn Jordan
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsnGwSIHyoYN0kiINAGUKxg" youtube video) ; Wolfgang's Channel
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCt-HTfaCUz8QIoknqyXKYiw" youtube video) ; Wirtual
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCuWKHSHTHMV_nVSeNH4gYAg" youtube video) ; Omri Cohen
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCx6GR83AbXiSX2gesCxSPPw" youtube video) ; Empyriangaming
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCyDZai57BfE_N0SaBkKQyXg" youtube video) ; Rob Scallon
