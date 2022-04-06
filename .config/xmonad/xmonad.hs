@@ -1,6 +1,7 @@
 import XMonad
 import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Grid
@@ -34,28 +35,29 @@ main = do
   xmproc <- spawnPipe "xmobar ~/.config/xmonad/bar.hs"
   xmonad $
     docks $
-    def
-      { borderWidth = 1
-      , modMask = mod4Mask
-      , normalBorderColor = "#444444"
-      , focusedBorderColor = "#b6a0ff"
-      , terminal = "alacritty"
-      , startupHook =
-          do spawn "hsetroot -solid gray10"
-             spawn "xsetroot -cursor_name left_ptr"
-      , manageHook = myManageHook
-      , layoutHook = myLayoutsHook
-      , handleEventHook =
-          handleEventHook def <+> Hacks.windowedFullscreenFixEventHook
-      , logHook =
-          dynamicLogWithPP
-            xmobarPP
-              { ppOutput = hPutStrLn xmproc
-              , ppLayout = const ""
-              , ppTitle = xmobarColor "#b0d6f5" "" . shorten 80
-              , ppCurrent = xmobarColor "#b6a0ff" "" . wrap "[" "]"
-              }
-      } `additionalKeysP`
+    ewmh
+      def
+        { borderWidth = 1
+        , modMask = mod4Mask
+        , normalBorderColor = "#444444"
+        , focusedBorderColor = "#b6a0ff"
+        , terminal = "alacritty"
+        , startupHook =
+            do spawn "hsetroot -solid gray10"
+               spawn "xsetroot -cursor_name left_ptr"
+        , manageHook = myManageHook
+        , layoutHook = myLayoutsHook
+        , handleEventHook =
+            handleEventHook def <+> Hacks.windowedFullscreenFixEventHook
+        , logHook =
+            dynamicLogWithPP
+              xmobarPP
+                { ppOutput = hPutStrLn xmproc
+                , ppLayout = const ""
+                , ppTitle = xmobarColor "#b0d6f5" "" . shorten 80
+                , ppCurrent = xmobarColor "#b6a0ff" "" . wrap "[" "]"
+                }
+        } `additionalKeysP`
     -- Despite the syntax, "M-<somekey>" doesn't do what you expect. At
     -- least if you're coming from Emacs. "M" is *not* meta, it's
     -- 'modMask', in my case the "Command/Super" key.
