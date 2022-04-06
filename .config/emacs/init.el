@@ -187,7 +187,6 @@
         ("https://blogs.igalia.com/apinheiro/feed/" blog)
         ("https://blogs.igalia.com/dpiliaiev/feed.xml" blog)
         ("https://christine.website/blog.rss" blog)
-        ("https://danluu.com/atom.xml" blog)
         ("https://deftly.net/rss.xml" blog)
         ("https://heronsperch.blogspot.com/feeds/posts/default?alt=rss" blog)
         ("https://jvns.ca/atom.xml" blog)
@@ -497,17 +496,6 @@ This ignores SENDER and RESPONSE."
   (add-hook 'rcirc-markup-text-functions #'rcirc-markup-nick-colors)
   ;; END GPL2+ CODE ;;
 
-  (require 'notifications)
-  (defun rcirc-notifications (process sender response target text)
-    (when (or (and (string= response "PRIVMSG")
-                   (not (string= sender (rcirc-nick process)))
-                   (not (rcirc-channel-p target)))
-              (and (string-match (rcirc-nick process) text)
-                   (rcirc-channel-p target)
-                   (not (string= (rcirc-nick process) sender))
-                   (not (string= (rcirc-server-name process) sender))))
-      (notifications-notify :app-name "rcirc" :app-icon nil :title sender :body text)))
-
 ;;;;; rcirc hooks
   (add-hook 'rcirc-mode-hook (lambda ()
                                (rcirc-omit-mode +1)
@@ -519,8 +507,6 @@ This ignores SENDER and RESPONSE."
 
   (add-hook 'rcirc-track-minor-mode-hook (lambda ()
                                            (delq 'rcirc-activity-string global-mode-string)))
-
-  (add-hook 'rcirc-print-hooks 'rcirc-notifications)
 
 ;;;;; rcirc config
   (setq rcirc-default-full-name "Christopher Bayliss (they/them)")
