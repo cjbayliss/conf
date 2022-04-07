@@ -80,7 +80,7 @@ main = do
     , ("M-<XF86AudioPlay>", spawn "emacsclient -e '(emms-play/pause-handler)'")
     , ("M-<XF86AudioPrev>", spawn "emacsclient -e '(emms-previous)'")
     , ( "<Print>"
-      , spawn "scrot -s ~/pictures/screenshots/%Y-%m-%d-%H%M%S-screenshot.png")
+      , spawn "scrot -s -f ~/pictures/screenshots/%Y-%m-%d-%H%M%S-screenshot.png")
     , ( "M-p"
       , spawn
           "j4-dmenu-desktop --dmenu=\"dmenu -i -fn 'Iosevka-10.5:semibold' -nb '#000' -nf '#fff' -sb '#000' -sf '#b6a0ff'\" --term=\"xterm\"")
