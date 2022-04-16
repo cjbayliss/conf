@@ -19,6 +19,7 @@ let
       tree-sitter
       tree-sitter-langs
     ]);
+  unstable = import <nixos-unstable> { };
   vcv-rack = callPackage ./pkgs/vcv-rack { };
 in {
   imports = [
@@ -114,6 +115,9 @@ in {
     winetricks
     yt-dlp
 
+    # unstable stuff
+    unstable.logiops
+
     # plugins/synths/drums
     distrho
     helm
@@ -143,6 +147,44 @@ in {
       '';
     })
   ];
+
+  # for Logitech M720 mouse
+  systemd.services.logid = {
+    enable = true;
+    description = "Logitech Configuration Daemon";
+
+    unitConfig = {
+      After = [ "multi-user.target" ];
+      Wants = [ "multi-user.target" ];
+    };
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${unstable.pkgs.logiops}/bin/logid";
+      ExecReload = "/bin/kill -HUP $MAINPID";
+      Restart = "on-failure";
+
+      # lockdown the service
+      CapabilityBoundingSet = "";
+      IPAddressDeny = "any";
+      LockPersonality = "yes";
+      MemoryDenyWriteExecute = "yes";
+      NoNewPrivileges = "yes";
+      PrivateMounts = "yes";
+      PrivateNetwork = "yes";
+      PrivateTmp = "yes";
+      PrivateUsers = "yes";
+      ProtectControlGroups = "yes";
+      ProtectHome = "yes";
+      ProtectKernelModules =  "yes";
+      ProtectKernelTunables = "yes";
+      ProtectSystem = "strict";
+      RestrictRealtime = "yes";
+      UMask = "0077";
+    };
+
+    wantedBy = [ "graphical.target" ];
+  };
 
   # FIXME: learn how to use systemd timers
   services.cron.enable = true;
