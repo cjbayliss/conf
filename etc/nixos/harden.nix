@@ -23,5 +23,8 @@
   services.nscd.enable = false;
   users.ldap.nsswitch = false;
 
+  # the nixos nvidia module enables apcid... on a systemd system 🧐
+  services.acpid.enable = lib.mkForce false;
+
   services.dbus.apparmor = "enabled";
 }
