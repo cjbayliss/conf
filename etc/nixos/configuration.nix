@@ -10,6 +10,7 @@ let
   emacs = (pkgs.emacsPackagesFor pkgs.emacsPgtk).emacsWithPackages (epkgs:
     with epkgs; [
       elfeed
+      elpher
       emms
       haskell-mode
       marginalia
@@ -186,8 +187,6 @@ in {
     wantedBy = [ "graphical.target" ];
   };
 
-  # FIXME: learn how to use systemd timers
-  services.cron.enable = true;
   programs.ssh.askPassword = "emacs-askpass";
 
   # flatpak for Path of Building (lutris keeps breaking for me 🧐)
