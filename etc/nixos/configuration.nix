@@ -2,12 +2,15 @@
 
 with pkgs;
 let
+  unstable = import <nixos-unstable> { };
+
   chromium = (ungoogled-chromium.override {
     commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode ";
   });
   mpv = (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; });
   python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
-  emacs = (pkgs.emacsPackagesFor pkgs.emacsPgtk).emacsWithPackages (epkgs:
+
+  emacs = (pkgs.emacsPackagesFor unstable.pkgs.emacs).emacsWithPackages (epkgs:
     with epkgs; [
       elfeed
       elpher
@@ -20,7 +23,6 @@ let
       tree-sitter
       tree-sitter-langs
     ]);
-  unstable = import <nixos-unstable> { };
   vcv-rack = callPackage ./pkgs/vcv-rack { };
 in {
   imports = [
@@ -197,6 +199,7 @@ in {
 
   sound.enable = true;
   security.rtkit.enable = true;
+  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -435,12 +438,5 @@ in {
     EMAIL = "cjb@cjb.sh";
     NAME = "Christopher Bayliss";
   };
-
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url =
-        "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-    }))
-  ];
 
 }

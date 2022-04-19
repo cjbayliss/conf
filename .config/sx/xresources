@@ -1,6 +1,6 @@
 ! Set the curser size
 Xcursor.size:  36
-Xcursor.theme: Adwaita
+Xcursor.theme: Yaru
 
 ! Set the dpi, and other font stuff
 Xft.dpi:        144
@@ -9,15 +9,6 @@ Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight
 Xft.hinting:    1
 Xft.antialias:  1
-
-*renderFont: true
-*faceName: xft:Iosevka Fixed:size=9.5
-
-! dark background
-*.foreground:   #ffffff
-*.background:   #000000
-*.cursorColor:  #ffffff
-*.cursorBlink: true
 
 ! emacs
 emacs.background: black
