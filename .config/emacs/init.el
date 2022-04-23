@@ -32,6 +32,8 @@
 (setq split-width-threshold 158)
 (setq tab-always-indent 'complete)
 (setq tramp-allow-unsafe-temporary-files t)
+(setq use-short-answers t)
+
 (setq-default fill-column 72)
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace nil)
@@ -41,7 +43,6 @@
                                      (inhibit-same-window . nil)))
 
 ;;;; misc options/changes
-(defalias 'yes-or-no-p 'y-or-n-p)
 (prefer-coding-system 'utf-8)
 
 ;; upcase-region & downcase-region are disabled, but not this. WTF??
@@ -68,6 +69,13 @@
               (pinentry-start))
             (when (fboundp 'marginalia-mode)
               (marginalia-mode +1))
+            (when (fboundp 'vertico-mode)
+              (vertico-mode +1))
+            ;; https://github.com/minad/corfu/issues/154
+            (cond ((fboundp 'corfu-global-mode)
+                   (corfu-global-mode +1))
+                  ((fboundp 'global-corfu-mode)
+                   (global-corfu-mode +1)))
             (delete-selection-mode +1)
             (savehist-mode +1)
             (show-paren-mode +1)))
@@ -76,6 +84,7 @@
 (mapc (lambda (x)
         (add-hook x 'hl-line-mode +1))
       '(dired-mode-hook
+        man-common-hook
         text-mode-hook))
 
 ;;;; disable/change startup messages
@@ -162,6 +171,16 @@
    (delq 'display-time-string global-mode-string)))
 
 ;;; Tools
+;;;; corfu
+(with-eval-after-load "corfu"
+  (defun corfu-enable-in-minibuffer ()
+    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+    (when (where-is-internal #'completion-at-point (list (current-local-map)))
+      ;; (setq-local corfu-auto nil) Enable/disable auto completion
+      (corfu-mode 1)))
+
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
+
 ;;;; dired
 (setq dired-listing-switches "-ABlhFv")
 (setq dired-kill-when-opening-new-dired-buffer t)
@@ -403,29 +422,6 @@
 (setq gnus-message-archive-group "nnimap+email:Sent")
 (setq gnus-gcc-mark-as-read t)
 
-;;;; icomplete
-(setq completion-ignore-case t)
-(setq read-buffer-completion-ignore-case t)
-(setq read-file-name-completion-ignore-case t)
-
-;; use completing-read for completion in region
-(setq completion-in-region-function
-      #'completing-read-completion--in-region)
-
-(setq icomplete-compute-delay 0)
-(setq icomplete-scroll t)
-(setq icomplete-show-matches-on-no-input t)
-
-(icomplete-vertical-mode +1)
-(icomplete-mode +1)
-
-;; without truncate-lines, icomplete-vertical spews a mess
-(add-hook 'icomplete-minibuffer-setup-hook
-          (lambda () (setq-local truncate-lines t)))
-
-(define-key icomplete-minibuffer-map (kbd "RET") 'icomplete-force-complete-and-exit)
-(define-key icomplete-minibuffer-map (kbd "TAB") 'icomplete-force-complete)
-
 ;;;; ix.io paste tool
 (defun ix-io--process-response (response)
   "Process RESPONSE from ix.io"
@@ -576,7 +572,7 @@ This ignores SENDER and RESPONSE."
                   (interactive)
                   (if (get-buffer "*ansi-term*")
                       (switch-to-buffer "*ansi-term*")
-                    (ansi-term "/run/current-system/sw/bin/bash"))))
+                    (ansi-term "/run/current-system/sw/bin/fish"))))
 
 ;;; Modes
 ;;;; common config for all prog-modes
@@ -752,50 +748,11 @@ The optional argument IGNORED is not used."
   (interactive (browse-url-interactive-arg "URL: "))
   (call-process "mpv" nil 0 nil url))
 
-;;;; completion-in-region-function
-(defun completing-read-completion--in-region (start end coll &optional pred)
-  "Use 'completing-read' to select a completion in region.
-
-START and END are the position in the buffer of the string to be
-completed.  COLL is the collection of possible completions, and
-PRED limits the possible completions to a subset of COLL.
-
-The following are tried in order:
-
- - in a minibuffer, run the 'completion--in-region' function
-
- - if there is only one possible completion, insert it
-
- - run 'completing-read' with a list of possible completions, and
-   insert that."
-  (if (minibufferp)
-      (completion--in-region start end coll pred)
-    (let* ((init (buffer-substring-no-properties start end))
-           (comp (all-completions init coll pred))
-           (meta (completion-metadata-get
-                  (completion-metadata init coll pred) 'category)))
-      (pcase (safe-length comp)
-        (`0)
-        (`1 (let ((minibuffer-completion-table coll)
-                  (minibuffer-completion-predicate pred))
-              (completion--in-region-1 start end)))
-        ( _ (let ((sel
-                   (if (eq meta 'file)
-                       (replace-regexp-in-string
-                        "^\\\\~/" "~/"
-                        (replace-regexp-in-string
-                         "\\\\ $" " "
-                         (shell-quote-argument
-                          (read-file-name "Completions: "
-                                          (file-name-directory init) init nil
-                                          (file-name-nondirectory init) pred))))
-                     (completing-read "Completions: " coll pred nil init))))
-              (when sel
-                (completion--replace start end sel))))))))
-
 ;;; outline this file
 (setq outline-minor-mode-highlight 'override)
 
+;; IMPORTANT: DON'T use `outline-minor-mode-cycle', it is broken
+;; (doesn't check if you are on a heading first)
 (defun outline-cycle-maybe ()
   "Run 'outline-cycle' if on an outline heading."
   (interactive)
@@ -805,6 +762,7 @@ The following are tried in order:
 
 (add-to-list 'safe-local-variable-values
              '(eval progn (outline-minor-mode 1) (hide-sublevels 1)))
+
 (add-hook 'outline-minor-mode-hook
           (lambda ()
             (define-key

@@ -12,6 +12,7 @@ let
 
   emacs = (pkgs.emacsPackagesFor unstable.pkgs.emacs).emacsWithPackages (epkgs:
     with epkgs; [
+      corfu
       elfeed
       elpher
       emms
@@ -22,6 +23,7 @@ let
       pinentry
       tree-sitter
       tree-sitter-langs
+      vertico
     ]);
   vcv-rack = callPackage ./pkgs/vcv-rack { };
 in {
