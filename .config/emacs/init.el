@@ -235,6 +235,7 @@
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCQhvDZeUrxPq9p3SkbTngkA" youtube video) ; TÂCHES TEACHES
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCRIgIJQWuBJ0Cv_VlU3USNA" youtube video) ; ヨルシカ / n-buna Official
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVN95kHPHk--fSwvTCRJmdw" youtube video) ; Jakub Ciupinski
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCW1ulY8s-PJU8oL4F3eS9tA" youtube video) ; lolcohol
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCXCXxhRVYvBOX45_gxr0iHA" youtube video) ; Christian Henson Music
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCafxR2HWJRmMfSdyZXvZMTw" youtube video) ; LOOK MUM NO COMPUTER
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCcUcK64JLSZAPUfG07s-Wew" youtube video) ; 宮本浩次
