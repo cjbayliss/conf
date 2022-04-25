@@ -5,7 +5,7 @@ let
   unstable = import <nixos-unstable> { };
 
   chromium = (ungoogled-chromium.override {
-    commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode ";
+    commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode --no-referrers --js-flags=--noexpose_wasm --no-pings ";
   });
   mpv = (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; });
   python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
