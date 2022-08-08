@@ -2,31 +2,13 @@
 
 with pkgs;
 let
-  unstable = import <nixos-unstable> { };
-
   chromium = (ungoogled-chromium.override {
     commandLineArgs = "--force-dark-mode --enable-features=WebUIDarkMode --no-referrers --js-flags=--noexpose_wasm --no-pings ";
   });
   mpv = (mpv-with-scripts.override { scripts = [ mpvScripts.mpris ]; });
   python = python3.withPackages (pp: with pp; [ flake8 notify2 pylint ]);
-
-  emacs = (pkgs.emacsPackagesFor unstable.pkgs.emacs).emacsWithPackages (epkgs:
-    with epkgs; [
-      corfu
-      elfeed
-      elpher
-      emms
-      haskell-mode
-      marginalia
-      nix-mode
-      php-mode
-      pinentry
-      tree-sitter
-      tree-sitter-langs
-      vertico
-    ]);
-  vcv-rack = callPackage ./pkgs/vcv-rack { };
-in {
+in
+{
   imports = [
     # hardware
     ./hardware-configuration.nix
@@ -38,7 +20,11 @@ in {
   nix.autoOptimiseStore = true;
 
   boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.requestEncryptionCredentials = true;
+
+  # Setup keyfile
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
+  };
 
   services.resolved = {
     enable = true;
@@ -54,7 +40,7 @@ in {
 
   time.timeZone = "Australia/Melbourne";
 
-  i18n.defaultLocale = "en_AU.UTF-8";
+  i18n.defaultLocale = "en_AU.utf8";
   console = {
     font = "";
     keyMap = "us";
@@ -64,14 +50,21 @@ in {
 
   users.users.cjb = {
     isNormalUser = true;
-    extraGroups = [ "audio" "wheel" "video" ];
+    extraGroups = [
+      "audio"
+      "video"
+      "wheel"
+    ];
     shell = pkgs.fish;
+    description = "Christopher Bayliss";
+    packages = with pkgs; [ ];
   };
+
+  # auto login
+  services.getty.autologinUser = "cjb";
 
   environment.systemPackages = with pkgs; [
     # libs
-    aspell
-    aspellDicts.en
     dmenu
     git-filter-repo
     hsetroot
@@ -89,6 +82,7 @@ in {
     fennel
     gcc
     ghc
+    lua
     php74
     python
     sbcl
@@ -97,6 +91,7 @@ in {
     black
     fnlfmt
     hlint
+    luaformatter
     nix-linter
     nixpkgs-fmt
     proselint
@@ -109,49 +104,25 @@ in {
     feh
     ffmpeg
     git
+    htop
+    logiops
+    neovim
     pandoc
     pass
     playerctl
-    protonup
     scrot
+    tmux
     unzip
     w3m
     wget
-    winePackages.stagingFull
-    winetricks
     yt-dlp
-
-    # unstable stuff
-    unstable.logiops
-    unstable.krita
-
-    # plugins/synths/drums
-    distrho
-    helm
-    surge
-    zyn-fusion
 
     # gui
     alacritty
-    bitwig-studio
     chromium
-    discord
     emacs
-    firefox
     j4-dmenu-desktop
     mpv
-    signal-desktop
-    vcv-rack
-
-    (pkgs.writeTextFile {
-      name = "emacs-askpass";
-      destination = "/bin/emacs-askpass";
-      executable = true;
-      text = ''
-        #! ${pkgs.bash}/bin/bash
-        emacsclient -e '(read-passwd "Password: ")' | xargs
-      '';
-    })
   ];
 
   # for Logitech M720 mouse
@@ -166,7 +137,7 @@ in {
 
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${unstable.pkgs.logiops}/bin/logid";
+      ExecStart = "${pkgs.logiops}/bin/logid";
       ExecReload = "/bin/kill -HUP $MAINPID";
       Restart = "on-failure";
 
@@ -182,7 +153,7 @@ in {
       PrivateUsers = "yes";
       ProtectControlGroups = "yes";
       ProtectHome = "yes";
-      ProtectKernelModules =  "yes";
+      ProtectKernelModules = "yes";
       ProtectKernelTunables = "yes";
       ProtectSystem = "strict";
       RestrictRealtime = "yes";
@@ -192,9 +163,7 @@ in {
     wantedBy = [ "graphical.target" ];
   };
 
-  programs.ssh.askPassword = "emacs-askpass";
-
-  # flatpak for Path of Building (lutris keeps breaking for me 🧐)
+  # flatpak
   services.flatpak.enable = true;
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ xdg-desktop-portal-gtk ];
@@ -248,7 +217,7 @@ in {
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "emacs";
+    pinentryFlavor = "qt";
   };
 
   virtualisation.podman.enable = true;
@@ -418,11 +387,9 @@ in {
 
     PYTHONSTARTUP = "$XDG_CONFIG_HOME/python/startup.py";
     PASSWORD_STORE_DIR = "$XDG_DATA_HOME/pass";
-    MOZ_GTK_TITLEBAR_DECORATION = "system"; # proper theming
-    MOZ_USE_XINPUT2 = "1";
 
-    EDITOR = "emacsclient";
-    VISUAL = "emacsclient";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
 
     # IMPORTANT: without these, audio plugins installed via nix are not found
     DSSI_PATH =

@@ -11,6 +11,7 @@
   ];
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelModules = [ "wacom" ];
@@ -28,14 +29,8 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "VCV-Rack"
-      "bitwig-studio"
-      "discord"
       "nvidia-settings"
       "nvidia-x11"
-      "steam"
-      "steam-original"
-      "steam-runtime"
     ];
 
   networking = {
@@ -69,16 +64,6 @@
     prime.offload.enable = true;
     prime.nvidiaBusId = "PCI:1:0:0";
     prime.amdgpuBusId = "PCI:4:0:0";
-
-    # the 510 driver is significantly better for vulkan
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
-
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-    extraPackages = with pkgs; [ libglvnd ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ libglvnd ];
   };
 
   # fixes mic mute button
@@ -96,8 +81,6 @@
   powerManagement.powertop.enable = true;
   hardware.enableRedistributableFirmware = true;
 
-  programs.steam.enable = true;
-
   services.tlp.settings = {
     CPU_BOOST_ON_AC = 0;
     CPU_BOOST_ON_BAT = 0;
@@ -108,6 +91,6 @@
     QT_FONT_DPI = "144";
   };
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "22.05";
 
 }

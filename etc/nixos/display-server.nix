@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let unstable = import <nixos-unstable> { };
-in {
+{
   services.xserver = {
     enable = true;
     layout = "us";
@@ -16,7 +15,6 @@ in {
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
-      haskellPackages = unstable.haskellPackages;
     };
 
     displayManager.sx.enable = true;
