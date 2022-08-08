@@ -21,8 +21,6 @@ myLayoutsHook =
 myManageHook =
   composeAll
     [ className =? "mpv" --> doF (W.view "9") <+> doShift "9"
-    , className =? "gmic_qt" --> doCenterFloat
-    , className =? "gmic" --> doFloat
     , className =? "awakened-poe-trade" --> doFloat
     , isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_UTILITY" -->
       doFloat
@@ -75,10 +73,6 @@ main = do
     , ("<XF86AudioNext>", spawn "playerctl next")
     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("<XF86AudioPrev>", spawn "playerctl previous")
-      -- emms
-    , ("M-<XF86AudioNext>", spawn "emacsclient -e '(emms-next)'")
-    , ("M-<XF86AudioPlay>", spawn "emacsclient -e '(emms-play/pause-handler)'")
-    , ("M-<XF86AudioPrev>", spawn "emacsclient -e '(emms-previous)'")
     , ( "<Print>"
       , spawn "scrot -s -f ~/pictures/screenshots/%Y-%m-%d-%H%M%S-screenshot.png")
     , ( "M-p"
