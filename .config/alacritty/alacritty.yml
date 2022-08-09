@@ -7,26 +7,34 @@ cursor:
     blinking: Always
   blink_interval: 500
 
-# https://gitlab.com/protesilaos/dotfiles/-/raw/487affab/emacs/.emacs.d/prot-lisp/modus-themes-exporter.el
 colors:
+  # Default colors
   primary:
-    background: '#000000'
-    foreground: '#ffffff'
+    background: '#161616'
+    foreground: '#e4e4e4'
+
+  # Cursor volors
+  cursor:
+    text: '#feffff'
+
+  # Normal colors
   normal:
-    black:   '#000000'
-    red:     '#ff8059'
-    green:   '#44bc44'
-    yellow:  '#d0bc00'
-    blue:    '#2fafff'
-    magenta: '#feacd0'
-    cyan:    '#00d3d0'
-    white:   '#bfbfbf'
+    black:   '#a3a3a3'
+    red:     '#e98885'
+    green:   '#a3c38b'
+    yellow:  '#ffc68d'
+    blue:    '#a6cae2'
+    magenta: '#e7cdfb'
+    cyan:    '#00a69f'
+    white:   '#e4e4e4'
+
+  # Bright colors
   bright:
-    black:   '#595959'
-    red:     '#ef8b50'
-    green:   '#70b900'
-    yellow:  '#c0c530'
-    blue:    '#79a8ff'
-    magenta: '#b6a0ff'
-    cyan:    '#6ae4b9'
-    white:   '#ffffff'
+    black:   '#c8c8c8'
+    red:     '#ffb2b0'
+    green:   '#c8e2b9'
+    yellow:  '#ffe1af'
+    blue:    '#bddff7'
+    magenta: '#fce2ff'
+    cyan:    '#0bbdb6'
+    white:   '#feffff'
