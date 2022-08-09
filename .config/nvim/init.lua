@@ -4,7 +4,6 @@ vim.o.guicursor = ''
 vim.o.hidden = true
 vim.o.number = true
 vim.o.termguicolors = true
-vim.o.laststatus = 0
 
 -- spaces please
 vim.o.expandtab = true
