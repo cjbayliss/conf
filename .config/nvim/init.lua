@@ -125,15 +125,5 @@ packer.startup(function()
         end
     }
 
-    -- -- vimwiki using MediaWiki syntax
-    -- use {
-    --     'vimwiki/vimwiki',
-    --     config = function()
-    --         vim.g.vimwiki_list = {
-    --             {auto_export = 1, path_html = '~/wiki', path = '~/wiki'}
-    --         }
-    --     end
-    -- }
-
     if firstRun then packer.sync() end
 end)
