@@ -32,6 +32,11 @@ end
 
 packer.startup(function()
     use {
+        'lewis6991/impatient.nvim',
+        config = function() require('impatient') end
+    }
+
+    use {
         'wbthomason/packer.nvim',
         config = function()
             vim.api.nvim_exec([[
@@ -67,10 +72,20 @@ packer.startup(function()
     }
 
     use {
+        'lewis6991/gitsigns.nvim',
+        config = function() require('gitsigns').setup() end
+    }
+
+    use {
         'norcalli/nvim-colorizer.lua',
         config = function()
             require('colorizer').setup({'*', '!rst', '!vimwiki'})
         end
+    }
+
+    use {
+        'numToStr/Comment.nvim',
+        config = function() require('Comment').setup() end
     }
 
     -- fennel
