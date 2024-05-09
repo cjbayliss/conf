@@ -1,0 +1,64 @@
+:root {
+  --tab-min-height: 37px !important;
+}
+
+:root[uidensity="compact"] {
+  --tab-min-height: 31px !important;
+}
+
+:root[uidensity="touch"] {
+  --tab-min-height: 41px !important;
+}
+
+.tab-background {
+  border-radius: 0px 0px !important;
+  margin-bottom: 0px !important;
+  margin-top: 0px !important;
+}
+
+.tabbrowser-tab[visuallyselected][usercontextid] .tab-background {
+  box-shadow: inset 0 -2px 0 var(--platform-color-accent-active) !important;
+}
+
+.tabbrowser-tab[visuallyselected]:not([usercontextid]) .tab-background {
+  box-shadow: inset 0 2px 0 var(--platform-color-accent-active) !important;
+}
+
+#tabbrowser-tabs:not([secondarytext-unsupported]) .tab-label-container {
+  height: var(--tab-min-height) !important;
+}
+
+#unified-extensions-button {
+  opacity: 0%;
+}
+
+#navigator-toolbox:hover #unified-extensions-button {
+  opacity: 100%;
+}
+
+#alltabs-button {
+  opacity: 0%;
+}
+
+#navigator-toolbox:hover #alltabs-button {
+  opacity: 100%;
+}
+
+#TabsToolbar #firefox-view-button[open] > .toolbarbutton-icon,
+.tab-background:is([selected], [multiselected]) {
+  background-color: var(--toolbar-bgcolor) !important;
+}
+
+#TabsToolbar #firefox-view-button:hover:not([open]) > .toolbarbutton-icon,
+.tabbrowser-tab:hover
+  > .tab-stack
+  > .tab-background:not([selected], [multiselected]) {
+  background-color: color-mix(in srgb, var(--toolbar-bgcolor) 60%, transparent) !important;
+}
+
+#TabsToolbar
+  #firefox-view-button[open]:not(:focus-visible)
+  > .toolbarbutton-icon:-moz-lwtheme,
+.tab-background[selected]:not([multiselected]):-moz-lwtheme {
+  outline: unset !important;
+}

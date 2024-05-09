@@ -1,0 +1,150 @@
+attribute = "light-magenta"
+"constant.character.escape" = "light-cyan"
+"constant.numeric" = "#afd7ff"
+constructor = "light-blue"
+"diff.delta" = "yellow"
+"diff.minus" = "light-red"
+"diff.plus" = "green"
+function = "light-magenta"
+"keyword.control" = "red"
+label = "light-magenta"
+"markup.heading" = "light-blue"
+"markup.link.text" = "light-red"
+"markup.list" = "light-red"
+"markup.quote" = "light-cyan"
+"markup.raw" = "light-green"
+namespace = "light-magenta"
+operator = "red"
+special = "light-blue"
+string = "light-blue"
+"ui.virtual.whitespace" = "light-gray"
+variable = "white"
+
+[comment]
+fg = "light-cyan"
+modifiers = ["italic"]
+
+[constant]
+fg = "#afd7ff"
+modifiers = ["bold"]
+
+["constant.builtin"]
+fg = "magenta"
+modifiers = ["italic"]
+
+[debug]
+fg = "gray"
+modifiers = ["bold"]
+
+[diagnostic]
+modifiers = ["underlined"]
+
+[error]
+fg = "light-red"
+modifiers = ["bold"]
+
+[hint]
+fg = "gray"
+modifiers = ["bold"]
+
+[info]
+fg = "blue"
+modifiers = ["bold"]
+
+[keyword]
+fg = "light-cyan"
+modifiers = ["italic"]
+
+["keyword.control.return"]
+fg = "light-cyan"
+modifiers = ["italic"]
+
+["keyword.function"]
+fg = "#afd7ff"
+modifiers = ["italic"]
+
+["markup.bold"]
+fg = "light-yellow"
+modifiers = ["bold"]
+
+["markup.italic"]
+fg = "light-magenta"
+modifiers = ["italic"]
+
+["markup.link.url"]
+fg = "yellow"
+modifiers = ["underlined"]
+
+["markup.strikethrough"]
+modifiers = ["crossed_out"]
+
+[type]
+fg = "light-cyan"
+modifiers = ["bold"]
+
+["ui.cursor"]
+fg = "light-gray"
+modifiers = ["reversed"]
+
+["ui.cursor.match"]
+fg = "light-yellow"
+modifiers = ["underlined"]
+
+["ui.cursor.primary"]
+fg = "light-gray"
+modifiers = ["reversed"]
+
+["ui.cursorline"]
+bg = "#111111"
+
+["ui.gutter"]
+bg = "black"
+
+["ui.gutter.selected"]
+bg = "#111111"
+
+["ui.help"]
+bg = "black"
+fg = "white"
+
+["ui.linenr"]
+bg = "black"
+fg = "light-gray"
+
+["ui.linenr.selected"]
+bg = "#111111"
+fg = "white"
+modifiers = ["bold"]
+
+["ui.menu"]
+bg = "#111111"
+fg = "light-gray"
+
+["ui.menu.selected"]
+fg = "light-blue"
+modifiers = ["reversed"]
+
+["ui.popup"]
+bg = "#111111"
+
+["ui.selection"]
+bg = "#222222"
+
+["ui.statusline"]
+bg = "#111111"
+fg = "light-gray"
+
+["ui.statusline.inactive"]
+bg = "black"
+fg = "gray"
+
+["ui.window"]
+bg = "black"
+
+["variable.builtin"]
+fg = "light-cyan"
+modifiers = ["italic"]
+
+[warning]
+fg = "yellow"
+modifiers = ["bold"]
