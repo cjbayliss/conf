@@ -1,0 +1,94 @@
+#!/bin/sh
+
+# alias stuff
+alias grep="grep --color=auto"
+alias ls="ls --color=auto -hF"
+[ -n "$(command -v ip 2>/dev/null)" ] && alias ip="ip -br"
+alias ix="curl -F 'f:1=<-' ix.io"
+alias paste.rs="curl --data-binary @- https://paste.rs/"
+alias poweroff="sudo /sbin/poweroff"
+alias top="top -u \$(whoami)"
+alias equery="printf 'Use emerge instead, e.g. emerge -pvqO bash\n'"
+
+__git_prompt() {
+    BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
+    [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] && STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/ \1/')" || STATUS="[NOSTAT]"
+    printf "%s%s" "$BRANCH" "$STATUS"
+}
+
+PS1="\$? ${HOSTNAME:=$(hostname)} \$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt) > "
+
+if [ -n "$BASH_VERSION" ]; then
+    # source bash-completion
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
+
+    # better history
+    shopt -s histappend
+    HISTCONTROL=ignoreboth
+    HISTSIZE=-1
+    HISTFILESIZE=-1
+    HISTFILE="$XDG_DATA_HOME/bash-history"
+
+    # check the window size after each command and, if necessary, update
+    # the values of LINES and COLUMNS.
+    shopt -s checkwinsize
+
+    # better completion (imo)
+    bind "set menu-complete-display-prefix on"
+    bind "set show-all-if-ambiguous on"
+    bind "set completion-query-items 0"
+    bind "TAB:menu-complete"
+    bind "\"\e[Z\": menu-complete-backward"
+
+    # bash prompt
+    __exit_status() {
+        EXIT_STATUS=$?
+        if [ $EXIT_STATUS -gt 0 ] && [ $EXIT_STATUS != 130 ]; then
+            printf "%s " "$EXIT_STATUS"
+        fi
+    }
+    __short_cwd() {
+        EXIT_STATUS=$?
+        CWD=
+        [ "$(basename $PWD)" != "/" ] && CWD="$(basename $PWD)"
+        SHORT_PWD_NO_CWD="$(echo $PWD | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/' -e 's/'$CWD'$//')"
+        COLLAPSED_PWD="$(echo $SHORT_PWD_NO_CWD | sed -r 's|/(.)[^/]*|/\1|g')"
+        [ "$SHORT_PWD_NO_CWD" == "~" ] &&
+            SHORT_CWD="$SHORT_PWD_NO_CWD" ||
+            SHORT_CWD="$COLLAPSED_PWD$CWD"
+        printf "%s" "$SHORT_CWD"
+        return $EXIT_STATUS
+    }
+    __git_branch() {
+        EXIT_STATUS=$?
+        BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
+        printf "%s" "$BRANCH"
+        return $EXIT_STATUS
+    }
+    __git_prompt() {
+        EXIT_STATUS=$?
+        [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] &&
+            STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /')" || STATUS=" [NOSTAT]"
+        printf "%s" "$STATUS"
+        return $EXIT_STATUS
+    }
+
+    PS1="\h \[\e[96m\]\$(__short_cwd)\[\e[0m\]\[\e[95m\]\$(__git_branch)\[\e[35m\]\$(__git_prompt)\[\e[0m\] \[\e[1;31m\]\$(__exit_status)\[\e[0m\]» "
+fi
+
+# cleanup on exit
+__cleanup() {
+    rm -rf ~/.cache 2>/dev/null
+    rm ~/.*hist* 2>/dev/null
+    rm ~/.*wget* 2>/dev/null
+    rm ~/.lesshst 2>/dev/null
+    rm ~/.viminfo 2>/dev/null
+    rmdir ~/* 2>/dev/null
+    clear
+}
+
+trap __cleanup EXIT

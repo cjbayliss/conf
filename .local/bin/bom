@@ -1,0 +1,20 @@
+#!/usr/bin/env fennel
+;; Get the weather from the BoM API
+
+(local http (require :socket.http))
+(local json (require :cjson))
+
+;; Brighton
+(local location :r1r07e)
+(local bom_url (.. "https://api.weather.bom.gov.au/v1/locations/" location
+                   :/observations))
+
+(fn fetch_weather_data [url]
+  (let [(data response) (http.request url)]
+    (if (= response 200)
+        (let [weather_data (json.decode data)]
+          (.. weather_data.data.temp "°C"))
+        (.. :N/A))))
+
+(print (fetch_weather_data bom_url))
+

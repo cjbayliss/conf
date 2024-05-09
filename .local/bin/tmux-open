@@ -1,0 +1,28 @@
+#!/usr/bin/env fennel
+
+;; NOTE: sadly each command seems to have their own format style, the best we
+;; can do is match for vscode style (vscode://file), the GNU ls style
+;; (file://<hostname>), then 'file://' style
+(local hostname (let [x (io.popen :hostname)]
+                  (tostring (x:read))))
+
+(local path (tostring (. arg 1)))
+(local [file] (icollect [_ uri (ipairs ["vscode://file"
+                                        (.. "file://" hostname "/")
+                                        "file://"])]
+                (if (= (string.sub path 1 (string.len uri)) uri)
+                    (string.gsub path uri "")
+                    nil)))
+
+(if (not (= file nil))
+    (let [check (io.popen "tmux list-windows -F '#S:#I #W #F' | grep hx | head -n1 | cut -d ' ' -f1")]
+      (let [hxopen (check:read)]
+        (if (not (= hxopen nil))
+            (do
+              (os.execute (.. "tmux send-keys -t " hxopen " 'Escape'"))
+              (os.execute (.. "tmux send-keys -t " hxopen " -l ':open " file
+                              "'"))
+              (os.execute (.. "tmux send-keys -t " hxopen " 'Enter'"))
+              (os.execute (.. "tmux select-window -t " hxopen)))
+            (os.execute (.. "tmux new-window -n hx hx " file))))))
+

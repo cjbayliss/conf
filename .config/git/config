@@ -1,0 +1,30 @@
+[commit]
+	verbose = true
+
+[core]
+	pager = "delta"
+
+[delta]
+	diff-highlight = true
+
+[diff]
+	algorithm = "histogram"
+
+[help]
+	autocorrect = "prompt"
+
+[init]
+	defaultBranch = "main"
+
+[interactive]
+	diffFilter = "delta --color-only"
+
+[url "git@codeberg.org:"]
+	pushInsteadOf = "https://codeberg.org/"
+
+[url "git@github.com:"]
+	pushInsteadOf = "https://github.com/"
+
+[user]
+	email = "cjbdev@icloud.com"
+	name = "Christopher Bayliss"
