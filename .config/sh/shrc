@@ -44,6 +44,10 @@ if [ -n "$BASH_VERSION" ]; then
     bind "TAB:menu-complete"
     bind "\"\e[Z\": menu-complete-backward"
 
+    # oksh/fish like C-w
+    stty werase undef
+    bind '\C-w:unix-filename-rubout'
+
     # bash prompt
     __exit_status() {
         EXIT_STATUS=$?
