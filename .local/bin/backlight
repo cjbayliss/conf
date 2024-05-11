@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# tool to get and set the backlight brightness
+#
+# example udev rule (/etc/udev/rules.d/backlight.rules):
+# ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video $sys$devpath/brightness", RUN+="/bin/chmod g+w $sys$devpath/brightness"
+
+__help() {
+    printf "usage: $(basename $0) [-chm] [-d PERCENT] [-i PERCENT] [-s VALUE]\n"
+}
+
+[ "$(command ls -1 /sys/class/backlight/ | wc -l)" = 1 ] && BACKLIGHT="$(command ls -d /sys/class/backlight/*)" || echo "Error: unknown platform."
+[ -f "$BACKLIGHT/max_brightness" ] && MAX_BRIGHTNESS="$(cat $BACKLIGHT/max_brightness)" || echo "Error: too many backlights."
+[ -f "$BACKLIGHT/brightness" ] && CURRENT_BRIGHTNESS="$(cat $BACKLIGHT/brightness)"
+
+case "$1" in
+'-c')
+    printf "%.0f%% (%s)\n" "$(echo $(cat $BACKLIGHT/brightness)/$MAX_BRIGHTNESS*100 | bc -l)" $CURRENT_BRIGHTNESS
+    exit 0
+    ;;
+'-d')
+    PERCENT="$(echo $2/100 | bc -l)"
+    BRIGHTNESS="$(printf "%.0f" $(echo $CURRENT_BRIGHTNESS'-('$PERCENT'*'$MAX_BRIGHTNESS')' | bc -l))"
+    ;;
+'-i')
+    PERCENT="$(echo $2/100 | bc -l)"
+    BRIGHTNESS="$(printf "%.0f" $(echo $CURRENT_BRIGHTNESS'+('$PERCENT'*'$MAX_BRIGHTNESS')' | bc -l))"
+    ;;
+'-h')
+    __help
+    exit 0
+    ;;
+'-m')
+    printf "Max brightness: %s\n" $MAX_BRIGHTNESS
+    exit 0
+    ;;
+'-s')
+    BRIGHTNESS="$2"
+    ;;
+*)
+    __help
+    exit 1
+    ;;
+esac
+
+[ "$BRIGHTNESS" -lt 0 ] && BRIGHTNESS=1
+[ "$BRIGHTNESS" -gt "$MAX_BRIGHTNESS" ] && BRIGHTNESS="$MAX_BRIGHTNESS"
+
+echo $BRIGHTNESS >"$BACKLIGHT/brightness"
