@@ -19,11 +19,7 @@ export XDG_MUSIC_DIR="$HOME/music"
 export XDG_PICTURES_DIR="$HOME/pictures"
 export XDG_VIDEOS_DIR="$HOME/videos"
 
-# imput method
-# export XMODIFIERS=@im=ibus
-# export CLUTTER_IM_MODULE=ibus
-# export GTK_IM_MODULE=ibus
-# export QT_IM_MODULE=ibus
+export GDK_DPI_SCALE=1.25
 
 # Now start sway! :)
 exec dbus-launch --sh-syntax --exit-with-session sway >"/tmp/sway-$(date '+%F-%H-%M-%S').log" 2>&1
