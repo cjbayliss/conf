@@ -24,7 +24,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 [ -f "$XDG_CONFIG_HOME/sh/shrc" ] && export ENV="$XDG_CONFIG_HOME/sh/shrc"
-export EMAIL="christopher.j.bayliss@gmail.com"
 export NAME="Christopher Bayliss"
 # export NO_COLOR=1
 export MAILCAPS="$MAILCAPS:$XDG_CONFIG_HOME/mutt/mailcap"
@@ -33,6 +32,9 @@ export PATH="$PATH:$HOME/.local/bin"
 export LESSHISTFILE='/dev/null'
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export GIT_PAGER="less -F"
+export GDK_DPI_SCALE=0.5
+export EDITOR="hx"
+export VISUAL=$EDITOR
 
 # ensure $XDG_*_HOME exists
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
