@@ -1,28 +1,17 @@
-#!/usr/bin/env fennel
+#!/bin/sh
 
-;; NOTE: sadly each command seems to have their own format style, the best we
-;; can do is match for vscode style (vscode://file), the GNU ls style
-;; (file://<hostname>), then 'file://' style
-(local hostname (let [x (io.popen :hostname)]
-                  (tostring (x:read))))
-
-(local path (tostring (. arg 1)))
-(local [file] (icollect [_ uri (ipairs ["vscode://file"
-                                        (.. "file://" hostname "/")
-                                        "file://"])]
-                (if (= (string.sub path 1 (string.len uri)) uri)
-                    (string.gsub path uri "")
-                    nil)))
-
-(if (not (= file nil))
-    (let [check (io.popen "tmux list-windows -F '#S:#I #W #F' | grep hx | head -n1 | cut -d ' ' -f1")]
-      (let [hxopen (check:read)]
-        (if (not (= hxopen nil))
-            (do
-              (os.execute (.. "tmux send-keys -t " hxopen " 'Escape'"))
-              (os.execute (.. "tmux send-keys -t " hxopen " -l ':open " file
-                              "'"))
-              (os.execute (.. "tmux send-keys -t " hxopen " 'Enter'"))
-              (os.execute (.. "tmux select-window -t " hxopen)))
-            (os.execute (.. "tmux new-window -n hx hx " file))))))
-
+# NOTE: sadly each command seems to have their own format style, the best we
+# can do is match for vscode style (vscode://file), the GNU ls style
+# (file://<hostname>), then 'file://' style
+file="$(echo $1 | sed -e 's/vscode:\/\/file//' -e 's/file:\/\/'$(hostname)'//' -e 's/file:\/\///')"
+if [ -n "$file" ]; then
+  hxopen="$(tmux list-windows -F "#S:#I #W #F" | grep hx | head -n1 | cut -d ' ' -f1)"
+  if [ -n "$hxopen" ]; then
+    tmux send-keys -t "$hxopen" 'Escape' &&
+    tmux send-keys -t "$hxopen" -l ":open $file" &&
+    tmux send-keys -t "$hxopen" 'Enter' &&
+    tmux select-window -t "$hxopen"
+  else
+    tmux new-window -n hx "hx $file"
+  fi
+fi
