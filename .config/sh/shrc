@@ -26,8 +26,8 @@ if [ -n "$BASH_VERSION" ]; then
         . /etc/bash_completion
     fi
 
-    # basic doas completion, see: https://wiki.gentoo.org/wiki/Doas#Bash_tab_completion
-    [ -f "$(command -v doas)" ] && complete -cf doas
+    # basic doas completion
+    [ -f "$(command -v doas)" ] && complete -F _command doas
 
     # better history
     shopt -s histappend
