@@ -1,0 +1,9 @@
+app-admin/kernel-hardening-checker ~amd64
+dev-util/shellcheck ~amd64
+gui-apps/wev ~amd64
+gui-apps/wlsunset ~amd64
+gui-apps/wmenu ~amd64
+gui-apps/wtype ~amd64
+sys-kernel/gentoo-sources ~amd64
+www-client/ungoogled-chromium ~amd64
+x11-terms/alacritty ~amd64
