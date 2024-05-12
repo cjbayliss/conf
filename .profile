@@ -50,9 +50,6 @@ export GROFF_NO_SGR=1
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-export MOZ_GTK_TITLEBAR_DECORATION=system
-export MOZ_USE_XINPUT2=1
-
 export NAME='Christopher Bayliss'
 export EMAIL='cjbdev@icloud.com'
 
