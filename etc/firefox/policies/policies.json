@@ -2,9 +2,12 @@
   "policies": {
     "Cookies": {
       "Allow": [
+        "https://amazon.com",
         "https://amazon.com.au",
         "https://apple.com",
         "https://codeberg.org",
+        "https://discord.com/",
+        "https://ebay.com",
         "https://ebay.com.au",
         "https://github.com",
         "https://gitlab.com",
