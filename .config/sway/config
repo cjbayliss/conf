@@ -112,5 +112,5 @@ bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86MonBrightnessDown exec backlight -d 10
 bindsym XF86MonBrightnessUp exec backlight -i 10
 
-exec wlsunset -t 5000 -T 5800 -l -38 -L 145 &
-exec gentoo-pipewire-launcher &
+exec 'wlsunset -t 5000 -T 5800 -l -38 -L 145 &'
+exec 'gentoo-pipewire-launcher restart &'
