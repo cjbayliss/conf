@@ -3,9 +3,6 @@
 # turn off the screen after 5m
 if [ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ]; then
     setterm --powersave on --blank 5
-
-    # set redshift
-    [ -n "$(command -v redshift 2>/dev/null)" ] && redshift -m drm -PO 4800 &
 fi
 
 # set default umask
@@ -75,5 +72,5 @@ mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 
 [ -n "$BASH_VERSION" ] && [ -f "$XDG_CONFIG_HOME/sh/shrc" ] && . "$XDG_CONFIG_HOME/sh/shrc"
 
-# start the ssh-agent. requires the package 'keychain'
-[ -n "$(command -v keychain 2>/dev/null)" ] && eval "$(keychain --eval --quiet --quick --timeout 15 --dir "$XDG_CACHE_HOME")"
+# start the ssh-agent.
+pidof -q ssh-agent || eval "$(ssh-agent)" >/dev/null

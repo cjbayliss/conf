@@ -16,7 +16,6 @@ gui-apps/wtype
 gui-wm/sway
 media-video/mpv
 net-misc/dhcpcd
-net-misc/keychain
 net-misc/yt-dlp
 net-wireless/wpa_supplicant
 sys-boot/efibootmgr
