@@ -21,3 +21,6 @@ sys-devel/llvm gold
 sys-kernel/installkernel refind
 www-client/firefox clang system-png L10N: en-GB
 x11-libs/gdk-pixbuf jpeg
+
+media-video/pipewire sound-server
+media-sound/pulseaudio -daemon

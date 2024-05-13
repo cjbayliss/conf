@@ -3,6 +3,7 @@ app-admin/kernel-hardening-checker
 app-editors/helix
 app-emulation/qemu
 app-eselect/eselect-repository
+app-misc/jq
 app-misc/tmux
 app-shells/bash-completion
 dev-util/git-delta
@@ -18,10 +19,10 @@ net-misc/dhcpcd
 net-misc/keychain
 net-misc/yt-dlp
 net-wireless/wpa_supplicant
-sys-apps/etckeeper
 sys-boot/efibootmgr
 sys-firmware/intel-microcode
 sys-firmware/sof-firmware
+sys-fs/btrfs-progs
 sys-kernel/gentoo-sources
 sys-kernel/installkernel
 sys-kernel/linux-firmware
