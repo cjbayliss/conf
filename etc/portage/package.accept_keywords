@@ -7,3 +7,6 @@ gui-apps/wtype ~amd64
 sys-kernel/gentoo-sources ~amd64
 www-client/ungoogled-chromium ~amd64
 x11-terms/alacritty ~amd64
+
+# this is because of the way the ebuild requires docutils between a range
+dev-python/sphinx ~amd64
