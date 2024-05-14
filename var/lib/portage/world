@@ -14,7 +14,10 @@ gui-apps/wlsunset
 gui-apps/wmenu
 gui-apps/wtype
 gui-wm/sway
+media-fonts/noto
+media-fonts/noto-emoji
 media-video/mpv
+net-misc/chrony
 net-misc/dhcpcd
 net-misc/yt-dlp
 net-wireless/wpa_supplicant
@@ -29,4 +32,5 @@ sys-power/powertop
 sys-process/cronie
 www-client/firefox
 x11-misc/j4-dmenu-desktop
+x11-misc/xdg-utils
 x11-terms/alacritty
