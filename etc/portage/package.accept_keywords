@@ -5,8 +5,8 @@ gui-apps/wev ~amd64
 gui-apps/wlsunset ~amd64
 gui-apps/wmenu ~amd64
 gui-apps/wtype ~amd64
+gui-apps/yambar ~amd64
 sys-kernel/gentoo-sources ~amd64
-www-client/ungoogled-chromium ~amd64
 x11-terms/alacritty ~amd64
 
 # this is because of the way the ebuild requires docutils between a range
