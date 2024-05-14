@@ -1,0 +1,56 @@
+bar:
+  font: Iosevka Fixed:pixelsize=19:weight=medium
+  height: 26
+  location: top
+  background: 000000ff
+
+  left:
+    - i3:
+        content:
+          "":
+            map:
+              default: {string: {text: "{name} "}}
+              conditions:
+                state == focused: {string: {text: "[{name}] ", foreground: b6a0ffff}}
+          current:
+            - string: {text: ": "}
+            - string: {text: "{title}", foreground: b0d6f5ff}
+
+  right:
+    - pulse:
+        content:
+          - map:
+              conditions:
+                sink_muted:
+                  - string: {text: "AUDIO OFF ", foreground: ff8059ff}
+                ~sink_muted:
+                  - string: {text: ""}
+          - string: {text: "{sink_percent}%"}
+    - label: {content: {string: {text: " < ", foreground: a8a8a8ff}}}
+    - mem:
+        poll-interval: 4000
+        content:
+          - string: {text: "{used:mb}M/{total:mb}M ({percent_used}%)", foreground: b0d6f5ff}
+    - label: {content: {string: {text: " < ", foreground: a8a8a8ff}}}
+    - script:
+        path: /bin/sh
+        args:
+          - '-c'
+          - "printf \"%s%s\\n\\n\" 'ipaddr|string|' \"$(ip -j a | jq -r 'first(.[] | select(.operstate == \"UP\") | .addr_info[] | .local)')\""
+        poll-interval: 60000
+        content:
+          - string: {text: "{ipaddr}", foreground: 6ae4b9ff}
+    - label: {content: {string: {text: " < ", foreground: a8a8a8ff}}}
+    - script:
+        path: /bin/sh
+        args:
+          - '-c'
+          - '/usr/bin/printf "%s%s\n\n" "loadavg|string|" "$(head -c4 /proc/loadavg)"'
+        poll-interval: 4000
+        content:
+          - string: {text: "{loadavg}"}
+    - label: {content: {string: {text: " < ", foreground: a8a8a8ff}}}
+    - clock:
+        date-format: "%0e %^a"
+        content:
+          - string: {text: "{date} {time}", right-margin: 5, foreground: f8dec0ff}

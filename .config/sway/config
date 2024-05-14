@@ -89,22 +89,6 @@ bindsym $mod+t floating disable
 bindsym $mod+Shift+t floating enable
 bindsym $mod+space layout toggle tabbed split stacking
 
-bar {
-    font "monospace 14.5"
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #000000
-        focused_workspace #000000 #000000 #b6a0ff
-        inactive_workspace #000000 #000000 #aaaaaa
-    }
-}
-
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -114,3 +98,4 @@ bindsym XF86MonBrightnessUp exec backlight -i 10
 
 exec 'wlsunset -t 5000 -T 5800 -l -38 -L 145 &'
 exec 'gentoo-pipewire-launcher restart &'
+exec 'yambar &'
