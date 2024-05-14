@@ -17,6 +17,7 @@
         "https://music.apple.com",
         "https://openai.com",
         "https://selfwealth.com.au",
+        "https://twitch.tv",
         "https://youtube.com"
       ],
       "Behavior": "reject-tracker-and-partition-foreign"
