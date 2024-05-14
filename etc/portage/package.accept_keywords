@@ -1,4 +1,5 @@
 app-admin/kernel-hardening-checker ~amd64
+app-editors/helix ~amd64
 dev-util/shellcheck ~amd64
 gui-apps/wev ~amd64
 gui-apps/wlsunset ~amd64
