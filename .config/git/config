@@ -28,3 +28,5 @@
 [user]
 	email = "cjbdev@icloud.com"
 	name = "Christopher Bayliss"
+[push]
+	autoSetupRemote = true
