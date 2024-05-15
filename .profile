@@ -71,6 +71,7 @@ export PATH="$PATH:$HOME/.local/bin:$GOPATH/bin:$XDG_DATA_HOME/npm/bin"
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 
 [ -n "$BASH_VERSION" ] && [ -f "$XDG_CONFIG_HOME/sh/shrc" ] && . "$XDG_CONFIG_HOME/sh/shrc"
+[ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b $XDG_CONFIG_HOME/dircolors)"
 
 # start the ssh-agent.
 pidof -q ssh-agent || eval "$(ssh-agent)" >/dev/null
