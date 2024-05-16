@@ -742,6 +742,10 @@
         "Status": "default",
         "Value": true
       },
+      "network.http.referer.spoofSource": {
+        "Status": "default",
+        "Value": true
+      },
       "network.predictor.enabled": {
         "Status": "default",
         "Value": false
