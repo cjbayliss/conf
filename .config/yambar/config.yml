@@ -14,7 +14,7 @@ bar:
                 state == focused: {string: {text: "[{name}] ", foreground: b6a0ffff}}
           current:
             - string: {text: ": "}
-            - string: {text: "{title}", foreground: b0d6f5ff}
+            - string: {text: "{title}", max: 120, foreground: b0d6f5ff}
 
   right:
     - pulse:
