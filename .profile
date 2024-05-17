@@ -53,19 +53,20 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export NAME='Christopher Bayliss'
 export EMAIL='cjbdev@icloud.com'
 
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export GOPATH="$XDG_DATA_HOME/go"
 export MYPY_CACHE_DIR="$XDG_CACHE_HOME/mypy"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/startup.py"
-export GOPATH="$XDG_DATA_HOME/go"
 
 export GDK_DPI_SCALE=0.5
 export XCURSOR_SIZE=24
 export XCURSOR_THEME=Adwaita
 
 # finally set $PATH
-export PATH="$PATH:$HOME/.local/bin:$GOPATH/bin:$XDG_DATA_HOME/npm/bin"
+export PATH="$PATH:$HOME/.local/bin:$GOPATH/bin:$XDG_DATA_HOME/npm/bin:$CARGO_HOME/bin"
 
 # ensure $XDG_*_HOME exists
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
