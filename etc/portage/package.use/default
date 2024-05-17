@@ -4,6 +4,7 @@ app-text/xmlto text
 dev-db/sqlite secure-delete
 dev-lang/python sqlite
 dev-lang/rust-bin clippy doc rls rustfmt
+dev-vcs/git -webdav
 gui-wm/sway -swaybar
 mail-client/mutt vanilla
 media-fonts/noto cjk
