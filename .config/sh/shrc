@@ -14,7 +14,7 @@ __git_prompt() {
     printf "%s%s" "$BRANCH" "$STATUS"
 }
 
-PS1="\$? ${HOSTNAME:=$(hostname)} \$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt) > "
+PS1="\$? ${HOSTNAME:=$(hostname)} \$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt) » "
 
 if [ -n "$BASH_VERSION" ]; then
     # source bash-completion
@@ -83,6 +83,8 @@ if [ -n "$BASH_VERSION" ]; then
         EXIT_STATUS=$?
         [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] &&
             STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /')" || STATUS=" [NOSTAT]"
+        [ "$(git ls-files 2>/dev/null | wc -l)" -ge 2000 ] &&
+            STATUS="$(git status --untracked-files=no --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /')"
         printf "%s" "$STATUS"
         return $EXIT_STATUS
     }
