@@ -1,0 +1,18 @@
+#!/usr/sbin/nft -f
+
+# clear all prior state
+flush ruleset
+
+# basic firewall
+table filter {
+    chain input {
+        type filter hook input priority 0; policy drop;
+        ct state invalid drop comment "drop invalid"
+        ct state { established, related } accept comment "accept extablished and related"
+        iif != lo ip daddr 127.0.0.1/8 drop comment "drop connections to loopback not from loopback"
+        iifname lo accept comment "accept localhost"
+    }
+
+    chain forward { type filter hook forward priority 0; policy drop; }
+    chain output { type filter hook output priority 0; policy accept; }
+}
