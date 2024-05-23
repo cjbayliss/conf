@@ -141,6 +141,10 @@ fg = "gray"
 ["ui.window"]
 bg = "black"
 
+["ui.virtual.inlay-hint"]
+fg = "light-gray"
+modifiers = ["italic"]
+
 ["variable.builtin"]
 fg = "light-cyan"
 modifiers = ["italic"]
