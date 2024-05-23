@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+
+############################ BTRFS SNAPSHOTTING ############################
+#
+# if on a server, probably use date -u '+%F-%Hh%Mm%Ss_%Z' instead
+
+case "${EBUILD_PHASE}" in
+preinst)
+    if [ -z "${REPLACING_VERSIONS}" ]; then
+        DESC="installing_${CATEGORY}.${PF}"
+    else
+        DESC="upgrading_${CATEGORY}.${PF}_from_${REPLACING_VERSIONS}"
+    fi
+    btrfs subvolume snapshot -r / "/srv/root/$(date '+%F-%Hh%Mm%Ss_%Z')_pre_$DESC"
+    btrfs subvolume snapshot -r /var "/srv/var/$(date '+%F-%Hh%Mm%Ss_%Z')_pre_$DESC"
+    ;;
+postinst)
+    btrfs subvolume snapshot -r / "/srv/root/$(date '+%F-%Hh%Mm%Ss_%Z')_post_$DESC"
+    btrfs subvolume snapshot -r /var "/srv/var/$(date '+%F-%Hh%Mm%Ss_%Z')_post_$DESC"
+    ;;
+prerm)
+    sleep 1 # FIXME: btrfs fails to create a snapshot if only just run
+    btrfs subvolume snapshot -r / "/srv/root/$(date '+%F-%Hh%Mm%Ss_%Z')_pre-removing_${CATEGORY}.${PF}"
+    btrfs subvolume snapshot -r /var "/srv/var/$(date '+%F-%Hh%Mm%Ss_%Z')_pre-removing_${CATEGORY}.${PF}"
+    ;;
+postrm)
+    sleep 1 # FIXME: btrfs fails to create a snapshot if only just run
+    btrfs subvolume snapshot -r / "/srv/root/$(date '+%F-%Hh%Mm%Ss_%Z')_post-removing_${CATEGORY}.${PF}"
+    btrfs subvolume snapshot -r /var "/srv/var/$(date '+%F-%Hh%Mm%Ss_%Z')_post-removing_${CATEGORY}.${PF}"
+    ;;
+esac
+
+register_success_hook btrfs_snapshot_on_seccess
+
+function btrfs_snapshot_on_seccess {
+    btrfs subvolume snapshot -r / "/srv/root/$(date '+%F-%Hh%Mm%Ss_%Z')_seccessful_merge"
+    btrfs subvolume snapshot -r /var "/srv/var/$(date '+%F-%Hh%Mm%Ss_%Z')_seccessful_merge"
+}
