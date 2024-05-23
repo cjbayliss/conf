@@ -1,7 +1,18 @@
 # sway
 gui-apps/grim
 gui-apps/slurp
+gui-apps/swaybg
+gui-apps/wlsunset
+gui-apps/wmenu
+gui-apps/wtype
 
 # devel/languages
+dev-go/gopls
 dev-lang/go
 dev-python/black
+dev-python/python-lsp-server
+
+# disk management
+sys-apps/gptfdisk
+sys-fs/btrfs-progs
+sys-fs/dosfstools

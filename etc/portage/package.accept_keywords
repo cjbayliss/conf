@@ -1,13 +1,12 @@
-app-admin/kernel-hardening-checker ~amd64
-app-editors/helix ~amd64
-dev-util/shellcheck ~amd64
-gui-apps/wev ~amd64
-gui-apps/wlsunset ~amd64
-gui-apps/wmenu ~amd64
-gui-apps/wtype ~amd64
-gui-apps/yambar ~amd64
-sys-kernel/gentoo-sources ~amd64
-x11-terms/alacritty ~amd64
-
-# this is because of the way the ebuild requires docutils between a range
-dev-python/sphinx ~amd64
+<sys-devel/gcc-15
+app-editors/helix
+app-eselect/eselect-zig
+dev-lang/zig-bin
+dev-util/hut
+gui-apps/wlsunset
+gui-apps/wmenu
+gui-apps/wtype
+gui-apps/yambar
+gui-wm/river
+sys-kernel/gentoo-sources
+x11-terms/alacritty

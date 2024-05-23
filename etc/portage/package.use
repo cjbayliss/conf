@@ -2,26 +2,19 @@ app-admin/doas persist
 app-emulation/qemu sdl
 app-text/xmlto text
 dev-db/sqlite secure-delete
-dev-lang/python sqlite
-dev-lang/rust-bin clippy doc rls rustfmt
-dev-vcs/git -webdav
+dev-lang/rust-bin clippy rustfmt rust-analyzer
 gui-wm/sway -swaybar
-mail-client/mutt vanilla
 media-fonts/noto cjk
-media-gfx/qrencode png
-media-libs/chromaprint tools
 media-libs/freetype harfbuzz
 media-libs/libpng apng
 media-libs/libsdl2 gles2
-media-libs/libvpx postproc
-media-sound/cmus opus
-media-sound/pulseaudio -daemon
 media-video/ffmpeg gnutls libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx wavpack webp x264 x265 xcb
 media-video/mpv cli drm jpeg libmpv -xv
-media-video/pipewire sound-server
+media-video/pipewire sound-server -man
+sys-apps/busybox syslog
+sys-apps/util-linux -su
 sys-boot/refind btrfs
-sys-devel/llvm gold
+sys-fs/btrfs-progs -man
 sys-kernel/installkernel refind
 www-client/firefox clang system-png L10N: en-GB
-x11-libs/gdk-pixbuf jpeg
 x11-misc/j4-dmenu-desktop -dmenu
