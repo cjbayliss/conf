@@ -1,11 +1,10 @@
 #!/bin/sh
 
 # alias stuff
-alias equery="printf 'Use emerge instead, e.g. emerge -pvqO bash\n'"
-alias grep="grep --color=auto"
+alias grep="grep --color=auto --exclude-dir=.git"
 alias ls="ls --color=auto -hF"
 alias poweroff="doas /usr/bin/poweroff"
-alias pst="curl --data-binary @${1:-/dev/stdin} https://paste.rs && echo"
+alias pst="hut paste create"
 alias top="top -u \$(whoami)"
 
 __git_prompt() {
