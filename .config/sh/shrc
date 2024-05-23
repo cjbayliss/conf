@@ -6,6 +6,7 @@ alias ls="ls --color=auto -hF"
 alias poweroff="doas /usr/bin/poweroff"
 alias pst="hut paste create"
 alias top="top -u \$(whoami)"
+alias unmaintained-local="qlist -Iv \$(portageq --repo gentoo --orphaned)"
 
 __git_prompt() {
     BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
