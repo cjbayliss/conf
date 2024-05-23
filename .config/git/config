@@ -1,23 +1,11 @@
 [commit]
 	verbose = true
 
-[core]
-	pager = "delta --keep-plus-minus-markers"
-
-[delta]
-	diff-highlight = true
-
 [diff]
 	algorithm = "histogram"
 
-[help]
-	autocorrect = "prompt"
-
 [init]
 	defaultBranch = "main"
-
-[interactive]
-	diffFilter = "delta --color-only --keep-plus-minus-markers"
 
 [url "git@codeberg.org:"]
 	pushInsteadOf = "https://codeberg.org/"
