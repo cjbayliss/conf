@@ -63,7 +63,7 @@ export XCURSOR_SIZE=24
 export XCURSOR_THEME=Adwaita
 
 # finally set $PATH
-export PATH="$PATH:$HOME/.local/bin:$GOPATH/bin:$XDG_DATA_HOME/npm/bin:$CARGO_HOME/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # ensure $XDG_*_HOME exists
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
