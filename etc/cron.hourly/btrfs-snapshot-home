@@ -1,0 +1,3 @@
+#!/bin/sh
+
+btrfs subvolume snapshot -r /home "/srv/home/$(date '+%F-%Hh%Mm')"
