@@ -7,18 +7,24 @@
         "https://apple.com",
         "https://codeberg.org",
         "https://crunchyroll.com",
-        "https://discord.com/",
+        "https://discord.com",
         "https://ebay.com",
         "https://ebay.com.au",
+        "https://element.io",
         "https://github.com",
         "https://gitlab.com",
+        "https://gog.com",
         "https://icloud.com",
         "https://macquarie.com.au",
         "https://music.apple.com",
-        "https://openai.com",
         "https://selfwealth.com.au",
+        "https://sr.ht",
         "https://twitch.tv",
         "https://youtube.com"
+      ],
+      "Block": [
+        "http://google.com",
+        "https://google.com"
       ],
       "Behavior": "reject-tracker-and-partition-foreign"
     },
@@ -27,13 +33,14 @@
       "Locked": true,
       "ProviderURL": "https://dns.quad9.net/dns-query"
     },
-    "DefaultDownloadDirectory": "${home}/downloads",
+    "DefaultDownloadDirectory": "${home}/stuff/downloads",
     "DisableAppUpdate": true,
     "DisableFeedbackCommands": true,
     "DisableFirefoxAccounts": true,
     "DisableFirefoxStudies": true,
     "DisablePocket": true,
     "DisableTelemetry": true,
+    "DisplayBookmarksToolbar": "newtab",
     "EnableTrackingProtection": {
       "Cryptomining": true,
       "Fingerprinting": true,
@@ -51,6 +58,27 @@
       "{446900e4-71c2-419f-a6a7-df9c091e268b}": {
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi",
         "installation_mode": "force_installed"
+      },
+      "amazon@search.mozilla.org": {
+        "installation_mode": "blocked"
+      },
+      "bing@search.mozilla.org": {
+        "installation_mode": "blocked"
+      },
+      "ddg@search.mozilla.org": {
+        "installation_mode": "blocked"
+      },
+      "ebay@search.mozilla.org": {
+        "installation_mode": "blocked"
+      },
+      "ecosia@search.mozilla.org": {
+        "installation_mode": "blocked"
+      },
+      "google@search.mozilla.org": {
+        "installation_mode": "blocked"
+      },
+      "wikipedia@search.mozilla.org": {
+        "installation_mode": "blocked"
       }
     },
     "FirefoxHome": {
@@ -69,83 +97,79 @@
     "OverrideFirstRunPage": "",
     "PasswordManagerEnabled": false,
     "SearchEngines": {
-      "Default": "DuckDuckGo",
+      "Default": "Google (Custom)",
       "Add": [
+        {
+          "Name": "Google (Custom)",
+          "URLTemplate": "https://www.google.com/search?q={searchTerms}&gbv=1",
+          "Method": "GET",
+          "IconURL": "https://www.google.com/favicon.ico",
+          "Alias": "!g",
+          "Description": "Search Gentoo"
+        },
+        {
+          "Name": "Gentoo Bugs",
+          "URLTemplate": "https://bugs.gentoo.org/buglist.cgi?quicksearch={searchTerms}",
+          "Method": "GET",
+          "IconURL": "https://www.gentoo.org/favicon.ico",
+          "Alias": "!gb",
+          "Description": "Search Gentoo Bugs"
+        },
         {
           "Name": "Gentoo Packages",
           "URLTemplate": "https://packages.gentoo.org/packages/search?q={searchTerms}",
           "Method": "GET",
-          "IconURL": "https://packages.gentoo.org/favicon.ico",
+          "IconURL": "https://www.gentoo.org/favicon.ico",
           "Alias": "!gp",
           "Description": "Search Gentoo Packages"
+        },
+        {
+          "Name": "Gentoo Wiki",
+          "URLTemplate": "https://wiki.gentoo.org/index.php?search={searchTerms}",
+          "Method": "GET",
+          "IconURL": "https://www.gentoo.org/favicon.ico",
+          "Alias": "!gw",
+          "Description": "Search Gentoo Wiki"
+        },
+        {
+          "Name": "Github",
+          "URLTemplate": "https://github.com/search?q={searchTerms}",
+          "Method": "GET",
+          "IconURL": "https://github.com/favicon.ico",
+          "Alias": "!gh",
+          "Description": "Search Github"
+        },
+        {
+          "Name": "Ask Moe",
+          "URLTemplate": "https://ask.moe/search?q={searchTerms}",
+          "Method": "GET",
+          "IconURL": "https://ask.moe/favicon.ico",
+          "Alias": "!am",
+          "Description": "Ask Moe!"
         }
       ]
     },
+    "Permissions": {
+      "Camera": {
+        "BlockNewRequests": true
+      },
+      "Microphone": {
+        "Allow": [
+          "https://discord.com"
+        ],
+        "BlockNewRequests": true
+      },
+      "Location": {
+        "BlockNewRequests": true
+      },
+      "Notifications": {
+        "BlockNewRequests": true
+      },
+      "Autoplay": {
+        "Default": "block-audio-video"
+      }
+    },
     "Preferences": {
-      "accessibility.force_disabled": {
-        "Status": "default",
-        "Value": 1
-      },
-      "app.feedback.baseURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "app.normandy.api_url": {
-        "Status": "default",
-        "Value": ""
-      },
-      "app.normandy.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "app.normandy.shieldLearnMoreUrl": {
-        "Status": "default",
-        "Value": ""
-      },
-      "app.releaseNotesURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "app.releaseNotesURL.aboutDialog": {
-        "Status": "default",
-        "Value": ""
-      },
-      "app.releaseNotesURL.prompt": {
-        "Status": "default",
-        "Value": ""
-      },
-      "app.shield.optoutstudies.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "app.support.baseURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "app.update.url.details": {
-        "Status": "default",
-        "Value": ""
-      },
-      "app.update.url.manual": {
-        "Status": "default",
-        "Value": ""
-      },
-      "beacon.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "breakpad.reportURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "browser.aboutConfig.showWarning": {
-        "Status": "default",
-        "Value": false
-      },
-      "browser.toolbars.bookmarks.visibility": {
-        "Status": "default",
-        "Value": "never"
-      },
       "browser.compactmode.show": {
         "Status": "default",
         "Value": true
@@ -362,6 +386,10 @@
         "Status": "default",
         "Value": false
       },
+      "browser.sessionstore.restore_pinned_tabs_on_demand": {
+        "Status": "default",
+        "Value": true
+      },
       "browser.shell.checkDefaultBrowser": {
         "Status": "default",
         "Value": false
@@ -373,10 +401,6 @@
       "browser.tabs.inTitlebar": {
         "Status": "default",
         "Value": 0
-      },
-      "browser.tabs.warnOnClose": {
-        "Status": "default",
-        "Value": false
       },
       "browser.uitour.url": {
         "Status": "default",
@@ -418,23 +442,7 @@
         "Status": "default",
         "Value": ""
       },
-      "captivedetect.canonicalURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "datareporting.healthreport.infoURL": {
-        "Status": "default",
-        "Value": ""
-      },
       "datareporting.policy.firstRunURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "devtools.performance.recording.ui-base-url": {
-        "Status": "default",
-        "Value": ""
-      },
-      "devtools.remote.adb.extensionURL": {
         "Status": "default",
         "Value": ""
       },
@@ -534,191 +542,19 @@
         "Status": "default",
         "Value": ""
       },
-      "fission.autostart": {
-        "Status": "default",
-        "Value": true
-      },
-      "font.minimum-size.ar": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.el": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.he": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.ja": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.ko": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.th": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-armn": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-beng": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-cans": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-cyrillic": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-devanagari": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-ethi": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-geor": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-gujr": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-guru": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-khmr": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-knda": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-math": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-mlym": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-orya": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-sinh": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-tamil": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-telu": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-tibt": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-unicode": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.x-western": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.zh-CN": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.zh-HK": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.minimum-size.zh-TW": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.name-list.emoji": {
-        "Status": "default",
-        "Value": "Noto Color Emoji"
-      },
-      "font.name.monospace.x-western": {
-        "Status": "default",
-        "Value": "Iosevka Fixed"
-      },
-      "font.name.sans-serif.x-western": {
-        "Status": "default",
-        "Value": "Liberation Sans"
-      },
-      "font.name.serif.x-western": {
-        "Status": "default",
-        "Value": "Liberation Sans"
-      },
-      "font.size.monospace.x-western": {
-        "Status": "default",
-        "Value": 17
-      },
-      "font.size.variable.x-western": {
-        "Status": "default",
-        "Value": 18
-      },
       "geo.provider.network.url": {
         "Status": "default",
         "Value": ""
-      },
-      "identity.fxaccounts.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "identity.fxaccounts.service.monitorLoginUrl": {
-        "Status": "default",
-        "Value": ""
-      },
-      "identity.sendtabpromo.url": {
-        "Status": "default",
-        "Value": ""
-      },
-      "javascript.options.asmjs": {
-        "Status": "default",
-        "Value": false
-      },
-      "javascript.options.wasm": {
-        "Status": "default",
-        "Value": false
-      },
-      "layout.css.scrollbar-width-thin.disabled": {
-        "Status": "default",
-        "Value": true
-      },
-      "lightweightThemes.getMoreURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "marionette.prefs.recommended": {
-        "Status": "default",
-        "Value": false
       },
       "media.gmp-manager.url": {
         "Status": "default",
         "Value": ""
       },
       "media.peerconnection.enabled": {
+        "Status": "default",
+        "Value": false
+      },
+      "media.videocontrols.picture-in-picture.video-toggle.enabled": {
         "Status": "default",
         "Value": false
       },
@@ -762,51 +598,11 @@
         "Status": "default",
         "Value": ""
       },
-      "permissions.default.camera": {
-        "Status": "default",
-        "Value": 2
-      },
-      "permissions.default.desktop-notification": {
-        "Status": "default",
-        "Value": 2
-      },
-      "permissions.default.geo": {
-        "Status": "default",
-        "Value": 2
-      },
-      "permissions.default.microphone": {
-        "Status": "default",
-        "Value": 2
-      },
-      "permissions.default.xr": {
-        "Status": "default",
-        "Value": 2
-      },
-      "privacy.resistFingerprinting.block_mozAddonManager": {
-        "Status": "default",
-        "Value": true
-      },
-      "privacy.trackingprotection.enabled": {
-        "Status": "default",
-        "Value": true
-      },
       "security.insecure_connection_text.enabled": {
         "Status": "default",
         "Value": true
       },
-      "security.mixed_content.block_display_content": {
-        "Status": "default",
-        "Value": true
-      },
-      "security.mixed_content.block_object_subrequest": {
-        "Status": "default",
-        "Value": true
-      },
       "security.ssl.require_safe_negotiation": {
-        "Status": "default",
-        "Value": true
-      },
-      "security.ssl.treat_unsafe_negotiation_as_broken": {
         "Status": "default",
         "Value": true
       },
@@ -842,86 +638,19 @@
         "Status": "default",
         "Value": false
       },
-      "toolkit.crashreporter.infoURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "toolkit.datacollection.infoURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "toolkit.legacyUserProfileCustomizations.stylesheets": {
-        "Status": "default",
-        "Value": true
-      },
-      "toolkit.shopping.ohttpConfigURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "toolkit.shopping.ohttpRelayURL": {
-        "Status": "default",
-        "Value": ""
-      },
-      "toolkit.telemetry.archive.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "toolkit.telemetry.bhrPing.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "toolkit.telemetry.cachedClientID": {
-        "Status": "default",
-        "Value": ""
-      },
-      "toolkit.telemetry.firstShutdownPing.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "toolkit.telemetry.newProfilePing.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "toolkit.telemetry.reportingpolicy.firstRun": {
-        "Status": "default",
-        "Value": false
-      },
-      "toolkit.telemetry.server": {
-        "Status": "default",
-        "Value": ""
-      },
-      "toolkit.telemetry.server_owner": {
-        "Status": "default",
-        "Value": ""
-      },
-      "toolkit.telemetry.shutdownPingSender.enabled": {
-        "Status": "default",
-        "Value": false
-      },
-      "toolkit.telemetry.unified": {
-        "Status": "default",
-        "Value": false
-      },
-      "toolkit.telemetry.updatePing.enabled": {
-        "Status": "default",
-        "Value": false
-      },
       "ui.key.menuAccessKeyFocuses": {
         "Status": "default",
         "Value": false
-      },
-      "ui.useOverlayScrollbars": {
-        "Status": "default",
-        "Value": 0
-      },
-      "webchannel.allowObject.urlWhitelist": {
-        "Status": "default",
-        "Value": ""
-      },
-      "webextensions.storage.sync.serverURL": {
-        "Status": "default",
-        "Value": ""
       }
+    },
+    "UserMessaging": {
+      "WhatsNew": false,
+      "ExtensionRecommendations": false,
+      "FeatureRecommendations": false,
+      "UrlbarInterventions": false,
+      "SkipOnboarding": false,
+      "MoreFromMozilla": false,
+      "Locked": true
     }
   }
 }
