@@ -30,10 +30,3 @@ postrm)
     btrfs subvolume snapshot -r /var "/srv/var/$(date '+%F-%Hh%Mm%Ss_%Z')_post-removing_${CATEGORY}.${PF}"
     ;;
 esac
-
-register_success_hook btrfs_snapshot_on_seccess
-
-function btrfs_snapshot_on_seccess {
-    btrfs subvolume snapshot -r / "/srv/root/$(date '+%F-%Hh%Mm%Ss_%Z')_seccessful_merge"
-    btrfs subvolume snapshot -r /var "/srv/var/$(date '+%F-%Hh%Mm%Ss_%Z')_seccessful_merge"
-}
