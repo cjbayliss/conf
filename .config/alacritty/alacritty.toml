@@ -1,34 +1,29 @@
 [colors]
-[colors.bright]
-black = "#595959"
-blue = "#79a8ff"
-cyan = "#6ae4b9"
-green = "#70b900"
-magenta = "#b6a0ff"
-red = "#ef8b50"
-white = "#ffffff"
-yellow = "#c0c530"
+bright.black = "#595959"
+bright.blue = "#79a8ff"
+bright.cyan = "#6ae4b9"
+bright.green = "#70b900"
+bright.magenta = "#b6a0ff"
+bright.red = "#ef8b50"
+bright.white = "#ffffff"
+bright.yellow = "#c0c530"
 
-[colors.normal]
-black = "#000000"
-blue = "#2fafff"
-cyan = "#00d3d0"
-green = "#44bc44"
-magenta = "#feacd0"
-red = "#ff8059"
-white = "#bfbfbf"
-yellow = "#d0bc00"
+normal.black = "#000000"
+normal.blue = "#2fafff"
+normal.cyan = "#00d3d0"
+normal.green = "#44bc44"
+normal.magenta = "#feacd0"
+normal.red = "#ff8059"
+normal.white = "#bfbfbf"
+normal.yellow = "#d0bc00"
 
-[colors.primary]
-background = "#000000"
-foreground = "#ffffff"
+primary.background = "#000000"
+primary.foreground = "#ffffff"
 
 [cursor]
 blink_interval = 500
-
-[cursor.style]
-blinking = "Always"
-shape = "Underline"
+style.blinking = "Always"
+style.shape = "Underline"
 
 [font]
 size = 14.5
