@@ -4,9 +4,13 @@
 alias grep="grep --color=auto --exclude-dir=.git"
 alias ls="ls --color=auto -hF"
 alias poweroff="doas /usr/bin/poweroff"
-alias pst="hut paste create"
+alias pst="curl --data-binary @${1:-/dev/stdin} https://paste.rs && echo"
 alias top="top -u \$(whoami)"
 alias unmaintained-local="qlist -Iv \$(portageq --repo gentoo --orphaned)"
+
+git-gentoo-print-sha-url () {
+    echo "https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=$1"
+}
 
 __git_prompt() {
     BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"

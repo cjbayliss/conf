@@ -7,8 +7,6 @@ gui-apps/wmenu
 gui-apps/wtype
 
 # devel/languages
-dev-go/gopls
-dev-lang/go
 dev-python/black
 dev-python/python-lsp-server
 
