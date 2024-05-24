@@ -2,7 +2,6 @@
 app-editors/helix
 app-eselect/eselect-zig
 dev-lang/zig-bin
-dev-util/hut
 gui-apps/wlsunset
 gui-apps/wmenu
 gui-apps/wtype

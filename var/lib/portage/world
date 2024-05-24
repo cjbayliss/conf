@@ -5,7 +5,6 @@ app-eselect/eselect-repository
 app-misc/jq
 app-misc/tmux
 app-shells/bash-completion
-dev-util/hut
 dev-util/pkgcheck
 dev-util/pkgdev
 dev-util/shellcheck-bin
