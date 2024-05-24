@@ -22,11 +22,11 @@
         "https://twitch.tv",
         "https://youtube.com"
       ],
+      "Behavior": "reject-tracker-and-partition-foreign",
       "Block": [
         "http://google.com",
         "https://google.com"
-      ],
-      "Behavior": "reject-tracker-and-partition-foreign"
+      ]
     },
     "DNSOverHTTPS": {
       "Enabled": true,
@@ -51,14 +51,6 @@
       "Enabled": true
     },
     "ExtensionSettings": {
-      "uBlock0@raymondhill.net": {
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
-        "installation_mode": "force_installed"
-      },
-      "{446900e4-71c2-419f-a6a7-df9c091e268b}": {
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi",
-        "installation_mode": "force_installed"
-      },
       "amazon@search.mozilla.org": {
         "installation_mode": "blocked"
       },
@@ -77,8 +69,16 @@
       "google@search.mozilla.org": {
         "installation_mode": "blocked"
       },
+      "uBlock0@raymondhill.net": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",
+        "installation_mode": "force_installed"
+      },
       "wikipedia@search.mozilla.org": {
         "installation_mode": "blocked"
+      },
+      "{446900e4-71c2-419f-a6a7-df9c091e268b}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi",
+        "installation_mode": "force_installed"
       }
     },
     "FirefoxHome": {
@@ -96,61 +96,14 @@
     "OfferToSaveLogins": false,
     "OverrideFirstRunPage": "",
     "PasswordManagerEnabled": false,
-    "SearchEngines": {
-      "Default": "Google (Custom)",
-      "Add": [
-        {
-          "Name": "Google (Custom)",
-          "URLTemplate": "https://www.google.com/search?q={searchTerms}&gbv=1",
-          "Method": "GET",
-          "IconURL": "https://www.google.com/favicon.ico",
-          "Alias": "!g",
-          "Description": "Search Gentoo"
-        },
-        {
-          "Name": "Gentoo Bugs",
-          "URLTemplate": "https://bugs.gentoo.org/buglist.cgi?quicksearch={searchTerms}",
-          "Method": "GET",
-          "IconURL": "https://www.gentoo.org/favicon.ico",
-          "Alias": "!gb",
-          "Description": "Search Gentoo Bugs"
-        },
-        {
-          "Name": "Gentoo Packages",
-          "URLTemplate": "https://packages.gentoo.org/packages/search?q={searchTerms}",
-          "Method": "GET",
-          "IconURL": "https://www.gentoo.org/favicon.ico",
-          "Alias": "!gp",
-          "Description": "Search Gentoo Packages"
-        },
-        {
-          "Name": "Gentoo Wiki",
-          "URLTemplate": "https://wiki.gentoo.org/index.php?search={searchTerms}",
-          "Method": "GET",
-          "IconURL": "https://www.gentoo.org/favicon.ico",
-          "Alias": "!gw",
-          "Description": "Search Gentoo Wiki"
-        },
-        {
-          "Name": "Github",
-          "URLTemplate": "https://github.com/search?q={searchTerms}",
-          "Method": "GET",
-          "IconURL": "https://github.com/favicon.ico",
-          "Alias": "!gh",
-          "Description": "Search Github"
-        },
-        {
-          "Name": "Ask Moe",
-          "URLTemplate": "https://ask.moe/search?q={searchTerms}",
-          "Method": "GET",
-          "IconURL": "https://ask.moe/favicon.ico",
-          "Alias": "!am",
-          "Description": "Ask Moe!"
-        }
-      ]
-    },
     "Permissions": {
+      "Autoplay": {
+        "Default": "block-audio-video"
+      },
       "Camera": {
+        "BlockNewRequests": true
+      },
+      "Location": {
         "BlockNewRequests": true
       },
       "Microphone": {
@@ -159,14 +112,8 @@
         ],
         "BlockNewRequests": true
       },
-      "Location": {
-        "BlockNewRequests": true
-      },
       "Notifications": {
         "BlockNewRequests": true
-      },
-      "Autoplay": {
-        "Default": "block-audio-video"
       }
     },
     "Preferences": {
@@ -643,14 +590,67 @@
         "Value": false
       }
     },
+    "SearchEngines": {
+      "Add": [
+        {
+          "Alias": "!g",
+          "Description": "Search Gentoo",
+          "IconURL": "https://www.google.com/favicon.ico",
+          "Method": "GET",
+          "Name": "Google (Custom)",
+          "URLTemplate": "https://www.google.com/search?q={searchTerms}&gbv=1"
+        },
+        {
+          "Alias": "!gb",
+          "Description": "Search Gentoo Bugs",
+          "IconURL": "https://www.gentoo.org/favicon.ico",
+          "Method": "GET",
+          "Name": "Gentoo Bugs",
+          "URLTemplate": "https://bugs.gentoo.org/buglist.cgi?quicksearch={searchTerms}"
+        },
+        {
+          "Alias": "!gp",
+          "Description": "Search Gentoo Packages",
+          "IconURL": "https://www.gentoo.org/favicon.ico",
+          "Method": "GET",
+          "Name": "Gentoo Packages",
+          "URLTemplate": "https://packages.gentoo.org/packages/search?q={searchTerms}"
+        },
+        {
+          "Alias": "!gw",
+          "Description": "Search Gentoo Wiki",
+          "IconURL": "https://www.gentoo.org/favicon.ico",
+          "Method": "GET",
+          "Name": "Gentoo Wiki",
+          "URLTemplate": "https://wiki.gentoo.org/index.php?search={searchTerms}"
+        },
+        {
+          "Alias": "!gh",
+          "Description": "Search Github",
+          "IconURL": "https://github.com/favicon.ico",
+          "Method": "GET",
+          "Name": "Github",
+          "URLTemplate": "https://github.com/search?q={searchTerms}"
+        },
+        {
+          "Alias": "!am",
+          "Description": "Ask Moe!",
+          "IconURL": "https://ask.moe/favicon.ico",
+          "Method": "GET",
+          "Name": "Ask Moe",
+          "URLTemplate": "https://ask.moe/search?q={searchTerms}"
+        }
+      ],
+      "Default": "Google (Custom)"
+    },
     "UserMessaging": {
-      "WhatsNew": false,
       "ExtensionRecommendations": false,
       "FeatureRecommendations": false,
-      "UrlbarInterventions": false,
-      "SkipOnboarding": false,
+      "Locked": true,
       "MoreFromMozilla": false,
-      "Locked": true
+      "SkipOnboarding": false,
+      "UrlbarInterventions": false,
+      "WhatsNew": false
     }
   }
 }
