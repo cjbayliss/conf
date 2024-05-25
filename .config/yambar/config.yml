@@ -6,6 +6,7 @@ bar:
 
   left:
     - i3:
+        sort: "ascending"
         content:
           "":
             map:
