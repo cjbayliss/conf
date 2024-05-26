@@ -1,4 +1,3 @@
-local plugin_path = vim.fn.stdpath('data') .. 'site/pack/paqs/'
 local paqpath = vim.fn.stdpath('data') .. 'site/pack/paqs/start/paq-nvim'
 if not (vim.uv or vim.loop).fs_stat(paqpath) then
   vim.fn.system({
@@ -60,7 +59,9 @@ require('nvim-treesitter.configs').setup({
         enable = true,
         additional_vim_regex_highlighting = false
     },
+    ignore_install = {},
+    modules = {},
+    sync_install = true,
 })
 
-require('spaceless').setup({})
 require('which-key').setup({})
