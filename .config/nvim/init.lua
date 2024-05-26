@@ -8,9 +8,6 @@ vim.o.number = true
 vim.o.signcolumn = 'yes'
 vim.o.textwidth = 72
 
--- this defaults to true now, and my theme is 256 colors
-vim.o.termguicolors = false
-
 -- folding
 vim.o.foldenable = false
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
