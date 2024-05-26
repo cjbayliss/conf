@@ -2,6 +2,7 @@ theme = "cjb"
 
 [editor]
 cursorline = true
+text-width = 72 # this should be the default for backwards compatibilty
 
 [editor.lsp]
 display-inlay-hints = true
