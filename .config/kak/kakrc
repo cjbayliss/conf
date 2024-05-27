@@ -1,10 +1,22 @@
 colorscheme desertex
 
+# create directory before writing
+hook -group user-bufwritepre global BufWritePre .* %{
+    nop %sh{ mkdir -p "$(dirname "${kak_hook_param}")" }
+}
+
 # I used this all the time in vim/neovim/helix
 alias global x write-quit
 
+# open a terminal for work
+map global user j ': tmux-repl-horizontal<ret>'
+
 add-highlighter global/ number-lines -hlcursor -separator " " -min-digits 3
 
+# default wrap
+set-option global autowrap_column 72
+
+# simpler assistant
 set global ui_options terminal_assistant=none
 
 set-face global Error red,default,default+b
