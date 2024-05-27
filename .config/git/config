@@ -19,8 +19,9 @@
 [push]
 	autoSetupRemote = true
 
-[alias]
-	cl = log --pretty=tformat:\"%C(Yellow)%h%Creset %C(Cyan)%as%Creset %Cgreen%aN %C(white)<%aE>%Creset %s\"
+[pretty]
+	compact = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %s"
+	compact-author = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %C(Magenta)%aN %C(white)<%aE>%Creset %s"
 
 [include]
 	path = ~/.config/git/send-mail
