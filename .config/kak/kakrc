@@ -1,0 +1,15 @@
+colorscheme desertex
+
+# I used this all the time in vim/neovim/helix
+alias global x write-quit
+
+add-highlighter global/ number-lines -hlcursor -separator " " -min-digits 3
+
+set global ui_options terminal_assistant=none
+
+set-face global Error red,default,default+b
+set-face global Information white,black,default
+set-face global MenuBackground white,black,default
+set-face global MenuForeground black,white,default
+set-face global PrimarySelection default,default,default+r
+set-face global StatusLine bright-cyan,default,default
