@@ -21,3 +21,6 @@
 
 [alias]
 	cl = log --pretty=tformat:\"%C(Yellow)%h%Creset %C(Cyan)%as%Creset %Cgreen%aN %C(white)<%aE>%Creset %s\"
+
+[include]
+	path = ~/.config/git/send-mail
