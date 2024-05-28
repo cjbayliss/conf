@@ -8,16 +8,29 @@ hook -group user-bufwritepre global BufWritePre .* %{
 # I used this all the time in vim/neovim/helix
 alias global x write-quit
 
-# open a terminal for work
-map global user j ': tmux-repl-horizontal<ret>'
+# keybinds
+map global user j ':tmux-repl-horizontal<ret>' -docstring 'open tmux pane'
+map global user c ':comment-line<ret>' -docstring 'toggle comment'
 
 add-highlighter global/ number-lines -hlcursor -separator " " -min-digits 3
+add-highlighter global/ regex '\b(FIXME|IMPORTANT|NOTE|TODO|WARNING|XXX)\b:' 0:default+rb
+add-highlighter global/ regex '\h+$' 0:default,red
+add-highlighter global/ show-matching
 
 # default wrap
 set-option global autowrap_column 72
 
 # simpler assistant
-set global ui_options terminal_assistant=none
+set-option global ui_options terminal_assistant=none
+
+# spaces please
+set-option global tabstop 4
+set-option global indentwidth 4
+hook global InsertChar \t %{ exec -draft h@ }
+add-highlighter global/yikes-thems-tabs show-whitespaces -tab ⭲ -nbsp · -spc " " -lf " "
+
+# respect editorconfig
+hook global BufCreate .* %{ try editorconfig-load }
 
 set-face global Error red,default,default+b
 set-face global Information white,black,default
@@ -25,3 +38,14 @@ set-face global MenuBackground white,black,default
 set-face global MenuForeground black,white,default
 set-face global PrimarySelection default,default,default+r
 set-face global StatusLine bright-cyan,default,default
+
+# filetypes
+hook global BufCreate (/etc/portage/(m|p).*|.*tmux\.conf) %{
+    set-option buffer filetype sh
+}
+
+hook global BufCreate /etc/portage/repos.conf/.* %{
+    set-option buffer filetype ini
+}
+
+hook global BufCreate .* %{ try modeline-parse }
