@@ -12,6 +12,8 @@ git-gentoo-print-sha-url () {
     echo "https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=$1"
 }
 
+[ -f "$(command -v gpg)" ] && [ -f "$(command -v tty)" ] && export GPG_TTY="$(tty)"
+
 __git_prompt() {
     BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
     [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] && STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/ \1/')" || STATUS="[NOSTAT]"
