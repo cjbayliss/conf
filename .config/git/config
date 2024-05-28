@@ -1,27 +1,27 @@
 [commit]
-	verbose = true
+    verbose = true
 
 [diff]
-	algorithm = "histogram"
+    algorithm = "histogram"
 
 [init]
-	defaultBranch = "main"
+    defaultBranch = "main"
 
 [url "git@codeberg.org:"]
-	pushInsteadOf = "https://codeberg.org/"
+    pushInsteadOf = "https://codeberg.org/"
 
 [url "git@github.com:"]
-	pushInsteadOf = "https://github.com/"
+    pushInsteadOf = "https://github.com/"
 
 [user]
-	email = "cjbdev@icloud.com"
-	name = "Christopher Bayliss"
+    email = "cjbdev@icloud.com"
+    name = "Christopher Bayliss"
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
 
 [pretty]
-	compact = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %s"
-	compact-author = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %C(Magenta)%aN %C(white)<%aE>%Creset %s"
+    compact = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %s"
+    compact-author = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %C(Magenta)%aN %C(white)<%aE>%Creset %s"
 
 [include]
-	path = ~/.config/git/send-mail
+    path = ~/.config/git/send-mail
