@@ -1,5 +1,6 @@
 [commit]
     verbose = true
+    gpgSign = true
 
 [diff]
     algorithm = "histogram"
@@ -16,8 +17,11 @@
 [user]
     email = "cjbdev@icloud.com"
     name = "Christopher Bayliss"
+    signingKey = 96EB7F84FD995CB60437F7AEE073B274B18A4A23
+
 [push]
     autoSetupRemote = true
+    gpgSign = "if-asked"
 
 [pretty]
     compact = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %s"
@@ -25,3 +29,6 @@
 
 [include]
     path = ~/.config/git/send-mail
+
+[tag]
+    gpgSign = true
