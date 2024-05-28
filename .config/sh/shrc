@@ -21,6 +21,9 @@ __git_prompt() {
 PS1="\$? ${HOSTNAME:=$(hostname)} \$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt) » "
 
 if [ -n "$BASH_VERSION" ]; then
+    # dont continue if not interative
+    [[ $- != *i* ]] && return
+
     # source bash-completion
     if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion
@@ -96,15 +99,9 @@ if [ -n "$BASH_VERSION" ]; then
     PS1="\h \[\e[96m\]\$(__short_cwd)\[\e[0m\]\[\e[95m\]\$(__git_branch)\[\e[35m\]\$(__git_prompt)\[\e[0m\] \[\e[1;31m\]\$(__exit_status)\[\e[0m\]» "
 fi
 
-# cleanup on exit
-__cleanup() {
-    rm -rf ~/.cache 2>/dev/null
-    rm ~/.*hist* 2>/dev/null
-    rm ~/.*wget* 2>/dev/null
-    rm ~/.lesshst 2>/dev/null
-    rm ~/.viminfo 2>/dev/null
-    rmdir ~/* 2>/dev/null
-    clear
+# clear on the console
+__clear_console() {
+    fgconsole 2>/dev/null && clear
 }
 
-trap __cleanup EXIT
+trap __clear_console EXIT
