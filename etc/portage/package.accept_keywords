@@ -1,13 +1,8 @@
 <sys-devel/gcc-15
-app-editors/helix
-app-editors/neovim
-app-eselect/eselect-zig
-dev-lang/zig-bin
-dev-util/lua-language-server
+app-editors/kakoune
 gui-apps/wlsunset
 gui-apps/wmenu
 gui-apps/wtype
 gui-apps/yambar
-gui-wm/river
 sys-kernel/gentoo-sources
 x11-terms/alacritty

@@ -1,20 +1,19 @@
 app-admin/doas persist
 app-emulation/qemu sdl
 app-text/xmlto text
-dev-db/sqlite secure-delete
 dev-lang/rust-bin clippy rustfmt rust-analyzer
+dev-vcs/git perl # needed for git-send-email
 gui-wm/sway -swaybar
 media-fonts/noto cjk
 media-libs/freetype harfbuzz
-media-libs/libpng apng
 media-libs/libsdl2 gles2
 media-video/ffmpeg gnutls libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx wavpack webp x264 x265 xcb
-media-video/mpv cli drm jpeg libmpv -xv
+media-video/mpv jpeg
 media-video/pipewire sound-server -man
-sys-apps/busybox syslog
+sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-boot/refind btrfs
 sys-fs/btrfs-progs -man
 sys-kernel/installkernel refind
-www-client/firefox clang system-png L10N: en-GB
+sys-process/procps -ncurses
 x11-misc/j4-dmenu-desktop -dmenu
