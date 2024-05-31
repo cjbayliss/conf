@@ -9,6 +9,7 @@ dev-util/pkgcheck
 dev-util/pkgdev
 dev-util/shellcheck-bin
 dev-vcs/git
+gui-apps/foot
 gui-apps/yambar
 gui-wm/sway
 mail-client/neomutt
@@ -30,4 +31,3 @@ www-client/firefox
 www-client/pybugz
 x11-misc/j4-dmenu-desktop
 x11-misc/xdg-utils
-x11-terms/alacritty

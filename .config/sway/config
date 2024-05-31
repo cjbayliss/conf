@@ -24,7 +24,7 @@ input type:touchpad {
     accel_profile "flat"
     natural_scroll enabled
     middle_emulation enabled
-    pointer_accel 0.5    
+    pointer_accel 0.5
 }
 
 input type:keyboard {
@@ -41,7 +41,7 @@ set $right l
 bindsym Shift+Escape exec "wtype '~'"
 
 # luanch stuff
-bindsym $mod+Shift+Return exec alacritty
+bindsym $mod+Shift+Return exec foot
 bindsym $mod+p exec j4-dmenu-desktop --no-generic --dmenu='wmenu -i -f "monospace 14.5" -N "#000000" -n "#ffffff" -S "#000000" -s "#b6a0ff"'
 
 # kill focused window
