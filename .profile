@@ -62,6 +62,9 @@ export GDK_DPI_SCALE=0.5
 export XCURSOR_SIZE=24
 export XCURSOR_THEME=Adwaita
 
+# firefox and some other progams respect this
+export DISABLE_TELEMETRY=1
+
 # finally set $PATH
 export PATH="$PATH:$HOME/.local/bin"
 
