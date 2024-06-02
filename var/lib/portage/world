@@ -15,7 +15,9 @@ gui-wm/sway
 mail-client/neomutt
 media-fonts/noto
 media-fonts/noto-emoji
+media-sound/playerctl
 media-video/mpv
+mpv-plugin/mpv-mpris
 net-firewall/nftables
 net-misc/dhcpcd
 net-misc/yt-dlp

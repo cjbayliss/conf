@@ -1,9 +1,8 @@
 workspace_layout tabbed
 
-# hack to diable titlebars
-font "monospace 0.001"
-titlebar_padding 1
-titlebar_border_thickness 0
+# this requires the disable_titlebar patch from:
+# https://github.com/neuromagus/disable_titlebar_in_sway/tree/main
+disable_titlebar yes
 
 # borders and gaps
 gaps inner 4
@@ -84,6 +83,9 @@ bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
+# move window to workspace on start
+for_window [app_id="mpv"] move window to workspace 9, focus
+
 bindsym $mod+w layout tabbed
 bindsym $mod+t floating disable
 bindsym $mod+Shift+t floating enable
@@ -95,6 +97,10 @@ bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 bindsym XF86MonBrightnessDown exec backlight -d 10
 bindsym XF86MonBrightnessUp exec backlight -i 10
+
+bindsym $mod+backslash exec playerctl play-pause
+bindsym $mod+bracketleft exec playerctl previous
+bindsym $mod+bracketright exec playerctl next
 
 exec 'wlsunset -t 5000 -T 5800 -l -38 -L 145 &'
 exec 'gentoo-pipewire-launcher restart &'
