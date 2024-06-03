@@ -14,13 +14,8 @@ git-gentoo-print-sha-url () {
 
 [ -f "$(command -v gpg)" ] && [ -f "$(command -v tty)" ] && export GPG_TTY="$(tty)"
 
-__git_prompt() {
-    BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
-    [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] && STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/ \1/')" || STATUS="[NOSTAT]"
-    printf "%s%s" "$BRANCH" "$STATUS"
-}
-
-PS1="\$? ${HOSTNAME:=$(hostname)} \$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt) » "
+# this prompt should be safe on most systems
+PS1="\h \w \$ "
 
 if [ -n "$BASH_VERSION" ]; then
     # dont continue if not interative
@@ -64,41 +59,14 @@ if [ -n "$BASH_VERSION" ]; then
     bind '"\e[B":history-substring-search-forward'
 
     # bash prompt
-    __exit_status() {
-        EXIT_STATUS=$?
-        if [ $EXIT_STATUS -gt 0 ] && [ $EXIT_STATUS != 130 ]; then
-            printf "%s " "$EXIT_STATUS"
-        fi
-    }
-    __short_cwd() {
-        EXIT_STATUS=$?
-        CWD=
-        [ "$(basename $PWD)" != "/" ] && CWD="$(basename $PWD)"
-        SHORT_PWD_NO_CWD="$(echo $PWD | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/' -e 's/'$CWD'$//')"
-        COLLAPSED_PWD="$(echo $SHORT_PWD_NO_CWD | sed -r 's|/(.)[^/]*|/\1|g')"
-        [ "$SHORT_PWD_NO_CWD" == "~" ] &&
-            SHORT_CWD="$SHORT_PWD_NO_CWD" ||
-            SHORT_CWD="$COLLAPSED_PWD$CWD"
-        printf "%s" "$SHORT_CWD"
-        return $EXIT_STATUS
-    }
-    __git_branch() {
-        EXIT_STATUS=$?
-        BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
-        printf "%s" "$BRANCH"
-        return $EXIT_STATUS
-    }
-    __git_prompt() {
-        EXIT_STATUS=$?
-        [ "$(git ls-files 2>/dev/null | wc -l)" -lt 2000 ] &&
-            STATUS="$(git status --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /')" || STATUS=" [NOSTAT]"
-        [ "$(git ls-files 2>/dev/null | wc -l)" -ge 2000 ] &&
-            STATUS="$(git status --untracked-files=no --short 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/^/ /')"
-        printf "%s" "$STATUS"
-        return $EXIT_STATUS
-    }
-
-    PS1="\h \[\e[96m\]\$(__short_cwd)\[\e[0m\]\[\e[95m\]\$(__git_branch)\[\e[35m\]\$(__git_prompt)\[\e[0m\] \[\e[1;31m\]\$(__exit_status)\[\e[0m\]» "
+    if [ -f "$(command -v starship)" ]; then
+        # use a nice prompt
+        eval "$(starship init bash)"
+    else
+        # fallback to a fast and safe prompt
+        PROMPT_DIRTRIM=1
+        PS1="\h \[\e[96m\]\w\[\e[0m\] \[\e[1;31m\]\$?\[\e[0m\] \$ "
+    fi
 fi
 
 # clear on the console
