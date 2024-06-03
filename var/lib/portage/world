@@ -5,6 +5,7 @@ app-eselect/eselect-repository
 app-misc/jq
 app-misc/tmux
 app-shells/bash-completion
+app-shells/starship
 dev-util/pkgcheck
 dev-util/pkgdev
 dev-util/shellcheck-bin
