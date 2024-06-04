@@ -4,7 +4,6 @@ gui-apps/slurp
 gui-apps/swaybg
 gui-apps/wlsunset
 gui-apps/wmenu
-gui-apps/wtype
 
 # devel/languages
 dev-python/black
