@@ -34,7 +34,7 @@ add-highlighter global/yikes-thems-tabs show-whitespaces -spc ' ' -lf ' '
 # spaces please
 hook -group expandtabs global InsertChar \t %{ exec -draft h@ }
 # except in these files
-hook global BufCreate .*\.(ebuild|c|h)$ %{
+hook global BufCreate (.*\.(ebuild|c|h)$)|.*/metadata.xml %{
     set-option buffer disabled_hooks expandtabs
 }
 
