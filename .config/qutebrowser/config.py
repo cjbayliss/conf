@@ -1,0 +1,232 @@
+from qutebrowser.api import interceptor
+from urllib.parse import parse_qs
+import logging
+import os
+import re
+import requests
+import secrets
+import sys
+import time
+
+log = logging.getLogger()
+
+
+# IMPORTANT: only matches whole domains
+ADBLOCK = {
+    "b.thumbs.redditmedia.com": ".css",
+    "googleads.g.doubleclick.net": "googleads.g.doubleclick.net",
+    "www.youtube.com": "&adformat=",
+    "www.youtube.com": "ads?",
+    "www.youtube.com": "adview?",
+    "www.youtube.com": "&el=adunit",
+}
+
+# for regex, see https://docs.python.org/3/library/re.html#re.sub
+REDIRECT = {
+    "www.reddit.com": {"type": "host", "host": "old.reddit.com"},
+    "www.google.com": {
+        "type": "regex",
+        "pattern": r"(.*\/url\?q\=)(.*?)&.*",
+        "repl": r"\2",
+    },
+    "www.amazon.com": {
+        "type": "regex",
+        "pattern": r"(\w+:\/\/.*?\.amazon\..*?\/).*(dp\/.*?\/).*",
+        "repl": r"\1\2",
+    },
+    "www.amazon.com.au": {
+        "type": "regex",
+        "pattern": r"(\w+:\/\/.*?\.amazon\..*?\/).*(dp\/.*?\/).*",
+        "repl": r"\1\2",
+    },
+}
+
+
+def request_manager(request: interceptor.Request) -> None:
+    redirect = False
+    initial_url = request.request_url.url()
+    # poor person's adblock
+    if request.request_url.host() in ADBLOCK and (
+        ADBLOCK[request.request_url.host()] in request.request_url.query()
+        or ADBLOCK[request.request_url.host()] in request.request_url.path()
+        or ADBLOCK[request.request_url.host()] in request.request_url.host()
+    ):
+        log.info("BLOCKED: %s", request.request_url.url())
+        request.block()
+
+    # upgrade to https
+    if request.request_url.scheme() == "http":
+        request.request_url.setScheme("https")
+        log.info("UPGRADING_TO_HTTPS: %s", request.request_url.url())
+        redirect = True
+
+    # redirector
+    if (
+        request.request_url.host() in REDIRECT
+        and REDIRECT[request.request_url.host()]["type"] == "host"
+    ):
+        request.request_url.setHost(REDIRECT[request.request_url.host()]["host"])
+        log.info("REDIRECTING: %s -> %s", initial_url, request.request_url.url())
+        redirect = True
+
+    if (
+        request.request_url.host() in REDIRECT
+        and REDIRECT[request.request_url.host()]["type"] == "regex"
+        and (
+            re.sub(
+                REDIRECT[request.request_url.host()]["pattern"],
+                REDIRECT[request.request_url.host()]["repl"],
+                request.request_url.url(),
+            )
+            != initial_url
+        )
+    ):
+        request.request_url.setUrl(
+            re.sub(
+                REDIRECT[request.request_url.host()]["pattern"],
+                REDIRECT[request.request_url.host()]["repl"],
+                request.request_url.url(),
+            )
+        )
+        log.info("REDIRECTING: %s -> %s", initial_url, request.request_url.url())
+        redirect = True
+
+    if redirect:
+        request.redirect(request.request_url)
+
+
+interceptor.register(request_manager)
+
+# don't load local config
+config.load_autoconfig(False)
+
+c.content.blocking.adblock.lists = [
+    "https://easylist.to/easylist/easylist.txt",
+    "https://easylist.to/easylist/easyprivacy.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badware.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2020.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2021.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/legacy.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/privacy.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt",
+    "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt",
+    "https://secure.fanboy.co.nz/fanboy-annoyance.txt",
+    "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt",
+]
+
+# stuff
+c.auto_save.session = True
+c.content.autoplay = False
+c.content.canvas_reading = False
+c.content.cookies.accept = "no-3rdparty"
+c.content.desktop_capture = False
+c.content.dns_prefetch = False
+c.content.geolocation = False
+c.content.headers.do_not_track = False
+c.content.mouse_lock = False
+c.content.notifications.enabled = False
+c.content.persistent_storage = False
+c.content.register_protocol_handler = False
+c.content.xss_auditing = True
+c.downloads.location.directory = "$HOME/stuff/downloads"
+c.downloads.location.prompt = False
+c.prompt.filebrowser = False
+c.tabs.show = "never"
+
+# disable CVEs
+c.content.javascript.enabled = False
+# except for these sites...
+ALLOW_SCRIPTS = [
+    "*://anilist.co/*",
+    "*://codeberg.org/*",
+    "*://discord.com/*",
+    "*://github.com/*",
+    "*://gitlab.com/*",
+    "*://music.youtube.com/*",
+    "*://*.sr.ht/*",
+    "*://www.crunchyroll.com/*",
+    "*://www.twitch.tv/*",
+    "*://www.youtube.com/*",
+    "*://www.youtube-nocookie.com/embed/*",
+    "chrome://*/*",
+    "chrome-devtools://*",
+    "devtools://*",
+    "qute://*/*",
+]
+
+for site in ALLOW_SCRIPTS:
+    config.set("content.javascript.enabled", True, site)
+
+# darkmode
+c.colors.webpage.bg = "#111"
+c.colors.webpage.darkmode.enabled = True
+c.colors.webpage.preferred_color_scheme = "dark"
+
+DISABLE_DARKMODE = [
+    "*://codeberg.org/*",
+    "*://discord.com/*",
+    "*://github.com/*",
+    "*://lobste.rs/*",
+    "*://*.sr.ht/*",
+    "*://*.youtube.com/*",
+]
+
+for site in DISABLE_DARKMODE:
+    config.set("colors.webpage.darkmode.enabled", False, site)
+
+# custom CSS (block ads, force better fonts, etc)
+c.content.user_stylesheets = "$HOME/.config/qutebrowser/default.css"
+
+# editor command
+c.editor.command = ["foot", "kak", "{}"]
+
+# default page
+c.url.default_page = "about:blank"
+c.url.start_pages = "about:blank"
+
+# default search engine
+c.url.searchengines = {
+    "!a": "https://www.amazon.com.au/s?k={}",
+    "!am": "https://ask.moe/search?q={}",
+    "DEFAULT": "https://www.google.com/search?q={}&gbv=1",
+    "!dp": "https://packages.debian.org/search?keywords={}&searchon=names&section=all",
+    "!eb": "https://www.ebay.com.au/sch/i.html?_nkw={}",
+    "!gb": "https://bugs.gentoo.org/buglist.cgi?quicksearch={}",
+    "!gh": "https://github.com/search?q={}",
+    "!gp": "https://packages.gentoo.org/packages/search?q={}",
+    "!gw": "https://wiki.gentoo.org/index.php?search={}",
+    "!mwd": "https://www.merriam-webster.com/dictionary/{}",
+    "!np": "https://search.nixos.org/options?channel=unstable&query={}",
+    "!np": "https://search.nixos.org/packages?channel=unstable&query={}",
+    "posix": "http://pubs.opengroup.org/onlinepubs/9699919799/utilities/{}.html",
+    "!up": "https://packages.ubuntu.com/search?keywords={}",
+    "!wd": "https://en.wiktionary.org/wiki/Special:Search?search={}",
+    "!w": "https://en.wikipedia.org/wiki/Special:Search?search={}",
+    "!ym": "https://music.youtube.com/search?q={}",
+    "!yt": "https://youtube.com/results?search_query={}",
+}
+
+c.colors.completion.category.bg = "#222"
+c.colors.completion.even.bg = "#111"
+c.colors.completion.odd.bg = "#111"
+
+c.completion.scrollbar.padding = 0
+c.completion.scrollbar.width = 0
+c.completion.shrink = True
+c.statusbar.position = "top"
+
+# fonts
+c.fonts.default_family = "monospace"
+c.fonts.default_size = "11pt"
+c.fonts.web.size.default = 17
+c.fonts.web.size.minimum = 15
+
+# keybinds
+config.bind("<Space>b", "cmd-set-text -s :tab-select")
+config.bind("<Space>m", "hint links spawn mpv {hint-url}")
+config.bind("gn", "tab-next")
+config.bind("gp", "tab-prev")
+config.bind("J", "scroll-page 0 0.5")
+config.bind("K", "scroll-page 0 -0.5")

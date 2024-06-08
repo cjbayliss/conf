@@ -5,3 +5,4 @@ gui-apps/wmenu
 gui-apps/yambar
 mpv-plugin/mpv-mpris
 sys-kernel/gentoo-sources
+www-client/qutebrowser

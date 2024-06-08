@@ -1,14 +1,17 @@
 app-admin/doas persist
-app-emulation/qemu sdl
+app-emulation/qemu sdl -opengl
 app-text/xmlto text
 dev-lang/rust-bin clippy rustfmt rust-analyzer
 dev-vcs/git perl # needed for git-send-email
 gui-wm/sway -swaybar
 media-fonts/noto cjk
 media-libs/freetype harfbuzz
-media-libs/libsdl2 gles2
-media-video/ffmpeg gnutls libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx wavpack webp x264 x265 xcb
-media-video/mpv jpeg
+media-libs/libglvnd X
+media-libs/libsdl2 gles2 -opengl
+media-libs/libwebp -opengl
+media-libs/mesa gles1 X
+media-video/ffmpeg gnutls libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx wavpack webp x264 x265 xcb -opengl
+media-video/mpv jpeg -opengl
 media-video/pipewire sound-server -man
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
@@ -16,4 +19,9 @@ sys-boot/refind btrfs
 sys-fs/btrfs-progs -man
 sys-kernel/installkernel refind
 sys-process/procps -ncurses
+www-client/qutebrowser widevine
 x11-misc/j4-dmenu-desktop -dmenu
+
+# for qutebrowser
+dev-python/PyQt6 qml webchannel
+sys-libs/zlib minizip
