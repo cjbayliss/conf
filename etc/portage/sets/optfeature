@@ -1,9 +1,14 @@
 # sway
+app-misc/jq
 gui-apps/grim
+gui-apps/qt6ct
 gui-apps/slurp
 gui-apps/swaybg
 gui-apps/wlsunset
 gui-apps/wmenu
+gui-apps/yambar
+x11-misc/j4-dmenu-desktop
+x11-misc/xdg-utils
 
 # devel/languages
 dev-python/black
@@ -13,3 +18,29 @@ dev-python/python-lsp-server
 sys-apps/gptfdisk
 sys-fs/btrfs-progs
 sys-fs/dosfstools
+
+# bash
+app-shells/bash-completion
+app-shells/starship
+dev-util/shellcheck-bin
+
+# kernel
+sys-firmware/intel-microcode
+sys-firmware/sof-firmware
+sys-kernel/installkernel
+sys-kernel/linux-firmware
+
+# mpv
+media-sound/playerctl
+mpv-plugin/mpv-mpris
+net-misc/yt-dlp
+
+# system
+app-admin/doas
+app-eselect/eselect-repository
+dev-util/ccache
+net-firewall/nftables
+net-misc/dhcpcd
+net-wireless/wpa_supplicant
+sys-boot/efibootmgr
+sys-process/cronie
