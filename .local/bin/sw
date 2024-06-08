@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# set QT theme engine, requires qt5ct 😑
-export QT_QPA_PLATFORMTHEME="qt5ct"
+# set QT theme engine, requires qt6ct 😑
+export QT_QPA_PLATFORMTHEME="qt6ct"
 
 # wayland stuff
 export GDK_BACKEND=wayland
@@ -23,6 +23,7 @@ export XDG_VIDEOS_DIR="$HOME/videos"
 export MOZ_USE_XINPUT2=1
 
 export GDK_DPI_SCALE=1.25
+export QT_FONT_DPI=125
 
 # Now start sway! :)
 exec dbus-launch --sh-syntax --exit-with-session sway >"/tmp/sway-$(date '+%F-%H-%M-%S').log" 2>&1

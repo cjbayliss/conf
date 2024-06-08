@@ -1,3 +1,4 @@
 sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE
 sys-firmware/intel-microcode intel-ucode
+www-plugins/chrome-binary-plugins google-chrome
 
