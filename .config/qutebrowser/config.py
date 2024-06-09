@@ -138,8 +138,9 @@ c.downloads.location.directory = "$HOME/stuff/downloads"
 c.downloads.location.prompt = False
 c.prompt.filebrowser = False
 c.tabs.show = "never"
+
+# use: /usr/share/qutebrowser/scripts/dictcli.py install en-AU
 c.spellcheck.languages = ["en-AU"]
-c.qt.args=["overlay-scrollbars"]
 
 # disable CVEs
 c.content.javascript.enabled = False
