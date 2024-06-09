@@ -138,7 +138,6 @@ c.downloads.location.directory = "$HOME/stuff/downloads"
 c.downloads.location.prompt = False
 c.prompt.filebrowser = False
 c.tabs.show = "never"
-c.confirm_quit = ["always"]
 
 # use: /usr/share/qutebrowser/scripts/dictcli.py install en-AU
 c.spellcheck.languages = ["en-AU"]
@@ -147,9 +146,13 @@ c.spellcheck.languages = ["en-AU"]
 c.content.javascript.enabled = False
 # except for these sites...
 ALLOW_SCRIPTS = [
+    "*://*.amazon.com/*",
+    "*://*.amazon.com.au/*",
     "*://anilist.co/*",
     "*://codeberg.org/*",
     "*://discord.com/*",
+    "*://*.ebay.com/*",
+    "*://*.ebay.com.au/*",
     "*://github.com/*",
     "*://gitlab.com/*",
     "*://music.youtube.com/*",
@@ -259,7 +262,8 @@ config.bind("<Shift-Escape>", "fake-key <Shift-Escape>")
 config.bind("<Ctrl+w>", "tab-close")
 config.bind("<Ctrl+;>", "cmd-set-text :")
 
-config.bind("<Ctrl+l>", "cmd-set-text -s :open")
+config.bind("<Ctrl+Shift+l>", "cmd-set-text -s :open")
+config.bind("<Ctrl+l>", "cmd-set-text -s :open {url}")
 config.bind("<Ctrl+t>", "cmd-set-text -s :open -t")
 
 config.bind("<Ctrl+->", "zoom-out")
