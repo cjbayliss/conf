@@ -180,6 +180,8 @@ DISABLE_DARKMODE = [
     "*://github.com/*",
     "*://lobste.rs/*",
     "*://*.sr.ht/*",
+    "*://www.crunchyroll.com/*",
+    "*://www.twitch.tv/*",
     "*://*.youtube.com/*",
 ]
 
