@@ -92,7 +92,11 @@ def request_manager(request: interceptor.Request) -> None:
         redirect = True
 
     if redirect:
-        request.redirect(request.request_url)
+        try:
+            request.redirect(request.request_url)
+        except:
+            # don't crash the browser
+            pass
 
 
 interceptor.register(request_manager)
