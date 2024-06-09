@@ -138,6 +138,8 @@ c.downloads.location.directory = "$HOME/stuff/downloads"
 c.downloads.location.prompt = False
 c.prompt.filebrowser = False
 c.tabs.show = "never"
+c.spellcheck.languages = ["en-AU"]
+c.qt.args=["overlay-scrollbars"]
 
 # disable CVEs
 c.content.javascript.enabled = False
@@ -163,6 +165,9 @@ ALLOW_SCRIPTS = [
 for site in ALLOW_SCRIPTS:
     config.set("content.javascript.enabled", True, site)
 
+# reddit changes the page content if the referer is google.com
+config.set("content.headers.custom", {"Referer": ""}, "*://old.reddit.com/r/*")
+
 # darkmode
 c.colors.webpage.bg = "#111"
 c.colors.webpage.darkmode.enabled = True
@@ -181,7 +186,7 @@ for site in DISABLE_DARKMODE:
     config.set("colors.webpage.darkmode.enabled", False, site)
 
 # custom CSS (block ads, force better fonts, etc)
-c.content.user_stylesheets = "$HOME/.config/qutebrowser/default.css"
+c.content.user_stylesheets = f"{os.environ['HOME']}/.config/qutebrowser/default.css"
 
 # editor command
 c.editor.command = ["foot", "kak", "{}"]
