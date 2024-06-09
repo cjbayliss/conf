@@ -4,6 +4,7 @@
 // @license         CC0-1
 // @match           https://lobste.rs/*
 // @match           https://*.sr.ht/*
+// @match           https://www.crunchyroll.com/*
 // @grant           none
 // @qute-js-world   user
 // ==/UserScript==
