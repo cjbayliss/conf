@@ -18,6 +18,8 @@ git-gentoo-print-sha-url () {
 # this prompt should be safe on most systems
 PS1="\h \w \$ "
 
+[ -f "$HOME/.config/sh/envrc" ] && . "$HOME/.config/sh/envrc"
+
 if [ -n "$BASH_VERSION" ]; then
     # dont continue if not interative
     [[ $- != *i* ]] && return
