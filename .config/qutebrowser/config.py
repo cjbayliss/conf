@@ -138,6 +138,7 @@ c.downloads.location.directory = "$HOME/stuff/downloads"
 c.downloads.location.prompt = False
 c.prompt.filebrowser = False
 c.tabs.show = "never"
+c.confirm_quit = ["always"]
 
 # use: /usr/share/qutebrowser/scripts/dictcli.py install en-AU
 c.spellcheck.languages = ["en-AU"]
@@ -235,10 +236,117 @@ c.fonts.default_size = "11pt"
 c.fonts.web.size.default = 17
 c.fonts.web.size.minimum = 15
 
-# keybinds
-config.bind("<Space>b", "cmd-set-text -s :tab-select")
-config.bind("<Space>m", "hint links spawn mpv {hint-url}")
-config.bind("gn", "tab-next")
-config.bind("gp", "tab-prev")
-config.bind("J", "scroll-page 0 0.5")
-config.bind("K", "scroll-page 0 -0.5")
+# clear default keybinds
+c.bindings.default = {}
+
+# input like normal
+c.input.forward_unbound_keys = "all"
+c.input.insert_mode.auto_enter = False
+c.input.insert_mode.auto_leave = False
+config.bind("0", "fake-key 0")
+config.bind("1", "fake-key 1")
+config.bind("2", "fake-key 2")
+config.bind("3", "fake-key 3")
+config.bind("4", "fake-key 4")
+config.bind("5", "fake-key 5")
+config.bind("6", "fake-key 6")
+config.bind("7", "fake-key 7")
+config.bind("8", "fake-key 8")
+config.bind("9", "fake-key 9")
+config.bind("<Shift-Escape>", "fake-key <Shift-Escape>")
+
+# general keybinds
+config.bind("<Ctrl+w>", "tab-close")
+config.bind("<Ctrl+;>", "cmd-set-text :")
+
+config.bind("<Ctrl+l>", "cmd-set-text -s :open")
+config.bind("<Ctrl+t>", "cmd-set-text -s :open -t")
+
+config.bind("<Ctrl+->", "zoom-out")
+config.bind("<Ctrl+0>", "zoom 100")
+config.bind("<Ctrl+=>", "zoom-in")
+
+config.bind("<Ctrl+b>c", "config-source")
+config.bind("<Ctrl+b><Ctrl+c>", "config-source")
+config.bind("<Ctrl+r>", "reload")
+
+config.bind("<Alt+0>", "tab-focus 10")
+config.bind("<Alt+1>", "tab-focus 1")
+config.bind("<Alt+2>", "tab-focus 2")
+config.bind("<Alt+3>", "tab-focus 3")
+config.bind("<Alt+4>", "tab-focus 4")
+config.bind("<Alt+5>", "tab-focus 5")
+config.bind("<Alt+6>", "tab-focus 6")
+config.bind("<Alt+7>", "tab-focus 7")
+config.bind("<Alt+8>", "tab-focus 8")
+config.bind("<Alt+9>", "tab-focus 9")
+
+config.bind("<Ctrl+f>", "cmd-set-text /")
+config.bind("<Ctrl+b><Ctrl+y>", "yank")
+
+config.bind("<Ctrl+b><Ctrl+m>", "hint links spawn mpv {hint-url}")
+config.bind("<Ctrl+b><Ctrl+M>", "spawn mpv {url}")
+config.bind("<Ctrl+b>m", "hint links spawn mpv {hint-url}")
+config.bind("<Ctrl+b>M", "spawn mpv {url}")
+
+config.bind("<Ctrl+i>", "devtools bottom")
+
+config.bind("<Ctrl+Left>", "tab-prev")
+config.bind("<Ctrl+Right>", "tab-next")
+
+config.bind("<Ctrl+Down>", "scroll-page 0 0.7")
+config.bind("<Ctrl+Up>", "scroll-page 0 -0.7")
+
+# javascript toggle
+config.bind(
+    "<Ctrl-b>jt",
+    "config-cycle -p -t -u *://{url:host}/* content.javascript.enabled ;; reload",
+)
+config.bind(
+    "<Ctrl-b>je",
+    "config-cycle -p -u *://{url:host}/* content.javascript.enabled ;; reload",
+)
+config.bind(
+    "<Ctrl-b>ja",
+    "config-cycle -p -t -u *://*.{url:host}/* content.javascript.enabled ;; reload",
+)
+
+# bindings for command mode
+config.bind("<Ctrl+f>", "search-next", mode="command")
+config.bind("<Ctrl+g>", "mode-leave", mode="command")
+config.bind("<Escape>", "mode-leave", mode="command")
+
+config.bind("<Down>", "completion-item-focus next ;; command-history-next", mode="command")
+config.bind("<Up>", " command-history-prev ;; completion-item-focus prev", mode="command")
+config.bind("<Return>", "command-accept", mode="command")
+config.bind("<Shift+Tab>", "completion-item-focus prev", mode="command")
+config.bind("<Tab>", "completion-item-focus next", mode="command")
+
+# bindings for hint mode
+config.bind("<Ctrl+g>", "mode-leave", mode="hint")
+config.bind("<Escape>", "mode-leave", mode="hint")
+config.bind("<Return>", "follow-hint", mode="hint")
+
+# need to be able to leave insert mode because of !@#$%^ devtools
+config.bind("<Ctrl+g>", "mode-leave", mode="insert")
+config.bind("<Escape>", "mode-leave", mode="insert")
+
+# bindings for prompt mode
+config.bind("<Ctrl+g>", "mode-leave", mode="prompt")
+config.bind("<Down>", "prompt-item-focus next", mode="prompt")
+config.bind("<Escape>", "mode-leave", mode="prompt")
+config.bind("<Return>", "prompt-accept", mode="prompt")
+config.bind("<Shift+Tab>", "prompt-item-focus prev", mode="prompt")
+config.bind("<Tab>", "prompt-item-focus next", mode="prompt")
+config.bind("<Up>", "prompt-item-focus prev", mode="prompt")
+config.bind("n", "prompt-accept no", mode="prompt")
+config.bind("y", "prompt-accept yes", mode="prompt")
+
+# bindings for yesno mode
+config.bind("<Ctrl+g>", "mode-leave", mode="yesno")
+config.bind("<Escape>", "mode-leave", mode="yesno")
+config.bind("<Return>", "prompt-accept", mode="yesno")
+config.bind("N", "prompt-accept --save no", mode="yesno")
+config.bind("Y", "prompt-accept --save yes", mode="yesno")
+config.bind("n", "prompt-accept no", mode="yesno")
+config.bind("y", "prompt-accept yes", mode="yesno")
