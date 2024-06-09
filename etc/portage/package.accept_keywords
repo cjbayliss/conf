@@ -1,4 +1,5 @@
 <sys-devel/gcc-15
+app-admin/bitwarden-cli-bin
 app-editors/kakoune
 gui-apps/wlsunset
 gui-apps/wmenu
