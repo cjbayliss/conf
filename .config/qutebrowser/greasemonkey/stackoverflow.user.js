@@ -8,6 +8,6 @@
 // @qute-js-world   user
 // ==/UserScript==
 
-document.querySelector('.js-top-bar').remove()
-document.querySelector('#announcement-banner').remove()
-document.querySelector('#left-sidebar').remove()
+document.querySelector(".js-top-bar").remove();
+document.querySelector("#announcement-banner").remove();
+document.querySelector("#left-sidebar").remove();

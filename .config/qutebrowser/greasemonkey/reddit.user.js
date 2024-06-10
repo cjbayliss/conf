@@ -7,8 +7,8 @@
 // @qute-js-world   user
 // ==/UserScript==
 
-document.querySelector('.commentsignupbar').remove();
-document.querySelector('.listingsignupbar').remove();
-document.querySelector('.premium-banner-outer').remove();
-document.querySelector('.sidebox.submit').parentElement.remove();
-document.querySelector('.sidebox.submit').parentElement.remove();
+document.querySelector(".commentsignupbar").remove();
+document.querySelector(".listingsignupbar").remove();
+document.querySelector(".premium-banner-outer").remove();
+document.querySelector(".sidebox.submit").parentElement.remove();
+document.querySelector(".sidebox.submit").parentElement.remove();

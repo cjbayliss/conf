@@ -9,12 +9,12 @@
 
 let results = document.querySelectorAll('a[href^="/url"]');
 for (let i = 0; i < results.length; i++) {
-    let url = new URL(results[i].href);
-    results[i].href = url.searchParams.get('q');
+  let url = new URL(results[i].href);
+  results[i].href = url.searchParams.get("q");
 }
 
 for (const span of document.querySelectorAll("span")) {
   if (span.textContent.includes("People also ask")) {
-    span.parentNode.parentNode.parentNode.remove()
+    span.parentNode.parentNode.parentNode.remove();
   }
 }
