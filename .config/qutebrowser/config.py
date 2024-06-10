@@ -23,6 +23,7 @@ ADBLOCK = {
 
 # for regex, see https://docs.python.org/3/library/re.html#re.sub
 REDIRECT = {
+    "medium.com": {"type": "host", "host": "scribe.rip"},
     "www.reddit.com": {"type": "host", "host": "old.reddit.com"},
     "www.google.com": {
         "type": "regex",
