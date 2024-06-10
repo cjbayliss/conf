@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Dark Scrollbars
+// @name            Scrollbar Fix
 // @version         0.1
 // @license         CC0-1
 // @match           *://*/*
