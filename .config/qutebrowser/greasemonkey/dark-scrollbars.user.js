@@ -5,8 +5,9 @@
 // @match           https://lobste.rs/*
 // @match           https://*.sr.ht/*
 // @match           https://www.crunchyroll.com/*
+// @match           https://*.youtube.com/*
 // @grant           none
 // @qute-js-world   user
 // ==/UserScript==
 
-document.documentElement.style.setProperty('color-scheme', 'dark');
+document.documentElement.style.setProperty("color-scheme", "dark");
