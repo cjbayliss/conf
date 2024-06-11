@@ -44,5 +44,12 @@ let observer = new MutationObserver((e) => {
   for (const el of document.querySelectorAll("#mouseover-overlay")) {
     el.remove();
   }
+
+  // clean links
+  let results = document.querySelectorAll('a[href*="/redirect?"]');
+  for (let i = 0; i < results.length; i++) {
+    let url = new URL(results[i].href);
+    results[i].href = url.searchParams.get("q");
+  }
 });
 observer.observe(document.body, { childList: true, subtree: true });
