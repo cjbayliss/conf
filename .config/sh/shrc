@@ -9,7 +9,7 @@ alias temp="grep . /sys/class/thermal/*/temp | sed -e 's/:/ /' -e 's/[0-9][0-9][
 alias unmaintained-local="qlist -Iv \$(portageq --repo gentoo --orphaned)"
 alias non-gentoo="qlist -IRv | grep -v ::gentoo | grep ::.*"
 
-git-gentoo-print-sha-url () {
+git_gentoo_print_sha_url() {
     echo "https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=$1"
 }
 
@@ -61,15 +61,22 @@ if [ -n "$BASH_VERSION" ]; then
     bind '"\e[A":history-substring-search-backward'
     bind '"\e[B":history-substring-search-forward'
 
-    # bash prompt
-    if [ -f "$(command -v starship)" ]; then
-        # use a nice prompt
-        eval "$(starship init bash)"
-    else
-        # fallback to a fast and safe prompt
-        PROMPT_DIRTRIM=1
-        PS1="\h \[\e[96m\]\w\[\e[0m\] \[\e[1;31m\]\$?\[\e[0m\] \$ "
-    fi
+    __exit_status() {
+        EXIT_STATUS="$?"
+        if [ "$EXIT_STATUS" != 0 ] && [ "$EXIT_STATUS" != 130 ]; then
+            printf "\e[0;31m%s\e[0m\n" "[exit status: $EXIT_STATUS]"
+        fi
+        unset EXIT_STATUS
+    }
+
+    __remote_host() {
+        [ -n "$SSH_CONNECTION" ] && printf "%s" "\[\e[0;31m\]ssh\[\e[0m\]:\[\e[0;95m\]$USER\[\e[0m\]@"
+    }
+
+    PROMPT_COMMAND='__exit_status'
+
+    PROMPT_DIRTRIM=1
+    PS1="$(__remote_host)\h \[\e[96m\]\w\[\e[0m\] \$ "
 fi
 
 # clear on the console

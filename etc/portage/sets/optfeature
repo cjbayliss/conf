@@ -21,7 +21,6 @@ sys-fs/dosfstools
 
 # bash
 app-shells/bash-completion
-app-shells/starship
 dev-util/shellcheck-bin
 
 # kernel
