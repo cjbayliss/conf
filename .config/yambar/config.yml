@@ -37,7 +37,7 @@ bar:
         path: /bin/sh
         args:
           - '-c'
-          - "printf \"%s%s\\n\\n\" 'ipaddr|string|' \"$(ip -j a | jq -r 'first(.[] | select(.operstate == \"UP\") | .addr_info[] | .local)')\""
+          - "printf \"%s%s\\n\\n\" 'ipaddr|string|' \"$(ip -j a | yq -r '[.[] | select(.operstate == \"UP\") | .addr_info[] | .local][0]')\""
         poll-interval: 60000
         content:
           - string: {text: "{ipaddr}", foreground: 6ae4b9ff}
@@ -50,6 +50,11 @@ bar:
         poll-interval: 4000
         content:
           - string: {text: "{loadavg}"}
+    - label: {content: {string: {text: " < ", foreground: a8a8a8ff}}}
+    - battery:
+        name: BAT0
+        content:
+          - string: {text: "BAT: {capacity}% {estimate}"}
     - label: {content: {string: {text: " < ", foreground: a8a8a8ff}}}
     - clock:
         date-format: "%0e %^a"

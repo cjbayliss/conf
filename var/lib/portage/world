@@ -2,6 +2,7 @@ app-admin/bitwarden-cli-bin
 app-editors/kakoune
 app-emulation/qemu
 app-misc/tmux
+app-misc/yq-go
 dev-util/pkgcheck
 dev-util/pkgdev
 dev-util/sh
@@ -12,6 +13,7 @@ mail-client/neomutt
 media-fonts/noto
 media-fonts/noto-emoji
 media-video/mpv
+net-news/sfeed
 sys-kernel/gentoo-sources
 www-client/pybugz
 www-client/qutebrowser
