@@ -8,16 +8,23 @@
 // @qute-js-world   user
 // ==/UserScript==
 
-// default scrollbars
-[].forEach.call(document.styleSheets, function (sheet) {
-  try {
-    for (var i = 0; i < sheet.rules.length; ++i) {
-      var rule = sheet.rules[i];
-      if (/::-webkit-scrollbar/.test(rule.selectorText)) {
-        sheet.deleteRule(i--);
+let MutationObserver =
+  window.MutationObserver ||
+  window.WebKitMutationObserver ||
+  window.MozMutationObserver;
+let observer = new MutationObserver((e) => {
+  // default scrollbars
+  [].forEach.call(document.styleSheets, function (sheet) {
+    try {
+      for (var i = 0; i < sheet.rules.length; ++i) {
+        var rule = sheet.rules[i];
+        if (/::-webkit-scrollbar/.test(rule.selectorText)) {
+          sheet.deleteRule(i--);
+        }
       }
+    } catch {
+      /* ignore */
     }
-  } catch {
-    /* ignore */
-  }
+  });
 });
+observer.observe(document.body, { childList: true, subtree: true });
