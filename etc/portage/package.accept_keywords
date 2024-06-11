@@ -1,6 +1,7 @@
 <sys-devel/gcc-15
 app-admin/bitwarden-cli-bin
 app-editors/kakoune
+dev-util/sh
 gui-apps/wlsunset
 gui-apps/wmenu
 gui-apps/yambar

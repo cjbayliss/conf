@@ -29,20 +29,23 @@ export MANWIDTH=72
 export PAGER=cat
 export TIME_STYLE=long-iso
 
-# man colours
-__RESET_COLORS="$(tput sgr0)"
-__BOLD="$(tput bold)"
-__RED="$(tput setaf 1)"
-__BRIGHT_BLUE="$(tput setaf 12)"
-__BRIGHT_CYAN="$(tput setaf 14)"
+if [ -z "$SSH_CONNECTION" ]; then
+    # don't run tput on a potentially unkown terminal
+    __RESET_COLORS="$(tput sgr0)"
+    __BOLD="$(tput bold)"
+    __RED="$(tput setaf 1)"
+    __BRIGHT_BLUE="$(tput setaf 12)"
+    __BRIGHT_CYAN="$(tput setaf 14)"
 
-export LESS_TERMCAP_mb="$__BOLD$__RED"
-export LESS_TERMCAP_md="$__BOLD$__RED"
-export LESS_TERMCAP_me="$__RESET_COLORS"
-export LESS_TERMCAP_so="$__BOLD$__BRIGHT_BLUE"
-export LESS_TERMCAP_se="$__RESET_COLORS"
-export LESS_TERMCAP_us="$__BOLD$__BRIGHT_CYAN"
-export LESS_TERMCAP_ue="$__RESET_COLORS"
+    # man colours
+    export LESS_TERMCAP_mb="$__BOLD$__RED"
+    export LESS_TERMCAP_md="$__BOLD$__RED"
+    export LESS_TERMCAP_me="$__RESET_COLORS"
+    export LESS_TERMCAP_so="$__BOLD$__BRIGHT_BLUE"
+    export LESS_TERMCAP_se="$__RESET_COLORS"
+    export LESS_TERMCAP_us="$__BOLD$__BRIGHT_CYAN"
+    export LESS_TERMCAP_ue="$__RESET_COLORS"
+fi
 export GROFF_NO_SGR=1 # required for man colours to work
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
