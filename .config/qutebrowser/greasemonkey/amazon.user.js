@@ -28,6 +28,9 @@ let observer = new MutationObserver((e) => {
   for (const el of document.querySelectorAll('iframe[title="Sponsored ad"]')) {
     el.remove();
   }
+  for (const el of document.querySelectorAll('div[class*="sbv-ad-content-container"]')) {
+    el.parentElement.parentElement.remove();
+  }
   for (const el of document.querySelectorAll(
     'span[data-component-type="sbv-video-single-product"]',
   )) {
