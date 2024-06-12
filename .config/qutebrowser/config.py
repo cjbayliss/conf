@@ -241,11 +241,12 @@ c.fonts.web.size.minimum = 15
 
 # keybinds
 config.bind("b", "cmd-set-text -s :tab-select")
-config.bind(";m", "hint links spawn mpv {hint-url}")
-config.bind(";M", "spawn mpv {url}")
+config.bind("<Ctrl-Escape>", "fake-key <Escape>")
+config.bind("<Ctrl+t>", "cmd-set-text -s :open -t ")
 config.bind("gn", "tab-next")
 config.bind("gp", "tab-prev")
 config.bind("J", "scroll-page 0 0.5")
 config.bind("K", "scroll-page 0 -0.5")
+config.bind(";m", "hint links spawn mpv {hint-url}")
+config.bind(";M", "spawn mpv {url}")
 config.bind("<Shift-Escape>", "fake-key <Shift-Escape>")
-config.bind("<Ctrl-Escape>", "fake-key <Escape>")
