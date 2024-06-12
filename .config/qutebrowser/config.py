@@ -224,21 +224,24 @@ c.url.searchengines = {
 }
 
 # colors
-c.colors.statusbar.command.bg = '#222'
-c.colors.statusbar.normal.bg = '#222'
-c.colors.statusbar.url.success.http.fg = '#7f7'
-c.colors.statusbar.url.success.https.fg = '#7f7'
+c.colors.statusbar.command.bg = "#222"
+c.colors.statusbar.normal.bg = "#222"
+c.colors.statusbar.url.error.fg = "#f77"
+c.colors.statusbar.url.hover.fg = "#7ff"
+c.colors.statusbar.url.success.http.fg = "#7f7"
+c.colors.statusbar.url.success.https.fg = "#7f7"
+c.colors.statusbar.url.warn.fg = "#ff7"
 
-c.colors.tabs.bar.bg = '#000'
-c.colors.tabs.even.bg = '#000'
-c.colors.tabs.indicator.start = '#ffa'
-c.colors.tabs.odd.bg = '#000'
-c.colors.tabs.pinned.even.bg = '#424'
-c.colors.tabs.pinned.odd.bg = '#242'
-c.colors.tabs.pinned.selected.even.bg = '#222'
-c.colors.tabs.pinned.selected.odd.bg = '#222'
-c.colors.tabs.selected.even.bg = '#222'
-c.colors.tabs.selected.odd.bg = '#222'
+c.colors.tabs.bar.bg = "#000"
+c.colors.tabs.even.bg = "#000"
+c.colors.tabs.indicator.start = "#ffa"
+c.colors.tabs.odd.bg = "#000"
+c.colors.tabs.pinned.even.bg = "#424"
+c.colors.tabs.pinned.odd.bg = "#242"
+c.colors.tabs.pinned.selected.even.bg = "#222"
+c.colors.tabs.pinned.selected.odd.bg = "#222"
+c.colors.tabs.selected.even.bg = "#222"
+c.colors.tabs.selected.odd.bg = "#222"
 
 c.colors.completion.category.bg = "#222"
 c.colors.completion.even.bg = "#111"
