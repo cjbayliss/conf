@@ -138,7 +138,6 @@ c.content.xss_auditing = True
 c.downloads.location.directory = "$HOME/stuff/downloads"
 c.downloads.location.prompt = False
 c.prompt.filebrowser = False
-c.tabs.show = "never"
 
 # use: /usr/share/qutebrowser/scripts/dictcli.py install en-AU
 c.spellcheck.languages = ["en-AU"]
@@ -224,10 +223,29 @@ c.url.searchengines = {
     "yt": "https://youtube.com/results?search_query={}",
 }
 
+# colors
+c.colors.statusbar.command.bg = '#222'
+c.colors.statusbar.normal.bg = '#222'
+c.colors.statusbar.url.success.http.fg = '#7f7'
+c.colors.statusbar.url.success.https.fg = '#7f7'
+
+c.colors.tabs.bar.bg = '#000'
+c.colors.tabs.even.bg = '#000'
+c.colors.tabs.indicator.start = '#ffa'
+c.colors.tabs.odd.bg = '#000'
+c.colors.tabs.pinned.even.bg = '#424'
+c.colors.tabs.pinned.odd.bg = '#242'
+c.colors.tabs.pinned.selected.even.bg = '#222'
+c.colors.tabs.pinned.selected.odd.bg = '#222'
+c.colors.tabs.selected.even.bg = '#222'
+c.colors.tabs.selected.odd.bg = '#222'
+
 c.colors.completion.category.bg = "#222"
 c.colors.completion.even.bg = "#111"
 c.colors.completion.odd.bg = "#111"
 
+# various UI settings
+c.tabs.max_width = 200
 c.completion.scrollbar.padding = 0
 c.completion.scrollbar.width = 0
 c.completion.shrink = True
