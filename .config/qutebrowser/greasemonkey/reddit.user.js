@@ -7,8 +7,18 @@
 // @qute-js-world   user
 // ==/UserScript==
 
-document.querySelector(".commentsignupbar").remove();
-document.querySelector(".listingsignupbar").remove();
-document.querySelector(".premium-banner-outer").remove();
-document.querySelector(".sidebox.submit").parentElement.remove();
-document.querySelector(".sidebox.submit").parentElement.remove();
+for (const el of document.querySelectorAll(".commentsignupbar")) {
+  el.remove();
+}
+for (const el of document.querySelectorAll(".promoted")) {
+  el.remove();
+}
+for (const el of document.querySelectorAll(".listingsignupbar")) {
+  el.remove();
+}
+for (const el of document.querySelectorAll(".premium-banner-outer")) {
+  el.remove();
+}
+for (const el of document.querySelectorAll(".sidebox.submit")) {
+  el.parentElement.remove();
+}
