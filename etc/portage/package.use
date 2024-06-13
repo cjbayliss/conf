@@ -1,14 +1,12 @@
 app-admin/doas persist
 app-emulation/qemu sdl
-app-text/xmlto text
 dev-lang/rust-bin clippy rustfmt rust-analyzer
 dev-vcs/git perl # needed for git-send-email
 gui-wm/sway -swaybar
 media-fonts/noto cjk
 media-libs/freetype harfbuzz
 media-libs/libsdl2 gles2
-media-libs/mesa gles1
-media-video/ffmpeg gnutls libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx wavpack webp x264 x265 xcb
+media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265
 media-video/mpv jpeg
 media-video/pipewire sound-server -man
 sys-apps/iproute2 -iptables
