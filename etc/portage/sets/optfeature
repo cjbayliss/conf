@@ -25,7 +25,6 @@ dev-util/shellcheck-bin
 # kernel
 sys-firmware/intel-microcode
 sys-firmware/sof-firmware
-sys-kernel/installkernel
 sys-kernel/linux-firmware
 
 # mpv

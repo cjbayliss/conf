@@ -17,9 +17,7 @@ media-video/mpv jpeg -opengl
 media-video/pipewire sound-server -man
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
-sys-boot/refind btrfs
 sys-fs/btrfs-progs -man
-sys-kernel/installkernel refind
 sys-libs/zlib minizip
 sys-process/procps -ncurses
 www-client/qutebrowser widevine
