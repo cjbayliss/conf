@@ -5,6 +5,7 @@ dev-build/cmake -qt6
 dev-lang/rust-bin clippy rustfmt rust-analyzer
 dev-python/PyQt6 qml quick webchannel
 dev-vcs/git perl # needed for git-send-email
+gui-apps/mako -icons
 gui-wm/sway -swaybar
 media-fonts/noto cjk
 media-libs/freetype harfbuzz
