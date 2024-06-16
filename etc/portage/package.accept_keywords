@@ -1,7 +1,9 @@
 <sys-devel/gcc-15
 app-admin/bitwarden-cli-bin
 app-editors/kakoune
+app-misc/anki
 app-misc/yq-go
+dev-util/github-cli
 dev-util/sh
 gui-apps/wlsunset
 gui-apps/wmenu
