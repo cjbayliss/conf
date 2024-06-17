@@ -222,6 +222,11 @@ c.url.searchengines = {
     "ym": "https://music.youtube.com/search?q={}",
     "yt": "https://youtube.com/results?search_query={}",
 }
+c.completion.web_history.exclude = [
+    "https://duckduckgo.com",
+    "https://*.google.com",
+    "https://*.google.com.au",
+]
 
 # colors
 c.colors.statusbar.command.bg = "#222"
