@@ -102,4 +102,5 @@ bindsym $mod+bracketright exec playerctl next
 
 exec 'wlsunset -t 5000 -T 5800 -l -38 -L 145 &'
 exec 'gentoo-pipewire-launcher restart &'
+exec_always sh -c 'killall mako; mako &'
 exec_always sh -c "killall yambar; yambar &" # always restart yamber, or it crashes
