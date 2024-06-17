@@ -179,14 +179,14 @@ c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.preferred_color_scheme = "dark"
 
 DISABLE_DARKMODE = [
-    "*://codeberg.org/*",
-    "*://discord.com/*",
-    "*://github.com/*",
-    "*://lobste.rs/*",
-    "*://*.sr.ht/*",
-    "*://www.crunchyroll.com/*",
-    "*://www.twitch.tv/*",
-    "*://*.youtube.com/*",
+    "codeberg.org",
+    "discord.com",
+    "github.com",
+    "lobste.rs",
+    "*.sr.ht",
+    "www.crunchyroll.com",
+    "www.twitch.tv",
+    "*.youtube.com",
 ]
 
 for site in DISABLE_DARKMODE:
