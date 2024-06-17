@@ -1,6 +1,7 @@
 app-admin/bitwarden-cli-bin
 app-editors/kakoune
 app-emulation/qemu
+app-i18n/fcitx-qt
 app-misc/anki
 app-misc/asciinema
 app-misc/tmux

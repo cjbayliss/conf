@@ -1,6 +1,8 @@
 <sys-devel/gcc-15
 app-admin/bitwarden-cli-bin
 app-editors/kakoune
+app-i18n/fcitx
+app-i18n/fcitx-qt
 app-misc/anki
 app-misc/yq-go
 dev-util/github-cli
