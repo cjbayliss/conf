@@ -9,6 +9,13 @@ alias temp="grep . /sys/class/thermal/*/temp | sed -e 's/:/ /' -e 's/[0-9][0-9][
 alias unmaintained-local="qlist -Iv \$(portageq --repo gentoo --orphaned)"
 alias non-gentoo="qlist -IRv | grep -v ::gentoo | grep ::.*"
 
+watch() {
+    while true;
+    do
+        reset; $1; sleep 5
+    done
+}
+
 git_gentoo_print_sha_url() {
     echo "https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=$1"
 }
