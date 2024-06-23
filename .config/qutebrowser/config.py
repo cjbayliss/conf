@@ -153,6 +153,7 @@ ALLOW_SCRIPTS = [
     "*://discord.com/*",
     "*://*.ebay.com/*",
     "*://*.ebay.com.au/*",
+    "*://*.gentoo.org/*",
     "*://github.com/*",
     "*://gitlab.com/*",
     "*://music.youtube.com/*",
