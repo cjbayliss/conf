@@ -10,15 +10,18 @@ alias unmaintained-local="qlist -Iv \$(portageq --repo gentoo --orphaned)"
 alias non-gentoo="qlist -IRv | grep -v ::gentoo | grep ::.*"
 
 watch() {
-    while true;
-    do
-        reset; $1; sleep 5
+    while true; do
+        reset
+        $1
+        sleep 5
     done
 }
 
 git_gentoo_print_sha_url() {
     echo "https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=$1"
 }
+
+sitelogin() { bw get username $1 && bw get password $1; }
 
 [ -f "$(command -v gpg)" ] && [ -f "$(command -v tty)" ] && export GPG_TTY="$(tty)"
 
