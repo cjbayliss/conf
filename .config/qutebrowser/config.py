@@ -125,7 +125,7 @@ c.content.blocking.adblock.lists = [
 c.auto_save.session = True
 c.content.autoplay = False
 c.content.canvas_reading = False
-c.content.cookies.accept = "no-3rdparty"
+c.content.cookies.accept = "never"
 c.content.desktop_capture = False
 c.content.dns_prefetch = False
 c.content.geolocation = False
@@ -142,34 +142,67 @@ c.prompt.filebrowser = False
 # use: /usr/share/qutebrowser/scripts/dictcli.py install en-AU
 c.spellcheck.languages = ["en-AU"]
 
-# disable CVEs
-c.content.javascript.enabled = False
-# except for these sites...
-ALLOW_SCRIPTS = [
-    "*://*.amazon.com/*",
-    "*://*.amazon.com.au/*",
-    "*://anilist.co/*",
-    "*://codeberg.org/*",
-    "*://discord.com/*",
-    "*://*.ebay.com/*",
-    "*://*.ebay.com.au/*",
-    "*://*.gentoo.org/*",
-    "*://github.com/*",
-    "*://gitlab.com/*",
-    "*://music.youtube.com/*",
-    "*://*.sr.ht/*",
-    "*://www.crunchyroll.com/*",
-    "*://www.twitch.tv/*",
-    "*://www.youtube.com/*",
-    "*://www.youtube-nocookie.com/embed/*",
+# list of internal pages
+internal = [
     "chrome://*/*",
     "chrome-devtools://*",
     "devtools://*",
     "qute://*/*",
 ]
 
+# list of shopping sites
+shopping = [
+    "*.bunnings.com.au",
+    "*.catch.com.au",
+    "*.coles.com.au",
+    "*.ebay.com.au",
+    "*.igashop.com.au",
+    "*.instantscripts.com.au",
+    "*.jbhifi.com.au",
+    "*.kmart.com.au",
+    "*.officeworks.com.au",
+    "*.priceline.com.au",
+    "*.target.com.au",
+]
+
+# list of shipping sites
+shipping = [
+    "*.auspost.com.au",
+]
+
+# list of entertainment sites
+entertainment = [
+    "*.anilist.co",
+    "*.crunchyroll.com",
+    "*.twitch.tv",
+    "*.youtube.com",
+]
+
+# list of social sites
+social = [
+    "*.discord.com",
+]
+
+# list of development sites
+devel = [
+    "*.codeberg.org",
+    "*.gentoo.org",
+    "*.github.com",
+    "*.gitlab.com",
+    "*.sr.ht",
+]
+
+# disable CVEs
+c.content.javascript.enabled = False
+# except for these sites...
+ALLOW_SCRIPTS = internal + shopping + shipping + entertainment + social + devel
+ALLOW_COOKIES = shopping + shipping + entertainment + social + devel
+
 for site in ALLOW_SCRIPTS:
     config.set("content.javascript.enabled", True, site)
+
+for site in ALLOW_COOKIES:
+    config.set("content.cookies.accept", "no-3rdparty", site)
 
 # reddit changes the page content if the referer is google.com
 config.set("content.headers.custom", {"Referer": ""}, "*://old.reddit.com/r/*")
@@ -180,13 +213,13 @@ c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.preferred_color_scheme = "dark"
 
 DISABLE_DARKMODE = [
-    "codeberg.org",
-    "discord.com",
-    "github.com",
-    "lobste.rs",
+    "*.codeberg.org",
+    "*.crunchyroll.com",
+    "*.discord.com",
+    "*.github.com",
+    "*.lobste.rs",
     "*.sr.ht",
-    "www.crunchyroll.com",
-    "www.twitch.tv",
+    "*.twitch.tv",
     "*.youtube.com",
 ]
 
@@ -197,7 +230,7 @@ for site in DISABLE_DARKMODE:
 c.content.user_stylesheets = f"{os.environ['HOME']}/.config/qutebrowser/default.css"
 
 # editor command
-c.editor.command = ["foot", "kak", "{}"]
+c.editor.command = ["alacritty", "-e", "kak", "{}"]
 
 # default page
 c.url.default_page = "about:blank"
