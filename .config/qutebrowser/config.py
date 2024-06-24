@@ -217,7 +217,7 @@ c.url.searchengines = {
     "mwd": "https://www.merriam-webster.com/dictionary/{}",
     "no": "https://search.nixos.org/packages?channel=unstable&query={}",
     "np": "https://search.nixos.org/options?channel=unstable&query={}",
-    "posix": "http://pubs.opengroup.org/onlinepubs/9699919799/utilities/{}.html",
+    "posix": "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/{}.html",
     "wd": "https://en.wiktionary.org/wiki/Special:Search?search={}",
     "wiki": "https://en.wikipedia.org/wiki/Special:Search?search={}",
     "ym": "https://music.youtube.com/search?q={}",
