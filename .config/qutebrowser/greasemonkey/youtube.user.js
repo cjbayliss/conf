@@ -12,39 +12,6 @@ let MutationObserver =
   window.WebKitMutationObserver ||
   window.MozMutationObserver;
 let observer = new MutationObserver((e) => {
-  // skip adds
-  const btn = document.querySelector(
-    ".videoAdUiSkipButton,.ytp-ad-skip-button",
-  );
-  if (btn) {
-    btn.click();
-  }
-  const ad = [...document.querySelectorAll(".ad-showing")][0];
-  if (ad) {
-    const video = document.querySelector("video");
-    video.muted = true;
-    video.hidden = true;
-
-    if (video.duration != NaN) {
-      video.currentTime = video.duration;
-    }
-
-    video.playbackRate = 16;
-  }
-
-  // remove homepage ads
-  for (const el of document.querySelectorAll(".ytd-ad-slot-renderer")) {
-    el.remove();
-  }
-
-  // remove video previews on hover
-  for (const el of document.querySelectorAll("#video-preview")) {
-    el.remove();
-  }
-  for (const el of document.querySelectorAll("#mouseover-overlay")) {
-    el.remove();
-  }
-
   // clean links
   let results = document.querySelectorAll('a[href*="/redirect?"]');
   for (let i = 0; i < results.length; i++) {
