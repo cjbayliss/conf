@@ -173,6 +173,7 @@ shopping = [
 # list of financial sites
 financial = [
     "*.macquarie.com.au",
+    "*.paypal.com",
     "*.selfwealth.com.au",
 ]
 
@@ -203,6 +204,11 @@ devel = [
     "*.sr.ht",
 ]
 
+# other sites
+other = [
+    "*.bitwarden.com",
+]
+
 # disable CVEs
 c.content.javascript.enabled = False
 # except for these sites...
@@ -213,6 +219,7 @@ ALLOW_SCRIPTS_COOKIES = list(
             entertainment,
             financial,
             internal,
+            other,
             shipping,
             shopping,
             social,
