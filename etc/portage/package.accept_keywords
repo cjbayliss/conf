@@ -10,6 +10,8 @@ dev-util/sh
 gui-apps/wlsunset
 gui-apps/wmenu
 gui-apps/yambar
+kde-frameworks/breeze-icons
 mpv-plugin/mpv-mpris
 sys-kernel/gentoo-sources
 www-client/qutebrowser
+x11-terms/alacritty

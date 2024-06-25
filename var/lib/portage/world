@@ -1,17 +1,16 @@
 app-admin/bitwarden-cli-bin
 app-editors/kakoune
-app-emulation/qemu
 app-i18n/fcitx-qt
 app-misc/anki
 app-misc/asciinema
 app-misc/tmux
 app-misc/yq-go
+app-portage/gentoolkit
 dev-util/github-cli
 dev-util/pkgcheck
 dev-util/pkgdev
 dev-util/sh
 dev-vcs/git
-gui-apps/foot
 gui-apps/mako
 gui-wm/sway
 mail-client/neomutt
@@ -19,7 +18,7 @@ media-fonts/noto
 media-fonts/noto-emoji
 media-video/mpv
 net-analyzer/wireshark
-net-news/sfeed
 sys-kernel/gentoo-sources
 www-client/pybugz
 www-client/qutebrowser
+x11-terms/alacritty
