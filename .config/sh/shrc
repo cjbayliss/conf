@@ -12,7 +12,7 @@ alias non-gentoo="qlist -IRv | grep -v ::gentoo | grep ::.*"
 watch() {
     while true; do
         reset
-        $1
+        $@
         sleep 5
     done
 }
