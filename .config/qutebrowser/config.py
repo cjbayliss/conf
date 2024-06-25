@@ -20,6 +20,7 @@ ADBLOCK = {
     "www.youtube.com": "ads?",
     "www.youtube.com": "adview?",
     "www.youtube.com": "&el=adunit",
+    "online.macquarie.com.au": "body-background",
 }
 
 # for regex, see https://docs.python.org/3/library/re.html#re.sub
@@ -157,6 +158,7 @@ shopping = [
     "*.catch.com.au",
     "*.coles.com.au",
     "*.ebay.com.au",
+    "*.gog.com",
     "*.igashop.com.au",
     "*.ikea.com",
     "*.instantscripts.com.au",
