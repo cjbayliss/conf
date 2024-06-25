@@ -1,4 +1,5 @@
 from qutebrowser.api import interceptor
+from itertools import chain
 from urllib.parse import parse_qs
 import logging
 import os
@@ -157,12 +158,20 @@ shopping = [
     "*.coles.com.au",
     "*.ebay.com.au",
     "*.igashop.com.au",
+    "*.ikea.com",
     "*.instantscripts.com.au",
     "*.jbhifi.com.au",
     "*.kmart.com.au",
     "*.officeworks.com.au",
+    "*.onepass.com.au",
     "*.priceline.com.au",
     "*.target.com.au",
+]
+
+# list of financial sites
+financial = [
+    "*.macquarie.com.au",
+    "*.selfwealth.com.au",
 ]
 
 # list of shipping sites
@@ -195,13 +204,22 @@ devel = [
 # disable CVEs
 c.content.javascript.enabled = False
 # except for these sites...
-ALLOW_SCRIPTS = internal + shopping + shipping + entertainment + social + devel
-ALLOW_COOKIES = shopping + shipping + entertainment + social + devel
+ALLOW_SCRIPTS_COOKIES = list(
+    chain.from_iterable(
+        [
+            devel,
+            entertainment,
+            financial,
+            internal,
+            shipping,
+            shopping,
+            social,
+        ]
+    )
+)
 
-for site in ALLOW_SCRIPTS:
+for site in ALLOW_SCRIPTS_COOKIES:
     config.set("content.javascript.enabled", True, site)
-
-for site in ALLOW_COOKIES:
     config.set("content.cookies.accept", "no-3rdparty", site)
 
 # reddit changes the page content if the referer is google.com
