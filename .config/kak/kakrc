@@ -33,6 +33,12 @@ hook global WinSetOption filetype=zig %{
     add-highlighter shared/zig/code/function regex 'fn \b(\w+)\(' 1:function
 }
 
+hook global BufCreate (/etc/portage/((m|p).*|sets/.*)|/var/lib/portage/.*) %{
+    add-highlighter buffer/ regex '^\b([a-z].*?)/(.*?)\b( |\n)' 1:type 2:keyword
+    add-highlighter buffer/ regex " ([\w-]+)" 1:green
+    add-highlighter buffer/ regex " (-[\w'-]+)" 1:red
+}
+
 # default wrap
 set-option global autowrap_column 72
 
@@ -79,7 +85,7 @@ hook global WinSetOption filetype=rust %{
 }
 
 # filetypes
-hook global BufCreate (/etc/portage/(m|p).*|.*tmux\.conf) %{
+hook global BufCreate (/etc/portage/((m|p).*|sets/.*)|/var/lib/portage/.*|.*tmux\.conf) %{
     set-option buffer filetype sh
 }
 
