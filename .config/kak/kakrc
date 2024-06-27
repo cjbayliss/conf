@@ -26,7 +26,11 @@ add-highlighter global/ regex '\h+$' 0:default,rgb:ee3333
 add-highlighter global/ show-matching
 
 hook global WinSetOption filetype=python %{
-    add-highlighter shared/python/code/function regex '\b(\w+)\(' 1:function
+    add-highlighter shared/python/code/function regex 'def \b(\w+)\(' 1:function
+}
+
+hook global WinSetOption filetype=zig %{
+    add-highlighter shared/zig/code/function regex 'fn \b(\w+)\(' 1:function
 }
 
 # default wrap
