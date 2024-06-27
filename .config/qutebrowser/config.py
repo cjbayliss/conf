@@ -1,5 +1,5 @@
-from qutebrowser.api import interceptor
 from itertools import chain
+from qutebrowser.api import interceptor
 from urllib.parse import parse_qs
 import logging
 import os
@@ -157,16 +157,20 @@ shopping = [
     "*.bunnings.com.au",
     "*.catch.com.au",
     "*.coles.com.au",
+    "*.computeralliance.com.au",
     "*.ebay.com.au",
     "*.gog.com",
     "*.igashop.com.au",
     "*.ikea.com",
     "*.instantscripts.com.au",
+    "*.jaycar.com.au",
     "*.jbhifi.com.au",
     "*.kmart.com.au",
     "*.officeworks.com.au",
     "*.onepass.com.au",
+    "*.pccasegear.com",
     "*.priceline.com.au",
+    "*.scorptec.com.au",
     "*.target.com.au",
 ]
 
@@ -185,6 +189,7 @@ shipping = [
 # list of entertainment sites
 entertainment = [
     "*.anilist.co",
+    "*.apple.com",
     "*.crunchyroll.com",
     "*.twitch.tv",
     "*.youtube.com",
@@ -207,6 +212,7 @@ devel = [
 # other sites
 other = [
     "*.bitwarden.com",
+    "*.icloud.com",
 ]
 
 # disable CVEs
@@ -266,7 +272,6 @@ c.url.start_pages = "about:blank"
 # default search engine
 c.url.searchengines = {
     "am": "https://ask.moe/search?q={}",
-    "amz": "https://www.amazon.com.au/s?k={}",
     "DEFAULT": "https://www.google.com/search?q={}&gbv=1",
     "dp": "https://packages.debian.org/search?keywords={}&searchon=names&section=all",
     "eb": "https://www.ebay.com.au/sch/i.html?_nkw={}",
