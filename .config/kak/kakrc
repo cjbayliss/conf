@@ -64,6 +64,7 @@ hook global BufCreate .* %{ try editorconfig-load }
 try %{
     eval %sh{kak-lsp --kakoune -s $kak_session}
     lsp-enable
+    lsp-inlay-diagnostics-enable global # requires kakoune 2024 or newer
 }
 
 # formatting
