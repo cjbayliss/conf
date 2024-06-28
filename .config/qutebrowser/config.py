@@ -174,6 +174,7 @@ shopping = [
     "*.jaycar.com.au",
     "*.jbhifi.com.au",
     "*.kmart.com.au",
+    "*.nintendo.com.au",
     "*.officeworks.com.au",
     "*.onepass.com.au",
     "*.pccasegear.com",
@@ -192,6 +193,7 @@ financial = [
 # list of shipping sites
 shipping = [
     "*.auspost.com.au",
+    "*.couriersplease.com.au",
 ]
 
 # list of entertainment sites
