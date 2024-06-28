@@ -1,26 +1,27 @@
-from itertools import chain
-from qutebrowser.api import interceptor
-from urllib.parse import parse_qs
+# pylint: disable=C0114
 import logging
 import os
 import re
-import requests
-import secrets
-import sys
-import time
+
+from itertools import chain
+from qutebrowser.api import interceptor
+
+config = config  # pylint: disable=E0602,W0127
+c = c  # pylint: disable=E0602,W0127
 
 log = logging.getLogger()
 
-
 # IMPORTANT: only matches whole domains
 ADBLOCK = {
-    "b.thumbs.redditmedia.com": ".css",
-    "googleads.g.doubleclick.net": "googleads.g.doubleclick.net",
-    "www.youtube.com": "&adformat=",
-    "www.youtube.com": "ads?",
-    "www.youtube.com": "adview?",
-    "www.youtube.com": "&el=adunit",
-    "online.macquarie.com.au": "body-background",
+    "b.thumbs.redditmedia.com": [".css"],
+    "googleads.g.doubleclick.net": ["googleads.g.doubleclick.net"],
+    "www.youtube.com": [
+        "&adformat=",
+        "ads?",
+        "adview?",
+        "&el=adunit",
+    ],
+    "online.macquarie.com.au": ["background"],
 }
 
 # for regex, see https://docs.python.org/3/library/re.html#re.sub
@@ -46,16 +47,19 @@ REDIRECT = {
 
 
 def request_manager(request: interceptor.Request) -> None:
+    """block or redirect requests based on rules"""
     redirect = False
     initial_url = request.request_url.url()
     # poor person's adblock
-    if request.request_url.host() in ADBLOCK and (
-        ADBLOCK[request.request_url.host()] in request.request_url.query()
-        or ADBLOCK[request.request_url.host()] in request.request_url.path()
-        or ADBLOCK[request.request_url.host()] in request.request_url.host()
-    ):
-        log.info("BLOCKED: %s", request.request_url.url())
-        request.block()
+    if request.request_url.host() in ADBLOCK:
+        for pattern in ADBLOCK[request.request_url.host()]:
+            if (
+                pattern in request.request_url.query()
+                or pattern in request.request_url.path()
+                or pattern in request.request_url.host()
+            ):
+                log.info("BLOCKED: %s", request.request_url.url())
+                request.block()
 
     # upgrade to https
     if request.request_url.scheme() == "http":
