@@ -162,6 +162,7 @@ internal = [
 
 # list of shopping sites
 shopping = [
+    "*.asianpantry.com.au",
     "*.bunnings.com.au",
     "*.catch.com.au",
     "*.coles.com.au",
@@ -174,6 +175,7 @@ shopping = [
     "*.jaycar.com.au",
     "*.jbhifi.com.au",
     "*.kmart.com.au",
+    "*.nintendo.com",
     "*.nintendo.com.au",
     "*.officeworks.com.au",
     "*.onepass.com.au",
