@@ -362,6 +362,7 @@ config.bind("<Ctrl-b>", "cmd-set-text -s :tab-select")
 config.bind("<Ctrl-l>", "cmd-set-text :open {url}")
 config.bind("<Ctrl-o>", "cmd-set-text -s :open -t")
 config.bind("<Ctrl-p>", "tab-pin")
+config.bind("<Ctrl-Shift-t>", "undo")
 config.bind("<Ctrl-t>", "cmd-set-text -s :open -t")
 config.bind("<Ctrl-w>", "tab-close")
 
