@@ -1,4 +1,5 @@
 app-admin/doas persist
+media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
 app-crypt/gpgme -qt6
 app-emulation/qemu sdl -opengl
 dev-build/cmake -qt6

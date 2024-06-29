@@ -14,7 +14,6 @@ dev-python/black
 dev-python/python-lsp-server
 
 # disk management
-sys-apps/gptfdisk
 sys-fs/btrfs-progs
 sys-fs/dosfstools
 
