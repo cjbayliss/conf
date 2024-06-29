@@ -1,6 +1,7 @@
 app-admin/bitwarden-cli-bin
 app-editors/kakoune
 app-editors/kakoune-lsp
+app-emulation/wine-vanilla
 app-i18n/fcitx-qt
 app-misc/anki
 app-misc/asciinema
