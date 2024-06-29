@@ -341,15 +341,101 @@ c.fonts.default_size = "11pt"
 c.fonts.web.size.default = 17
 c.fonts.web.size.minimum = 15
 
-# keybinds
-config.bind("b", "cmd-set-text -s :tab-select")
-config.bind("<Ctrl-Escape>", "fake-key <Escape>")
-config.bind("<Ctrl+t>", "cmd-set-text -s :open -t ")
-config.bind("gn", "tab-next")
-config.bind("gp", "tab-prev")
-config.bind("J", "scroll-page 0 0.5")
-config.bind("K", "scroll-page 0 -0.5")
-config.bind(";m", "hint links spawn mpv {hint-url}")
-config.bind(";M", "spawn mpv {url}")
+# clear default keybinds
+c.bindings.default = {}
+
+# input like normal
+c.input.forward_unbound_keys = "all"
+c.input.insert_mode.auto_enter = False
+c.input.insert_mode.auto_leave = False
+c.input.insert_mode.plugins = False
+c.input.match_counts = False
+c.input.escape_quits_reporter = False
 config.bind("<Shift-Escape>", "fake-key <Shift-Escape>")
-config.bind("tt", "fake-key t")
+
+# keybinds
+config.bind("<Ctrl-/>", "cmd-set-text :")
+
+config.bind("<Ctrl-b>", "cmd-set-text -s :tab-select")
+config.bind("<Ctrl-l>", "cmd-set-text :open {url}")
+config.bind("<Ctrl-o>", "cmd-set-text -s :open -t")
+config.bind("<Ctrl-p>", "tab-pin")
+config.bind("<Ctrl-t>", "cmd-set-text -s :open -t")
+config.bind("<Ctrl-w>", "tab-close")
+
+config.bind("<Ctrl-r>", "reload")
+config.bind("<Ctrl-f>", "cmd-set-text /")
+
+config.bind("<Ctrl-i>", "devtools bottom")
+config.bind("<Ctrl-u>", "view-source")
+
+config.bind("<Ctrl-->", "zoom-out")
+config.bind("<Ctrl-0>", "zoom 100")
+config.bind("<Ctrl-=>", "zoom-in")
+
+
+config.bind("<Ctrl-[>", "back")
+config.bind("<Ctrl-]>", "forward")
+
+config.bind("<Ctrl-j>", "scroll-page 0 0.7")
+config.bind("<Ctrl-k>", "scroll-page 0 -0.7")
+
+config.bind("<Ctrl-h>", "hint all")
+config.bind("<Ctrl-m>", "hint links spawn mpv {hint-url}")
+config.bind("<Ctrl-Shift-m>", "spawn mpv {url}")
+
+config.bind("<Ctrl-Shift-c>", "config-source")
+
+config.bind(
+    "<Ctrl-.>",
+    "config-cycle -p -t -u *://*.{url:host}/* content.javascript.enabled ;; config-cycle -p -t -u *://*.{url:host}/* content.cookies.accept no-3rdparty never ;; reload",
+)
+
+# bindings for command mode
+config.bind("<Ctrl-f>", "search-next", mode="command")
+config.bind("<Ctrl-g>", "mode-leave", mode="command")
+config.bind("<Escape>", "mode-leave", mode="command")
+config.bind(
+    "<Down>", "completion-item-focus next ;; command-history-next", mode="command"
+)
+config.bind(
+    "<Up>", " command-history-prev ;; completion-item-focus prev", mode="command"
+)
+config.bind("<Return>", "command-accept", mode="command")
+config.bind("<Shift-Tab>", "completion-item-focus prev", mode="command")
+config.bind("<Tab>", "completion-item-focus next", mode="command")
+
+# bindings for hint mode
+config.bind("<Ctrl-g>", "mode-leave", mode="hint")
+config.bind("<Escape>", "mode-leave", mode="hint")
+config.bind("<Return>", "follow-hint", mode="hint")
+
+# bindings for prompt mode
+config.bind("<Ctrl-g>", "mode-leave", mode="prompt")
+config.bind("<Down>", "prompt-item-focus next", mode="prompt")
+config.bind("<Escape>", "mode-leave", mode="prompt")
+config.bind("<Return>", "prompt-accept", mode="prompt")
+config.bind("<Shift-Tab>", "prompt-item-focus prev", mode="prompt")
+config.bind("<Tab>", "prompt-item-focus next", mode="prompt")
+config.bind("<Up>", "prompt-item-focus prev", mode="prompt")
+config.bind("n", "prompt-accept no", mode="prompt")
+config.bind("y", "prompt-accept yes", mode="prompt")
+
+# bindings for yesno mode
+config.bind("<Ctrl-g>", "mode-leave", mode="yesno")
+config.bind("<Escape>", "mode-leave", mode="yesno")
+config.bind("<Return>", "prompt-accept", mode="yesno")
+config.bind("N", "prompt-accept --save no", mode="yesno")
+config.bind("Y", "prompt-accept --save yes", mode="yesno")
+config.bind("n", "prompt-accept no", mode="yesno")
+config.bind("y", "prompt-accept yes", mode="yesno")
+
+config.bind("<Alt-1>", "tab-focus -n 1")
+config.bind("<Alt-2>", "tab-focus -n 2")
+config.bind("<Alt-3>", "tab-focus -n 3")
+config.bind("<Alt-4>", "tab-focus -n 4")
+config.bind("<Alt-5>", "tab-focus -n 5")
+config.bind("<Alt-6>", "tab-focus -n 6")
+config.bind("<Alt-7>", "tab-focus -n 7")
+config.bind("<Alt-8>", "tab-focus -n 8")
+config.bind("<Alt-9>", "tab-focus -n -1")
