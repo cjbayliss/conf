@@ -48,10 +48,9 @@ def validate_arguments(args, help_text: str) -> bool or str:
     if args.backlight and not valid_backlight(args.backlight):
         return "Invalid backlight name."
 
-    if (
-        args.check or args.decrease or args.increase or args.max or args.set
-    ) and not args.backlight:
+    if not args.backlight and not args.list:
         return help_text + "\nA backlight is required."
+
     return True
 
 
