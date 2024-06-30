@@ -28,7 +28,11 @@ ARGUMENTS = [
 
 
 def init_args(args: list[list[list, dict]]) -> list:
-    parser = argparse.ArgumentParser()
+    # fucking python and its fucking PEP8 E731 ffs.
+    def formatter(prog):
+        return argparse.HelpFormatter(prog, max_help_position=48)
+
+    parser = argparse.ArgumentParser(formatter_class=formatter)
     for arg in args:
         parser.add_argument(*arg[0], **arg[1])
     return [parser.parse_args(), parser.format_help()]
