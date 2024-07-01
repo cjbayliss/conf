@@ -20,6 +20,7 @@ media-fonts/noto
 media-fonts/noto-emoji
 media-video/mpv
 net-analyzer/wireshark
+net-misc/openntpd
 sys-kernel/gentoo-sources
 www-client/pybugz
 www-client/qutebrowser
