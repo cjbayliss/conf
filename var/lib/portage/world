@@ -9,6 +9,7 @@ app-misc/tmux
 app-misc/yq-go
 app-portage/gentoolkit
 dev-util/github-cli
+dev-util/hut
 dev-util/pkgcheck
 dev-util/pkgdev
 dev-util/sh

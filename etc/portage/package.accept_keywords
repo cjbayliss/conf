@@ -1,4 +1,5 @@
 <sys-devel/gcc-15
+dev-util/hut
 app-admin/bitwarden-cli-bin
 app-editors/kakoune
 app-editors/kakoune-lsp
