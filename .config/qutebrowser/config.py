@@ -142,6 +142,7 @@ c.content.geolocation = False
 c.content.headers.do_not_track = False
 c.content.mouse_lock = False
 c.content.notifications.enabled = False
+c.content.pdfjs = True
 c.content.persistent_storage = False
 c.content.register_protocol_handler = False
 c.content.xss_auditing = True
