@@ -24,4 +24,5 @@ net-misc/openntpd
 sys-kernel/gentoo-sources
 www-client/pybugz
 www-client/qutebrowser
+www-plugins/pdfjs
 x11-terms/alacritty
