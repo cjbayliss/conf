@@ -149,6 +149,19 @@ c.downloads.location.directory = "$HOME/stuff/downloads"
 c.downloads.location.prompt = False
 c.prompt.filebrowser = False
 
+# hardware acceleration
+c.qt.workarounds.disable_accelerated_2d_canvas = "never"
+c.qt.args = [
+    "disable-font-subpixel-positioning",
+    "enable-features=VaapiVideoDecoder,VaapiVideoEncoder,CanvasOopRasterization,RawDraw",
+    "enable-raw-draw",
+    "enable-unsafe-webgpu",
+    "enable-zero-copy",
+    "ignore-gpu-blocklist",
+    "use-gl=egl",
+    "use-vulkan",
+]
+
 # use: /usr/share/qutebrowser/scripts/dictcli.py install en-AU
 c.spellcheck.languages = ["en-AU"]
 
