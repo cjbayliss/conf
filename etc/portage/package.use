@@ -1,7 +1,6 @@
 app-admin/doas persist
-media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
 app-crypt/gpgme -qt6
-app-emulation/qemu sdl -opengl
+app-emulation/qemu sdl
 dev-build/cmake -qt6
 dev-lang/rust-bin clippy rustfmt rust-analyzer
 dev-python/PyQt6 qml quick webchannel
@@ -11,10 +10,13 @@ gui-wm/sway -swaybar
 media-fonts/noto cjk
 media-libs/freetype harfbuzz
 media-libs/libglvnd X
-media-libs/libsdl2 gles2 -opengl
-media-libs/libwebp -opengl
+media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
+media-libs/libsdl2 gles2
+media-libs/libva X
+media-libs/mesa X
+media-libs/vulkan-loader X
 media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265
-media-video/mpv jpeg -opengl
+media-video/mpv jpeg X
 media-video/pipewire sound-server -man
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
