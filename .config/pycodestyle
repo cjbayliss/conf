@@ -1,0 +1,4 @@
+# vim: set ft=ini
+[pycodestyle]
+# sigh, why doesn't everyone follow python black's style
+ignore = E501,W503
