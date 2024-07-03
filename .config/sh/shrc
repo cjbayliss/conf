@@ -25,8 +25,15 @@ sitelogin() { bw get username $1 && bw get password $1; }
 
 [ -f "$(command -v gpg)" ] && [ -f "$(command -v tty)" ] && export GPG_TTY="$(tty)"
 
-# this prompt should be safe on most systems
-PS1="\h \w \$ "
+__git_prompt() {
+    BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
+    STATUS="$(git status -uno -s 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/ \1/')"
+    printf "%s%s" "$BRANCH" "$STATUS"
+}
+
+# cross OS and cross shell prompts are HARD. this one won't work on
+# FreeBSD or Chimera Linux (not to be confused with ChimeraOS)
+PS1="\$? ${HOSTNAME:=$(hostname)} \$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt) \$ "
 
 [ -f "$HOME/.config/sh/envrc" ] && . "$HOME/.config/sh/envrc"
 
@@ -51,8 +58,8 @@ if [ -n "$BASH_VERSION" ]; then
     HISTFILESIZE=-1
     HISTFILE="$XDG_DATA_HOME/bash-history"
 
-    # check the window size after each command and, if necessary, update
-    # the values of LINES and COLUMNS.
+    # check the window size after each command and, if necessary,
+    # update the values of LINES and COLUMNS.
     shopt -s checkwinsize
 
     # better completion (imo)
@@ -85,12 +92,19 @@ if [ -n "$BASH_VERSION" ]; then
 
     PROMPT_COMMAND='__exit_status'
 
-    PROMPT_DIRTRIM=1
-    PS1="$(__remote_host)\h \[\e[96m\]\w\[\e[0m\] \$ "
+    if [ -f "$(command -v fish_cwd)" ]; then
+        PS1="$(__remote_host)\h \[\e[96m\]\$(fish_cwd)\[\e[0m\] \$ "
+    else
+        PROMPT_DIRTRIM=1
+        PS1="$(__remote_host)\h \[\e[96m\]\w\[\e[0m\] \$ "
+    fi
 fi
 
 # clear on the console
 __clear_console() {
+    rm -rf ~/.cache/
+    rm -rf ~/.w3m/
+    rm -rf ~/.wget-hsts
     fgconsole 2>/dev/null && clear
 }
 
