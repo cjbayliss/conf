@@ -156,7 +156,6 @@ c.qt.args = [
     "disable-font-subpixel-positioning",
     "enable-features=VaapiVideoDecoder,VaapiVideoEncoder,CanvasOopRasterization,RawDraw",
     "enable-raw-draw",
-    "enable-unsafe-webgpu",
     "enable-zero-copy",
     "ignore-gpu-blocklist",
     "use-gl=egl",
