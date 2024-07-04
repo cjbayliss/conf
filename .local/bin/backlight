@@ -79,7 +79,7 @@ if __name__ == "__main__":
     backlight_path = Path(f"/sys/class/backlight/{args.backlight}/brightness")
     max_brightness = int(
         Path(f"/sys/class/backlight/{args.backlight}/max_brightness")
-        .read_text()
+        .read_text("utf-8")
         .rsplit()[0]
     )
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
             get_current_brightness(backlight_path)
             - (max_brightness * args.decrease / 100)
         )
-        backlight_path.write_text(str(max([amount, 1])))
+        backlight_path.write_text(str(max([amount, 1])), encoding="utf-8")
         if args.verbose:
             print(
                 f"{get_brightness_percent(get_current_brightness(backlight_path), max_brightness)}%"
@@ -107,7 +107,7 @@ if __name__ == "__main__":
             get_current_brightness(backlight_path)
             + (max_brightness * args.increase / 100)
         )
-        backlight_path.write_text(str(min([amount, max_brightness])))
+        backlight_path.write_text(str(min([amount, max_brightness])), encoding="utf-8")
         if args.verbose:
             print(
                 f"{get_brightness_percent(get_current_brightness(backlight_path), max_brightness)}%"
@@ -117,7 +117,7 @@ if __name__ == "__main__":
         if args.set > max_brightness:
             print(f"Must be less the {max_brightness}")
             sys.exit(1)
-        backlight_path.write_text(str(int(args.set)))
+        backlight_path.write_text(str(int(args.set)), encoding="utf-8")
         if args.verbose:
             print(
                 f"{get_brightness_percent(get_current_brightness(backlight_path), max_brightness)}%"
