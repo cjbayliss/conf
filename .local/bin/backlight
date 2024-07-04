@@ -5,9 +5,6 @@
 # example udev rule (/etc/udev/rules.d/backlight.rules):
 # ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video $sys$devpath/brightness", RUN+="/bin/chmod g+w $sys$devpath/brightness"
 
-# FIXME: this is a messy script, I guess that is because it deals with
-# IO, but still, surely it can be cleaner
-
 from pathlib import Path
 import argparse
 import os
