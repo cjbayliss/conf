@@ -27,44 +27,46 @@ ARGUMENTS = [
 # fmt: on
 
 
-def init_args(args: list[list[list, dict]]) -> list:
-    # fucking python and its fucking PEP8 E731 ffs.
-    def formatter(prog):
-        return argparse.HelpFormatter(prog, max_help_position=48)
+def init_args(args_7f05: list[list]) -> list:
+    # pylint: disable=C3001
+    formatter_7f05 = lambda prog: argparse.HelpFormatter(prog, max_help_position=48)
 
-    parser = argparse.ArgumentParser(formatter_class=formatter)
-    for arg in args:
-        parser.add_argument(*arg[0], **arg[1])
-    return [parser.parse_args(), parser.format_help()]
+    parser_7f05 = argparse.ArgumentParser(formatter_class=formatter_7f05)
+    for arg_7f05 in args_7f05:
+        parser_7f05.add_argument(*arg_7f05[0], **arg_7f05[1])
+    return [parser_7f05.parse_args(), parser_7f05.format_help()]
 
 
-def valid_backlight(backlight: str) -> bool:
-    backlight_path = f"/sys/class/backlight/{backlight}"
-    if os.path.exists(backlight_path) and os.path.isdir(backlight_path):
+def valid_backlight(backlight_615a: str) -> bool:
+    backlight_path_615a = f"/sys/class/backlight/{backlight_615a}"
+    if os.path.exists(backlight_path_615a) and os.path.isdir(backlight_path_615a):
         return True
+    return False
 
 
-def validate_arguments(args, help_text: str) -> bool or str:
-    if args.backlight and not valid_backlight(args.backlight):
+def validate_arguments(args_96bd: argparse.Namespace, help_text_96bd: str) -> str:
+    if args_96bd.backlight and not valid_backlight(args_96bd.backlight):
         return "Invalid backlight name."
 
-    if not args.backlight and not args.list:
-        return help_text + "\nA backlight is required."
+    if not args_96bd.backlight and not args_96bd.list:
+        return help_text_96bd + "\nA backlight is required."
 
-    return True
-
-
-def get_current_brightness(path: Path) -> int:
-    return int(path.read_text().rsplit()[0])
+    return ""
 
 
-def get_brightness_percent(current_brightness: int, max_brightness: int) -> int:
-    return int((current_brightness / max_brightness) * 100)
+def get_current_brightness(path_b9ee: Path) -> int:
+    return int(path_b9ee.read_text().rsplit()[0])
+
+
+def get_brightness_percent(
+    current_brightness_2615: int, max_brightness_2615: int
+) -> int:
+    return int((current_brightness_2615 / max_brightness_2615) * 100)
 
 
 if __name__ == "__main__":
     args, help_text = init_args(ARGUMENTS)
-    if (text := validate_arguments(args, help_text)) is not True:
+    if (text := validate_arguments(args, help_text)) != "":
         print(text)
         sys.exit(1)
 
