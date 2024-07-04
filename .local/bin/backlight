@@ -15,10 +15,10 @@ import sys
 
 # fmt: off
 ARGUMENTS = [
-    [["-b", '--backlight'], {"help": "use BACKLIGHT",                   "action": "store"}],
-    [["-c", '--check'],     {"help": "check brightness",                "action": "store_true"}],
-    [["-d", '--decrease'],  {"help": "decrease brightness by PERCENT",  "action": "store", "type": int, "metavar": "PERCENT"}],
-    [["-i", '--increase'],  {"help": "increase brightness by PERCENT",  "action": "store", "type": int, "metavar": "PERCENT"}],
+    [["-b", "--backlight"], {"help": "use BACKLIGHT",                   "action": "store"}],
+    [["-c", "--check"],     {"help": "check brightness",                "action": "store_true"}],
+    [["-d", "--decrease"],  {"help": "decrease brightness by PERCENT",  "action": "store", "type": int, "metavar": "PERCENT"}],
+    [["-i", "--increase"],  {"help": "increase brightness by PERCENT",  "action": "store", "type": int, "metavar": "PERCENT"}],
     [["-l", "--list"],      {"help": "list backlights",                 "action": "store_true"}],
     [["-m", "--max"],       {"help": "get max brightness",              "action": "store_true"}],
     [["-s", "--set"],       {"help": "set brightness using an INTEGER", "type": int, "metavar": "INTEGER"}],
