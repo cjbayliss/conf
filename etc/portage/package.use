@@ -1,6 +1,7 @@
 app-admin/doas persist
 app-crypt/gpgme -qt6
 app-emulation/qemu sdl
+app-emulation/wine-vanilla -xcomposite
 dev-build/cmake -qt6
 dev-lang/rust-bin clippy rustfmt rust-analyzer
 dev-python/PyQt6 qml quick webchannel

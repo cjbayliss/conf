@@ -12,6 +12,7 @@ x11-misc/xdg-utils
 # devel/languages
 dev-python/black
 dev-python/pylint
+dev-python/python-lsp-mypy
 dev-python/python-lsp-server
 
 # disk management
