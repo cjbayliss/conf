@@ -54,6 +54,11 @@ def request_manager(request: interceptor.Request) -> None:
     redirect = False
     initial_url = request.request_url.url()
     # poor person's adblock
+    for font_type in [".otf", ".ttf", ".woff"]:
+        if font_type in request.request_url.path():
+            log.info("BLOCKED: %s", request.request_url.url())
+            request.block()
+
     if request.request_url.host() in ADBLOCK:
         for pattern in ADBLOCK[request.request_url.host()]:
             if (
