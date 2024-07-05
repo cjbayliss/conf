@@ -1,4 +1,5 @@
 app-admin/bitwarden-cli-bin
+app-arch/innoextract
 app-editors/kakoune
 app-editors/kakoune-lsp
 app-emulation/wine-vanilla
@@ -16,7 +17,6 @@ dev-util/sh
 dev-vcs/git
 gui-apps/mako
 gui-wm/sway
-mail-client/neomutt
 media-fonts/noto
 media-fonts/noto-emoji
 media-video/mpv
