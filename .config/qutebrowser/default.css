@@ -1,7 +1,50 @@
 * {
-    -moz-font-feature-settings: unset !important;
-    font-feature-settings: unset !important;
-    font-kerning: unset !important;
-    letter-spacing: unset !important;
-    text-size-adjust: unset !important;
+  -moz-font-feature-settings: unset !important;
+  font-feature-settings: unset !important;
+  font-kerning: unset !important;
+  letter-spacing: unset !important;
+  text-size-adjust: unset !important;
+}
+
+/* force Liberation Sans */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+p {
+  font-family: "Liberation Sans", sans-serif !important;
+}
+
+/* force Iosevka Fixed for mono stuff. FIXME: make this work for all mono fonts.*/
+/*[aria-label="file content"],*/
+.blob-code,
+.blob-code span,
+.blob-num,
+.code,
+code *,
+code,
+.code-view :not(.fa):not(.svg):not(.icon),
+.commit-id,
+.commit-ref,
+.diff-line-num,
+.file-info,
+.file-info-entry,
+.lines-num,
+.lines-num span:after,
+.mono,
+pre *,
+pre,
+.react-code-line-contents,
+.react-code-lines,
+.react-code-text,
+.react-line-number,
+.react-line-numbers,
+.text-mono,
+.ui .sha.label {
+  font-family: "Iosevka Fixed", monospace !important;
+  font-size: 11pt !important;
 }
