@@ -147,6 +147,7 @@ c.content.notifications.enabled = False
 c.content.pdfjs = True
 c.content.persistent_storage = False
 c.content.register_protocol_handler = False
+c.content.tls.certificate_errors = "block"
 c.content.xss_auditing = True
 c.downloads.location.directory = "$HOME/stuff/downloads"
 c.downloads.location.prompt = False
