@@ -8,7 +8,7 @@ dev-python/PyQt6 qml quick webchannel
 dev-vcs/git perl # needed for git-send-email
 gui-apps/mako -icons
 gui-wm/sway -swaybar
-media-fonts/noto cjk
+media-fonts/noto cjk -extra
 media-libs/freetype harfbuzz
 media-libs/libglvnd X
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
