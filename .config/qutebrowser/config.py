@@ -4,10 +4,12 @@ import os
 import re
 
 from itertools import chain
-from qutebrowser.api import interceptor
+from qutebrowser.api import interceptor  # type: ignore
+from typing import TYPE_CHECKING, Any
 
-config = config  # pylint: disable=E0602,W0127
-c = c  # pylint: disable=E0602,W0127
+if TYPE_CHECKING:
+    config = Any  # pylint: disable=C0103
+    c = Any  # pylint: disable=C0103
 
 log = logging.getLogger()
 
@@ -101,9 +103,8 @@ def request_manager(request: interceptor.Request) -> None:
     if redirect:
         try:
             request.redirect(request.request_url)
-        except:
-            # don't crash the browser
-            pass
+        except interceptor.RedirectException:
+            pass  # don't crash the browser
 
 
 interceptor.register(request_manager)
@@ -259,8 +260,8 @@ ALLOW_SCRIPTS_COOKIES = list(
 )
 
 for site in ALLOW_SCRIPTS_COOKIES:
-    config.set("content.javascript.enabled", True, site)
-    config.set("content.cookies.accept", "no-3rdparty", site)
+    config.set("content.javascript.enabled", True, site)  # pylint: disable=E1101
+    config.set("content.cookies.accept", "no-3rdparty", site)  # pylint: disable=E1101
 
 # reddit changes the page content if the referer is google.com
 config.set("content.headers.custom", {"Referer": ""}, "*://old.reddit.com/r/*")
@@ -282,7 +283,7 @@ DISABLE_DARKMODE = [
 ]
 
 for site in DISABLE_DARKMODE:
-    config.set("colors.webpage.darkmode.enabled", False, site)
+    config.set("colors.webpage.darkmode.enabled", False, site)  # pylint: disable=E1101
 
 # custom CSS (block ads, force better fonts, etc)
 c.content.user_stylesheets = f"{os.environ['HOME']}/.config/qutebrowser/default.css"
