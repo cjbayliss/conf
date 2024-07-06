@@ -28,7 +28,7 @@ ADBLOCK = {
 
 # for regex, see https://docs.python.org/3/library/re.html#re.sub
 REDIRECT = {
-    "en.wikipedia.org": {"type": "host", "host": "en.m.wikipedia.org"},
+    "en.m.wikipedia.org": {"type": "host", "host": "en.wikipedia.org"},
     "medium.com": {"type": "host", "host": "scribe.rip"},
     "www.reddit.com": {"type": "host", "host": "old.reddit.com"},
     "www.google.com": {
@@ -246,6 +246,7 @@ devel = [
 other = [
     "*.bitwarden.com",
     "*.icloud.com",
+    "*.wikipedia.org",
 ]
 
 # disable CVEs
