@@ -20,7 +20,7 @@ p {
 }
 
 /* force Iosevka Fixed for mono stuff. FIXME: make this work for all mono fonts.*/
-/*[aria-label="file content"],*/
+[aria-label*="Commit"],
 .blob-code,
 .blob-code span,
 .blob-num,
@@ -30,6 +30,8 @@ code,
 .code-view :not(.fa):not(.svg):not(.icon),
 .commit-id,
 .commit-ref,
+[data-testid="latest-commit-html"],
+[data-testid="list-view-item-title-container"] > .markdown-title,
 .diff-line-num,
 .file-info,
 .file-info-entry,
@@ -41,6 +43,7 @@ pre,
 .react-code-line-contents,
 .react-code-lines,
 .react-code-text,
+.react-directory-commit-message,
 .react-line-number,
 .react-line-numbers,
 .text-mono,
