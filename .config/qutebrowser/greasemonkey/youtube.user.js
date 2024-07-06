@@ -12,6 +12,11 @@ let MutationObserver =
   window.WebKitMutationObserver ||
   window.MozMutationObserver;
 let observer = new MutationObserver((e) => {
+  document.getElementsByClassName("ytp-gradient-bottom")[0].style.background =
+    "rgba(0,0,0,0.7)";
+  document.getElementsByClassName("ytp-gradient-bottom")[0].style.height =
+    "20px";
+  document.getElementById("cinematics-container").remove();
   // clean links
   let results = document.querySelectorAll('a[href*="/redirect?"]');
   for (let i = 0; i < results.length; i++) {
