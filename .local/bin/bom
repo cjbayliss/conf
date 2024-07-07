@@ -5,8 +5,8 @@ Get the weather from the BoM API
 See: https://github.com/bremor/bureau_of_meteorology/blob/9b20d1d/api%20doc/API.md
 """
 
-import urllib.request
 import json
+import urllib.request
 
 LOCATION = "r1r07e"  # Brighton
 BOM_URL = f"https://api.weather.bom.gov.au/v1/locations/{LOCATION}/observations"
