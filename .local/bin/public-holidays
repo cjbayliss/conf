@@ -2,9 +2,9 @@
 # pylint: disable=C0103
 """public-holidays prints a list of Victorian public holidays"""
 
-from datetime import date
 import csv
 import urllib.request
+from datetime import date
 from typing import List, Tuple
 
 # the ANSI escape codes we'll use

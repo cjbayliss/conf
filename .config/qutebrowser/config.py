@@ -2,10 +2,10 @@
 import logging
 import os
 import re
-
 from itertools import chain
-from qutebrowser.api import interceptor  # type: ignore
 from typing import TYPE_CHECKING, Any
+
+from qutebrowser.api import interceptor  # type: ignore
 
 if TYPE_CHECKING:
     config = Any  # pylint: disable=C0103
