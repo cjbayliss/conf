@@ -16,6 +16,7 @@ dev-util/pkgdev
 dev-util/sh
 dev-vcs/git
 gui-apps/mako
+gui-apps/wl-clipboard
 gui-wm/sway
 media-fonts/noto
 media-fonts/noto-emoji
