@@ -31,6 +31,16 @@ REDIRECT = {
     "en.m.wikipedia.org": {"type": "host", "host": "en.wikipedia.org"},
     "medium.com": {"type": "host", "host": "scribe.rip"},
     "www.reddit.com": {"type": "host", "host": "old.reddit.com"},
+    "www.ebay.com": {
+        "type": "regex",
+        "pattern": r"(\w+:\/\/.*?\.ebay\..*?\/).*(itm\/.*?\?).*",
+        "repl": r"\1\2",
+    },
+    "www.ebay.com.au": {
+        "type": "regex",
+        "pattern": r"(\w+:\/\/.*?\.ebay\..*?\/).*(itm\/.*?\?).*",
+        "repl": r"\1\2",
+    },
     "www.google.com": {
         "type": "regex",
         "pattern": r"(.*\/url\?q\=)(.*?)&.*",
@@ -239,6 +249,7 @@ devel = [
     "*.gentoo.org",
     "*.github.com",
     "*.gitlab.com",
+    "*.godbolt.org",
     "*.sr.ht",
 ]
 
