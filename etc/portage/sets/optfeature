@@ -10,6 +10,7 @@ x11-misc/j4-dmenu-desktop
 x11-misc/xdg-utils
 
 # devel/languages
+dev-debug/valgrind
 dev-python/black
 dev-python/pylint
 dev-python/python-lsp-mypy
