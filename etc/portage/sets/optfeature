@@ -21,6 +21,7 @@ sys-fs/dosfstools
 
 # bash
 app-shells/bash-completion
+app-shells/fishy-pwd
 dev-util/shellcheck-bin
 
 # kernel
