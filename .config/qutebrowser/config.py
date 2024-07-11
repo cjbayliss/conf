@@ -31,6 +31,11 @@ REDIRECT = {
     "en.m.wikipedia.org": {"type": "host", "host": "en.wikipedia.org"},
     "medium.com": {"type": "host", "host": "scribe.rip"},
     "www.reddit.com": {"type": "host", "host": "old.reddit.com"},
+    "www.googleadservices.com": {
+        "type": "regex",
+        "pattern": r"(\w+:\/\/.*?\.googleadservices\..*?\/).*adurl=(\w+:\/\/.*?\.\w+.*?\/).*",
+        "repl": r"\2",
+    },
     "www.ebay.com": {
         "type": "regex",
         "pattern": r"(\w+:\/\/.*?\.ebay\..*?\/).*(itm\/.*?\?).*",
