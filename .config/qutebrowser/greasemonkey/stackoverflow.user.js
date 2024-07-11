@@ -8,6 +8,33 @@
 // @qute-js-world   user
 // ==/UserScript==
 
-document.querySelector(".js-top-bar").remove();
-document.querySelector("#announcement-banner").remove();
-document.querySelector("#left-sidebar").remove();
+list = [
+  "#announcement-banner",
+  ".bottom-notice",
+  "#custom-header",
+  "#footer",
+  ".js-add-link",
+  ".js-post-menu",
+  ".js-top-bar",
+  "#left-sidebar",
+  "#left-sidebar",
+  "#notify-container",
+  "#one-tap-container",
+  "#post-form",
+  "#sidebar",
+  "#signup-dialog-container",
+  "#signup-modal-container",
+  ".site-header",
+  ".votecell",
+];
+
+for (selector in list) {
+  elements = document.querySelectorAll(list[selector]);
+  for (element in elements) {
+    try {
+      elements[element].remove();
+    } catch {
+      // do nothing
+    }
+  }
+}
