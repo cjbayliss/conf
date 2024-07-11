@@ -65,6 +65,8 @@ export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/startup.py"
 
 export GDK_DPI_SCALE=0.5
+export XCURSOR_SIZE=24
+export XCURSOR_THEME=Adwaita
 
 # some programs respect this
 export DISABLE_TELEMETRY=1

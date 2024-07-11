@@ -30,4 +30,3 @@ def format_temperature(temp: str) -> str:
 
 if __name__ == "__main__":
     print(format_temperature(fetch_weather_data(BOM_URL)))
-

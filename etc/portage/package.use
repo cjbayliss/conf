@@ -1,19 +1,15 @@
 app-admin/doas persist
-app-crypt/gpgme -qt6
-app-emulation/qemu sdl
-app-emulation/wine-vanilla -xcomposite
-dev-build/cmake -qt6
+dev-debug/gdb source-highlight
 dev-lang/rust-bin clippy rustfmt rust-analyzer
-dev-python/PyQt6 qml quick webchannel
-dev-vcs/git perl # needed for git-send-email
 gui-apps/mako -icons
 gui-wm/sway -swaybar
 media-fonts/noto cjk -extra
+media-gfx/qrencode png
 media-libs/freetype harfbuzz
-media-libs/libglvnd X
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
 media-libs/libsdl2 gles2
 media-libs/libva X
+media-libs/libvpx postproc
 media-libs/mesa X
 media-libs/vulkan-loader X
 media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265
@@ -22,7 +18,5 @@ media-video/pipewire sound-server -man
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
-sys-libs/zlib minizip
 sys-process/procps -ncurses
-www-client/qutebrowser widevine
 x11-misc/j4-dmenu-desktop -dmenu
