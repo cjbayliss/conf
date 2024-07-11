@@ -1,55 +1,11 @@
-#!/usr/bin/env python3
-# pylint: disable=C0103
-"""public-holidays prints a list of Victorian public holidays"""
-
-import csv
-import urllib.request
-from datetime import date
-from typing import List, Tuple
-
-# the ANSI escape codes we'll use
-CYAN = "\033[36m"
-BOLD = "\033[1m"
-ITALIC = "\033[3m"
-RESET = "\033[0m"
-
-# https://data.gov.au/data/dataset/australian-holidays-machine-readable-dataset
-# pylint: disable-next=C0301
-PUBLIC_HOLIDAY_DATE_URL = "https://data.gov.au/data/dataset/b1bc6077-dadd-4f61-9f8c-002ab2cdff10/resource/9e920340-0744-4031-a497-98ab796633e8/download/australian_public_holidays_2024.csv"
+#!/bin/sh
 
 
-def fetch_holiday_data(url: str) -> List[str]:
-    """Fetch holiday data from the specified URL."""
-    with urllib.request.urlopen(url) as response:
-        return response.read().decode("utf-8").splitlines()
+# see: https://data.gov.au/data/dataset/australian-holidays-machine-readable-dataset
+__PUBLIC_HOLIDAYS_DATASET="https://data.gov.au/data/dataset/b1bc6077-dadd-4f61-9f8c-002ab2cdff10/resource/9e920340-0744-4031-a497-98ab796633e8/download/australian_public_holidays_2024.csv"
 
+curl -s "$__PUBLIC_HOLIDAYS_DATASET" |\
+    column -s ',' --table-columns DATE,HOLIDAY,DESC,LINK,STATE,extra1,extra2,extra3 --json |\
+    jq -r '.[].[] | select(.state == "vic\r") | [.date,.holiday] | @tsv'
 
-def generate_holiday_list(csv_dict: csv.DictReader) -> List[Tuple[date, str]]:
-    """Return the holiday array"""
-    holidays = [
-        (date.fromisoformat(row["Date"]), row["Holiday Name"])
-        for row in csv_dict
-        if row["Jurisdiction"] == "vic"
-    ]
-
-    holidays.sort(key=lambda x: x[0])
-    return holidays
-
-
-def print_holidays(holiday_list: List[Tuple[date, str]]) -> None:
-    """Print the holidays"""
-    print(f"{BOLD}{'Date':<12} {'Holiday Name':<30}{RESET}")
-    print("-" * 42)
-    for holiday_date, holiday_name in holiday_list:
-        if holiday_date == date.today():
-            print(f"{BOLD}{ITALIC}{CYAN}{'TODAY':<12} {holiday_name:<30}{RESET}")
-        else:
-            print(f"{holiday_date.isoformat():<12} {holiday_name:<30}")
-
-
-if __name__ == "__main__":
-    print_holidays(
-        generate_holiday_list(
-            csv.DictReader(fetch_holiday_data(PUBLIC_HOLIDAY_DATE_URL))
-        )
-    )
+unset $__PUBLIC_HOLIDAYS_DATASET
