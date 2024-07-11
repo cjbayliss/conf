@@ -1,32 +1,8 @@
-#!/usr/bin/env python3
-"""
-Get the weather from the BoM API
+#!/bin/sh
 
-See: https://github.com/bremor/bureau_of_meteorology/blob/9b20d1d/api%20doc/API.md
-"""
+# see: https://github.com/bremor/bureau_of_meteorology/blob/9b20d1d/api%20doc/API.md
 
-import json
-import urllib.request
+__LOCATION="r1r07e" # closest station to brighton
 
-LOCATION = "r1r07e"  # Brighton
-BOM_URL = f"https://api.weather.bom.gov.au/v1/locations/{LOCATION}/observations"
-
-
-def fetch_weather_data(url: str) -> str:
-    """Fetch BOM weather data from url"""
-    try:
-        with urllib.request.urlopen(url) as response:
-            weather_data = response.read().decode("utf-8")
-            return json.loads(weather_data)["data"]["temp"]
-    except urllib.error.URLError as e:
-        print(f"Error fetching URL: {e}")
-        return str(None)
-
-
-def format_temperature(temp: str) -> str:
-    """Format weather data"""
-    return f"{temp}°C" if temp is not None else "N/A"
-
-
-if __name__ == "__main__":
-    print(format_temperature(fetch_weather_data(BOM_URL)))
+printf "%s°C\n" "$(curl -s https://api.weather.bom.gov.au/v1/locations/${__LOCATION}/observations | jq -r '.data.temp')"
+unset __LOCATION
