@@ -91,6 +91,7 @@ __clear_console() {
     rm -rf ~/.cache/
     rm -rf ~/.w3m/
     rm -rf ~/.wget-hsts
+    rm -rf ~/.python_history
     fgconsole 2>/dev/null && clear
 }
 
