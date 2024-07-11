@@ -11,29 +11,15 @@ alias non-gentoo="qlist -IRv | grep -v ::gentoo | grep ::.*"
 
 watch() {
     while true; do
-        reset
-        $@
-        sleep 5
+        reset; $@; sleep 5
     done
 }
 
-git_gentoo_print_sha_url() {
-    echo "https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=$1"
-}
-
-sitelogin() { bw get username $1 && bw get password $1; }
-
 [ -f "$(command -v gpg)" ] && [ -f "$(command -v tty)" ] && export GPG_TTY="$(tty)"
-
-__git_prompt() {
-    BRANCH="$(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/')"
-    STATUS="$(git status -uno -s 2>/dev/null | sed 's/^ //g' | cut -d' ' -f1 | sort -u | tr -d '\n' | sed 's/\(.*\)/ \1/')"
-    printf "%s%s" "$BRANCH" "$STATUS"
-}
 
 # cross OS and cross shell prompts are HARD. this one won't work on
 # FreeBSD or Chimera Linux (not to be confused with ChimeraOS)
-PS1="\$? ${HOSTNAME:=$(hostname)} \$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/')\$(__git_prompt) \$ "
+PS1="${HOSTNAME:=$(hostname)} \$(pwd | sed -e 's/\/usr\/home\/'$USER'/~/' -e 's/\/home\/'$USER'/~/') \$ "
 
 [ -f "$HOME/.config/sh/envrc" ] && . "$HOME/.config/sh/envrc"
 
