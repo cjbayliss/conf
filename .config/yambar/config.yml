@@ -37,7 +37,7 @@ bar:
         path: /bin/sh
         args:
           - '-c'
-          - "printf \"%s%s\\n\\n\" 'ipaddr|string|' \"$(ip -j a | yq -r '[.[] | select(.operstate == \"UP\") | .addr_info[] | .local][0]')\""
+          - "printf \"%s%s\\n\\n\" 'ipaddr|string|' \"$(ip -j a | jq -r '[.[] | select(.operstate == \"UP\") | .addr_info[] | .local][0]')\""
         poll-interval: 60000
         content:
           - string: {text: "{ipaddr}", foreground: 6ae4b9ff}
