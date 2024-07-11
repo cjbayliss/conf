@@ -1,121 +1,49 @@
-#!/usr/bin/env python3
+#!/bin/sh
 
 # tool to get and set the backlight brightness
 #
 # example udev rule (/etc/udev/rules.d/backlight.rules):
 # ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video $sys$devpath/brightness", RUN+="/bin/chmod g+w $sys$devpath/brightness"
 
-import argparse
-import os
-import sys
-from pathlib import Path
+__help() {
+    printf "usage: $(basename $0) [-chm] [-d PERCENT] [-i PERCENT] [-s VALUE]\n"
+}
 
-# fmt: off
-ARGUMENTS = [
-    [["-b", "--backlight"], {"help": "use BACKLIGHT",                   "action": "store"}],
-    [["-c", "--check"],     {"help": "check brightness",                "action": "store_true"}],
-    [["-d", "--decrease"],  {"help": "decrease brightness by PERCENT",  "action": "store", "type": int, "metavar": "PERCENT"}],
-    [["-i", "--increase"],  {"help": "increase brightness by PERCENT",  "action": "store", "type": int, "metavar": "PERCENT"}],
-    [["-l", "--list"],      {"help": "list backlights",                 "action": "store_true"}],
-    [["-m", "--max"],       {"help": "get max brightness",              "action": "store_true"}],
-    [["-s", "--set"],       {"help": "set brightness using an INTEGER", "type": int, "metavar": "INTEGER"}],
-    [["-v", "--verbose"],   {"help": "verbose output",                  "action": "store_true"}],
-]
-# fmt: on
+[ "$(command ls -1 /sys/class/backlight/ | wc -l)" = 1 ] && BACKLIGHT="$(command ls -d /sys/class/backlight/*)" || echo "Error: unknown platform."
+[ -f "$BACKLIGHT/max_brightness" ] && MAX_BRIGHTNESS="$(cat $BACKLIGHT/max_brightness)" || echo "Error: too many backlights."
+[ -f "$BACKLIGHT/brightness" ] && CURRENT_BRIGHTNESS="$(cat $BACKLIGHT/brightness)"
 
+case "$1" in
+'-c')
+    printf "%.0f%% (%s)\n" "$(echo $(cat $BACKLIGHT/brightness)/$MAX_BRIGHTNESS*100 | bc -l)" $CURRENT_BRIGHTNESS
+    exit 0
+    ;;
+'-d')
+    PERCENT="$(echo $2/100 | bc -l)"
+    BRIGHTNESS="$(printf "%.0f" $(echo $CURRENT_BRIGHTNESS'-('$PERCENT'*'$MAX_BRIGHTNESS')' | bc -l))"
+    ;;
+'-i')
+    PERCENT="$(echo $2/100 | bc -l)"
+    BRIGHTNESS="$(printf "%.0f" $(echo $CURRENT_BRIGHTNESS'+('$PERCENT'*'$MAX_BRIGHTNESS')' | bc -l))"
+    ;;
+'-h')
+    __help
+    exit 0
+    ;;
+'-m')
+    printf "Max brightness: %s\n" $MAX_BRIGHTNESS
+    exit 0
+    ;;
+'-s')
+    BRIGHTNESS="$2"
+    ;;
+*)
+    __help
+    exit 1
+    ;;
+esac
 
-def init_args(args_7f05: list[list]) -> list:
-    # pylint: disable=C3001
-    formatter_7f05 = lambda prog: argparse.HelpFormatter(prog, max_help_position=48)
+[ "$BRIGHTNESS" -lt 0 ] && BRIGHTNESS=1
+[ "$BRIGHTNESS" -gt "$MAX_BRIGHTNESS" ] && BRIGHTNESS="$MAX_BRIGHTNESS"
 
-    parser_7f05 = argparse.ArgumentParser(formatter_class=formatter_7f05)
-    for arg_7f05 in args_7f05:
-        parser_7f05.add_argument(*arg_7f05[0], **arg_7f05[1])
-    return [parser_7f05.parse_args(), parser_7f05.format_help()]
-
-
-def valid_backlight(backlight_615a: str) -> bool:
-    backlight_path_615a = f"/sys/class/backlight/{backlight_615a}"
-    if os.path.exists(backlight_path_615a) and os.path.isdir(backlight_path_615a):
-        return True
-    return False
-
-
-def validate_arguments(args_96bd: argparse.Namespace, help_text_96bd: str) -> str:
-    if args_96bd.backlight and not valid_backlight(args_96bd.backlight):
-        return "Invalid backlight name."
-
-    if not args_96bd.backlight and not args_96bd.list:
-        return help_text_96bd + "\nA backlight is required."
-
-    return ""
-
-
-def get_current_brightness(path_b9ee: Path) -> int:
-    return int(path_b9ee.read_text().rsplit()[0])
-
-
-def get_brightness_percent(
-    current_brightness_2615: int, max_brightness_2615: int
-) -> int:
-    return int((current_brightness_2615 / max_brightness_2615) * 100)
-
-
-if __name__ == "__main__":
-    args, help_text = init_args(ARGUMENTS)
-    if (text := validate_arguments(args, help_text)) != "":
-        print(text)
-        sys.exit(1)
-
-    backlight_names = [dir.name for dir in os.scandir("/sys/class/backlight/")]
-    if args.list:
-        for backlight in backlight_names:
-            print(backlight)
-        sys.exit()
-
-    backlight_path = Path(f"/sys/class/backlight/{args.backlight}/brightness")
-    max_brightness = int(
-        Path(f"/sys/class/backlight/{args.backlight}/max_brightness")
-        .read_text("utf-8")
-        .rsplit()[0]
-    )
-
-    if args.max:
-        print(max_brightness)
-
-    if args.check:
-        current = get_current_brightness(backlight_path)
-        absolute = f" ({current})" if args.verbose else str()
-        print(f"{get_brightness_percent(current, max_brightness)}%{absolute}")
-
-    if args.decrease:
-        amount = int(
-            get_current_brightness(backlight_path)
-            - (max_brightness * args.decrease / 100)
-        )
-        backlight_path.write_text(str(max([amount, 1])), encoding="utf-8")
-        if args.verbose:
-            print(
-                f"{get_brightness_percent(get_current_brightness(backlight_path), max_brightness)}%"
-            )
-
-    if args.increase:
-        amount = int(
-            get_current_brightness(backlight_path)
-            + (max_brightness * args.increase / 100)
-        )
-        backlight_path.write_text(str(min([amount, max_brightness])), encoding="utf-8")
-        if args.verbose:
-            print(
-                f"{get_brightness_percent(get_current_brightness(backlight_path), max_brightness)}%"
-            )
-
-    if args.set:
-        if args.set > max_brightness:
-            print(f"Must be less the {max_brightness}")
-            sys.exit(1)
-        backlight_path.write_text(str(int(args.set)), encoding="utf-8")
-        if args.verbose:
-            print(
-                f"{get_brightness_percent(get_current_brightness(backlight_path), max_brightness)}%"
-            )
+echo $BRIGHTNESS >"$BACKLIGHT/brightness"
