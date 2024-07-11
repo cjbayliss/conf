@@ -24,6 +24,7 @@ p {
 .blob-code,
 .blob-code span,
 .blob-num,
+[class^="codeLine"],
 [class^="inlineCode"],
 .code,
 code *,
