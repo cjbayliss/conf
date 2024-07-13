@@ -62,7 +62,7 @@ export MYPY_CACHE_DIR="$XDG_CACHE_HOME/mypy"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/startup.py"
+[ -f "$XDG_CONFIG_HOME/python/startup.py" ] && export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/startup.py"
 
 export GDK_DPI_SCALE=0.5
 export XCURSOR_SIZE=24
