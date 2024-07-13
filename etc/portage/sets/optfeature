@@ -1,21 +1,38 @@
 # sway
 gui-apps/grim
+gui-apps/mako
 gui-apps/slurp
 gui-apps/swaybg
 gui-apps/wl-clipboard
 gui-apps/wlsunset
 gui-apps/wmenu
 gui-apps/yambar
+gui-wm/sway
 x11-misc/j4-dmenu-desktop
 x11-misc/xdg-utils
 
 # devel/languages
-dev-debug/valgrind
 dev-debug/gdb
+dev-debug/valgrind
 dev-python/black
 dev-python/pylint
 dev-python/python-lsp-mypy
 dev-python/python-lsp-server
+
+# vcs
+dev-vcs/git
+dev-vcs/mercurial
+
+# workflow/editors
+app-misc/tmux
+app-editors/kakoune
+app-editors/kakoune-lsp
+
+# gentoo dev
+app-portage/gentoolkit
+dev-util/pkgcheck
+dev-util/pkgdev
+www-client/pybugz
 
 # disk management
 sys-fs/btrfs-progs
@@ -29,6 +46,7 @@ dev-util/shellcheck-bin
 # kernel
 sys-firmware/intel-microcode
 sys-firmware/sof-firmware
+sys-kernel/gentoo-sources
 sys-kernel/linux-firmware
 
 # mpv
@@ -39,9 +57,11 @@ net-misc/yt-dlp
 # system
 app-admin/doas
 app-eselect/eselect-repository
+app-misc/jq
 dev-util/ccache
 net-firewall/nftables
 net-misc/dhcpcd
+net-misc/openntpd
 net-wireless/wpa_supplicant
 sys-boot/efibootmgr
 sys-process/cronie
