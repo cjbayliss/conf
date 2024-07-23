@@ -155,7 +155,7 @@
       "Add": [
         {
           "Alias": "!g",
-          "Description": "Search Gentoo",
+          "Description": "Search Google",
           "IconURL": "https://www.google.com/favicon.ico",
           "Method": "GET",
           "Name": "Google (Custom)",
