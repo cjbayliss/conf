@@ -30,6 +30,7 @@ app-editors/kakoune-lsp
 
 # gentoo dev
 app-portage/gentoolkit
+app-portage/iwdevtools
 dev-util/pkgcheck
 dev-util/pkgdev
 www-client/pybugz
