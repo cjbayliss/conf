@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# source iwdevtools bashrc for QA
+[ -f "/usr/share/iwdevtools/bashrc" ] && source /usr/share/iwdevtools/bashrc
 
 ############################ BTRFS SNAPSHOTTING ############################
 #
