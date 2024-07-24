@@ -1,4 +1,5 @@
 app-admin/doas persist
+app-text/xmlto text
 dev-debug/gdb source-highlight
 dev-lang/rust-bin clippy rustfmt rust-analyzer
 gui-apps/mako -icons
