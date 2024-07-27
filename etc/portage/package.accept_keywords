@@ -1,11 +1,8 @@
 <sys-devel/gcc-15
 app-editors/kakoune
 app-editors/kakoune-lsp
-app-emulation/wine-mono
-app-emulation/wine-vanilla
 dev-python/python-lsp-mypy
 gui-apps/wlsunset
-gui-apps/wmenu
 gui-apps/yambar
 mpv-plugin/mpv-mpris
 sys-kernel/gentoo-sources
