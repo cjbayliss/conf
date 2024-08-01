@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ "$(hostname)" == "hakea" ]; then
+    # set backlight to 50%
+    echo 12121 > /sys/class/backlight/intel_backlight/brightness
+fi
