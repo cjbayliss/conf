@@ -24,10 +24,6 @@ input type:touchpad {
     pointer_accel 0.5
 }
 
-input type:keyboard {
-    xkb_options "caps:escape,altwin:swap_alt_win"
-}
-
 set $mod Mod4
 set $left h
 set $down j
