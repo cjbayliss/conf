@@ -1,5 +1,3 @@
-workspace_layout tabbed
-
 # this requires the disable_titlebar patch from:
 # https://github.com/neuromagus/disable_titlebar_in_sway/tree/main
 disable_titlebar yes
@@ -12,9 +10,9 @@ default_border pixel 2
 focus_follows_mouse no
 
 # colours
-client.focused #b6a0ff #b6a0ff #000000 #000000
-client.focused_inactive #444444 #444444 #000000 #000000
-client.unfocused #444444 #444444 #000000 #000000
+client.focused #b6a0ff #b6a0ff #000000 #b6a0ff
+client.focused_inactive #444444 #444444 #000000 #444444
+client.unfocused #444444 #444444 #000000 #444444
 
 output "*" background #1a1a1a solid_color
 
