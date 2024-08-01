@@ -1,0 +1,5 @@
+evdev:input:b0011v0001p0001eAB83*
+    KEYBOARD_KEY_db=leftalt # META -> ALT
+    KEYBOARD_KEY_b8=rightmeta # ALT -> META
+    KEYBOARD_KEY_38=leftmeta # ALT -> META
+    KEYBOARD_KEY_3a=01 # CAPSLOCK -> ESC
