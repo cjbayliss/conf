@@ -204,6 +204,54 @@
           "Method": "GET",
           "Name": "Ask Moe",
           "URLTemplate": "https://ask.moe/search?q={searchTerms}"
+        },
+        {
+          "Alias": "!w",
+          "Description": "Search Wikipedia",
+          "IconURL": "https://en.wikipedia.org/static/favicon/wikipedia.ico",
+          "Method": "GET",
+          "Name": "Wikipedia",
+          "URLTemplate": "https://en.wikipedia.org/wiki/Special:Search?search={searchTerms}"
+        },
+        {
+          "Alias": "!define",
+          "Description": "Search Wiktionary",
+          "IconURL": "https://en.wiktionary.org/static/favicon/wiktionary/en.ico",
+          "Method": "GET",
+          "Name": "Wiktionary",
+          "URLTemplate": "https://en.wiktionary.org/wiki/Special:Search?search={searchTerms}"
+        },
+        {
+          "Alias": "!np",
+          "Description": "Search NixOS Packages",
+          "IconURL": "https://search.nixos.org/favicon.png",
+          "Method": "GET",
+          "Name": "NixOS Packages",
+          "URLTemplate": "https://search.nixos.org/packages?channel=unstable&query={searchTerms}"
+        },
+        {
+          "Alias": "!no",
+          "Description": "Search NixOS Options",
+          "IconURL": "https://search.nixos.org/favicon.png",
+          "Method": "GET",
+          "Name": "NixOS Options",
+          "URLTemplate": "https://search.nixos.org/options?channel=unstable&query={searchTerms}"
+        },
+        {
+          "Alias": "!dp",
+          "Description": "Search Debian Packages",
+          "IconURL": "https://packages.debian.org/favicon.ico",
+          "Method": "GET",
+          "Name": "Debian Packages",
+          "URLTemplate": "https://packages.debian.org/search?keywords={searchTerms}&searchon=names&section=all"
+        },
+        {
+          "Alias": "!d",
+          "Description": "Search DuckDuckGo (Lite)",
+          "IconURL": "https://duckduckgo.com/favicon.ico",
+          "Method": "GET",
+          "Name": "DuckDuckGo (Lite)",
+          "URLTemplate": "https://lite.duckduckgo.com/lite?q={searchTerms}"
         }
       ],
       "Default": "Google (Custom)"
