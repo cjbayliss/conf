@@ -16,6 +16,10 @@ map global user j ':tmux-repl-horizontal<ret>' -docstring 'open tmux pane'
 map global user k ':lsp-hover<ret>' -docstring 'show info for current position'
 map global user l ':enter-user-mode lsp<ret>' -docstring 'enter lsp user mode'
 
+# clipboard
+map global user p '!wl-paste -n<ret>' -docstring 'paste from clipboard'
+map global user y '<a-|>wl-copy<ret>' -docstring 'yank to clipboard'
+
 # wrap
 map global user w '|fold -sw 72<ret>' -docstring 'wrap to 72'
 map global user W '|fold -sw 80<ret>' -docstring 'wrap to 80'
