@@ -16,6 +16,10 @@ map global user j ':tmux-repl-horizontal<ret>' -docstring 'open tmux pane'
 map global user k ':lsp-hover<ret>' -docstring 'show info for current position'
 map global user l ':enter-user-mode lsp<ret>' -docstring 'enter lsp user mode'
 
+# wrap
+map global user w '|fold -sw 72<ret>' -docstring 'wrap to 72'
+map global user W '|fold -sw 80<ret>' -docstring 'wrap to 80'
+
 map global goto n '<esc>:bn<ret>' -docstring 'next buffer'
 map global goto p '<esc>:bp<ret>' -docstring 'previous buffer'
 
