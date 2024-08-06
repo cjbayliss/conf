@@ -1,0 +1,7 @@
+set adjust-open width
+set font 'monospace normal 28'
+
+set recolor
+set recolor-keephue
+
+set sandbox strict

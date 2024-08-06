@@ -25,9 +25,10 @@ dev-vcs/git
 dev-vcs/mercurial
 
 # workflow/editors
-app-misc/tmux
 app-editors/kakoune
 app-editors/kakoune-lsp
+app-misc/tmux
+app-text/zathura-meta
 
 # gentoo dev
 app-portage/gentoolkit
