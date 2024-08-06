@@ -1,6 +1,8 @@
 <sys-devel/gcc-15
 app-editors/kakoune
 app-editors/kakoune-lsp
+dev-lang/elixir
+dev-lang/erlang
 dev-python/python-lsp-mypy
 gui-apps/wlsunset
 gui-apps/yambar
