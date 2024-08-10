@@ -8,6 +8,7 @@ gui-wm/sway -swaybar
 media-fonts/noto cjk -extra
 media-gfx/qrencode png
 media-libs/freetype harfbuzz
+media-libs/libglvnd X # this is required for gl.pc and libGL.so to get installed. FIXME: create a bug for this
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
 media-libs/libsdl2 gles2
 media-libs/libvpx postproc
