@@ -64,6 +64,11 @@ if [ -n "$BASH_VERSION" ]; then
     bind '"\e[A":history-substring-search-backward'
     bind '"\e[B":history-substring-search-forward'
 
+    # macros
+    bind '"\ed": "\C-acurl -fgLR --retry 10 --retry-max-time 10 --remote-name-all --proto-default https "'
+    bind '"\ey": "\C-ayt-dlp -f 248+251 "'
+    bind '"\em": "\C-a\C-kmpv --shuffle=yes --video=no --volume=70 ~/music/"'
+
     __exit_status() {
         EXIT_STATUS="$?"
         if [ "$EXIT_STATUS" != 0 ] && [ "$EXIT_STATUS" != 130 ]; then
