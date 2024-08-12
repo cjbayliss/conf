@@ -31,7 +31,7 @@ set $up k
 set $right l
 
 # luanch stuff
-bindsym $mod+Shift+Return exec alacritty
+bindsym $mod+Shift+Return exec foot
 bindsym $mod+p exec j4-dmenu-desktop --no-generic --dmenu='wmenu -i -f "monospace 14.5" -N "#000000" -n "#ffffff" -S "#000000" -s "#b6a0ff"'
 
 # kill focused window
