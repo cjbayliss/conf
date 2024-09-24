@@ -149,10 +149,6 @@
       "extensions.webextensions.restrictedDomains": {
         "Status": "locked",
         "Value": "appleid.apple.com,idmsa.apple.com,online.macquarie.com.au,secure.selfwealth.com.au,www.icloud.com,www-mail.icloud-sandbox.com"
-      },
-      "network.http.referer.spoofSource": {
-        "Status": "locked",
-        "Value": true
       }
     },
     "SearchEngines": {
