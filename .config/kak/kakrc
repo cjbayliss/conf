@@ -13,8 +13,6 @@ map global normal ' ' ''
 map global normal \; ':enter-user-mode user<ret>' -docstring 'enter <user> user mode'
 map global user \; ':comment-line<ret>' -docstring 'toggle comment'
 map global user j ':tmux-repl-horizontal<ret>' -docstring 'open tmux pane'
-map global user k ':lsp-hover<ret>' -docstring 'show info for current position'
-map global user l ':enter-user-mode lsp<ret>' -docstring 'enter lsp user mode'
 
 # clipboard
 map global user p '!wl-paste -n<ret>' -docstring 'paste from clipboard'
@@ -70,13 +68,6 @@ hook global BufCreate (.*\.(ebuild|c|h)$)|.*/metadata.xml|.*Makefile %{
 
 # respect editorconfig
 hook global BufCreate .* %{ try editorconfig-load }
-
-# lsp
-try %{
-    eval %sh{kak-lsp --kakoune -s $kak_session}
-    lsp-enable
-    lsp-inlay-diagnostics-enable global # requires kakoune 2024 or newer
-}
 
 # formatting
 define-command -hidden format-on-save %{
