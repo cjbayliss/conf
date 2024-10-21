@@ -16,8 +16,6 @@ x11-misc/xdg-utils
 dev-debug/gdb
 dev-debug/valgrind
 dev-lang/elixir
-dev-python/black
-dev-python/pylint
 
 # vcs
 dev-vcs/git
