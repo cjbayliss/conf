@@ -1,0 +1,2 @@
+[templates]
+compact-author = '{label("yellow", node|short)} {label("cyan", localdate(date)|shortdate)} {label("magenta", mailmap(author)|person)} <{label("white", mailmap(author)|email)}> {desc|firstline|strip}\n'
