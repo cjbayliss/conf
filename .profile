@@ -64,6 +64,8 @@ export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 [ -f "$XDG_CONFIG_HOME/python/startup.py" ] && export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/startup.py"
 
+export SCREENRC="$XDG_CONFIG_HOME/screen/screenrc"
+
 export GDK_DPI_SCALE=0.5
 export XCURSOR_SIZE=24
 export XCURSOR_THEME=Adwaita
