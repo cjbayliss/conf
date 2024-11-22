@@ -4,14 +4,17 @@
 alias grep="grep --color=auto --exclude-dir=.git"
 alias ls="ls --color=auto -hF"
 alias poweroff="doas /usr/bin/poweroff"
-alias pst="curl --data-binary @${1:-/dev/stdin} https://paste.rs && echo"
 alias temp="grep . /sys/class/thermal/*/temp | sed -e 's/:/ /' -e 's/[0-9][0-9][0-9]$/°C/'"
 alias unmaintained-local="qlist -Iv \$(portageq --repo gentoo --orphaned)"
 alias non-gentoo="qlist -IRv | grep -v ::gentoo | grep ::.*"
 
+pst() {
+    curl --data-binary "@${1:-/dev/stdin}" https://paste.rs && echo
+}
+
 watch() {
     while true; do
-        reset; $@; sleep 5
+        reset; "$@"; sleep 5
     done
 }
 
