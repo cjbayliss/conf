@@ -3,8 +3,6 @@ app-editors/kakoune
 app-editors/kakoune-lsp
 dev-lang/elixir
 dev-lang/erlang
-dev-python/python-lsp-mypy
 gui-apps/wlsunset
 gui-apps/yambar
 mpv-plugin/mpv-mpris
-sys-kernel/gentoo-sources
