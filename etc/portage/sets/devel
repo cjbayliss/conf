@@ -1,0 +1,12 @@
+# devel/languages
+dev-debug/gdb
+dev-debug/valgrind
+dev-lang/elixir
+dev-util/shellcheck-bin
+
+# gentoo dev
+app-portage/gentoolkit
+app-portage/iwdevtools
+dev-util/pkgcheck
+dev-util/pkgdev
+www-client/pybugz
