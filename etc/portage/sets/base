@@ -1,0 +1,25 @@
+# sway
+gui-apps/foot
+gui-apps/grim
+gui-apps/mako
+gui-apps/slurp
+gui-apps/swaybg
+gui-apps/wl-clipboard
+gui-apps/wlsunset
+gui-apps/wmenu
+gui-apps/yambar
+gui-wm/sway
+x11-misc/j4-dmenu-desktop
+x11-misc/xdg-utils
+
+# vcs
+dev-vcs/git
+dev-vcs/mercurial
+
+# workflow/editors
+app-editors/kakoune
+app-misc/tmux
+
+# bash
+app-shells/bash-completion
+app-shells/fishy-pwd

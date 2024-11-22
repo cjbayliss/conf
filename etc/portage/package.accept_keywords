@@ -1,4 +1,5 @@
 <sys-devel/gcc-15
+app-admin/kernel-hardening-checker
 app-editors/kakoune
 app-editors/kakoune-lsp
 dev-lang/elixir
