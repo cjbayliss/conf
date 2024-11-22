@@ -3,16 +3,19 @@ app-text/poppler cairo
 app-text/xmlto text
 dev-debug/gdb source-highlight
 dev-lang/rust-bin clippy rustfmt rust-analyzer
-gui-apps/mako -icons
-gui-wm/sway -swaybar
+dev-qt/qtgui X egl
+gui-libs/wlroots X
+gui-wm/sway X -swaybar
 media-fonts/noto cjk -extra
 media-gfx/qrencode png
 media-libs/freetype harfbuzz
+media-libs/libepoxy X
 media-libs/libglvnd X # this is required for gl.pc and libGL.so to get installed. FIXME: create a bug for this
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
 media-libs/libsdl2 gles2
 media-libs/libvpx postproc
 media-libs/libwebp -opengl # this pulls in freeglut which pulls in virtual/opengl which pulls in x11
+media-libs/mesa X
 media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265 -opengl
 media-video/mpv jpeg -opengl
 media-video/pipewire sound-server -man
@@ -20,4 +23,5 @@ sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
 sys-process/procps -ncurses
+x11-libs/libxkbcommon X
 x11-misc/j4-dmenu-desktop -dmenu
