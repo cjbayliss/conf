@@ -1,3 +1,8 @@
+# editor
+app-editors/kakoune-lsp
+
+# language servers
+
 # devel/languages
 dev-debug/gdb
 dev-debug/valgrind
