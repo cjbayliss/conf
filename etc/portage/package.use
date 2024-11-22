@@ -18,7 +18,7 @@ media-libs/libwebp -opengl # this pulls in freeglut which pulls in virtual/openg
 media-libs/mesa X
 media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265 -opengl
 media-video/mpv jpeg -opengl
-media-video/pipewire sound-server -man
+media-video/pipewire extra ffmpeg flatpak jack-sdk lv2 pipewire-alsa sound-server -man
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
