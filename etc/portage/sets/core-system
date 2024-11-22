@@ -1,0 +1,25 @@
+# disk management
+sys-fs/btrfs-progs
+sys-fs/dosfstools
+
+# kernel
+app-admin/kernel-hardening-checker
+sys-firmware/intel-microcode
+sys-firmware/sof-firmware
+sys-kernel/gentoo-sources
+sys-kernel/linux-firmware
+
+# system
+app-admin/doas
+app-admin/kernel-hardening-checker
+app-eselect/eselect-repository
+app-misc/jq
+dev-util/ccache
+media-fonts/noto
+media-fonts/noto-emoji
+net-firewall/nftables
+net-misc/dhcpcd
+net-misc/openntpd
+net-wireless/wpa_supplicant
+sys-boot/efibootmgr
+sys-process/cronie
