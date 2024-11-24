@@ -14,14 +14,5 @@ table filter {
     }
 
     chain forward { type filter hook forward priority 0; policy drop; }
-    chain output {
-        type filter hook output priority 0; policy drop;
-        tcp dport 22 accept comment "accept ssh outgoing"
-        udp dport 53 accept comment "accept dns outgoing"
-        udp dport 123 accept comment "accept ntp outgoing"
-        tcp dport 443 accept comment "accept https outgoing"
-        tcp dport 993 accept comment "accept imaps outgoing"
-        tcp dport 587 accept comment "accept smtps outgoing"
-        tcp dport 6697 accept comment "accept ircs outgoing"
-    }
+    chain output { type filter hook output priority 0; policy accept; }
 }
