@@ -1,9 +1,14 @@
+*/*::steam-overlay
 <sys-devel/gcc-15
 app-admin/kernel-hardening-checker
 app-editors/kakoune
 app-editors/kakoune-lsp
 dev-lang/elixir
 dev-lang/erlang
+games-util/game-device-udev-rules
 gui-apps/wlsunset
 gui-apps/yambar
+media-sound/qtractor
 mpv-plugin/mpv-mpris
+sci-electronics/kicad
+sys-libs/libudev-compat
