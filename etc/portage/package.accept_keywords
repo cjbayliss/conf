@@ -3,12 +3,13 @@
 app-admin/kernel-hardening-checker
 app-editors/kakoune
 app-editors/kakoune-lsp
+app-eselect/eselect-zig
 dev-lang/elixir
 dev-lang/erlang
+dev-lang/zig
 games-util/game-device-udev-rules
 gui-apps/wlsunset
 gui-apps/yambar
-media-sound/qtractor
 mpv-plugin/mpv-mpris
-sci-electronics/kicad
 sys-libs/libudev-compat
+x11-terms/ghostty
