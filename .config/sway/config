@@ -1,6 +1,7 @@
-# this requires the disable_titlebar patch from:
-# https://github.com/neuromagus/disable_titlebar_in_sway/tree/main
-disable_titlebar yes
+# this essentially disabled the titlebar
+font pango:monospace 0.1
+titlebar_border_thickness 0
+titlebar_padding 0
 
 # borders and gaps
 gaps inner 4
@@ -83,7 +84,7 @@ for_window [app_id="mpv"] move window to workspace 9, focus
 bindsym $mod+w layout tabbed
 bindsym $mod+t floating disable
 bindsym $mod+Shift+t floating enable
-bindsym $mod+space layout toggle tabbed split stacking
+bindsym $mod+space layout toggle tabbed split
 
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
