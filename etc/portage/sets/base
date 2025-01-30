@@ -32,3 +32,6 @@ media-video/mpv
 media-sound/playerctl
 mpv-plugin/mpv-mpris
 net-misc/yt-dlp
+
+# flatpak
+sys-apps/flatpak
