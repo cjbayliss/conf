@@ -1,55 +1,44 @@
 # core
 app-admin/doas persist
+app-alternatives/sh -bash dash
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
 sys-fs/fuse suid
 sys-process/procps -ncurses
-app-alternatives/sh -bash dash
 
 # media
-media-gfx/qrencode png
-media-libs/gst-plugins-base theora
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
 media-libs/libvpx postproc
-media-plugins/gst-plugins-meta aac flac mp3 mpeg ogg opus theora vorbis vpx
-media-sound/clementine -udisks
-media-sound/qtractor aubio dssi ladspa libsamplerate mad osc rubberband vorbis
 media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265
 media-video/mpv jpeg
 
 # x11 libs
 x11-base/xwayland libei
 x11-libs/gdk-pixbuf jpeg
-x11-libs/qscintilla qt6
-x11-libs/wxGTK gstreamer libnotify sdl tiff
 x11-misc/j4-dmenu-desktop -dmenu
 x11-misc/xdg-user-dirs gtk
 
 # enable/disable X
+>=gui-libs/gtk-4 -X
 gui-apps/yambar -X
 gui-libs/wlroots X
 gui-wm/sway X -swaybar
 media-libs/libva X
 media-libs/vulkan-loader X
 sys-apps/dbus X
+sys-apps/flatpak X
 sys-apps/xdg-desktop-portal-gtk X
-www-client/firefox -X
 x11-libs/cairo X
 x11-libs/libxkbcommon X
+x11-terms/ghostty -X
 
 # other
-app-crypt/gcr gtk
-app-text/poppler cairo
 app-text/xmlto text
 dev-debug/gdb source-highlight
-dev-lang/rust-bin clippy rustfmt rust-analyzer
-dev-libs/boost python
-dev-qt/qtgui egl
+dev-lang/rust-bin clippy rustfmt rust-analyzer rust-src
 media-fonts/noto cjk -extra
 media-libs/freetype harfbuzz
-media-libs/lib3mf -system-act
-media-libs/libsdl2 gles2
 media-video/pipewire extra ffmpeg flatpak jack-sdk lv2 pipewire-alsa sound-server -man
 
 # 32bit ABI for steam
@@ -68,6 +57,8 @@ dev-libs/lzo abi_x86_32
 dev-libs/nspr  abi_x86_32
 dev-libs/nss  abi_x86_32
 dev-libs/wayland abi_x86_32
+llvm-core/clang abi_x86_32
+llvm-core/llvm  abi_x86_32
 media-gfx/graphite2 abi_x86_32
 media-libs/flac abi_x86_32
 media-libs/fontconfig abi_x86_32
@@ -89,8 +80,6 @@ net-libs/libndp  abi_x86_32
 sys-apps/dbus abi_x86_32
 sys-apps/systemd-utils abi_x86_32
 sys-apps/util-linux abi_x86_32
-sys-devel/clang abi_x86_32
-sys-devel/llvm  abi_x86_32
 sys-libs/gpm  abi_x86_32
 sys-libs/libcap abi_x86_32
 sys-libs/libudev-compat abi_x86_32

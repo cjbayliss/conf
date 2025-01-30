@@ -20,6 +20,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # why store this? put it in /tmp
 export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/cache"
 export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:/home/cjb/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
 [ -f "$XDG_CONFIG_HOME/sh/shrc" ] && export ENV="$XDG_CONFIG_HOME/sh/shrc"
 
 export EDITOR="kak"
