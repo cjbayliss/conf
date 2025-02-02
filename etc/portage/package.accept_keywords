@@ -13,3 +13,4 @@ gui-apps/yambar
 mpv-plugin/mpv-mpris
 sys-libs/libudev-compat
 x11-terms/ghostty
+x11-terms/ghostty-terminfo

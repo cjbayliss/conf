@@ -34,12 +34,14 @@ x11-libs/libxkbcommon X
 x11-terms/ghostty -X
 
 # other
+app-text/poppler cairo
 app-text/xmlto text
 dev-debug/gdb source-highlight
 dev-lang/rust-bin clippy rustfmt rust-analyzer rust-src
 media-fonts/noto cjk -extra
 media-libs/freetype harfbuzz
 media-video/pipewire extra ffmpeg flatpak jack-sdk lv2 pipewire-alsa sound-server -man
+www-client/firefox -telemetry -X
 
 # 32bit ABI for steam
 app-arch/bzip2  abi_x86_32
