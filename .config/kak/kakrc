@@ -40,6 +40,10 @@ hook global WinSetOption filetype=python %{
     add-highlighter shared/python/code/function regex '\b(\w+)\(' 1:function
 }
 
+hook global WinSetOption filetype=rust %{
+    add-highlighter buffer/ regex '\b(RETURN|EXIT)\b$' 0:default+rb
+}
+
 hook global WinSetOption filetype=zig %{add-highlighter shared/zig/code/function regex '\b(\w+)\(' 1:function}
 hook global WinSetOption filetype=c %{add-highlighter shared/c/code/function regex '\b(\w+)\(' 1:function}
 hook global WinSetOption filetype=cpp %{add-highlighter shared/cpp/code/function regex '\b(\w+)\(' 1:function}
@@ -76,6 +80,15 @@ try %{
     eval %sh{kak-lsp --kakoune -s $kak_session}
     lsp-enable
     lsp-inlay-diagnostics-enable global # requires kakoune 2024 or newer
+    lsp-inlay-hints-enable global
+
+    set-face global InlayHint comment
+
+    set-face global InfoBullet bullet
+    set-face global InfoHeader header
+    set-face global InfoLink link
+    set-face global InfoLinkMono link
+    set-face global InfoMono mono
 }
 
 # formatting
