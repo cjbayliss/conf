@@ -15,6 +15,7 @@ app-admin/kernel-hardening-checker
 app-eselect/eselect-repository
 app-misc/jq
 dev-util/ccache
+media-fonts/jetbrains-mono
 media-fonts/noto
 media-fonts/noto-emoji
 net-firewall/nftables

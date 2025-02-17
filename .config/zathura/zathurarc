@@ -1,5 +1,5 @@
 set adjust-open width
-set font 'monospace normal 28'
+set font 'monospace normal 11'
 
 set recolor
 set recolor-keephue

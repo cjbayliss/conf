@@ -1,6 +1,6 @@
 bar:
-  font: Iosevka Fixed:pixelsize=19:weight=medium
-  height: 26
+  font: JetBrains Mono:pixelsize=16.5:weight=medium
+  height: 24
   location: top
   background: 000000ff
 
