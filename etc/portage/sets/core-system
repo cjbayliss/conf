@@ -9,6 +9,9 @@ sys-firmware/sof-firmware
 sys-kernel/gentoo-sources
 sys-kernel/linux-firmware
 
+# video acceleration
+media-libs/libva-intel-media-driver
+
 # system
 app-admin/doas
 app-admin/kernel-hardening-checker
