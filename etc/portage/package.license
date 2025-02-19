@@ -1,3 +1,4 @@
 games-util/steam-launcher ValveSteamLicense
+media-libs/libva-intel-media-driver no-source-code
 sys-firmware/intel-microcode intel-ucode
 sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE
