@@ -24,6 +24,7 @@ x11-misc/xdg-user-dirs gtk
 gui-apps/yambar -X
 gui-libs/wlroots X
 gui-wm/sway X -swaybar
+media-libs/libglvnd X
 media-libs/libva X
 media-libs/vulkan-loader X
 sys-apps/dbus X
@@ -59,6 +60,7 @@ dev-libs/lzo abi_x86_32
 dev-libs/nspr  abi_x86_32
 dev-libs/nss  abi_x86_32
 dev-libs/wayland abi_x86_32
+dev-util/spirv-tools abi_x86_32
 llvm-core/clang abi_x86_32
 llvm-core/llvm  abi_x86_32
 media-gfx/graphite2 abi_x86_32
