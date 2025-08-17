@@ -1,0 +1,66 @@
+From 67db1c2917da810bd4331dc9326c3f45dfedb302 Mon Sep 17 00:00:00 2001
+From: Walter Doekes <walter+github@wjd.nu>
+Date: Mon, 10 Feb 2020 17:33:43 +0100
+Subject: [PATCH] parse: Don't abort() on parse errors; cope with NULs; handle
+ EOF (#4)
+
+- xmlindent asserted False at EOF:
+  content() would be called with a NUL, causing strlen to return non-1. Now
+  it handles both inline NULs and doesn't crash.
+- xmlindent would abort() at unrecognised tokens. Now it just exit(1)s.
+---
+ Makefile     |  2 +-
+ indent.c     | 15 +++++++++++++--
+ xmlindent.yy |  4 ++--
+ 3 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/indent.c b/indent.c
+index 6708b96..6d0f91e 100644
+--- a/indent.c
++++ b/indent.c
+@@ -437,6 +437,17 @@ static bool need_wrap(struct buffer * buffer)
+ 		+ buffer_size(buffer) + indent_size()) >= max_columns;
+ }
+ 
++/*
++ * We detect EOF by getting a call to yywrap() when the only input file
++ * is completely read.
++ */
++static bool is_at_eof;
++
++int yywrap() {
++    is_at_eof = 1;
++    return 1; /* 1=nothing more to read */
++}
++
+ static void content(void)
+ {
+     char current;
+@@ -444,10 +455,10 @@ static void content(void)
+     /*
+      * We should get one character at a time.
+      */
+-    assert(strlen(yytext) == 1);
++    assert(yyleng == 1); /* strlen(yytext) fails at NUL or EOF */
+ 
+     current = yytext[0];
+-    if (current == EOF)
++    if (is_at_eof)
+ 	return;
+     
+     if (is_newline(current)) {
+diff --git a/xmlindent.yy b/xmlindent.yy
+index bc673c9..f891172 100644
+--- a/xmlindent.yy
++++ b/xmlindent.yy
+@@ -101,8 +101,8 @@ COMMENT			"<!--"
+ }
+ 
+ . {
+-	fprintf(stderr, "Error: Scanner did not recognize string '%s'. ", yytext);
+-	abort();
++	fprintf(stderr, "Error: Scanner did not recognize string '%s' near line %d.\n", yytext, yylineno);
++	exit(1);
+ }
+ 
+ %%
