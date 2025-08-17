@@ -1,23 +1,13 @@
 */*::steam-overlay
 app-admin/kernel-hardening-checker
 app-editors/kakoune
-app-editors/kakoune-lsp
-dev-lang/elixir
-dev-lang/erlang
-games-util/game-device-udev-rules
-gui-apps/wlsunset
-gui-apps/yambar
-mpv-plugin/mpv-mpris
-sys-libs/libudev-compat
+app-editors/kakoune-lsp::guru
+gui-apps/wlsunset::guru
+gui-apps/yambar::guru
+media-gfx/gimp
+media-libs/babl
+media-libs/gegl
+mpv-plugin/mpv-mpris::guru
 
 # GCC 15
-<sys-devel/gcc-15.0.9999 ** # 2025-02-19 this is sys-devel/gcc-15.0.1_pre20250216
-# based on the messages I saw, I think *at least* this patch would be needed:
-# https://invisible-island.net/ncurses/NEWS.html#index-t20241214
-<sys-libs/ncurses-6.6 ** # 2025-02-19 this is sys-libs/ncurses-6.5_p20250125
-# https://github.com/kkos/oniguruma/commit/5f1408dee4a01dee60c4cd67f2e2e46484ef50a5
-<dev-libs/oniguruma-6.9.11 # 2025-02-19 this is dev-libs/oniguruma-6.9.10
-# you need at least this commit to build git with C23:
-# https://git.kernel.org/pub/scm/git/git.git/commit/?id=639cd8db63
-# above commit is in the git 2.28.1 release
-<dev-vcs/git-2.49 # 2025-02-20 this is dev-vcs/git-2.48.1
+sys-devel/gcc
