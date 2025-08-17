@@ -90,9 +90,6 @@ bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-bindsym XF86MonBrightnessDown exec backlight -d 5
-bindsym XF86MonBrightnessUp exec backlight -i 5
-
 bindsym $mod+backslash exec playerctl play-pause
 bindsym $mod+bracketleft exec playerctl previous
 bindsym $mod+bracketright exec playerctl next
