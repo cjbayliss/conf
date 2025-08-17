@@ -16,6 +16,12 @@ x11-misc/j4-dmenu-desktop
 x11-misc/xdg-user-dirs
 x11-misc/xdg-utils
 
+# fonts
+media-fonts/jetbrains-mono
+media-fonts/noto
+media-fonts/noto-cjk
+media-fonts/noto-emoji
+
 # vcs
 dev-vcs/git
 dev-vcs/mercurial
@@ -29,10 +35,10 @@ app-shells/bash-completion
 app-shells/fishy-pwd
 
 # mpv
-media-video/mpv
 media-sound/playerctl
+media-video/mpv
 mpv-plugin/mpv-mpris
 net-misc/yt-dlp
 
-# flatpak
-sys-apps/flatpak
+# tools
+app-misc/jq
