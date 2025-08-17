@@ -1,29 +1,26 @@
 # disk management
 sys-fs/btrfs-progs
 sys-fs/dosfstools
+sys-fs/xfsprogs
 
 # kernel
 app-admin/kernel-hardening-checker
 sys-firmware/intel-microcode
-sys-firmware/sof-firmware
 sys-kernel/gentoo-sources
 sys-kernel/linux-firmware
 
-# video acceleration
-media-libs/libva-intel-media-driver
-
-# system
+# admin
 app-admin/doas
-app-admin/kernel-hardening-checker
-app-eselect/eselect-repository
-app-misc/jq
-dev-util/ccache
-media-fonts/jetbrains-mono
-media-fonts/noto
-media-fonts/noto-emoji
-net-firewall/nftables
-net-misc/dhcpcd
-net-misc/openntpd
-net-wireless/wpa_supplicant
-sys-boot/efibootmgr
 sys-process/cronie
+app-admin/sysklogd
+net-misc/openntpd
+sys-boot/efibootmgr
+
+# portage
+dev-util/ccache
+app-eselect/eselect-repository
+
+# network
+net-misc/dhcpcd
+net-wireless/wpa_supplicant
+net-firewall/nftables

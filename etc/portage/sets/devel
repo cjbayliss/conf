@@ -4,6 +4,7 @@ app-editors/kakoune-lsp
 # language servers
 
 # devel/languages
+app-text/diction
 dev-debug/gdb
 dev-debug/valgrind
 dev-lang/elixir
@@ -11,7 +12,6 @@ dev-util/bear
 dev-util/shellcheck-bin
 
 # gentoo dev
-app-portage/gentoolkit
 app-portage/iwdevtools
 dev-util/pkgcheck
 dev-util/pkgdev

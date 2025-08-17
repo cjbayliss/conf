@@ -1,6 +1,17 @@
+# CPU FLAGS
+*/* CPU_FLAGS_X86: aes avx avx2 bmi1 bmi2 f16c fma3 mmx mmxext pclmul popcnt rdrand sse sse2 sse3 sse4_1 sse4_2 ssse3
+
+# VIDEO
+*/* VIDEO_CARDS: -* amdgpu radeonsi
+x11-libs/libdrm video_cards_radeon
+
+# LANGUAGES
+*/* L10N: en en_AU en-AU en_GB en-GB
+*/* LINGUAS: en en_AU en-AU en_GB en-GB
+
 # core
 app-admin/doas persist
-app-alternatives/sh -bash dash
+app-admin/sysklogd logrotate
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
@@ -9,7 +20,6 @@ sys-process/procps -ncurses
 
 # media
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
-media-libs/libvpx postproc
 media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265
 media-video/mpv jpeg
 
@@ -17,48 +27,37 @@ media-video/mpv jpeg
 x11-base/xwayland libei
 x11-libs/gdk-pixbuf jpeg
 x11-misc/j4-dmenu-desktop -dmenu
-x11-misc/xdg-user-dirs gtk
 
 # enable/disable X
 >=gui-libs/gtk-4 -X
+dev-python/pycairo X
 gui-apps/yambar -X
 gui-libs/wlroots X
 gui-wm/sway X -swaybar
-media-libs/libglvnd X
 media-libs/libva X
 media-libs/vulkan-loader X
 sys-apps/dbus X
-sys-apps/flatpak X
-sys-apps/xdg-desktop-portal-gtk X
 x11-libs/cairo X
-x11-libs/libxkbcommon X
-x11-terms/ghostty -X
 
 # other
-app-text/poppler cairo
 app-text/xmlto text
 dev-debug/gdb source-highlight
 dev-lang/rust-bin clippy rustfmt rust-analyzer rust-src
-media-fonts/noto cjk -extra
+media-fonts/noto -extra
 media-libs/freetype harfbuzz
 media-video/pipewire extra ffmpeg flatpak jack-sdk lv2 pipewire-alsa sound-server -man
 www-client/firefox -telemetry -X
 
 # 32bit ABI for steam
 app-arch/bzip2  abi_x86_32
+app-arch/xz-utils abi_x86_32
 app-arch/zstd  abi_x86_32
-dev-db/sqlite abi_x86_32
 dev-libs/elfutils  abi_x86_32
 dev-libs/expat  abi_x86_32
 dev-libs/glib abi_x86_32
 dev-libs/icu  abi_x86_32
-dev-libs/libevdev abi_x86_32
 dev-libs/libffi  abi_x86_32
 dev-libs/libpcre2 abi_x86_32
-dev-libs/libxml2  abi_x86_32
-dev-libs/lzo abi_x86_32
-dev-libs/nspr  abi_x86_32
-dev-libs/nss  abi_x86_32
 dev-libs/wayland abi_x86_32
 dev-util/spirv-tools abi_x86_32
 llvm-core/clang abi_x86_32
@@ -84,6 +83,7 @@ net-libs/libndp  abi_x86_32
 sys-apps/dbus abi_x86_32
 sys-apps/systemd-utils abi_x86_32
 sys-apps/util-linux abi_x86_32
+sys-libs/gdbm abi_x86_32
 sys-libs/gpm  abi_x86_32
 sys-libs/libcap abi_x86_32
 sys-libs/libudev-compat abi_x86_32
