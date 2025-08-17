@@ -51,11 +51,6 @@ bar:
         content:
           - string: {text: "{loadavg}"}
     - label: {content: {string: {text: " < ", foreground: a8a8a8ff}}}
-    - battery:
-        name: BAT0
-        content:
-          - string: {text: "BAT: {capacity}% {estimate}"}
-    - label: {content: {string: {text: " < ", foreground: a8a8a8ff}}}
     - clock:
         date-format: "%0e %^a"
         content:
