@@ -1,6 +1,9 @@
 # editor
 app-editors/kakoune-lsp
 
+# formatters
+dev-util/xmlindent
+
 # language servers
 
 # devel/languages
