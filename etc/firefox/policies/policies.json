@@ -19,6 +19,7 @@
         "https://ebay.com",
         "https://ebay.com.au",
         "https://element.io",
+        "https://fastmail.com",
         "https://gentoo.org",
         "https://github.com",
         "https://gitlab.com",
@@ -33,6 +34,7 @@
         "https://lobste.rs",
         "https://macquarie.com.au",
         "https://music.apple.com",
+        "https://my.1password.eu",
         "https://officeworks.com.au",
         "https://onepass.com.au",
         "https://paypal.com",
@@ -101,8 +103,8 @@
       "wikipedia@search.mozilla.org": {
         "installation_mode": "blocked"
       },
-      "{446900e4-71c2-419f-a6a7-df9c091e268b}": {
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi",
+      "{d634138d-c276-4fc8-924b-40a0ea21d284}": {
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi",
         "installation_mode": "normal_installed"
       }
     },
@@ -145,7 +147,7 @@
     "Preferences": {
       "extensions.webextensions.restrictedDomains": {
         "Status": "locked",
-        "Value": "appleid.apple.com,idmsa.apple.com,online.macquarie.com.au,secure.selfwealth.com.au,www.icloud.com,www-mail.icloud-sandbox.com"
+        "Value": "appleid.apple.com,idmsa.apple.com,online.macquarie.com.au,secure.selfwealth.com.au,www.icloud.com,www-mail.icloud-sandbox.com,www.fastmail.com,app.fastmail.com"
       }
     },
     "SearchEngines": {
