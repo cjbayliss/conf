@@ -2,10 +2,13 @@
 app-admin/kernel-hardening-checker
 app-editors/kakoune
 app-editors/kakoune-lsp::guru
+games-util/mangohud::guru
 gui-apps/wlsunset::guru
 media-gfx/gimp
 media-libs/babl
 media-libs/gegl
+media-libs/imgui::guru
+media-libs/implot::guru
 mpv-plugin/mpv-mpris::guru
 
 # GCC 15
