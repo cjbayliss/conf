@@ -2,15 +2,19 @@
 app-editors/kakoune-lsp
 
 # formatters
+dev-python/black
 dev-util/xmlindent
 
 # language servers
+dev-python/python-lsp-mypy
+dev-python/python-lsp-server
 
 # devel/languages
 app-text/diction
 dev-debug/gdb
 dev-debug/valgrind
 dev-lang/elixir
+dev-python/pylint
 dev-util/bear
 dev-util/shellcheck-bin
 
