@@ -10,6 +10,7 @@
         "https://auspost.com.au",
         "https://bitwarden.com",
         "https://bunnings.com.au",
+        "https://centrelink.gov.au",
         "https://codeberg.org",
         "https://coles.com.au",
         "https://computeralliance.com.au",
@@ -33,10 +34,14 @@
         "https://kmart.com.au",
         "https://lobste.rs",
         "https://macquarie.com.au",
+        "https://medicareaustralia.gov.au",
         "https://music.apple.com",
         "https://my.1password.eu",
+        "https://my.gov.au",
+        "https://myrecord.ehealth.gov.au",
         "https://officeworks.com.au",
         "https://onepass.com.au",
+        "https://onlineservices.ato.gov.au",
         "https://paypal.com",
         "https://pccasegear.com",
         "https://scorptec.com.au",
@@ -51,8 +56,9 @@
     },
     "DNSOverHTTPS": {
       "Enabled": true,
+      "Fallback": false,
       "Locked": true,
-      "ProviderURL": "https://dns.quad9.net/dns-query"
+      "ProviderURL": "https://security.cloudflare-dns.com/dns-query"
     },
     "DefaultDownloadDirectory": "${home}/stuff/downloads",
     "DisableAppUpdate": true,
@@ -147,7 +153,7 @@
     "Preferences": {
       "extensions.webextensions.restrictedDomains": {
         "Status": "locked",
-        "Value": "appleid.apple.com,idmsa.apple.com,online.macquarie.com.au,secure.selfwealth.com.au,www.icloud.com,www-mail.icloud-sandbox.com,www.fastmail.com,app.fastmail.com"
+        "Value": "appleid.apple.com,idmsa.apple.com,online.macquarie.com.au,secure.selfwealth.com.au,www.icloud.com,www-mail.icloud-sandbox.com,www.fastmail.com,app.fastmail.com,my.gov.au,auth.ato.gov.au,onlineservices.ato.gov.au,centrelink.gov.au,medicareaustralia.gov.au,myrecord.ehealth.gov.au"
       }
     },
     "SearchEngines": {
