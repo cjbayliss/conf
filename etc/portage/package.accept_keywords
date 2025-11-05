@@ -3,7 +3,6 @@ app-admin/kernel-hardening-checker
 app-editors/kakoune
 app-editors/kakoune-lsp::guru
 gui-apps/wlsunset::guru
-gui-apps/yambar::guru
 media-gfx/gimp
 media-libs/babl
 media-libs/gegl
