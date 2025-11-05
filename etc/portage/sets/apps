@@ -3,3 +3,6 @@ games-util/steam-launcher
 media-gfx/gimp
 media-sound/cmus
 www-client/firefox
+
+# for games
+games-util/mangohud
