@@ -84,4 +84,7 @@ mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 [ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b $XDG_CONFIG_HOME/dircolors)"
 
 # start the ssh-agent.
-pidof -q ssh-agent || eval "$(ssh-agent)" >/dev/null
+if [ -z "${WAYLAND_DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+    pkill -9 ssh-agent # FIXME: OpenRC user services "starts" ssh-agent, very incorrectly
+    pidof -q ssh-agent || eval "$(ssh-agent)" >/dev/null
+fi
