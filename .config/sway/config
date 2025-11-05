@@ -92,6 +92,21 @@ bindsym $mod+backslash exec playerctl play-pause
 bindsym $mod+bracketleft exec playerctl previous
 bindsym $mod+bracketright exec playerctl next
 
+bar {
+    font pango:JetBrains Mono Medium 12.5
+    position top
+    height 24
+    separator_symbol "<"
+    status_command cjbstatus
+
+    colors {
+        statusline #ffffff
+        background #000000
+        separator #a8a8a8
+        focused_workspace #000000 #000000 #b6a0ff
+        inactive_workspace #000000 #000000 #ffffff
+    }
+}
 
 exec 'wlsunset -t 5000 -T 6300 -l -38 -L 145 &'
 exec 'gentoo-pipewire-launcher restart &'
@@ -102,4 +117,3 @@ exec "sh -c 'sleep 5;exec /usr/libexec/xdg-desktop-portal -r'"
 
 exec_always sh -c 'killall mako; mako &'
 exec_always sh -c 'killall fcitx5; fcitx5 &'
-exec_always sh -c "killall yambar; yambar &" # always restart yamber, because it crashes
