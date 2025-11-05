@@ -2,6 +2,7 @@
 app-admin/kernel-hardening-checker
 app-editors/kakoune
 app-editors/kakoune-lsp::guru
+dev-python/python-lsp-mypy::guru
 games-util/mangohud::guru
 gui-apps/wlsunset::guru
 media-gfx/gimp
