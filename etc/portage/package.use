@@ -19,7 +19,11 @@ sys-fs/fuse suid
 sys-process/procps -ncurses
 
 # media
+media-libs/babl introspection lcms
+media-libs/gegl lcms introspection cairo
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
+media-libs/libsdl2 gles2
+media-libs/libvpx postproc
 media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265
 media-video/mpv jpeg
 
@@ -41,6 +45,7 @@ sys-apps/dbus X
 x11-libs/cairo X
 
 # other
+app-text/poppler cairo
 app-text/xmlto text
 dev-debug/gdb source-highlight
 dev-lang/rust-bin clippy rustfmt rust-analyzer rust-src
