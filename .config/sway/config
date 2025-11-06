@@ -1,10 +1,13 @@
+# pseudo fullscreen by default
+workspace_layout tabbed
+
 # this essentially disabled the titlebar
 font pango:monospace 0.1
 titlebar_border_thickness 0
 titlebar_padding 0
 
-# borders and gaps
-gaps inner 4
+# border
+hide_edge_borders --i3 both
 default_border pixel 2
 
 # disable annoying stuff
@@ -95,22 +98,6 @@ bindsym $mod+0 exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym $mod+backslash exec playerctl play-pause
 bindsym $mod+bracketleft exec playerctl previous
 bindsym $mod+bracketright exec playerctl next
-
-bar {
-    font pango:JetBrains Mono Medium 12.5
-    position top
-    height 24
-    separator_symbol "<"
-    status_command cjbstatus
-
-    colors {
-        statusline #ffffff
-        background #000000
-        separator #a8a8a8
-        focused_workspace #000000 #000000 #b6a0ff
-        inactive_workspace #000000 #000000 #ffffff
-    }
-}
 
 exec 'wlsunset -t 5000 -T 6300 -l -38 -L 145 &'
 exec 'gentoo-pipewire-launcher restart &'

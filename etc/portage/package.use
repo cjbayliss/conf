@@ -37,7 +37,7 @@ x11-misc/j4-dmenu-desktop -dmenu
 dev-python/pycairo X
 gui-apps/yambar -X
 gui-libs/wlroots X
-gui-wm/sway X
+gui-wm/sway X -swaybar
 media-libs/libglvnd X
 media-libs/libva X
 media-libs/vulkan-loader X
