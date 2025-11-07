@@ -102,6 +102,7 @@ virtual/libiconv abi_x86_32
 virtual/libintl abi_x86_32
 virtual/libudev abi_x86_32
 virtual/opengl  abi_x86_32
+virtual/zlib abi_x86_32
 x11-libs/cairo abi_x86_32
 x11-libs/extest abi_x86_32
 x11-libs/libX11  abi_x86_32
