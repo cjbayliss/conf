@@ -83,6 +83,7 @@ bindsym $mod+Shift+9 move container to workspace number 9
 
 # move window to workspace on start
 for_window [app_id="mpv"] move window to workspace 9, focus
+for_window [class="steam$" title="Steam"] move window to workspace 3
 for_window [class="steam_app_238960" title="Path of Exile"] move window to workspace 4, focus; fullscreen enable
 for_window [class="steam_app_2694490" title="Path of Exile 2"] move window to workspace 4, focus; fullscreen enable
 
