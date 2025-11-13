@@ -1,0 +1,70 @@
+#!/bin/env bash
+
+# dont continue if not interative
+[[ $- != *i* ]] && return
+
+# aliases that don't work in POSIX shells:
+alias temp="grep . /sys/class/thermal/*/temp | sed -e 's/:/ /' -e 's/[0-9][0-9][0-9]$/°C/'"
+
+# source bash-completion
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+# basic doas completion
+[ -f "$(command -v doas)" ] && complete -F _command doas
+
+# better history
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=-1
+HISTFILESIZE=-1
+HISTFILE="$XDG_DATA_HOME/bash-history"
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# better completion (imo)
+bind "set completion-query-items 0"
+bind "set menu-complete-display-prefix on"
+bind "set page-completions off"
+bind "set show-all-if-ambiguous on"
+bind "TAB:menu-complete"
+bind "\"\e[Z\": menu-complete-backward"
+
+# oksh/fish like C-w
+stty werase undef
+bind '\C-w:unix-filename-rubout'
+
+# fish like history substring search
+bind '"\e[A":history-substring-search-backward'
+bind '"\e[B":history-substring-search-forward'
+
+# macros
+bind '"\ed": "\C-acurl -fgLR --retry 10 --retry-max-time 10 --remote-name-all --proto-default https "'
+bind '"\ey": "\C-ayt-dlp -f 248+251 "'
+bind '"\em": "\C-a\C-kmpv --shuffle=yes --video=no --volume=70 ~/music/"'
+
+__exit_status() {
+    EXIT_STATUS="$?"
+    if [ "$EXIT_STATUS" != 0 ] && [ "$EXIT_STATUS" != 130 ]; then
+        printf "\e[0;31m%s\e[0m\n" "[exit status: $EXIT_STATUS]"
+    fi
+    unset EXIT_STATUS
+}
+
+__remote_host() {
+    [ -n "$SSH_CONNECTION" ] && printf "%s" "\[\e[0;31m\]ssh\[\e[0m\]:\[\e[0;95m\]$USER\[\e[0m\]@"
+}
+
+PROMPT_COMMAND='__exit_status'
+
+if [ -f "$(command -v fishy-pwd)" ]; then
+    PS1="$(__remote_host)\h \[\e[96m\]\$(fishy-pwd)\[\e[0m\] \$ "
+else
+    PROMPT_DIRTRIM=1
+    PS1="$(__remote_host)\h \[\e[96m\]\w\[\e[0m\] \$ "
+fi
