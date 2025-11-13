@@ -38,7 +38,6 @@ app-shells/fishy-pwd
 media-sound/playerctl
 media-video/mpv
 mpv-plugin/mpv-mpris
-net-misc/yt-dlp
 
 # tools
 app-misc/jq
