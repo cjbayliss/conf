@@ -11,10 +11,10 @@ sys-kernel/linux-firmware
 
 # admin
 app-admin/doas
-sys-process/cronie
 app-admin/sysklogd
 net-misc/openntpd
 sys-boot/efibootmgr
+sys-process/cronie
 
 # portage
 dev-util/ccache

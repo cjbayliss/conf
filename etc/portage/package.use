@@ -12,12 +12,12 @@ x11-libs/libdrm video_cards_radeon
 # core
 app-admin/doas persist
 app-admin/sysklogd logrotate
+app-misc/ddcutil user-permissions
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
 sys-fs/fuse suid
 sys-process/procps -ncurses
-app-misc/ddcutil user-permissions
 
 # media
 media-libs/babl introspection lcms
