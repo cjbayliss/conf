@@ -4,12 +4,13 @@
 flush ruleset
 
 # basic firewall
-table filter {
+table inet filter {
     chain input {
         type filter hook input priority 0; policy drop;
         ct state invalid drop comment "drop invalid"
         ct state { established, related } accept comment "accept extablished and related"
-        iif != lo ip daddr 127.0.0.1/8 drop comment "drop connections to loopback not from loopback"
+        iif != lo ip daddr 127.0.0.1/8 drop comment "drop ipv4 connections to loopback not from loopback"
+        iif != lo ip6 daddr ::1 drop comment "drop ipv6 connections to loopback not from loopback"
         iifname lo accept comment "accept localhost"
     }
 
