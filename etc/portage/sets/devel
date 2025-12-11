@@ -13,7 +13,6 @@ dev-python/python-lsp-server
 app-text/diction
 dev-debug/gdb
 dev-debug/valgrind
-dev-lang/elixir
 dev-python/pylint
 dev-util/bear
 dev-util/shellcheck-bin

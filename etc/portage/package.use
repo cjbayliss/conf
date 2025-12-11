@@ -1,9 +1,8 @@
 # CPU FLAGS
-*/* CPU_FLAGS_X86: aes avx avx2 bmi1 bmi2 f16c fma3 mmx mmxext pclmul popcnt rdrand sse sse2 sse3 sse4_1 sse4_2 ssse3
+*/* CPU_FLAGS_X86: aes avx avx2 bmi1 bmi2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3 vpclmulqdq
 
 # VIDEO
 */* VIDEO_CARDS: -* amdgpu radeonsi
-x11-libs/libdrm video_cards_radeon
 
 # LANGUAGES
 */* L10N: en en_AU en-AU en_GB en-GB
@@ -12,111 +11,31 @@ x11-libs/libdrm video_cards_radeon
 # core
 app-admin/doas persist
 app-admin/sysklogd logrotate
-app-misc/ddcutil user-permissions
 sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
 sys-fs/fuse suid
+sys-kernel/installkernel grub dracut
 sys-process/procps -ncurses
+app-crypt/pinentry -gtk -qt6 -wayland
 
 # media
-media-libs/babl introspection lcms
-media-libs/gegl lcms introspection cairo
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
-media-libs/libsdl2 gles2
-media-libs/libvpx postproc
-media-video/ffmpeg libass libdrm libxml2 mp3 openh264 opus srt theora vorbis vpx webp x264 x265
-media-video/mpv jpeg
-
-# x11 libs
-x11-base/xwayland libei
-x11-libs/gdk-pixbuf jpeg
-x11-misc/j4-dmenu-desktop -dmenu
-
-# enable/disable X
->=gui-libs/gtk-4 -X
-dev-python/pycairo X
-gui-apps/yambar -X
-gui-libs/wlroots X
-gui-wm/sway X
-media-libs/libglvnd X
-media-libs/libva X
-media-libs/vulkan-loader X
-sys-apps/dbus X
-x11-libs/cairo X
+media-video/ffmpeg mp3 openh264 opus srt theora vorbis vpx webp x265
 
 # other
-app-text/poppler cairo
-app-text/xmlto text
 dev-debug/gdb source-highlight
 dev-lang/rust-bin clippy rustfmt rust-analyzer rust-src
 media-fonts/noto -extra
 media-libs/freetype harfbuzz
 media-video/pipewire extra ffmpeg flatpak jack-sdk lv2 pipewire-alsa sound-server -man
-www-client/firefox -telemetry -X
 
-# 32bit ABI for steam
-app-arch/bzip2  abi_x86_32
-app-arch/xz-utils abi_x86_32
-app-arch/zstd  abi_x86_32
-dev-libs/elfutils  abi_x86_32
-dev-libs/expat  abi_x86_32
-dev-libs/glib abi_x86_32
-dev-libs/icu  abi_x86_32
-dev-libs/libffi  abi_x86_32
-dev-libs/libpcre2 abi_x86_32
-dev-libs/wayland abi_x86_32
-dev-util/spirv-tools abi_x86_32
-llvm-core/clang abi_x86_32
-llvm-core/llvm  abi_x86_32
-media-gfx/graphite2 abi_x86_32
-media-libs/flac abi_x86_32
-media-libs/fontconfig abi_x86_32
-media-libs/freetype abi_x86_32
-media-libs/harfbuzz abi_x86_32
-media-libs/libglvnd  abi_x86_32
-media-libs/libogg abi_x86_32
-media-libs/libpng abi_x86_32
-media-libs/libpulse abi_x86_32
-media-libs/libsndfile abi_x86_32
-media-libs/libva abi_x86_32
-media-libs/libvorbis abi_x86_32
-media-libs/mesa  abi_x86_32
-media-libs/opus abi_x86_32
-media-sound/lame abi_x86_32
-media-sound/mpg123-base abi_x86_32
-net-libs/libasyncns abi_x86_32
-net-libs/libndp  abi_x86_32
-sys-apps/dbus abi_x86_32
-sys-apps/systemd-utils abi_x86_32
-sys-apps/util-linux abi_x86_32
-sys-libs/gdbm abi_x86_32
-sys-libs/gpm  abi_x86_32
-sys-libs/libcap abi_x86_32
-sys-libs/libudev-compat abi_x86_32
-sys-libs/ncurses  abi_x86_32
-sys-libs/pam abi_x86_32
-sys-libs/readline abi_x86_32
-sys-libs/zlib  abi_x86_32
-virtual/libelf  abi_x86_32
-virtual/libiconv abi_x86_32
-virtual/libintl abi_x86_32
-virtual/libudev abi_x86_32
-virtual/opengl  abi_x86_32
-virtual/zlib abi_x86_32
-x11-libs/cairo abi_x86_32
-x11-libs/extest abi_x86_32
-x11-libs/libX11  abi_x86_32
-x11-libs/libXau  abi_x86_32
-x11-libs/libXdmcp  abi_x86_32
-x11-libs/libXext  abi_x86_32
-x11-libs/libXfixes  abi_x86_32
-x11-libs/libXrandr  abi_x86_32
-x11-libs/libXrender  abi_x86_32
-x11-libs/libXxf86vm  abi_x86_32
-x11-libs/libdrm  abi_x86_32
-x11-libs/libpciaccess abi_x86_32
-x11-libs/libxcb  abi_x86_32
-x11-libs/libxshmfence  abi_x86_32
-x11-libs/pixman abi_x86_32
-x11-libs/xcb-util-keysyms abi_x86_32
+# x11 libs
+x11-misc/j4-dmenu-desktop -dmenu
+
+# enable/disable X
+gui-libs/wlroots X
+gui-wm/sway X
+media-libs/libepoxy X
+media-libs/libglvnd X
+media-libs/mesa X
