@@ -49,8 +49,8 @@ if [ -z "$SSH_CONNECTION" ]; then
     export LESS_TERMCAP_se="$__RESET_COLORS"
     export LESS_TERMCAP_us="$__BOLD$__BRIGHT_CYAN"
     export LESS_TERMCAP_ue="$__RESET_COLORS"
+    export GROFF_NO_SGR=1 # required for man colours to work
 fi
-export GROFF_NO_SGR=1 # required for man colours to work
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
@@ -66,10 +66,6 @@ export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 [ -f "$XDG_CONFIG_HOME/python/startup.py" ] && export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/startup.py"
 
 export SCREENRC="$XDG_CONFIG_HOME/screen/screenrc"
-
-export GDK_DPI_SCALE=0.5
-export XCURSOR_SIZE=24
-export XCURSOR_THEME=Adwaita
 
 # some programs respect this
 export DISABLE_TELEMETRY=1
