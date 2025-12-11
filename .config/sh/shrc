@@ -1,14 +1,16 @@
 #!/bin/sh
 
 # alias stuff
+unalias -a # ensure shitty distro aliases are removed first
+
 alias grep="grep --color=auto --exclude-dir=.git"
 alias ls="ls --color=auto -hF"
 
-alias non-gentoo="qlist -IRv | grep -v ::gentoo | grep ::.*"
-alias unmaintained-local="qlist -Iv \$(portageq --repo gentoo --orphaned)"
+[ -f "$(command -v qlist)" ] && alias non-gentoo="qlist -IRv | grep -v ::gentoo | grep ::.*"
+[ -f "$(command -v qlist)" ] && alias unmaintained-local="qlist -Iv \$(portageq --repo gentoo --orphaned)"
 
-alias poweroff="doas /usr/bin/poweroff"
-alias reboot="doas /usr/bin/reboot"
+[ -f "$(command -v doas)" ] && alias poweroff="doas /usr/bin/poweroff"
+[ -f "$(command -v doas)" ] && alias reboot="doas /usr/bin/reboot"
 
 pst() {
     curl --data-binary "@${1:-/dev/stdin}" https://paste.rs && echo
