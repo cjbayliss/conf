@@ -22,8 +22,8 @@ export XDG_VIDEOS_DIR="$HOME/videos"
 # firefox stuff
 export MOZ_USE_XINPUT2=1
 
-export GDK_DPI_SCALE=1.25
-export QT_FONT_DPI=125
+export XCURSOR_SIZE=24
+export XCURSOR_THEME=Adwaita
 
 # Now start sway! :)
 exec dbus-launch --sh-syntax --exit-with-session sway >"/tmp/sway-$(date '+%F-%H-%M-%S').log" 2>&1
