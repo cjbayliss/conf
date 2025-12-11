@@ -89,7 +89,7 @@ mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 mkdir -p "$XDG_DESKTOP_DIR" "$XDG_DOCUMENTS_DIR" "$XDG_DOWNLOAD_DIR" "$XDG_MUSIC_DIR" "$XDG_PICTURES_DIR" "$XDG_PUBLICSHARE_DIR" "$XDG_TEMPLATES_DIR" "$XDG_VIDEOS_DIR"
 
 [ -n "$BASH_VERSION" ] && [ -f "$XDG_CONFIG_HOME/sh/shrc" ] && . "$XDG_CONFIG_HOME/sh/shrc"
-[ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b $XDG_CONFIG_HOME/dircolors)"
+[ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b "$XDG_CONFIG_HOME"/dircolors)"
 
 # start the ssh-agent.
 if [ -z "${WAYLAND_DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
