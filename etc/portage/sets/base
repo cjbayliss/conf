@@ -1,8 +1,6 @@
 # sway
-app-misc/ddcutil
 gui-apps/foot
 gui-apps/grim
-gui-apps/mako
 gui-apps/slurp
 gui-apps/swaybg
 gui-apps/wl-clipboard
@@ -10,6 +8,7 @@ gui-apps/wlsunset
 gui-apps/wmenu
 gui-libs/xdg-desktop-portal-wlr
 gui-wm/sway
+media-sound/playerctl
 sys-apps/xdg-desktop-portal
 sys-apps/xdg-desktop-portal-gtk
 x11-misc/j4-dmenu-desktop
@@ -34,10 +33,8 @@ app-misc/tmux
 app-shells/bash-completion
 app-shells/fishy-pwd
 
-# mpv
-media-sound/playerctl
-media-video/mpv
-mpv-plugin/mpv-mpris
-
 # tools
 app-misc/jq
+
+# apps
+sys-apps/flatpak
