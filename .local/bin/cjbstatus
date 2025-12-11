@@ -7,13 +7,13 @@ __window_title() {
 }
 
 __mute() {
-    mute="$(pactl get-sink-mute @DEFAULT_SINK@ | sed -e 's/Mute: yes/AUDIO OFF/' -e 's/Mute: no//')"
+    mute="$(wpctl get-volume @DEFAULT_SINK@ | column -JN 'name,vol,mute' | jq -r '.table[].mute // ""')"
     printf "{'full_text':'%s','color':'#ff8059','separator_block_width':10,'separator':false}," "$mute"
 }
 
 __volume() {
-    vol="$(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume:/ {print $5}')"
-    printf "{'full_text':'%s','separator_block_width':22}," "$vol"
+    vol="$(wpctl get-volume @DEFAULT_SINK@ | column -JN 'name,vol,mute' | jq -r '.table[].vol' | sed 's/0\.//')"
+    printf "{'full_text':'%s%%','separator_block_width':22}," "$vol"
 }
 
 __memory() {
