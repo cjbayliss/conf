@@ -3,6 +3,18 @@
 # dont continue if not interative
 [[ $- != *i* ]] && return
 
+flatpak() {
+    command flatpak "$@"
+
+    # remove broken links
+    find "$HOME/.local/bin/" -xtype l -delete
+    # add exports to path
+    for i in /var/lib/flatpak/app/*/current/active/export/bin/*; do
+        name="${i##*.}"
+        [ -f "$HOME/.local/bin/${name,,}" ] || ln -s "$i" "$HOME/.local/bin/${name,,}"
+    done
+}
+
 # aliases that don't work in POSIX shells:
 alias temp="grep . /sys/class/thermal/*/temp | sed -e 's/:/ /' -e 's/[0-9][0-9][0-9]$/°C/'"
 
