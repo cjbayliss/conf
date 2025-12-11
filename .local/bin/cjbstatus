@@ -1,29 +1,29 @@
 #!/bin/sh
 
-# FIXME: read this and make it sane, I wrote it late at night without
-# careful thought
+printf '{"version":1}\n['
 
-echo -e "{'version':1}\n["
+__window_title() {
+    swaymsg -t get_tree | jq -r '.. | objects | select(.focused) | {full_text: .name, color: "#bfbfbf", separator_block_width: 22}' | sed -e 's/}$/},/' -e 's/"[0-9]",$/"",/'
+}
 
 __mute() {
     mute="$(pactl get-sink-mute @DEFAULT_SINK@ | sed -e 's/Mute: yes/AUDIO OFF/' -e 's/Mute: no//')"
-    echo -n "{'full_text':'$mute','color':'#ff8059','separator_block_width':10,'separator':false},";
+    printf "{'full_text':'%s','color':'#ff8059','separator_block_width':10,'separator':false}," "$mute"
 }
 
 __volume() {
-    vol="$(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume:/ {print $5}')";
-    printf "{'full_text':'%s','separator_block_width':22}," $vol;
+    vol="$(pactl get-sink-volume @DEFAULT_SINK@ | awk '/Volume:/ {print $5}')"
+    printf "{'full_text':'%s','separator_block_width':22}," "$vol"
 }
 
 __memory() {
-    meminfo="$(grep -e MemTotal -e MemAvailable /proc/meminfo)";
-    total="$(echo $meminfo | cut -d' ' -f2)";
-    available="$(echo $meminfo | cut -d' ' -f5)";
-    mem="$((($total-$available)/1024))M/$(($total/1024))M"
-    percent="($(awk -vtotal=$(($total-available)) -vavailable=$available 'BEGIN{printf("%.00f\n",total/available*100)}')%)"
-    printf "{'full_text':'%s %s','color':'#b0d6f5','separator_block_width':22}," $mem $percent
+    meminfo="$(grep -e MemTotal -e MemAvailable /proc/meminfo | column -JN 'name,value,unit')"
+    total=$(printf "%s" "$meminfo" | jq -r '.table[] | select(.name == "MemTotal:").value')
+    available=$(printf "%s" "$meminfo" | jq -r '.table[] | select(.name == "MemAvailable:").value')
+    mem="$(((total-available)/1024))M/$((total/1024))M"
+    percent="($(free | grep Mem | awk '{printf("%.00f\n", $3/$2 * 100.0)}')%)"
+    printf "{'full_text':'%s %s','color':'#b0d6f5','separator_block_width':22}," "$mem" "$percent"
 }
-
 
 __ip() {
     printf "{'full_text':'%s','color':'#6ae4b9','separator_block_width':22}," "$(ip -j a | jq -r '[.[] | select(.operstate == "UP") | .addr_info[] | .local][0]')"
@@ -34,21 +34,24 @@ __load() {
 }
 
 __date() {
-    printf "{'full_text':'%s','color':'#f8dec0'}," "$(date '+%0e %^a %H:%M')";
+    printf "{'full_text':'%s','color':'#f8dec0'}," "$(date '+%0e %^a %H:%M')"
 }
 
-tick=10;
+
+high_refresh="$(__window_title)$(__mute)$(__volume)"
+low_refresh="$(__memory)$(__ip)$(__load)$(__date)"
+
+tick=0
 while true; do
-    printf "[";
-    __mute;
-    __volume;
-    if [ $tick -ge 10 ]; then
-        tick=0;
-        status="$(__memory)$(__ip)$(__load)";
+    high_refresh="$(__window_title)$(__mute)$(__volume)"
+    if [ $tick -ge 5 ]; then # 1s
+        tick=0
+        low_refresh="$(__memory)$(__ip)$(__load)$(__date)"
     fi
-    echo -n $status; # NOTE: printf(1) strips spaces (??)
-    __date;
-    printf "],\n";
-    tick=$(($tick + 1));
-    sleep 1;
+    printf "["
+    printf "%s" "$high_refresh"
+    printf "%s" "$low_refresh"
+    printf "],\n"
+    tick=$((tick + 1))
+    sleep 0.2 # 5hz
 done
