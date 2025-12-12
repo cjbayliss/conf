@@ -20,8 +20,6 @@ client.unfocused #444444 #444444 #000000 #444444
 
 output "*" background #1a1a1a solid_color
 
-output "LG Electronics LG ULTRAGEAR 306NTSU8N342" scale 1.25
-
 input type:touchpad {
     tap enabled
     accel_profile "flat"
@@ -38,7 +36,7 @@ set $right l
 
 # luanch stuff
 bindsym $mod+Shift+Return exec foot
-bindsym $mod+p exec j4-dmenu-desktop --no-generic --dmenu='wmenu -i -f "monospace 11" -N "#000000" -n "#ffffff" -S "#000000" -s "#b6a0ff"'
+bindsym $mod+p exec j4-dmenu-desktop --no-generic --dmenu='wmenu -i -f "monospace 13" -N "#000000" -n "#ffffff" -S "#000000" -s "#b6a0ff"'
 
 # kill focused window
 bindsym $mod+Shift+c kill
@@ -103,7 +101,7 @@ bindsym $mod+bracketleft exec playerctl previous
 bindsym $mod+bracketright exec playerctl next
 
 bar {
-    font pango:JetBrains Mono Medium 11
+    font pango:JetBrains Mono Medium 13
     position top
     height 24
     separator_symbol "<"
