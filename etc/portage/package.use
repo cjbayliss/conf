@@ -15,8 +15,7 @@ sys-apps/iproute2 -iptables
 sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
 sys-fs/fuse suid
-sys-kernel/installkernel grub dracut
-sys-process/procps -ncurses
+sys-kernel/installkernel grub
 app-crypt/pinentry -gtk -qt6 -wayland
 
 # media
