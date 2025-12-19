@@ -1,7 +1,0 @@
-set adjust-open width
-set font 'monospace normal 11'
-
-set recolor
-set recolor-keephue
-
-set sandbox strict
