@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=FFXIV
+Comment=Play this game on Steam
+Exec=/usr/bin/gamescope -W 2545 -H 1395 -w 2560 -h 1440 -S fit -- /usr/bin/flatpak run com.valvesoftware.Steam steam://rungameid/13846254940567109632
+Icon=/home/cjb/.var/app/com.valvesoftware.Steam/data/Steam/userdata/293976175/config/grid/3223832450_icon.png
+Terminal=false
+Type=Application
+Categories=Game;

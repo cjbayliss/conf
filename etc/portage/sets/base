@@ -1,4 +1,5 @@
 # sway
+app-misc/evtest
 gui-apps/foot
 gui-apps/grim
 gui-apps/slurp
@@ -14,6 +15,7 @@ sys-apps/xdg-desktop-portal-gtk
 x11-misc/j4-dmenu-desktop
 x11-misc/xdg-user-dirs
 x11-misc/xdg-utils
+x11-misc/xsel
 
 # fonts
 media-fonts/jetbrains-mono
