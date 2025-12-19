@@ -29,6 +29,7 @@ dev-lang/rust-bin clippy rustfmt rust-analyzer rust-src
 media-fonts/noto -extra
 media-libs/freetype harfbuzz
 media-video/pipewire extra ffmpeg flatpak jack-sdk lv2 pipewire-alsa sound-server -man
+sys-apps/xdg-desktop-portal flatpak
 
 # x11 libs
 x11-misc/j4-dmenu-desktop -dmenu
@@ -39,3 +40,4 @@ gui-wm/sway X
 media-libs/libepoxy X
 media-libs/libglvnd X
 media-libs/mesa X
+sys-apps/flatpak X
