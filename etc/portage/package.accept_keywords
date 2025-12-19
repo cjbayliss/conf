@@ -1,5 +1,9 @@
-app-admin/kernel-hardening-checker
-app-editors/kakoune
+# gentoo
+app-editors/kakoune::gentoo
+media-libs/vkroots::gentoo
+gui-wm/gamescope::gentoo
+
+# GURU
 app-editors/kakoune-lsp::guru
 dev-python/python-lsp-mypy::guru
 gui-apps/wlsunset::guru
