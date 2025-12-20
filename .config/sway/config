@@ -85,7 +85,7 @@ bindsym $mod+Shift+9 move container to workspace number 9
 # window rules
 for_window [app_id="firefox" title="^Picture-in-Picture$"] floating enable, sticky enable
 for_window [app_id="mpv"] move window to workspace 9, focus
-for_window [class="steam$" title="Steam"] move window to workspace 3
+for_window [title="Sign in to Steam"] move window to workspace 3
 for_window [title="Steam Big Picture Mode"] move window to workspace 3
 
 bindsym $mod+minus exec wpctl set-volume @DEFAULT_SINK@ 2%-
