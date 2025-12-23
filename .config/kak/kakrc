@@ -41,6 +41,8 @@ hook global WinSetOption filetype=python %{
 }
 
 hook global WinSetOption filetype=zig %{add-highlighter shared/zig/code/function regex '\b(\w+)\(' 1:function}
+hook global WinSetOption filetype=c %{add-highlighter shared/c/code/function regex '\b(\w+)\(' 1:function}
+hook global WinSetOption filetype=cpp %{add-highlighter shared/cpp/code/function regex '\b(\w+)\(' 1:function}
 
 hook global BufCreate (/etc/portage/((m|p).*|sets/.*)|/var/lib/portage/.*) %{
     add-highlighter buffer/ regex '^(<=|>=|<|>|)\b([a-z].*?)/(.*?)\b( |\n)' 2:type 3:keyword
@@ -83,15 +85,6 @@ try %{
     set-face global InfoLink link
     set-face global InfoLinkMono link
     set-face global InfoMono mono
-}
-
-hook global WinSetOption filetype=.* %{
-    hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
-    hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
-    hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
-    hook -once -always window WinSetOption filetype=.* %{
-        remove-hooks window semantic-tokens
-    }
 }
 
 # formatting
