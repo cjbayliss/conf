@@ -16,7 +16,8 @@ sys-apps/util-linux -su
 sys-fs/btrfs-progs -man
 sys-fs/fuse suid
 sys-kernel/installkernel grub
-app-crypt/pinentry -gtk -qt6 -wayland
+app-crypt/pinentry -gtk -wayland
+net-wireless/wpa_supplicant -gui
 
 # media
 media-libs/libpulse -asyncns # libasyncns is unmaintained in gentoo
