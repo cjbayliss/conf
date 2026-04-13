@@ -15,8 +15,15 @@ map global user \; ':comment-line<ret>' -docstring 'toggle comment'
 map global user j ':tmux-repl-horizontal<ret>' -docstring 'open tmux pane'
 
 # clipboard
-map global user p '!wl-paste -n<ret>' -docstring 'paste from clipboard'
-map global user y '<a-|>wl-copy<ret>' -docstring 'yank to clipboard'
+evaluate-commands %sh{
+  if [ "$(uname)" = "Darwin" ]; then
+    printf 'map global user p "!pbpaste<ret>" -docstring "paste from clipboard"\n'
+    printf 'map global user y "<a-|>pbcopy<ret>" -docstring "yank to clipboard"\n'
+  else
+    printf 'map global user p "!wl-paste -n<ret>" -docstring "paste from clipboard"\n'
+    printf 'map global user y "<a-|>wl-copy<ret>" -docstring "yank to clipboard"\n'
+  fi
+}
 
 # wrap
 map global user w '|fold -sw 72<ret>' -docstring 'wrap to 72'
