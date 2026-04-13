@@ -23,4 +23,4 @@ bell-features = no-system, no-audio, no-attention, title, no-border
 # macos
 macos-secure-input-indication = false
 macos-option-as-alt = true
-command = "/Users/cjb/.local/bin/fish"
+command = "/opt/homebrew/bin/fish"
