@@ -28,6 +28,9 @@ if [ -f /opt/homebrew/bin/brew ]
 end
 
 if status is-interactive
+    set -gx GPG_TTY (tty)
+    set -gx SHELL (command -v fish)
+
     function fish_prompt
         string join '' -- (prompt_hostname) ' ' (set_color brcyan) (prompt_pwd) (set_color --reset) ' $ '
     end
