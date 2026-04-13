@@ -1,0 +1,26 @@
+# colours
+theme = light:Modus Operandi,dark:Modus Vivendi
+
+# fonts
+font-family = JetBrains Mono
+font-feature = -calt, -liga, -dlig
+font-thicken = true
+font-thicken-strength = 10
+
+# cursor
+cursor-style = underline
+cursor-style-blink = true
+adjust-cursor-thickness = 4
+shell-integration-features = no-cursor
+
+# window
+window-padding-x = 4
+window-padding-y = 4
+window-width = 120
+window-height = 40
+bell-features = no-system, no-audio, no-attention, title, no-border
+
+# macos
+macos-secure-input-indication = false
+macos-option-as-alt = true
+command = "/Users/cjb/.local/bin/fish"
