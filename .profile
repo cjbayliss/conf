@@ -57,7 +57,9 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export NAME='Christopher Bayliss'
 export EMAIL='cjbdev@icloud.com'
 
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
+[ -d "$CARGO_HOME/bin" ] && PATH="$PATH:$CARGO_HOME/bin"
 export GOPATH="$XDG_DATA_HOME/go"
 export MYPY_CACHE_DIR="$XDG_CACHE_HOME/mypy"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
