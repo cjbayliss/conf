@@ -12,3 +12,5 @@ default:
 	done
 	@test -f "$(HOME)/.bashrc" && rm "$(HOME)/.bashrc"
 	@ln -sv "$(HOME)/.profile" "$(HOME)/.bashrc"
+	@test -f "$(HOME)/.zshrc" && rm "$(HOME)/.zshrc"
+	@ln -sv "$(HOME)/.profile" "$(HOME)/.zshrc"

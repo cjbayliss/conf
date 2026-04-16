@@ -26,9 +26,8 @@ watch() {
 
 [ -f "$HOME/.config/sh/envrc" ] && . "$HOME/.config/sh/envrc"
 
-if [ -n "$BASH_VERSION" ]; then
-    . "$XDG_CONFIG_HOME/bash/bashrc"
-fi
+[ -n "$BASH_VERSION" ] && . "$XDG_CONFIG_HOME/bash/bashrc"
+[ -n "$ZSH_VERSION" ] && . "$XDG_CONFIG_HOME/zsh/zshrc"
 
 # clear on the console
 __clear_console() {

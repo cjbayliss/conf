@@ -88,11 +88,11 @@ export XDG_VIDEOS_DIR="$HOME/videos"
 mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
 mkdir -p "$XDG_DESKTOP_DIR" "$XDG_DOCUMENTS_DIR" "$XDG_DOWNLOAD_DIR" "$XDG_MUSIC_DIR" "$XDG_PICTURES_DIR" "$XDG_PUBLICSHARE_DIR" "$XDG_TEMPLATES_DIR" "$XDG_VIDEOS_DIR"
 
-[ -n "$BASH_VERSION" ] && [ -f "$XDG_CONFIG_HOME/sh/shrc" ] && . "$XDG_CONFIG_HOME/sh/shrc"
-[ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b "$XDG_CONFIG_HOME"/dircolors)"
+[ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ] && [ -f "$XDG_CONFIG_HOME/sh/shrc" ] && . "$XDG_CONFIG_HOME/sh/shrc"
+[ -f "$(command -v dircolors)" ] && [ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b "$XDG_CONFIG_HOME"/dircolors)"
 
 # start the ssh-agent.
-if [ -z "${WAYLAND_DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+if [ -z "${WAYLAND_DISPLAY}" ] && [ -n "$XDG_VTNR" ] && [ "${XDG_VTNR}" -eq 1 ]; then
     pkill -9 ssh-agent # FIXME: OpenRC user services "starts" ssh-agent, very incorrectly
     pidof -q ssh-agent || eval "$(ssh-agent)" >/dev/null
 fi
