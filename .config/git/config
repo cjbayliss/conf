@@ -32,3 +32,5 @@
 
 [tag]
     gpgSign = true
+
+# vim: set ft=conf
