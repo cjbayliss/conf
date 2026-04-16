@@ -72,15 +72,13 @@ __update_title() {
     printf '\033]0;%s %s' "$HOSTNAME" "${PWD/#$HOME/\~}"
 }
 
-__remote_host() {
-    [ -n "$SSH_CONNECTION" ] && printf "%s" "\[\e[0;31m\]ssh\[\e[0m\]:\[\e[0;95m\]$USER\[\e[0m\]@"
-}
-
 PROMPT_COMMAND='__exit_status; __update_title'
 
 if [ -f "$(command -v fishy-pwd)" ]; then
-    PS1="$(__remote_host)\h \[\e[96m\]\$(fishy-pwd)\[\e[0m\] \$ "
+    PS1="\h \[\e[96m\]\$(fishy-pwd)\[\e[0m\] \$ "
 else
     PROMPT_DIRTRIM=1
-    PS1="$(__remote_host)\h \[\e[96m\]\w\[\e[0m\] \$ "
+    PS1="\h \[\e[96m\]\w\[\e[0m\] \$ "
 fi
+
+# vim: set ft=sh
