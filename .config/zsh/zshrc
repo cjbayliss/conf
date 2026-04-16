@@ -31,6 +31,7 @@ zstyle ':completion:*' verbose no
 bindkey '^[[Z' reverse-menu-complete
 
 # oksh/fish like C-w
+WORDCHARS=${WORDCHARS//\&/}
 export WORDCHARS=${WORDCHARS//\//}
 
 # fish like history substring search
