@@ -1,5 +1,5 @@
 # colours
-theme = light:Modus Operandi,dark:Modus Vivendi
+theme = light:Modus Operandi,dark:Nvim Dark
 
 # fonts
 font-family = JetBrains Mono
@@ -16,10 +16,15 @@ shell-integration-features = no-cursor
 # window
 window-padding-x = 4
 window-padding-y = 4
-window-width = 120
+window-width = 130
 window-height = 40
 bell-features = no-system, no-audio, no-attention, title, no-border
+working-directory = home
+window-inherit-working-directory = false
 
 # macos
 macos-secure-input-indication = false
 macos-option-as-alt = true
+macos-titlebar-style = tabs
+
+# vim: set ft=conf
