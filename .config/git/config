@@ -24,8 +24,8 @@
     gpgSign = "if-asked"
 
 [pretty]
-    compact = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %s"
-    compact-author = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %C(Magenta)%aN %C(white)<%aE>%Creset %s"
+    compact = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %C(BrightRed)%d%Creset %s"
+    compact-author = tformat:"%C(BrightYellow)%h%Creset %C(BrightCyan)%as%Creset %C(Magenta)%aN %C(white)<%aE>%Creset %C(BrightRed)%d%Creset %s"
 
 [include]
     path = ~/.config/git/send-mail
