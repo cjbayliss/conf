@@ -1,5 +1,11 @@
 colorscheme default
 
+# colour overrides
+set-face global Information default
+set-face global MenuBackground default
+set-face global MenuForeground default+br
+set-face global PrimarySelection default+r
+
 # create directory before writing
 hook -group user-bufwritepre global BufWritePre .* %{
     nop %sh{ mkdir -p "$(dirname "${kak_hook_param}")" }
