@@ -69,7 +69,7 @@ __exit_status() {
 }
 
 __update_title() {
-    printf '\033]0;%s %s' "$HOSTNAME" "${PWD/#$HOME/\~}"
+    printf '\033]0;%s %s\033\\' "$HOSTNAME" "${PWD/#$HOME/~}"
 }
 
 PROMPT_COMMAND='__exit_status; __update_title'
