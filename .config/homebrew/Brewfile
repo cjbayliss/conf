@@ -1,0 +1,7 @@
+brew "gnupg"
+brew "kakoune"
+brew "mpv"
+brew "shellcheck"
+brew "shfmt"
+cask "discord"
+cask "jan"
