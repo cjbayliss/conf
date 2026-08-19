@@ -1,5 +1,11 @@
 {
   "policies": {
+    "AIControls": {
+      "Default": {
+        "Locked": true,
+        "Value": "blocked"
+      }
+    },
     "CaptivePortal": false,
     "Cookies": {
       "Allow": [
@@ -35,7 +41,6 @@
         "https://macquarie.com.au",
         "https://medicareaustralia.gov.au",
         "https://music.apple.com",
-        "https://my.1password.eu",
         "https://my.gov.au",
         "https://myrecord.ehealth.gov.au",
         "https://officeworks.com.au",
@@ -59,8 +64,6 @@
       "Locked": true,
       "ProviderURL": "https://security.cloudflare-dns.com/dns-query"
     },
-    "DefaultDownloadDirectory": "${home}/stuff/downloads",
-    "DisableAppUpdate": true,
     "DisableFeedbackCommands": true,
     "DisableFirefoxAccounts": true,
     "DisableFirefoxStudies": true,
@@ -74,8 +77,8 @@
     "DisplayBookmarksToolbar": "newtab",
     "DontCheckDefaultBrowser": true,
     "EnableTrackingProtection": {
-      "Locked": true,
       "Category": "standard",
+      "Locked": true,
       "Value": false
     },
     "EncryptedMediaExtensions": {
@@ -87,9 +90,9 @@
         "installation_mode": "normal_installed",
         "private_browsing": true
       },
-      "{d634138d-c276-4fc8-924b-40a0ea21d284}": {
+      "{446900e4-71c2-419f-a6a7-df9c091e268b}": {
         "default_area": "navbar",
-        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi",
         "installation_mode": "normal_installed"
       }
     },
@@ -104,18 +107,15 @@
       "TopSites": false
     },
     "GenerativeAI": {
-      "Chatbot": false,
       "Enabled": false,
-      "LinkPreviews": false,
-      "Locked": true,
-      "TabGroups": false
+      "Locked": true
     },
     "HardwareAcceleration": true,
     "HttpsOnlyMode": "enabled",
     "NetworkPrediction": false,
     "NoDefaultBookmarks": true,
     "OfferToSaveLogins": false,
-    "OverrideFirstRunPage": "",
+    "OverrideFirstRunPage": "about:newtab",
     "PasswordManagerEnabled": false,
     "Permissions": {
       "Autoplay": {
@@ -141,17 +141,30 @@
       "browser.aboutConfig.showWarning": {
         "Value": false
       },
+      "browser.newtabpage.activity-stream.hideLogo": {
+        "Value": false
+      },
+      "browser.newtabpage.activity-stream.showSponsoredCheckboxes": {
+        "Value": false
+      },
+      "browser.newtabpage.activity-stream.widgets.enabled": {
+        "Value": false
+      },
+      "browser.urlbar.trimURLs": {
+        "Value": false
+      },
+      "extensions.getAddons.showPane": {
+        "Value": false
+      },
+      "extensions.htmlaboutaddons.recommendations.enabled": {
+        "Value": false
+      },
       "extensions.webextensions.restrictedDomains": {
         "Status": "locked",
         "Value": "appleid.apple.com,idmsa.apple.com,online.macquarie.com.au,secure.selfwealth.com.au,www.icloud.com,www-mail.icloud-sandbox.com,www.fastmail.com,app.fastmail.com,my.gov.au,auth.ato.gov.au,onlineservices.ato.gov.au,centrelink.gov.au,medicareaustralia.gov.au,myrecord.ehealth.gov.au"
       },
       "ui.key.menuAccessKeyFocuses": {
         "Value": false
-      },
-      "ui.systemUsesDarkTheme": {
-        "Status": "default",
-        "Type": "number",
-        "Value": 1
       }
     },
     "SanitizeOnShutdown": {
@@ -169,30 +182,6 @@
           "Method": "GET",
           "Name": "Amazon (AU)",
           "URLTemplate": "https://www.amazon.com.au/s?k={searchTerms}"
-        },
-        {
-          "Alias": "!gb",
-          "Description": "Search Gentoo Bugs",
-          "IconURL": "https://www.gentoo.org/favicon.ico",
-          "Method": "GET",
-          "Name": "Gentoo Bugs",
-          "URLTemplate": "https://bugs.gentoo.org/buglist.cgi?quicksearch={searchTerms}"
-        },
-        {
-          "Alias": "!gp",
-          "Description": "Search Gentoo Packages",
-          "IconURL": "https://www.gentoo.org/favicon.ico",
-          "Method": "GET",
-          "Name": "Gentoo Packages",
-          "URLTemplate": "https://packages.gentoo.org/packages/search?q={searchTerms}"
-        },
-        {
-          "Alias": "!gw",
-          "Description": "Search Gentoo Wiki",
-          "IconURL": "https://www.gentoo.org/favicon.ico",
-          "Method": "GET",
-          "Name": "Gentoo Wiki",
-          "URLTemplate": "https://wiki.gentoo.org/index.php?search={searchTerms}"
         },
         {
           "Alias": "!gh",
@@ -265,21 +254,11 @@
           "Method": "GET",
           "Name": "Marginalia",
           "URLTemplate": "https://marginalia-search.com/search?query={searchTerms}"
-        },
-        {
-          "Alias": "!s",
-          "Description": "Search Startpage",
-          "IconURL": "https://www.startpage.com/favicon.ico",
-          "Method": "POST",
-          "Name": "Startpage",
-          "PostData": "query={searchTerms}",
-          "URLTemplate": "https://www.startpage.com/sp/search"
         }
       ],
-      "Default": "Startpage",
+      "Default": "DuckDuckGo",
       "Remove": [
         "Bing",
-        "DuckDuckGo",
         "Google",
         "Twitter",
         "eBay",
@@ -288,6 +267,7 @@
       ]
     },
     "SearchSuggestEnabled": false,
+    "SkipTermsOfUse": true,
     "UserMessaging": {
       "ExtensionRecommendations": false,
       "FeatureRecommendations": false,
