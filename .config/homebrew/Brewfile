@@ -1,7 +1,11 @@
 brew "gnupg"
 brew "kakoune"
+brew "mole"
 brew "mpv"
 brew "shellcheck"
 brew "shfmt"
-cask "discord"
+
+cask "firefox"
+cask "hammerspoon"
 cask "jan"
+cask "mozilla-vpn"
