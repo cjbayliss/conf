@@ -16,12 +16,6 @@ pst() {
     curl --data-binary "@${1:-/dev/stdin}" https://paste.rs && echo
 }
 
-watch() {
-    while true; do
-        reset; "$@"; sleep 5
-    done
-}
-
 [ -f "$(command -v gpg)" ] && [ -f "$(command -v tty)" ] && export GPG_TTY="$(tty)"
 
 [ -f "$HOME/.config/sh/envrc" ] && . "$HOME/.config/sh/envrc"
