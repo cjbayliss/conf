@@ -10,7 +10,11 @@ default:
 		[ -f "$$dest" ] && rm "$$dest"; \
 		[ ! -L "$$dest" ] && ln -sv $$i $$dest; \
 	done
-	@test -f "$(HOME)/.bashrc" && rm "$(HOME)/.bashrc"
+	@if [ -f "$(HOME)/.bashrc" ] || [ -L "$(HOME)/.bashrc" ]; then \
+		rm -v "$(HOME)/.bashrc"; \
+	fi
 	@ln -sv "$(HOME)/.profile" "$(HOME)/.bashrc"
-	@test -f "$(HOME)/.zshrc" && rm "$(HOME)/.zshrc"
+	@if [ -f "$(HOME)/.zshrc" ] || [ -L "$(HOME)/.zshrc" ]; then \
+		rm -v "$(HOME)/.zshrc"; \
+	fi
 	@ln -sv "$(HOME)/.profile" "$(HOME)/.zshrc"
