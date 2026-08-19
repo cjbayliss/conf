@@ -1,14 +1,6 @@
 #!/bin/sh
 
-# turn off the screen after 5m
-if [ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ]; then
-    setterm --powersave on --blank 5
-fi
-
-# load system environment variables first
-[ -f /etc/profile.env ] && . /etc/profile.env
-
-# 🐑
+# configure XDG_*_{DIR,HOME} stuff
 if [ -z "${XDG_RUNTIME_DIR}" ]; then
     export XDG_RUNTIME_DIR="/tmp/${UID:=$(id -u "$USER")}-runtime-dir"
     if [ ! -d "${XDG_RUNTIME_DIR}" ]; then
@@ -17,20 +9,31 @@ if [ -z "${XDG_RUNTIME_DIR}" ]; then
     fi
 fi
 export XDG_CONFIG_HOME="$HOME/.config"
-# why store this? put it in /tmp
 export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_DATA_DIRS="$XDG_DATA_DIRS:/home/cjb/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
-[ -f "$XDG_CONFIG_HOME/sh/shrc" ] && export ENV="$XDG_CONFIG_HOME/sh/shrc"
+export XDG_STATE_HOME="$HOME/.local/state"
 
-export EDITOR="kak"
-export VISUAL="$EDITOR"
+# ensure $XDG_*_HOME exists
+mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
+
+# OS specific stuff
+if [ "$(uname -s)" = "Darwin" ]; then
+    [ -f "$XDG_CONFIG_HOME/sh/os/macos" ] && . "$XDG_CONFIG_HOME/sh/os/macos"
+elif [ "$(uname -s)" = "Linux" ]; then
+    [ -f "$XDG_CONFIG_HOME/sh/os/linux" ] && . "$XDG_CONFIG_HOME/sh/os/linux"
+fi
+
+if [ -n "$(command -v kak)" ]; then
+    export EDITOR="kak"
+    export VISUAL="$EDITOR"
+fi
 
 export LESSHISTFILE='/dev/null'
 export MAILCAPS="$MAILCAPS:$XDG_CONFIG_HOME/mutt/mailcap"
 export MANPAGER='less --mouse --wheel-lines 3'
 export MANWIDTH=72
 export PAGER=cat
+export SCREENRC="$XDG_CONFIG_HOME/screen/screenrc"
 export TIME_STYLE=long-iso
 
 if [ -z "$SSH_CONNECTION" ]; then
@@ -65,9 +68,8 @@ export MYPY_CACHE_DIR="$XDG_CACHE_HOME/mypy"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
+export HF_HOME="$XDG_STATE_HOME/huggingface"
 [ -f "$XDG_CONFIG_HOME/python/startup.py" ] && export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/startup.py"
-
-export SCREENRC="$XDG_CONFIG_HOME/screen/screenrc"
 
 # some programs respect this
 export DISABLE_TELEMETRY=1
@@ -76,25 +78,13 @@ export DISABLE_TELEMETRY=1
 mkdir -p "$HOME/.local/bin"
 export PATH="$PATH:$HOME/.local/bin"
 
-# IMPORTANT: NEVER!!! use xdg-user-dirs-update, it is broken as fuck
-export XDG_DESKTOP_DIR="$HOME/stuff/desktop"
-export XDG_DOCUMENTS_DIR="$HOME/stuff"
-export XDG_DOWNLOAD_DIR="$HOME/stuff/downloads"
-export XDG_MUSIC_DIR="$HOME/music"
-export XDG_PICTURES_DIR="$HOME/pictures"
-export XDG_PUBLICSHARE_DIR="$HOME/stuff/public"
-export XDG_TEMPLATES_DIR="$HOME/stuff/templates"
-export XDG_VIDEOS_DIR="$HOME/videos"
+# generic shell config
+[ -f "$XDG_CONFIG_HOME/sh/shrc" ] && export ENV="$XDG_CONFIG_HOME/sh/shrc"
 
-# ensure $XDG_*_HOME exists
-mkdir -p "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
-mkdir -p "$XDG_DESKTOP_DIR" "$XDG_DOCUMENTS_DIR" "$XDG_DOWNLOAD_DIR" "$XDG_MUSIC_DIR" "$XDG_PICTURES_DIR" "$XDG_PUBLICSHARE_DIR" "$XDG_TEMPLATES_DIR" "$XDG_VIDEOS_DIR"
-
+# not every shell sources $ENV
 [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ] && [ -f "$XDG_CONFIG_HOME/sh/shrc" ] && . "$XDG_CONFIG_HOME/sh/shrc"
-[ -f "$(command -v dircolors)" ] && [ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b "$XDG_CONFIG_HOME"/dircolors)"
 
-# start the ssh-agent.
-if [ -z "${WAYLAND_DISPLAY}" ] && [ -n "$XDG_VTNR" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-    pkill -9 ssh-agent # FIXME: OpenRC user services "starts" ssh-agent, very incorrectly
-    pidof -q ssh-agent || eval "$(ssh-agent)" >/dev/null
+if [ -f "$(command -v dircolors)" ]; then
+    [ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b "$XDG_CONFIG_HOME"/dircolors)"
 fi
+
