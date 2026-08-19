@@ -87,4 +87,3 @@ export PATH="$PATH:$HOME/.local/bin"
 if [ -f "$(command -v dircolors)" ]; then
     [ -f "$XDG_CONFIG_HOME/dircolors" ] && eval "$(dircolors -b "$XDG_CONFIG_HOME"/dircolors)"
 fi
-
