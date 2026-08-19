@@ -51,14 +51,23 @@ __exit_status() {
     unset EXIT_STATUS
 }
 
-__update_title() {
-    printf '\033]0;%s %s' "$HOSTNAME" "${PWD/#$HOME/~}"
+__set_title() {
+    printf '\033]0;%s %s\033\\' "$HOSTNAME" "${PWD/#$HOME/~}"
 }
 
-PROMPT="%f%m %F{014}%~%f \$ "
+__set_current_git_branch() {
+    __CURRENT_GIT_BRANCH="$(git branch -q 2>/dev/null| grep '\*' | cut -d ' ' -f2 | sed 's/.*/[&] /')"
+}
+
+__set_current_prompt_pwd() {
+    __CURRENT_PROMPT_PWD="${PWD/#$HOME/~}"
+    [ -f "$(command -v fishy-pwd)" ] && __CURRENT_PROMPT_PWD="$(fishy-pwd)"
+}
 
 precmd() {
     __exit_status
-    __update_title
-    [ -f "$(command -v fishy-pwd)" ] && PROMPT="%f%m%f %F{014}$(fishy-pwd)%f \$ "
+    __set_title
+    __set_current_git_branch
+    __set_current_prompt_pwd
+    PROMPT="%f%m %F{014}${__CURRENT_PROMPT_PWD}%f $__CURRENT_GIT_BRANCH\$ "
 }
