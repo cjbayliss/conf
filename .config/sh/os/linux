@@ -1,0 +1,36 @@
+#!/bin/sh
+
+# turn off the screen after 5m
+if [ "$(fgconsole 2>/dev/null || echo -1)" -gt 0 ]; then
+    setterm --powersave on --blank 5
+fi
+
+# load system environment variables first
+[ -f /etc/profile.env ] && . /etc/profile.env
+
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:/home/cjb/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
+
+# IMPORTANT: NEVER!!! use xdg-user-dirs-update, it is broken as fuck
+export XDG_DESKTOP_DIR="$HOME/stuff/desktop"
+export XDG_DOCUMENTS_DIR="$HOME/stuff"
+export XDG_DOWNLOAD_DIR="$HOME/stuff/downloads"
+export XDG_MUSIC_DIR="$HOME/music"
+export XDG_PICTURES_DIR="$HOME/pictures"
+export XDG_PUBLICSHARE_DIR="$HOME/stuff/public"
+export XDG_TEMPLATES_DIR="$HOME/stuff/templates"
+export XDG_VIDEOS_DIR="$HOME/videos"
+
+mkdir -p "$XDG_DESKTOP_DIR" \
+    "$XDG_DOCUMENTS_DIR" \
+    "$XDG_DOWNLOAD_DIR" \
+    "$XDG_MUSIC_DIR" \
+    "$XDG_PICTURES_DIR" \
+    "$XDG_PUBLICSHARE_DIR" \
+    "$XDG_TEMPLATES_DIR" \
+    "$XDG_VIDEOS_DIR"
+
+# start the ssh-agent.
+if [ -z "${WAYLAND_DISPLAY}" ] && [ -n "$XDG_VTNR" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+    pkill -9 ssh-agent # FIXME: OpenRC user services "starts" ssh-agent, very incorrectly
+    pidof -q ssh-agent || eval "$(ssh-agent)" >/dev/null
+fi
