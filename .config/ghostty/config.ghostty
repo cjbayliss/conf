@@ -8,23 +8,24 @@ font-thicken = true
 font-thicken-strength = 10
 
 # cursor
+adjust-cursor-thickness = 4
 cursor-style = underline
 cursor-style-blink = true
-adjust-cursor-thickness = 4
 shell-integration-features = no-cursor
 
 # window
+bell-features = no-system, no-audio, no-attention, title, no-border
+window-height = 46
+window-inherit-working-directory = true
 window-padding-x = 4
 window-padding-y = 4
 window-width = 130
-window-height = 40
-bell-features = no-system, no-audio, no-attention, title, no-border
 working-directory = home
-window-inherit-working-directory = false
 
 # macos
-macos-secure-input-indication = false
+macos-auto-secure-input = true
 macos-option-as-alt = true
-macos-titlebar-style = tabs
+macos-secure-input-indication = false
+macos-titlebar-style = transparent
 
 # vim: set ft=conf
