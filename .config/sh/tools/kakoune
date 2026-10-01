@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ -n "$(command -v kak)" ]; then
+    export EDITOR="kak"
+    export VISUAL="$EDITOR"
+fi
