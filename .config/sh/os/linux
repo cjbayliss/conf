@@ -8,8 +8,6 @@ fi
 # load system environment variables first
 [ -f /etc/profile.env ] && . /etc/profile.env
 
-export XDG_DATA_DIRS="$XDG_DATA_DIRS:/home/cjb/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share"
-
 # IMPORTANT: NEVER!!! use xdg-user-dirs-update, it is broken as fuck
 export XDG_DESKTOP_DIR="$HOME/stuff/desktop"
 export XDG_DOCUMENTS_DIR="$HOME/stuff"

@@ -10,12 +10,6 @@ setopt NOBEEP
 # zsh specific aliases
 alias mpv="noglob mpv"
 
-# brew
-[ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-export HOMEBREW_NO_ENV_HINTS=1
-PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-
 # better history
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_ALL_DUPS
