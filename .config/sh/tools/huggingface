@@ -1,0 +1,3 @@
+#!/bin/sh
+
+export HF_HOME="$XDG_STATE_HOME/huggingface"
