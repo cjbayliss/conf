@@ -5,6 +5,7 @@
 
 # STOP FUCKING BEEPING!
 unsetopt BEEP
+setopt NOBEEP
 
 # zsh specific aliases
 alias mpv="noglob mpv"
@@ -12,6 +13,8 @@ alias mpv="noglob mpv"
 # brew
 [ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 export HOMEBREW_NO_ENV_HINTS=1
+PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
 # better history
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -32,8 +35,7 @@ zstyle ':completion:*' verbose no
 bindkey '^[[Z' reverse-menu-complete
 
 # oksh/fish like C-w
-WORDCHARS=${WORDCHARS//\&/}
-export WORDCHARS=${WORDCHARS//\//}
+export WORDCHARS='_-'
 
 # fish like history substring search
 autoload -Uz up-line-or-beginning-search
@@ -55,10 +57,6 @@ __set_title() {
     printf '\033]0;%s %s\033\\' "$HOSTNAME" "${PWD/#$HOME/~}"
 }
 
-__set_current_git_branch() {
-    __CURRENT_GIT_BRANCH="$(git branch -q 2>/dev/null | grep '\*' | cut -d ' ' -f2 | sed 's/.*/[&] /')"
-}
-
 __set_current_prompt_pwd() {
     __CURRENT_PROMPT_PWD="${PWD/#$HOME/~}"
     [ -f "$(command -v fishy-pwd)" ] && __CURRENT_PROMPT_PWD="$(fishy-pwd)"
@@ -67,7 +65,6 @@ __set_current_prompt_pwd() {
 precmd() {
     __exit_status
     __set_title
-    __set_current_git_branch
     __set_current_prompt_pwd
-    PROMPT="%f%m %F{014}${__CURRENT_PROMPT_PWD}%f $__CURRENT_GIT_BRANCH\$ "
+    PROMPT="%f%m %F{014}${__CURRENT_PROMPT_PWD}%f \$ "
 }
