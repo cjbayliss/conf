@@ -61,6 +61,7 @@ export NAME='Christopher Bayliss'
 export EMAIL='cjbdev@icloud.com'
 
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+[ -f "$(command -v rustup)" ] && PATH="$PATH:$(dirname $(rustup which rustc))"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 [ -d "$CARGO_HOME/bin" ] && PATH="$PATH:$CARGO_HOME/bin"
 export GOPATH="$XDG_DATA_HOME/go"
