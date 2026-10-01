@@ -24,6 +24,7 @@ elif [ "$(uname -s)" = "Linux" ]; then
 fi
 
 # tool specific stuff
+[ -f "$XDG_CONFIG_HOME/sh/tools/brew" ] && . "$XDG_CONFIG_HOME/sh/tools/brew"
 for __tool in "$XDG_CONFIG_HOME"/sh/tools/*; do
     [ -f "$__tool" ] && . "$__tool"
 done
