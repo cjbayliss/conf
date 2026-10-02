@@ -6,7 +6,7 @@ brew "git"
 brew "gnu-sed"
 brew "gnupg"
 brew "kakoune"
-brew "mole"
+brew "mole" if OS.mac?
 brew "mpv"
 brew "opencode"
 brew "prettier"
@@ -18,9 +18,10 @@ brew "shfmt"
 brew "stylua"
 brew "uv"
 
-cask "firefox"
-cask "font-jetbrains-mono"
-cask "ghostty"
-cask "mozilla-vpn"
+cask "firefox" if OS.mac?
+cask "font-jetbrains-mono" if OS.mac?
+cask "ghostty" if OS.mac?
+cask "mozilla-vpn" if OS.mac?
 
 uv "llm"
+uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
