@@ -6,6 +6,7 @@ brew "git"
 brew "gnu-sed"
 brew "gnupg"
 brew "kakoune"
+brew "llama.cpp"
 brew "mole" if OS.mac?
 brew "mpv"
 brew "opencode"
