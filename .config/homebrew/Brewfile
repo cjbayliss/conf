@@ -25,5 +25,5 @@ cask "font-jetbrains-mono" if OS.mac?
 cask "ghostty" if OS.mac?
 cask "mozilla-vpn" if OS.mac?
 
-uv "llm"
+uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
