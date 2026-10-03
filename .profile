@@ -23,7 +23,15 @@ elif [ "$(uname -s)" = "Linux" ]; then
     [ -f "$XDG_CONFIG_HOME/sh/os/linux" ] && . "$XDG_CONFIG_HOME/sh/os/linux"
 fi
 
+# local machine environment variables
+mkdir -p "$XDG_CONFIG_HOME/sh/env"
+for __env in "$XDG_CONFIG_HOME"/sh/env/*; do
+    [ -f "$__env" ] && . "$__env"
+done
+unset __env
+
 # tool specific stuff
+mkdir -p "$XDG_CONFIG_HOME/sh/tools"
 [ -f "$XDG_CONFIG_HOME/sh/tools/brew" ] && . "$XDG_CONFIG_HOME/sh/tools/brew"
 for __tool in "$XDG_CONFIG_HOME"/sh/tools/*; do
     [ -f "$__tool" ] && . "$__tool"

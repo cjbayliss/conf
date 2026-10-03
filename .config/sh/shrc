@@ -18,8 +18,6 @@ pst() {
 
 [ -f "$(command -v gpg)" ] && [ -f "$(command -v tty)" ] && export GPG_TTY="$(tty)"
 
-[ -f "$HOME/.config/sh/envrc" ] && . "$HOME/.config/sh/envrc"
-
 [ -n "$BASH_VERSION" ] && . "$XDG_CONFIG_HOME/bash/bashrc"
 [ -n "$ZSH_VERSION" ] && . "$XDG_CONFIG_HOME/zsh/zshrc"
 
