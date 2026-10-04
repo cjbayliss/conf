@@ -6,6 +6,7 @@ brew "git"
 brew "gnu-sed"
 brew "gnupg"
 brew "grep"
+brew "jackchuka/tap/dutix", trusted: true
 brew "kakoune"
 brew "llama.cpp"
 brew "man-db"
@@ -23,9 +24,11 @@ brew "stylua"
 brew "uv"
 
 cask "firefox" if OS.mac?
+cask "iina" if OS.mac?
 cask "font-jetbrains-mono" if OS.mac?
 cask "ghostty" if OS.mac?
 cask "mozilla-vpn" if OS.mac?
 
 uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
+uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
