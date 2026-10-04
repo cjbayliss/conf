@@ -1,12 +1,16 @@
 #!/bin/sh
 
 if [ -x /opt/homebrew/bin/brew ]; then
+    __brew_prefix="$(brew --prefix)"
     export HOMEBREW_NO_ENV_HINTS=1
     [ -n "$BASH_VERSION" ] && eval "$(/opt/homebrew/bin/brew shellenv bash)"
     [ -n "$ZSH_VERSION" ] && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-    [ -d /opt/homebrew/opt/gnu-sed/libexec/gnubin ] && PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-    [ -d /opt/homebrew/opt/coreutils/libexec/gnubin ] && PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+    [ -d "$__brew_prefix/opt/coreutils/libexec/gnubin" ] && PATH="$__brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
+    [ -d "$__brew_prefix/opt/gnu-sed/libexec/gnubin" ] && PATH="$__brew_prefix/opt/gnu-sed/libexec/gnubin:$PATH"
+    [ -d "$__brew_prefix/opt/grep/libexec/gnubin" ] && PATH="$__brew_prefix/opt/grep/libexec/gnubin:$PATH"
+    [ -d "$__brew_prefix/opt/man-db/libexec/bin" ] && PATH="$__brew_prefix/opt/man-db/libexec/bin:$PATH"
 fi
+unset __brew_prefix
 
 brew() {
     command brew "$@"
