@@ -77,8 +77,8 @@ __update_title() {
 
 PROMPT_COMMAND='__exit_status; __update_title'
 
-if [ -f "$(command -v fishy-pwd)" ]; then
-    PS1="\h \[\e[96m\]\$(fishy-pwd)\[\e[0m\] \$ "
+if [ -f "$(command -v fpwd)" ]; then
+    PS1="\h \[\e[96m\]\$(fpwd \$HOME \$PWD)\[\e[0m\] \$ "
 else
     PROMPT_DIRTRIM=1
     PS1="\h \[\e[96m\]\w\[\e[0m\] \$ "
