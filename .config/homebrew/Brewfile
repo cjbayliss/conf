@@ -32,3 +32,5 @@ cask "mozilla-vpn" if OS.mac?
 uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
 uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
+
+cargo "fpwd", source: "https://github.com/cjbayliss/fpwd"
