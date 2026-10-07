@@ -12,7 +12,7 @@ brew "llama.cpp"
 brew "man-db"
 brew "mole" if OS.mac?
 brew "mpv"
-brew "opencode"
+brew "nono"
 brew "prettier"
 brew "ripgrep"
 brew "ruff"
@@ -24,13 +24,15 @@ brew "stylua"
 brew "uv"
 
 cask "firefox" if OS.mac?
-cask "iina" if OS.mac?
 cask "font-jetbrains-mono" if OS.mac?
 cask "ghostty" if OS.mac?
+cask "iina" if OS.mac?
 cask "mozilla-vpn" if OS.mac?
 
-uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
+uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
+
+npm "@earendil-works/pi-coding-agent"
 
 cargo "fpwd", source: "https://github.com/cjbayliss/fpwd"
