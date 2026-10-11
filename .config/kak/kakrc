@@ -99,6 +99,10 @@ hook global WinSetOption filetype=rust %{
     set-option window formatcmd rustfmt
     format-on-save
 }
+hook global WinSetOption filetype=markdown %{
+    set-option window formatcmd "prettier --prose-wrap=always --parser=markdown --print-width=72"
+    format-on-save
+}
 
 # filetypes
 hook global BufCreate (/etc/portage/((m|p).*|sets/.*)|/var/lib/portage/.*|.*tmux\.conf) %{
