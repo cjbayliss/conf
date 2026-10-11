@@ -92,7 +92,7 @@ define-command -hidden format-on-save %{
 }
 
 hook global WinSetOption filetype=python %{
-    set-option window formatcmd "black --quiet -"
+    set-option window formatcmd "ruff format -q -"
     format-on-save
 }
 hook global WinSetOption filetype=rust %{

@@ -1,6 +1,5 @@
 brew "bash-completion@2"
 brew "bash"
-brew "black"
 brew "coreutils"
 brew "git"
 brew "gnu-sed"
@@ -16,7 +15,6 @@ brew "mpv"
 brew "nono"
 brew "prettier"
 brew "ripgrep"
-brew "ruff"
 brew "rustup"
 brew "screen"
 brew "shellcheck"
@@ -31,8 +29,10 @@ cask "iina" if OS.mac?
 cask "mozilla-vpn" if OS.mac?
 
 uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
-uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
+uv "nt", source: "git+https://github.com/cjbayliss/nt.git"
 uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
 
+uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
+uv "ruff"
 
 cargo "fpwd", source: "https://github.com/cjbayliss/fpwd"
