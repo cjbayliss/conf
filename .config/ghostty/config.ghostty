@@ -26,6 +26,7 @@ window-width = 130
 macos-auto-secure-input = true
 macos-option-as-alt = true
 macos-secure-input-indication = false
+macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = transparent
 
 # vim: set ft=conf
