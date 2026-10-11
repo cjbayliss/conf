@@ -5,3 +5,7 @@ maki.setup({
         theme = "terminal",
     },
 })
+
+maki.keymap.set("n", "<C-d>", function()
+  maki.api.run_command("/exit")
+end, { desc = "exit maki" })
