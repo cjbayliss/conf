@@ -1,5 +1,5 @@
 {
-  "extends": "default",
+  "extends": ["default"],
   "meta": {
     "name": "maki",
     "version": "0.1.0",
@@ -35,7 +35,8 @@
       "$HOME/.nvm/",
       "$HOME/.agents/skills",
       "$NONO_PACKAGES",
-      "$NONO_CONFIG/profiles"
+      "$NONO_CONFIG/profiles",
+      "$HOME/dev/repos/conf"
     ]
   },
   "network": {
