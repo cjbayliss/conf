@@ -9,6 +9,7 @@ brew "grep"
 brew "jackchuka/tap/dutix", trusted: true
 brew "kakoune"
 brew "llama.cpp"
+brew "maki"
 brew "man-db"
 brew "mole" if OS.mac?
 brew "mpv"
@@ -33,6 +34,5 @@ uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
 uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
 
-npm "@earendil-works/pi-coding-agent"
 
 cargo "fpwd", source: "https://github.com/cjbayliss/fpwd"
