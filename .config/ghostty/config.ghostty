@@ -2,8 +2,7 @@
 theme = light:Modus Operandi,dark:Nvim Dark
 
 # fonts
-font-family = JetBrains Mono
-font-feature = -calt, -liga, -dlig
+font-family = JetBrains Mono NL
 font-thicken = true
 font-thicken-strength = 10
 
@@ -15,12 +14,13 @@ shell-integration-features = no-cursor
 
 # window
 bell-features = no-system, no-audio, no-attention, title, no-border
-window-height = 46
 window-inherit-working-directory = true
 window-padding-x = 4
 window-padding-y = 4
-window-width = 130
 working-directory = home
+
+window-height = 44
+window-width = 130
 
 # macos
 macos-auto-secure-input = true
