@@ -14,6 +14,7 @@ brew "mole" if OS.mac?
 brew "mpv"
 brew "nono"
 brew "prettier"
+brew "python"
 brew "ripgrep"
 brew "rustup"
 brew "screen"
