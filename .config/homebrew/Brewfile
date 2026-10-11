@@ -5,7 +5,7 @@ brew "git"
 brew "gnu-sed"
 brew "gnupg"
 brew "grep"
-brew "jackchuka/tap/dutix", trusted: true
+brew "jackchuka/tap/dutix", trusted: true if OS.mac?
 brew "kakoune"
 brew "llama.cpp"
 brew "maki"
