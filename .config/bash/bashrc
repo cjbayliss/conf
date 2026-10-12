@@ -26,7 +26,7 @@ elif [ -f /etc/bash_completion ]; then
 fi
 
 # brew completions
-[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+[ -n "$HOMEBREW_PREFIX" ] && [ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 
 # basic doas completion
 [ -f "$(command -v doas)" ] && complete -F _command doas

@@ -1,16 +1,23 @@
 #!/bin/sh
 
-if [ -x /opt/homebrew/bin/brew ]; then
-    __brew_prefix="$(brew --prefix)"
+__brew_prefix=""
+for __brew_dir in /opt/homebrew /home/linuxbrew/.linuxbrew /usr/local; do
+    if [ -x "$__brew_dir/bin/brew" ]; then
+        __brew_prefix="$__brew_dir"
+        break
+    fi
+done
+
+if [ -n "$__brew_prefix" ]; then
     export HOMEBREW_NO_ENV_HINTS=1
-    [ -n "$BASH_VERSION" ] && eval "$(/opt/homebrew/bin/brew shellenv bash)"
-    [ -n "$ZSH_VERSION" ] && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+    [ -n "$BASH_VERSION" ] && eval "$("$__brew_prefix/bin/brew" shellenv bash)"
+    [ -n "$ZSH_VERSION" ] && eval "$("$__brew_prefix/bin/brew" shellenv zsh)"
     [ -d "$__brew_prefix/opt/coreutils/libexec/gnubin" ] && PATH="$__brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
     [ -d "$__brew_prefix/opt/gnu-sed/libexec/gnubin" ] && PATH="$__brew_prefix/opt/gnu-sed/libexec/gnubin:$PATH"
     [ -d "$__brew_prefix/opt/grep/libexec/gnubin" ] && PATH="$__brew_prefix/opt/grep/libexec/gnubin:$PATH"
     [ -d "$__brew_prefix/opt/man-db/libexec/bin" ] && PATH="$__brew_prefix/opt/man-db/libexec/bin:$PATH"
 fi
-unset __brew_prefix
+unset __brew_prefix __brew_dir
 
 brew() {
     command brew "$@"

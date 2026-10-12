@@ -2,8 +2,14 @@
 
 set -eu
 
-brew="/opt/homebrew/bin/brew"
-[ -x "$brew" ] || exit 0
+brew=""
+for cand in /opt/homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin/brew /usr/local/bin/brew; do
+    if [ -x "$cand" ]; then
+        brew="$cand"
+        break
+    fi
+done
+[ -n "$brew" ] || exit 0
 
 out="${XDG_CONFIG_HOME:-$HOME/.config}/sh/env/brew"
 tmp="$out.$$"
