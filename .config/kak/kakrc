@@ -109,6 +109,10 @@ hook global BufCreate (/etc/portage/((m|p).*|sets/.*)|/var/lib/portage/.*|.*tmux
     set-option buffer filetype sh
 }
 
+hook global BufCreate .*Containerfile.* %{
+    set-option buffer filetype dockerfile
+}
+
 hook global BufCreate /etc/portage/repos.conf/.* %{
     set-option buffer filetype ini
 }
