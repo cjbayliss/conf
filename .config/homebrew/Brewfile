@@ -8,7 +8,6 @@ brew "grep"
 brew "jackchuka/tap/dutix", trusted: true if OS.mac?
 brew "kakoune"
 brew "llama.cpp"
-brew "make"
 brew "maki"
 brew "man-db"
 brew "mole" if OS.mac?
