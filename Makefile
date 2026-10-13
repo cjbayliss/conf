@@ -10,6 +10,19 @@ default:
 		[ -f "$$dest" ] && rm "$$dest"; \
 		[ ! -L "$$dest" ] && ln -sv $$i $$dest; \
 	done
+	@pinentry=$$(command -v pinentry-tty); \
+	if [ -n "$$pinentry" ]; then \
+		mkdir -pv "$(HOME)/.gnupg"; \
+		touch "$(HOME)/.gnupg/gpg-agent.conf"; \
+		if grep -q '^pinentry-program' "$(HOME)/.gnupg/gpg-agent.conf"; then \
+			sed "s|^pinentry-program .*|pinentry-program $$pinentry|" "$(HOME)/.gnupg/gpg-agent.conf" > "$(HOME)/.gnupg/gpg-agent.conf.tmp" \
+			&& mv -v "$(HOME)/.gnupg/gpg-agent.conf.tmp" "$(HOME)/.gnupg/gpg-agent.conf"; \
+		else \
+			echo "pinentry-program $$pinentry" >> "$(HOME)/.gnupg/gpg-agent.conf"; \
+		fi; \
+	else \
+		echo "pinentry-tty not found; gpg-agent.conf left unchanged"; \
+	fi
 	@if [ -f "$(HOME)/.bashrc" ] || [ -L "$(HOME)/.bashrc" ]; then \
 		rm -v "$(HOME)/.bashrc"; \
 	fi
