@@ -1,4 +1,4 @@
-.PHONEY: default
+.PHONY: default
 
 default:
 	@for i in $$(find $(PWD)/.???* -type d ! -path '*/.git*'); do \
