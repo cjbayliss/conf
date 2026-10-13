@@ -1,16 +1,15 @@
 brew "bash-completion@2"
 brew "bash"
 brew "coreutils"
+brew "gh"
 brew "git"
 brew "gnu-sed"
 brew "gnupg"
 brew "grep"
-brew "jackchuka/tap/dutix", trusted: true if OS.mac?
 brew "kakoune"
 brew "llama.cpp"
 brew "maki"
 brew "man-db"
-brew "mole" if OS.mac?
 brew "mpv"
 brew "nono"
 brew "prettier"
@@ -24,15 +23,21 @@ brew "shfmt"
 brew "stylua"
 brew "uv"
 
-cask "firefox" if OS.mac?
-cask "font-jetbrains-mono" if OS.mac?
-cask "ghostty" if OS.mac?
-cask "iina" if OS.mac?
-cask "mozilla-vpn" if OS.mac?
+if OS.mac?
+    brew "mole"
+    brew "jackchuka/tap/dutix", trusted: true
+
+    cask "firefox"
+    cask "font-jetbrains-mono"
+    cask "ghostty"
+    cask "iina"
+    cask "mozilla-vpn"
+
+    uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
+end
 
 uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
 uv "nt", source: "git+https://github.com/cjbayliss/nt.git"
-uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
 
 uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "ruff"
