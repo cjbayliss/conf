@@ -184,28 +184,20 @@
           "URLTemplate": "https://www.amazon.com.au/s?k={searchTerms}"
         },
         {
-          "Alias": "!gh",
-          "Description": "Search Github",
-          "IconURL": "https://github.com/favicon.ico",
+          "Alias": "!amo",
+          "Description": "Search AMO",
+          "IconURL": "https://addons.mozilla.org/favicon.ico",
           "Method": "GET",
-          "Name": "Github",
-          "URLTemplate": "https://github.com/search?q={searchTerms}"
+          "Name": "AMO",
+          "URLTemplate": "https://addons.mozilla.org/en-US/firefox/search/?q={searchTerms}"
         },
         {
-          "Alias": "!w",
-          "Description": "Search Wikipedia",
-          "IconURL": "https://en.wikipedia.org/static/favicon/wikipedia.ico",
+          "Alias": "!ddg",
+          "Description": "Search DuckDuckGo (No AI)",
+          "IconURL": "https://duckduckgo.com/favicon.ico",
           "Method": "GET",
-          "Name": "Wikipedia",
-          "URLTemplate": "https://en.wikipedia.org/wiki/Special:Search?search={searchTerms}"
-        },
-        {
-          "Alias": "define",
-          "Description": "Search Wiktionary",
-          "IconURL": "https://en.wiktionary.org/static/favicon/wiktionary/en.ico",
-          "Method": "GET",
-          "Name": "Wiktionary",
-          "URLTemplate": "https://en.wiktionary.org/wiki/Special:Search?search={searchTerms}"
+          "Name": "DuckDuckGo (No AI)",
+          "URLTemplate": "https://noai.duckduckgo.com/?q={searchTerms}"
         },
         {
           "Alias": "!dp",
@@ -216,20 +208,52 @@
           "URLTemplate": "https://packages.debian.org/search?keywords={searchTerms}&searchon=names&section=all"
         },
         {
-          "Alias": "!yt",
-          "Description": "Search YouTube",
-          "IconURL": "https://www.youtube.com/favicon.ico",
-          "Method": "GET",
-          "Name": "YouTube",
-          "URLTemplate": "https://www.youtube.com/results?search_query={searchTerms}"
-        },
-        {
           "Alias": "!eb",
           "Description": "Search eBay",
           "IconURL": "https://www.ebay.com.au/favicon.ico",
           "Method": "GET",
           "Name": "eBay (AU)",
           "URLTemplate": "https://www.ebay.com.au/sch/i.html?kw={searchTerms}"
+        },
+        {
+          "Alias": "!fp",
+          "Description": "Search Fedora Packages",
+          "IconURL": "https://packages.fedoraproject.org/favicon.ico",
+          "Method": "GET",
+          "Name": "Fedora Packages",
+          "URLTemplate": "https://packages.fedoraproject.org/search?query={searchTerms}"
+        },
+        {
+          "Alias": "!gh",
+          "Description": "Search Github",
+          "IconURL": "https://github.com/favicon.ico",
+          "Method": "GET",
+          "Name": "Github",
+          "URLTemplate": "https://github.com/search?q={searchTerms}"
+        },
+        {
+          "Alias": "!k",
+          "Description": "Search Kagi",
+          "IconURL": "https://kagi.com/favicon.ico",
+          "Method": "GET",
+          "Name": "Kagi",
+          "URLTemplate": "https://kagi.com/search?q={searchTerms}"
+        },
+        {
+          "Alias": "!ka",
+          "Description": "Ask Kagi Assistant",
+          "IconURL": "https://kagi.com/favicon.ico",
+          "Method": "GET",
+          "Name": "Kagi Assistant",
+          "URLTemplate": "https://assistant.kagi.com/?q={searchTerms}"
+        },
+        {
+          "Alias": "!m",
+          "Description": "Search Marginalia",
+          "IconURL": "https://marginalia-search.com/favicon.ico",
+          "Method": "GET",
+          "Name": "Marginalia",
+          "URLTemplate": "https://marginalia-search.com/search?query={searchTerms}"
         },
         {
           "Alias": "!rw",
@@ -240,30 +264,39 @@
           "URLTemplate": "https://oldschool.runescape.wiki/Special:Search?search={searchTerms}"
         },
         {
-          "Alias": "!amo",
-          "Description": "Search AMO",
-          "IconURL": "https://addons.mozilla.org/favicon.ico",
+          "Alias": "!w",
+          "Description": "Search Wikipedia",
+          "IconURL": "https://en.wikipedia.org/static/favicon/wikipedia.ico",
           "Method": "GET",
-          "Name": "AMO",
-          "URLTemplate": "https://addons.mozilla.org/en-US/firefox/search/?q={searchTerms}"
+          "Name": "Wikipedia",
+          "URLTemplate": "https://en.wikipedia.org/wiki/Special:Search?search={searchTerms}"
         },
         {
-          "Alias": "!m",
-          "Description": "Search Marginalia",
-          "IconURL": "https://marginalia-search.com/favicon.ico",
+          "Alias": "!yt",
+          "Description": "Search YouTube",
+          "IconURL": "https://www.youtube.com/favicon.ico",
           "Method": "GET",
-          "Name": "Marginalia",
-          "URLTemplate": "https://marginalia-search.com/search?query={searchTerms}"
+          "Name": "YouTube",
+          "URLTemplate": "https://www.youtube.com/results?search_query={searchTerms}"
+        },
+        {
+          "Alias": "define",
+          "Description": "Search Wiktionary",
+          "IconURL": "https://en.wiktionary.org/static/favicon/wiktionary/en.ico",
+          "Method": "GET",
+          "Name": "Wiktionary",
+          "URLTemplate": "https://en.wiktionary.org/wiki/Special:Search?search={searchTerms}"
         }
       ],
-      "Default": "DuckDuckGo",
+      "Default": "Kagi",
       "Remove": [
         "Bing",
+        "DuckDuckGo",
         "Google",
+        "Perplexity",
         "Twitter",
-        "eBay",
         "Wikipedia (en)",
-        "Perplexity"
+        "eBay"
       ]
     },
     "SearchSuggestEnabled": false,
