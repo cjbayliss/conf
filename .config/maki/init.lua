@@ -1,5 +1,9 @@
 maki.setup({
     always_yolo = true,
+    always_thinking = "adaptive",
+    provider = {
+        default_model = "synthetic/hf:zai-org/GLM-5.3-Flash",
+    },
     ui = {
         splash_animation = false,
         theme = "terminal",
