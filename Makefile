@@ -23,6 +23,12 @@ default:
 	else \
 		echo "pinentry-tty not found; gpg-agent.conf left unchanged"; \
 	fi
+	@if [ "$$(uname)" = "Darwin" ] && [ -d "/Applications/Firefox.app" ]; then \
+		mkdir -pv "/Applications/Firefox.app/Contents/Resources/distribution"; \
+		cp -v "$(PWD)/firefox-policies.json" "/Applications/Firefox.app/Contents/Resources/distribution/policies.json"; \
+	elif [ "$$(uname)" = "Darwin" ]; then \
+		echo "Firefox.app not found; policies not installed"; \
+	fi
 	@if [ -f "$(HOME)/.bashrc" ] || [ -L "$(HOME)/.bashrc" ]; then \
 		rm -v "$(HOME)/.bashrc"; \
 	fi
