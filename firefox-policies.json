@@ -248,6 +248,14 @@
           "URLTemplate": "https://assistant.kagi.com/?q={searchTerms}"
         },
         {
+          "Alias": "!kt",
+          "Description": "Kagi Translate",
+          "IconURL": "https://translate.kagi.com/favicon.ico",
+          "Method": "GET",
+          "Name": "Kagi Translate",
+          "URLTemplate": "https://translate.kagi.com/?text={searchTerms}"
+        },
+        {
           "Alias": "!m",
           "Description": "Search Marginalia",
           "IconURL": "https://marginalia-search.com/favicon.ico",
