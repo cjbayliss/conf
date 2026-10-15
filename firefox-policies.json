@@ -20,6 +20,7 @@
     "DisableFirefoxAccounts": true,
     "DisableFirefoxStudies": true,
     "DisablePocket": true,
+    "DisableRemoteImprovements": true,
     "DisableSecurityBypass": {
       "InvalidCertificate": true,
       "SafeBrowsing": true
@@ -89,6 +90,12 @@
       "browser.aboutConfig.showWarning": {
         "Value": false
       },
+      "browser.compactmode.show": {
+        "Value": true
+      },
+      "browser.fullscreen.exit_on_escape": {
+        "Value": false
+      },
       "browser.newtabpage.activity-stream.hideLogo": {
         "Value": false
       },
@@ -97,6 +104,18 @@
       },
       "browser.newtabpage.activity-stream.widgets.enabled": {
         "Value": false
+      },
+      "browser.newtabpage.enabled": {
+        "Value": false
+      },
+      "browser.theme.native-theme": {
+        "Value": true
+      },
+      "browser.toolbars.bookmarks.visibility": {
+        "Value": "never"
+      },
+      "browser.uidensity": {
+        "Value": 1
       },
       "browser.urlbar.trimURLs": {
         "Value": false
@@ -113,6 +132,9 @@
       },
       "ui.key.menuAccessKeyFocuses": {
         "Value": false
+      },
+      "widget.macos.titlebar-blend-mode.behind-window": {
+        "Value": true
       }
     },
     "SanitizeOnShutdown": {
