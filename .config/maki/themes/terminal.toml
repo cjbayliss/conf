@@ -85,33 +85,33 @@
 [palette]
 background = "default"
 foreground = "default"
-comment    = "light-gray"
+comment    = "cyan"
 mode_build = "red"
 mode_plan  = "green"
-mode_bash  = "yellow"
+mode_bash  = "default"
 
 [ui]
-user               = { fg = "blue" }
-assistant          = { fg = "foreground" }
-assistant_prefix   = { fg = "foreground", modifiers = ["bold"] }
-thinking           = { fg = "light-gray", modifiers = ["italic"] }
+user               = { fg = "default" }
+assistant          = { fg = "default" }
+assistant_prefix   = { fg = "default", modifiers = ["bold"] }
+thinking           = { fg = "default", modifiers = ["italic"] }
 
-tool               = { fg = "foreground" }
-tool_prefix        = { fg = "foreground", modifiers = ["bold"] }
-tool_path          = { fg = "blue" }
-tool_annotation    = { fg = "light-gray" }
-tool_success       = { fg = "green" }
-tool_error         = { fg = "red" }
-tool_dim           = { fg = "light-gray" }
+tool               = { fg = "default" }
+tool_prefix        = { fg = "default", modifiers = ["bold"] }
+tool_path          = { fg = "default" }
+tool_annotation    = { fg = "default" }
+tool_success       = { fg = "default" }
+tool_error         = { fg = "default" }
+tool_dim           = { fg = "default" }
 
-error              = { fg = "red" }
-status_dim         = { fg = "light-gray" }
+error              = { fg = "default" }
+status_dim         = { fg = "default" }
 
-strikethrough      = { fg = "light-gray", modifiers = ["crossed_out"] }
-horizontal_rule    = { fg = "light-gray" }
-plan_rule          = { fg = "magenta", modifiers = ["bold"] }
-code_gutter        = { fg = "light-gray" }
-table_border       = { fg = "light-gray" }
+strikethrough      = { fg = "default", modifiers = ["crossed_out"] }
+horizontal_rule    = { fg = "default" }
+plan_rule          = { fg = "default", modifiers = ["bold"] }
+code_gutter        = { fg = "default" }
+table_border       = { fg = "default" }
 
 diff_old           = { fg = "red" }
 diff_new           = { fg = "green" }
@@ -119,31 +119,31 @@ diff_old_sign      = { fg = "red", modifiers = ["bold"] }
 diff_new_sign      = { fg = "green", modifiers = ["bold"] }
 diff_old_emphasis  = { modifiers = ["reversed"] }
 diff_new_emphasis  = { modifiers = ["reversed"] }
-diff_line_nr       = { fg = "light-gray" }
+diff_line_nr       = { fg = "default" }
 
-todo_completed     = { fg = "green" }
-todo_in_progress   = { fg = "yellow" }
-todo_pending       = { fg = "light-gray" }
-todo_cancelled     = { fg = "red", modifiers = ["crossed_out"] }
+todo_completed     = { fg = "default" }
+todo_in_progress   = { fg = "default" }
+todo_pending       = { fg = "default" }
+todo_cancelled     = { fg = "default", modifiers = ["crossed_out"] }
 
-item_selected      = { fg = "white", bg = "blue" }
-item               = { fg = "cyan" }
-item_desc          = { fg = "light-gray" }
-accent             = { fg = "magenta" }
-panel_border       = { fg = "blue" }
-panel_title        = { fg = "blue", modifiers = ["bold"] }
-cursor             = { fg = "white", bg = "light-gray" }
-keybind_key        = { fg = "cyan", modifiers = ["bold"] }
-keybind_section    = { fg = "magenta", modifiers = ["bold"] }
-input_border       = { fg = "light-gray" }
-keybind_desc       = { fg = "foreground" }
-queue              = { fg = "magenta" }
-plan_path          = { fg = "magenta", modifiers = ["bold"] }
-status_notice      = { fg = "yellow" }
-status_retry_error = { fg = "red" }
-status_retry_info  = { fg = "light-gray" }
-input_placeholder  = { fg = "light-gray" }
-queue_delete       = { fg = "red", modifiers = ["bold"] }
-timestamp          = { fg = "light-gray" }
-spinner            = { fg = "yellow" }
-active             = { fg = "cyan" }
+item_selected      = { fg = "default", bg = "default", modifiers = ["reversed"] }
+item               = { fg = "default" }
+item_desc          = { fg = "default" }
+accent             = { fg = "default" }
+panel_border       = { fg = "default" }
+panel_title        = { fg = "default", modifiers = ["bold"] }
+cursor             = { fg = "default", bg = "default", modifiers = ["reversed"] }
+keybind_key        = { fg = "default", modifiers = ["bold"] }
+keybind_section    = { fg = "default", modifiers = ["bold"] }
+input_border       = { fg = "default" }
+keybind_desc       = { fg = "default" }
+queue              = { fg = "default" }
+plan_path          = { fg = "default", modifiers = ["bold"] }
+status_notice      = { fg = "default" }
+status_retry_error = { fg = "default" }
+status_retry_info  = { fg = "default" }
+input_placeholder  = { fg = "default" }
+queue_delete       = { fg = "default", modifiers = ["bold"] }
+timestamp          = { fg = "default" }
+spinner            = { fg = "default" }
+active             = { fg = "default" }
