@@ -1,5 +1,8 @@
 #!/bin/sh
 
+if command -v gman >/dev/null 2>&1; then
+    export MANOPT='--nh --nj'
+fi
 export MANPAGER='less --mouse --wheel-lines 3'
 export MANWIDTH=72
 if [ -z "$SSH_CONNECTION" ]; then
