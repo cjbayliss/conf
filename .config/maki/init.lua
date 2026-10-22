@@ -2,7 +2,7 @@ maki.setup({
     always_yolo = true,
     always_thinking = "adaptive",
     provider = {
-        default_model = "synthetic/hf:zai-org/GLM-5.3-Flash",
+        default_model = "synthetic/hf:deepseek-ai/DeepSeek-V4.1-Flash-1017",
     },
     ui = {
         splash_animation = false,
