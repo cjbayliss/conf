@@ -24,12 +24,13 @@ brew "stylua"
 brew "uv"
 
 if OS.mac?
-    brew "mole"
     brew "jackchuka/tap/dutix", trusted: true
+    brew "mole"
 
     cask "firefox"
     cask "font-jetbrains-mono"
     cask "ghostty"
+    cask "hammerspoon"
     cask "iina"
     cask "mozilla-vpn"
 
