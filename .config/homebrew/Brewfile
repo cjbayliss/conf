@@ -46,3 +46,5 @@ uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "ruff"
 
 cargo "fpwd", source: "https://github.com/cjbayliss/fpwd"
+cargo "kak-tree-sitter"
+cargo "ktsctl"
