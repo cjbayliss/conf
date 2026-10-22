@@ -39,6 +39,7 @@ end
 
 uv "l2l", source: "git+https://github.com/cjbayliss/l2l.git"
 uv "nt", source: "git+https://github.com/cjbayliss/nt.git"
+uv "semble", source: "git+https://github.com/MinishLab/semble", with: ["mcp"]
 
 uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 uv "ruff"

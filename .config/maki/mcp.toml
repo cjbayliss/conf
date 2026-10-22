@@ -1,0 +1,5 @@
+# Semble: local semantic code search for agents.
+[mcp.semble]
+command = ["/Users/cjb/.local/share/uv/tools/semble/bin/semble"]
+timeout = 300000
+always_load = true
