@@ -6,6 +6,7 @@ brew "git"
 brew "gnu-sed"
 brew "gnupg"
 brew "grep"
+brew "kakoune-lsp/kakoune-lsp/kakoune-lsp", trusted: true
 brew "kakoune"
 brew "llama.cpp"
 brew "maki"
