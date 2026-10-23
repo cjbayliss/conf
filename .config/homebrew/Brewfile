@@ -30,6 +30,12 @@ brew "lua-language-server"
 brew "pylsp"
 npm "intelephense"
 
+# docker
+brew "colima" if OS.mac?
+brew "docker-buildx"
+brew "docker-compose"
+brew "docker"
+
 if OS.mac?
     brew "jackchuka/tap/dutix", trusted: true
     brew "mole"
