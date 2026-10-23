@@ -4,7 +4,7 @@ default:
 	@for i in $$(find $(PWD)/.???* -type d ! -path '*/.git*'); do \
 		mkdir -pv "$(HOME)$${i#$(PWD)}"; \
 	done
-	@for i in $$(find $(PWD)/.???* -type f ! -path '*/.git*'); do \
+	@for i in $$(find $(PWD)/.???* -type f ! -path '*/.git*' ! -path '$(PWD)/.docker/config.json'); do \
 		dest="$(HOME)$${i#$(PWD)}"; \
 		[ -f "$$dest" ] && [ ! -L "$$dest" ] && mv -v "$$dest" "$$dest.bak"; \
 		[ -f "$$dest" ] && rm "$$dest"; \
@@ -22,6 +22,14 @@ default:
 		fi; \
 	else \
 		echo "pinentry-tty not found; gpg-agent.conf left unchanged"; \
+	fi
+	@mkdir -pv "$(HOME)/.docker"
+	@[ -L "$(HOME)/.docker/config.json" ] && rm -v "$(HOME)/.docker/config.json" || true
+	@if brew_prefix=$$(brew --prefix 2>/dev/null); then \
+		sed "s|__BREW_PREFIX__|$$brew_prefix|g" "$(PWD)/.docker/config.json" > "$(HOME)/.docker/config.json.tmp" \
+		&& mv -v "$(HOME)/.docker/config.json.tmp" "$(HOME)/.docker/config.json"; \
+	else \
+		echo "brew not found; leaving $(HOME)/.docker/config.json unchanged"; \
 	fi
 	@if [ "$$(uname)" = "Darwin" ] && [ -d "/Applications/Firefox.app" ]; then \
 		mkdir -pv "/Applications/Firefox.app/Contents/Resources/distribution"; \
