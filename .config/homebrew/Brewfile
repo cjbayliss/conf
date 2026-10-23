@@ -6,7 +6,6 @@ brew "git"
 brew "gnu-sed"
 brew "gnupg"
 brew "grep"
-brew "kakoune-lsp/kakoune-lsp/kakoune-lsp", trusted: true
 brew "kakoune"
 brew "llama.cpp"
 brew "maki"
@@ -23,6 +22,13 @@ brew "shellcheck"
 brew "shfmt"
 brew "stylua"
 brew "uv"
+
+# LSP
+brew "bash-language-server"
+brew "kakoune-lsp/kakoune-lsp/kakoune-lsp", trusted: true
+brew "lua-language-server"
+brew "pylsp"
+npm "intelephense"
 
 if OS.mac?
     brew "jackchuka/tap/dutix", trusted: true
