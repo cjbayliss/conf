@@ -302,39 +302,39 @@ local function resizeWindow(direction)
     fitFocused(math.max(MIN_WIDTH, math.min(availableWidth, width)) / availableWidth)
 end
 
-local CTRL_ALT = { "ctrl", "alt" }
-local CTRL_ALT_SHIFT = { "ctrl", "alt", "shift" }
+local MOD_KEY = { "alt", "cmd" }
+local MOD_KEY_SHIFT = { "alt", "cmd", "shift" }
 
-hs.hotkey.bind(CTRL_ALT, "left", function()
+hs.hotkey.bind(MOD_KEY, "left", function()
     cycleWindow(-1)
 end)
 
-hs.hotkey.bind(CTRL_ALT, "right", function()
+hs.hotkey.bind(MOD_KEY, "right", function()
     cycleWindow(1)
 end)
 
-hs.hotkey.bind(CTRL_ALT_SHIFT, "left", function()
+hs.hotkey.bind(MOD_KEY_SHIFT, "left", function()
     swapWindow(-1)
 end)
 
-hs.hotkey.bind(CTRL_ALT_SHIFT, "right", function()
+hs.hotkey.bind(MOD_KEY_SHIFT, "right", function()
     swapWindow(1)
 end)
 
-hs.hotkey.bind(CTRL_ALT, "=", function()
+hs.hotkey.bind(MOD_KEY, "=", function()
     resizeWindow(1)
 end)
 
-hs.hotkey.bind(CTRL_ALT, "-", function()
+hs.hotkey.bind(MOD_KEY, "-", function()
     resizeWindow(-1)
 end)
 
-hs.hotkey.bind(CTRL_ALT, "r", function()
+hs.hotkey.bind(MOD_KEY, "r", function()
     fitFocused(0.85)
 end)
 
-hs.hotkey.bind(CTRL_ALT, "m", function()
+hs.hotkey.bind(MOD_KEY, "m", function()
     fitFocused(1)
 end)
 
-hs.hotkey.bind(CTRL_ALT_SHIFT, "r", hs.reload)
+hs.hotkey.bind(MOD_KEY_SHIFT, "r", hs.reload)
