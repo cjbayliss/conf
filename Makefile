@@ -1,14 +1,14 @@
 .PHONY: default
 
 default:
-	@for i in $$(find $(PWD)/.???* -type d ! -path '*/.git*'); do \
-		mkdir -pv "$(HOME)$${i#$(PWD)}"; \
+	@for i in $$(find $(CURDIR)/.[!.]* -type d ! -path '*/.git*'); do \
+		mkdir -pv "$(HOME)$${i#$(CURDIR)}"; \
 	done
-	@for i in $$(find $(PWD)/.???* -type f ! -path '*/.git*' ! -path '$(PWD)/.docker/config.json'); do \
-		dest="$(HOME)$${i#$(PWD)}"; \
+	@for i in $$(find $(CURDIR)/.[!.]* -type f ! -path '*/.git*' ! -path '$(CURDIR)/.docker/config.json'); do \
+		dest="$(HOME)$${i#$(CURDIR)}"; \
 		[ -f "$$dest" ] && [ ! -L "$$dest" ] && mv -v "$$dest" "$$dest.bak"; \
 		[ -f "$$dest" ] && rm "$$dest"; \
-		[ ! -L "$$dest" ] && ln -sv $$i $$dest; \
+		ln -sfnv "$$i" "$$dest"; \
 	done
 	@pinentry=$$(command -v pinentry-tty); \
 	if [ -n "$$pinentry" ]; then \
