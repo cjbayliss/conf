@@ -1,12 +1,15 @@
 maki.setup({
     always_yolo = true,
-    always_thinking = "adaptive",
+    always_thinking = "high",
     provider = {
         default_model = "synthetic/hf:deepseek-ai/DeepSeek-V4.1-Flash-1017",
     },
     ui = {
         splash_animation = false,
         theme = "terminal",
+    },
+    plugins = {
+        memory = { enabled = false },
     },
 })
 
