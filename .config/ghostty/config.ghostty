@@ -27,6 +27,6 @@ macos-auto-secure-input = true
 macos-option-as-alt = true
 macos-secure-input-indication = false
 macos-titlebar-proxy-icon = hidden
-macos-titlebar-style = transparent
+macos-titlebar-style = tabs
 
 # vim: set ft=conf
