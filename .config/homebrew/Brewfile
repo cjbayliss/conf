@@ -1,4 +1,5 @@
 # UDE (UNIX Development Envrionment)
+brew "ast-grep"
 brew "bash-completion@2"
 brew "bash"
 brew "coreutils"
@@ -9,12 +10,10 @@ brew "screen"
 cargo "fpwd", source: "https://github.com/cjbayliss/fpwd"
 
 # VCS
-brew "gh"
 brew "git"
 brew "gnupg"
 
 # editor
-brew "kakoune-lsp/kakoune-lsp/kakoune-lsp", trusted: true
 brew "kakoune"
 
 # formatting/linting
@@ -35,13 +34,6 @@ brew "maki"
 brew "nono"
 brew "rtk"
 uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
-uv "semble", source: "git+https://github.com/MinishLab/semble", with: ["mcp"]
-
-# LSP
-brew "bash-language-server"
-brew "lua-language-server"
-brew "pylsp"
-npm "intelephense"
 
 # docker
 brew "colima" if OS.mac?
@@ -63,7 +55,5 @@ if OS.mac?
     cask "firefox"
     cask "font-jetbrains-mono"
     cask "ghostty"
-    cask "hammerspoon"
-    cask "iina"
     cask "mozilla-vpn"
 end
