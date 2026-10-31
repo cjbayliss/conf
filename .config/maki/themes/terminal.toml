@@ -86,8 +86,8 @@
 background = "default"
 foreground = "default"
 comment    = "cyan"
-mode_build = "red"
-mode_plan  = "green"
+mode_build = "yellow"
+mode_plan  = "blue"
 mode_bash  = "default"
 
 [ui]
