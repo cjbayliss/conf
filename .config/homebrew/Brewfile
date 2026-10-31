@@ -21,6 +21,7 @@ brew "prettier"
 brew "shellcheck"
 brew "shfmt"
 brew "stylua"
+uv "mbake"
 uv "ruff"
 
 # languages
@@ -52,6 +53,7 @@ if OS.mac?
     uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
 
     # macOS apps
+    cask "abue-ammar/tinycast/tinycast", trusted: true
     cask "firefox"
     cask "font-jetbrains-mono"
     cask "ghostty"
