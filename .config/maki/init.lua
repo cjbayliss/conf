@@ -25,6 +25,6 @@ maki.api.register_prompt_hint({
     }, "\n"),
 })
 
-maki.keymap.set("n", "<C-d>", function()
+maki.keymap.set({ "i" }, "<C-d>", function()
     maki.api.run_command("/exit")
 end, { desc = "exit maki" })
