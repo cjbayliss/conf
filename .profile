@@ -44,7 +44,7 @@ export PAGER=cat
 export TIME_STYLE=long-iso
 
 export NAME='Christopher Bayliss'
-export EMAIL='cjbdev@icloud.com'
+export EMAIL='cjbdev@fastmail.net'
 
 # some programs respect this
 export DISABLE_TELEMETRY=1
