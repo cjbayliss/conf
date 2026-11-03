@@ -5,9 +5,6 @@
   "defaultThinkingLevel": "high",
   "defaultTools": [
     "+codemode",
-    "+find",
-    "+grep",
-    "+ls",
     "+tool_search"
   ],
   "enableInstallTelemetry": false,
