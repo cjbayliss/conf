@@ -1,0 +1,31 @@
+{
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
+  "defaultModel": "synthetic/hf:zai-org/GLM-5.3-Flash",
+  "defaultProvider": "synthetic",
+  "defaultThinkingLevel": "high",
+  "defaultTools": [
+    "+codemode",
+    "+find",
+    "+grep",
+    "+ls",
+    "+tool_search"
+  ],
+  "enableInstallTelemetry": false,
+  "enabledModels": [
+    "synthetic/hf:zai-org/GLM-5.3-Flash",
+    "synthetic/hf:zai-org/GLM-5.3",
+    "synthetic/hf:moonshotai/Kimi-K3",
+    "synthetic/hf:deepseek-ai/DeepSeek-V4.1-Flash"
+  ],
+  "modelThinkingLevels": {
+    "synthetic/hf:deepseek-ai/DeepSeek-V4.1-Flash": "high",
+    "synthetic/hf:moonshotai/Kimi-K3": "high",
+    "synthetic/hf:zai-org/GLM-5.3": "high",
+    "synthetic/hf:zai-org/GLM-5.3-Flash": "high"
+  },
+  "quietStartup": true,
+  "showHardwareCursor": true,
+  "theme": "ansi16/ansi16",
+  "tuiMode": "regular",
+  "lastChangelogVersion": "1.5.0"
+}

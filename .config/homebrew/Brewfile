@@ -34,6 +34,7 @@ brew "llama.cpp"
 brew "maki"
 brew "nono"
 brew "rtk"
+npm "@earendil-works/pi-coding-agent"
 uv "llm", with: ["llm-openrouter", "llm-tools-exa"]
 
 # docker
