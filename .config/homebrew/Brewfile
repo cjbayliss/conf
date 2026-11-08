@@ -2,6 +2,7 @@
 brew "ast-grep"
 brew "bash-completion@2"
 brew "bash"
+brew "bat"
 brew "coreutils"
 brew "gnu-sed"
 brew "grep"
@@ -53,7 +54,7 @@ if OS.mac?
     uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
 
     # macOS apps
-    cask "abue-ammar/tinycast/tinycast", trusted: true
+    cask "tinycast"
     cask "firefox"
     cask "font-jetbrains-mono"
     cask "ghostty"
