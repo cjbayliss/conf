@@ -107,6 +107,10 @@ hook global WinSetOption filetype=sh %{
     set-option window formatcmd "shfmt -i 4 -"
     format-on-save
 }
+hook global WinSetOption filetype=toml %{
+    set-option window formatcmd "taplo fmt -o indent_string='    ' -"
+    format-on-save
+}
 
 # filetypes
 hook global BufCreate (/etc/portage/((m|p).*|sets/.*)|/var/lib/portage/.*|.*tmux\.conf) %{

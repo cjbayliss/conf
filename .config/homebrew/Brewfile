@@ -8,6 +8,7 @@ brew "gnu-sed"
 brew "grep"
 brew "man-db"
 brew "screen"
+brew "tokei"
 cargo "fpwd", source: "https://github.com/cjbayliss/fpwd"
 
 # VCS
@@ -22,6 +23,7 @@ brew "prettier"
 brew "shellcheck"
 brew "shfmt"
 brew "stylua"
+brew "taplo"
 uv "mbake"
 uv "ruff"
 
@@ -54,9 +56,9 @@ if OS.mac?
     uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
 
     # macOS apps
-    cask "tinycast"
     cask "firefox"
     cask "font-jetbrains-mono"
     cask "ghostty"
     cask "mozilla-vpn"
+    cask "zed"
 end
