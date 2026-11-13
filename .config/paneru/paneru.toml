@@ -30,7 +30,7 @@ enabled = false
 
 [windows.all]
 title = ".*"
-horizontal_padding = 4
+horizontal_padding = 2
 vertical_padding = 0
 
 [windows.dialogs]
