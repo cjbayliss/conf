@@ -1,0 +1,56 @@
+[options]
+auto_center = true
+focus_follows_mouse = false
+animation_speed = 50
+preset_column_widths = [0.50, 0.60, 0.70, 0.80, 0.90, 1.00]
+
+[padding]
+bottom = 4
+top = 4
+
+[bindings]
+window_focus_west = "alt + cmd - leftarrow"
+window_focus_east = "alt + cmd - rightarrow"
+
+window_swap_west = "alt + cmd + shift - leftarrow"
+window_swap_east = "alt + cmd + shift - rightarrow"
+
+window_grow = "alt + cmd - equal"
+window_shrink = "alt + cmd - minus"
+
+window_fullwidth = "alt + cmd - m"
+
+window_center = "alt + cmd - c"
+
+window_copyrule = "alt + cmd + shift - c"
+restart = "alt + cmd - r"
+
+[decorations.menu]
+enabled = false
+
+[windows.all]
+title = ".*"
+horizontal_padding = 4
+vertical_padding = 0
+
+[windows.dialogs]
+title = ".*"
+subrole = "AXDialog"
+floating = true
+
+[windows.floating_window]
+title = ".*"
+subrole = "AXFloatingWindow"
+floating = true
+
+[windows.firefox]
+title = ".*"
+bundle_id = "org.mozilla.firefox"
+subrole = "AXStandardWindow"
+width = 0.90
+
+[windows.consolelink]
+bundle_id = "com.chunqian.ConsoleLink"
+title = ".*"
+manage = true
+width = 1.00

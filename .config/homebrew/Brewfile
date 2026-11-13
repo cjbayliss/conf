@@ -53,6 +53,7 @@ uv "nt", source: "git+https://github.com/cjbayliss/nt.git"
 if OS.mac?
     # macOS tools
     brew "mole"
+    brew "paneru"
     uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git"
 
     # macOS apps
