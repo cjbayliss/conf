@@ -54,12 +54,10 @@ if OS.mac?
     # macOS tools
     brew "mole"
     brew "paneru"
-    uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git", with: ["phonon"]
+    uv "t2s", source: "git+https://github.com/cjbayliss/t2s.git", with: ["ptts"]
 
     # macOS apps
     cask "firefox"
     cask "font-jetbrains-mono"
     cask "ghostty"
-    cask "mozilla-vpn"
-    cask "zed"
 end
