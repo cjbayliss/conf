@@ -1,8 +1,21 @@
 [options]
+animation_speed = 50
 auto_center = true
 focus_follows_mouse = false
-animation_speed = 50
-preset_column_widths = [0.50, 0.60, 0.70, 0.80, 0.90, 1.00]
+mouse_follows_focus = false
+preset_column_widths = [
+    0.10,
+    0.20,
+    0.30,
+    0.40,
+    0.50,
+    0.60,
+    0.70,
+    0.80,
+    0.90,
+    1.00,
+]
+sliver_width = 1
 
 [padding]
 bottom = 4
@@ -50,7 +63,12 @@ subrole = "AXStandardWindow"
 width = 0.90
 
 [windows.consolelink]
-bundle_id = "com.chunqian.ConsoleLink"
 title = ".*"
+bundle_id = "com.chunqian.ConsoleLink"
 manage = true
 width = 1.00
+
+[windows.pob_redux]
+title = ".*"
+bundle_id = "dev.pobredux.desktop"
+width = 0.90
