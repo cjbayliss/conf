@@ -6,6 +6,8 @@ unalias -a # ensure shitty distro aliases are removed first
 alias grep="grep --color=auto --exclude-dir=.git"
 alias ls="ls --color=auto -hF"
 
+[ -f "$(command -v llm)" ] && alias ask="llm -T web_search -T get_contents --cl 10"
+
 pst() {
     curl --data-binary "@${1:-/dev/stdin}" https://paste.rs && echo
 }
